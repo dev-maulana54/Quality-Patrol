@@ -1,0 +1,95 @@
+/**
+ *
+ * You can write your CSS code here, DO NOT touch the default JavaScript file
+ * because it will make it harder for you to update.
+ *
+ */
+
+/*# sourceMappingURL=custom.css.map */
+
+.informasiDetail > a:hover {
+  background-color: #6070e5;
+  color: white;
+}
+
+.proofImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+}
+
+.divIcon img {
+  width: 100px;
+}
+
+
+.background {
+  position: relative; /* Make this element relative */
+  z-index: 1; /* Ensure content has higher z-index than pseudo-element */
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #e5e5f7;
+  opacity: 0.5;
+  background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
+  background-size: 20px 20px;
+  z-index: -1; /* Send pseudo-element to the back */
+  animation: moveBackground 1s linear infinite;
+}
+
+
+/* Define the keyframes for the animation */
+@keyframes moveBackground {
+  0% {
+    background-position: 0 0, 10px 10px;
+  }
+  100% {
+    background-position: 20px 20px, 30px 30px;
+  }
+}
+
+
+/* Include the loader CSS as shown above */
+#loading-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#table-1 th {
+  text-align: center !important;
+}

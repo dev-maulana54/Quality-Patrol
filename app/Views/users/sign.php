@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $title ?></title><!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"><!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- Flatpickr CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <!-- Select2 core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <!-- Select2 Bootstrap-5 Theme -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.6.2/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" /> -->
+    <link href="<?= base_url() ?>assets/css/summary.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/css/t_patrol.css" rel="stylesheet">
+
+    <style>
+        .select2-container .select2-selection--single {
+            height: 38px;
+            padding: 6px 12px;
+        }
+
+        /* Thumbnail */
+        #imagePreview img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: .5rem;
+            cursor: zoom-in;
+            border: 1px solid rgba(0, 0, 0, .1);
+        }
+
+        /* Overlay viewer */
+        #imgViewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .8);
+            display: none;
+            z-index: 9999;
+        }
+
+        #imgViewer.active {
+            display: block;
+        }
+
+        .viewer-toolbar {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .viewer-toolbar button {
+            background: rgba(255, 255, 255, .9);
+            border: 0;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .viewer-stage {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            touch-action: none;
+            /* penting untuk drag di mobile */
+        }
+
+        #viewerImg {
+            max-width: 90vw;
+            max-height: 90vh;
+            user-select: none;
+            pointer-events: none;
+            transform-origin: center center;
+            /* diubah via JS */
+            will-change: transform;
+        }
+
+        /* Thumbnail */
+        #imagePreview_edit img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: .5rem;
+            cursor: zoom-in;
+            border: 1px solid rgba(0, 0, 0, .1);
+        }
+
+        /* Overlay viewer */
+        #imgViewer_edit {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .8);
+            display: none;
+            z-index: 9999;
+        }
+
+        #imgViewer_edit.active {
+            display: block;
+        }
+
+        .viewer-toolbar {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .viewer-toolbar button {
+            background: rgba(255, 255, 255, .9);
+            border: 0;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .viewer-stage {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            touch-action: none;
+            /* penting untuk drag di mobile */
+        }
+
+        .previewpdf {
+            display: none;
+        }
+
+        .previewpdf_fill {
+            display: none;
+        }
+
+        #viewerImg_edit {
+            max-width: 90vw;
+            max-height: 90vh;
+            user-select: none;
+            pointer-events: none;
+            transform-origin: center center;
+            /* diubah via JS */
+            will-change: transform;
+        }
+
+        .patrol-tabs {
+            display: inline-flex;
+            background-color: white;
+            padding: 6px;
+            border-radius: 14px;
+            gap: 6px;
+        }
+
+        .dark-theme .patrol-tabs {
+            background-color: #1e1e1e;
+        }
+
+        .patrol-tabs .nav-link {
+            padding: 8px 20px;
+            border-radius: 10px;
+            color: #4ea1ff;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .patrol-tabs .nav-link.active {
+            background-color: #0d6efd;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, .35);
+        }
+
+        /* Dark Theme Card */
+        .dark-theme .card {
+            background-color: #1e1e1e;
+            color: #e4e4eb;
+            border: 1px solid #2a2a40;
+        }
+
+        /* Dark Theme Card */
+        .dark-theme.card-body {
+            background-color: #1e1e1e;
+            color: #e4e4eb;
+            border: 1px solid #2a2a40;
+        }
+
+        /* Card Header */
+        .dark-theme .card-header {
+            background-color: #1e1e1e;
+            border-bottom: 1px solid #2a2a40;
+            color: #ffffff;
+        }
+
+        .signature-wrap {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Penting: canvas ikut tinggi/lebar wrapper */
+        #signature_pad {
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: none;
+            /* biar tidak scroll pas teken */
+        }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+
+<body class="light-theme"><!-- Header -->
+    <div class="header">
+        <div class="header-left"><button class="mobile-toggle" id="mobileToggle"> <i class="bi bi-list"></i> </button>
+            <h1 class="logo-text" id="appName">Quality Patrol</h1>
+        </div>
+        <div class="header-right">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="bi bi-sun-fill"></i>
+            </button>
+            <div class="profile-dropdown">
+                <img src="https://ui-avatars.com/api/?name=User&amp;background=0d6efd&amp;color=fff&amp;size=128" alt="Profile" class="profile-img" id="profileImg">
+                <div class="dropdown-menu" id="profileDropdown">
+                    <a href="#" class="dropdown-item" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right me-2"></i>Logout </a>
+                </div>
+            </div>
+        </div>
+    </div><!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div style="
+            padding: 20px;
+            margin: 0 15px 20px 15px;
+            background: linear-gradient(135deg, #0d6efd, #0056b3);
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+        ">
+            <h4 style="
+                color: white;
+                font-size: 14px;
+                font-weight: 600;
+                margin: 0 0 4px 0;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            " id="sidebarUserName"><?= $nama; ?> </h4>
+            <p style="
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 11px;
+                margin: 0;
+                font-weight: 400;
+            "><?php if ($role === 1) {
+                    echo "Administrator";
+                } else if ($role === 2) {
+                    echo "Auditor";
+                } else {
+                    echo "Auditee";
+                } ?></p>
+        </div>
+        <a href="<?= base_url('summary') ?>" class="menu-item " data-page="dashboard">
+            <i class="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="<?= base_url('temuan_patrol') ?>" class="menu-item active" data-page="patrol">
+            <i class="bi bi-search"></i>
+            <span>Data Patrol</span>
+        </a>
+        <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
+            <i class="bi bi-calendar-check"></i>
+            <span>Schedule</span>
+        </a>
+        <?php if ($role === 1) : ?>
+            <div class="menu-header">
+                Master Data
+            </div>
+            <a href="<?= base_url('admin/mdata_user') ?>" class="menu-item" data-page="user">
+                <i class="bi bi-people"></i>
+                <span>User</span>
+            </a>
+            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
+                <i class="bi bi-building"></i> <span>Departemen</span>
+            </a>
+        <?php endif; ?>
+    </div><!-- Main Content -->
+    <div class="main-content" id="mainContent">
+
+
+        <!-- Data Table -->
+
+
+        <!-- <div class="card" >
+            <div class="card-body">
+                <h5 class="card-title">Filter</h5>
+               
+            </div>
+        </div> -->
+
+
+
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Hadir</h5>
+                <button type="button" class="btn btn-primary btn-sm sign_btn" data-bs-toggle="modal" data-bs-target="#modal_tambah_sign" data-value="tambah_d_hadir" data-id="">
+                    Tambah Daftar Hadir
+                </button>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th style="width: 5%;">No</th>
+                                <th>NPK</th>
+                                <th>Nama</th>
+                                <th>Area / Proses Patrol</th>
+                                <th>Role</th>
+                                <th>Signed At</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($data_daftar_hadir as $index => $df_hadir) : ?>
+                                <tr>
+                                    <td class="text-center"><?= $index + 1 ?></td>
+                                    <td><?= $df_hadir['npk'] ?> </td>
+                                    <td>
+                                        <?= $df_hadir['nama'] ?>
+                                        <?php if ($df_hadir['keterangan'] == 0) : ?>
+                                            <button class="btn btn-link p-0 ms-2 text-success sign_btn" data-id="<?= $df_hadir['id_sign'] ?>" data-bs-toggle="modal" data-bs-target="#modal_tambah_sign" data-value="sign_user" title="Sign">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= $df_hadir['section'] ?> </td>
+                                    <?php if ($df_hadir['role'] == 2) : ?>
+                                        <td>Auditor</td>
+                                    <?php endif; ?>
+                                    <?php if ($df_hadir['role'] == 3) : ?>
+                                        <td>Auditee</td>
+                                    <?php endif; ?>
+                                    <td><?= $df_hadir['signed_at'] ?> </td>
+                                    <?php if ($df_hadir['keterangan'] == 1) : ?>
+                                        <td>
+                                            <span class="badge bg-success">Hadir</span>
+
+                                        </td>
+                                    <?php endif; ?>
+                                    <?php if ($df_hadir['keterangan'] == 0) : ?>
+                                        <td>
+
+                                            <span class="badge bg-danger">Tidak Hadir</span>
+                                        </td>
+                                    <?php endif; ?>
+
+                                </tr>
+                            <?php endforeach; ?>
+                            <!-- Tambahkan data di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div><!-- Footer -->
+    <div class="footer" id="footer">
+        <p id="footerText">© 2025 Quality Patrol — All rights reserved</p>
+    </div>
+    <!-- Button trigger modal -->
+
+
+    <div class="modal fade" id="modal_tambah_sign" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Absen Quality Patrol</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="formSign" enctype="multipart/form-data">
+                        <input type="hidden" id="id_schedule" value="<?= $id ?>">
+                        <input type="hidden" id="id_sign" value="<?= $id ?>">
+                        <input type="hidden" id="value_sign" name="value_sign" value="">
+
+                        <div class="row g-3" id="wrap_nama_role">
+
+                            <!-- NAMA -->
+                            <div class="form-group col-md-6">
+                                <label for="dt_nama" class="form-label">
+                                    <i class="bi bi-person-fill me-1"></i> Nama
+                                </label>
+                                <select class="" id="dt_nama" style="width:100%;">
+                                    <option value="">-- Pilih Opsi --</option>
+                                    <?php foreach ($data_karyawan as $karyawan) : ?>
+                                        <option value="<?= $karyawan['npk'] ?>"><?= $karyawan['npk'] ?> - <?= $karyawan['nama'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- ROLE -->
+                            <div class="form-group col-md-6">
+                                <label for="list_role" class="form-label">
+                                    <i class="bi bi-diagram-3 me-1"></i>Role
+                                </label>
+                                <select class="form-select select2" id="list_role" style="width:100%;">
+                                    <option value="">-- Pilih Role --</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Auditor</option>
+                                    <option value="3">Auditee</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row g-3" id="">
+                            <!-- PILIH JENIS SIGN -->
+                            <div class="form-group col-md-12">
+                                <label for="sign_type" class="form-label">
+                                    <i class="bi bi-pen me-1"></i> Jenis Tanda Tangan
+                                </label>
+                                <select class="form-select" id="sign_type" name="sign_type">
+                                    <option value="digital" selected>Tanda tangan digital</option>
+                                    <option value="upload">Upload file gambar</option>
+                                </select>
+                            </div>
+
+                            <!-- DIGITAL SIGN -->
+                            <div class="col-12" id="digital_section">
+                                <div class="border rounded-3 p-3">
+
+                                    <div class="d-flex flex-wrap gap-3 align-items-end mb-3">
+                                        <div>
+                                            <label class="form-label mb-1">Warna</label>
+                                            <input type="color" id="pen_color" class="form-control form-control-color" value="#ff006a"
+                                                title="Pilih warna">
+                                        </div>
+
+                                        <div style="min-width: 240px;">
+                                            <label class="form-label mb-1">Tebal garis: <span id="pen_width_label">3</span> px</label>
+                                            <input type="range" class="form-range" id="pen_width" min="1" max="12" step="1" value="3">
+                                        </div>
+
+                                        <div class="ms-auto d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-secondary" id="btnClearSign">
+                                                <i class="bi bi-eraser me-1"></i> Clear
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <label class="form-label">
+                                        <i class="bi bi-check2-square me-1"></i> Area Approval
+                                    </label>
+
+                                    <div class="rounded-3 border bg-light signature-wrap">
+                                        <canvas id="signature_pad"></canvas>
+                                    </div>
+
+                                    <input type="hidden" name="signature_data" id="signature_data">
+                                    <small class="text-muted d-block mt-2">
+                                        Tulis tanda tangan pada area di atas.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- UPLOAD SIGN -->
+                            <div class="col-12 d-none" id="upload_section">
+                                <div class="border rounded-3 p-3">
+                                    <label for="sign_file" class="form-label">
+                                        <i class="bi bi-upload me-1"></i> Upload tanda tangan (PNG/JPG)
+                                    </label>
+                                    <input class="form-control" type="file" id="sign_file" name="sign_file"
+                                        accept="image/png,image/jpeg">
+
+                                    <div class="mt-3 d-none" id="upload_preview_wrap">
+                                        <label class="form-label mb-1">Preview</label>
+                                        <div class="border rounded-3 p-2 bg-light">
+                                            <img id="upload_preview" alt="Preview" style="max-width: 100%; max-height: 220px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnSubmit_filldata" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script><!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Select2 core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+    <!-- SIGNATURE PAD -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+    <script src="<?= base_url() ?>assets/js/temuan_patrol/view-image.js"></script>
+    <script src="<?= base_url() ?>assets/js/temuan_patrol/t_patrol.js"></script>
+    <script>
+        const tsList = new TomSelect("#dt_nama", {
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+
+        // Klik button (tambah / sign)
+        $('.sign_btn').on('click', function() {
+            var id_sign = $(this).data('id') || '';
+            var valueSign = $(this).data('value') || '';
+
+            $('#id_sign').val(id_sign);
+            $('#value_sign').val(valueSign);
+
+            // default: tampilkan dulu
+            $('#wrap_nama_role').removeClass('d-none');
+
+            if (valueSign === 'sign_user') {
+                // hide nama + role
+                $('#wrap_nama_role').addClass('d-none');
+
+                // optional: kosongkan value supaya bersih
+                $('#dt_nama').val('').trigger('change'); // kalau pakai select2, trigger change penting
+                $('#list_role').val('').trigger('change');
+            }
+        });
+
+        // Opsional: reset saat modal ditutup (biar state tidak kebawa dari klik sebelumnya)
+        $('#modal_tambah_sign').on('hidden.bs.modal', function() {
+            $('#wrap_nama_role').removeClass('d-none');
+
+            $('#dt_nama').val('').trigger('change');
+            $('#list_role').val('').trigger('change');
+
+            $('#id_sign').val('');
+            $('#value_sign').val('');
+
+            // opsional tambahan kalau kamu pakai digital signature canvas:
+            // $('#signature_data').val('');
+            // kalau punya fungsi clear canvas misal signaturePad.clear():
+            // signaturePad.clear();
+
+            // opsional tambahan kalau pakai upload preview:
+            // $('#sign_file').val('');
+            // $('#upload_preview_wrap').addClass('d-none');
+            // $('#upload_preview').attr('src', '');
+        });
+
+        let signaturePad = null;
+
+        function resizeCanvasToDisplaySize(canvas) {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            const rect = canvas.getBoundingClientRect();
+
+            canvas.width = Math.floor(rect.width * ratio);
+            canvas.height = Math.floor(rect.height * ratio);
+
+            const ctx = canvas.getContext("2d");
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0); // scale untuk retina
+        }
+
+        function fillWhiteBackground(canvas) {
+            // isi putih beneran (bukan cuma property)
+            const ctx = canvas.getContext("2d");
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        }
+
+        function setPenOptions() {
+            if (!signaturePad) return;
+
+            const color = document.getElementById("pen_color").value;
+            const width = Number(document.getElementById("pen_width").value);
+
+            signaturePad.penColor = color;
+            signaturePad.minWidth = width;
+            signaturePad.maxWidth = width;
+
+            document.getElementById("pen_width_label").textContent = width;
+        }
+
+        function initSignaturePad() {
+            const canvas = document.getElementById("signature_pad");
+
+            // resize sesuai ukuran tampilannya
+            resizeCanvasToDisplaySize(canvas);
+
+            // isi background putih (agar tidak ada efek “hitam nyelip”)
+            fillWhiteBackground(canvas);
+
+            // jika ada instance lama, matikan event-nya
+            if (signaturePad) {
+                signaturePad.off();
+                signaturePad = null;
+            }
+
+            signaturePad = new SignaturePad(canvas, {
+                backgroundColor: "rgb(255,255,255)",
+                penColor: document.getElementById("pen_color").value,
+                minWidth: Number(document.getElementById("pen_width").value),
+                maxWidth: Number(document.getElementById("pen_width").value),
+            });
+
+            // clear akan apply backgroundColor
+            signaturePad.clear();
+            setPenOptions();
+        }
+
+        function bindUpdateBeforeDraw() {
+            const canvas = document.getElementById("signature_pad");
+            const update = () => setPenOptions();
+
+            // paksa update pen sebelum mulai coret
+            canvas.addEventListener("pointerdown", update);
+            canvas.addEventListener("mousedown", update);
+            canvas.addEventListener("touchstart", update, {
+                passive: true
+            });
+        }
+
+        function toggleSignType() {
+            const val = document.getElementById("sign_type").value;
+            const digital = document.getElementById("digital_section");
+            const upload = document.getElementById("upload_section");
+
+            if (val === "digital") {
+                digital.classList.remove("d-none");
+                upload.classList.add("d-none");
+
+                // re-init canvas setelah ditampilkan (biar ukuran pas)
+                setTimeout(() => {
+                    initSignaturePad();
+                }, 50);
+            } else {
+                digital.classList.add("d-none");
+                upload.classList.remove("d-none");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // init signature
+            initSignaturePad();
+            bindUpdateBeforeDraw();
+
+            // toggle jenis sign
+            document.getElementById("sign_type").addEventListener("change", toggleSignType);
+
+            // warna & tebal
+            document.getElementById("pen_color").addEventListener("input", setPenOptions);
+            document.getElementById("pen_width").addEventListener("input", setPenOptions);
+
+            // clear
+            document.getElementById("btnClearSign").addEventListener("click", function() {
+                if (!signaturePad) return;
+                signaturePad.clear();
+            });
+
+            // preview upload
+            document.getElementById("sign_file").addEventListener("change", function(e) {
+                const file = e.target.files && e.target.files[0];
+                const wrap = document.getElementById("upload_preview_wrap");
+                const img = document.getElementById("upload_preview");
+
+                if (!file) {
+                    wrap.classList.add("d-none");
+                    img.src = "";
+                    return;
+                }
+
+                img.src = URL.createObjectURL(file);
+                wrap.classList.remove("d-none");
+            });
+
+            // submit
+            document.getElementById("btnSubmit_filldata").addEventListener("click", function() {
+                const signType = document.getElementById("sign_type").value;
+
+                if (signType === "digital") {
+                    if (!signaturePad || signaturePad.isEmpty()) {
+                        alert("Tanda tangan digital masih kosong.");
+                        return;
+                    }
+                    // base64 png
+                    const dataURL = signaturePad.toDataURL("image/png");
+                    document.getElementById("signature_data").value = dataURL;
+                } else {
+                    const file = document.getElementById("sign_file").files[0];
+                    if (!file) {
+                        alert("Silakan pilih file gambar tanda tangan.");
+                        return;
+                    }
+                }
+
+                // TODO: sesuaikan submit
+                // document.getElementById("formSign").submit();
+                console.log("Submit OK. sign_type =", signType);
+            });
+
+            // re-init saat modal muncul (penting supaya ukuran canvas pas)
+            const modalEl = document.getElementById("modal_tambah_sign");
+            modalEl.addEventListener("shown.bs.modal", function() {
+                if (document.getElementById("sign_type").value === "digital") {
+                    setTimeout(() => initSignaturePad(), 50);
+                }
+            });
+        });
+    </script>
+    <script>
+        document.getElementById("btnSubmit_filldata").addEventListener("click", async function() {
+            const signType = document.getElementById("sign_type").value;
+            const npk = document.getElementById("dt_nama").value;
+            const role = document.getElementById("list_role").value;
+            const id_schedule = document.getElementById("id_schedule").value;
+
+            const valueSign = document.getElementById("value_sign").value || ""; // <- penting
+            const id_sign = document.getElementById("id_sign").value || ""; // <- kalau perlu ikut dikirim
+
+            if (!id_schedule) return alert("ID Schedule tidak ditemukan.");
+
+            // Wajib hanya kalau tambah_d_hadir
+            const needIdentity = (valueSign === "tambah_d_hadir");
+
+            if (needIdentity) {
+                if (!npk) return alert("Nama belum dipilih.");
+                if (!role) return alert("Role belum dipilih.");
+            }
+
+            const url = "<?= base_url('attendance/sign-digital') ?>";
+
+            try {
+                // ===============================
+                // CASE 1: DIGITAL SIGN (JSON)
+                // ===============================
+                if (signType === "digital") {
+                    if (!signaturePad || signaturePad.isEmpty()) {
+                        return alert("Tanda tangan digital masih kosong.");
+                    }
+
+                    const signatureData = signaturePad.toDataURL("image/png");
+
+                    // payload dasar (selalu dikirim)
+                    const payload = {
+                        sign_type: "digital",
+                        id_schedule: id_schedule,
+                        value_sign: valueSign,
+                        id_sign: id_sign,
+                        signature_data: signatureData
+                    };
+
+                    // hanya kirim npk+role kalau tambah_d_hadir
+                    if (needIdentity) {
+                        payload.npk = npk;
+                        payload.role = role;
+                    }
+
+                    const res = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Requested-With": "XMLHttpRequest"
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await safeParseResponse(res);
+                    if (!res.ok) throw data;
+
+                    alert(data.message || "Berhasil sign.");
+                    closeModalAndReload();
+                    return;
+                }
+
+                // ===============================
+                // CASE 2: UPLOAD SIGN (FormData)
+                // ===============================
+                if (signType === "upload") {
+                    const fileInput = document.getElementById("sign_file");
+                    const file = fileInput?.files?.[0];
+
+                    if (!file) return alert("Silakan pilih file tanda tangan.");
+
+                    const formData = new FormData();
+                    formData.append("sign_type", "upload");
+                    formData.append("id_schedule", id_schedule);
+                    formData.append("value_sign", valueSign);
+                    formData.append("id_sign", id_sign);
+                    formData.append("sign_file", file);
+
+                    // hanya kirim npk+role kalau tambah_d_hadir
+                    if (needIdentity) {
+                        formData.append("npk", npk);
+                        formData.append("role", role);
+                    }
+
+                    const res = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        },
+                        credentials: "same-origin",
+                        body: formData
+                    });
+
+                    const data = await safeParseResponse(res);
+                    if (!res.ok) throw data;
+
+                    alert(data.message || "Berhasil upload tanda tangan.");
+                    closeModalAndReload();
+                    return;
+                }
+
+                alert("Jenis tanda tangan tidak dikenali.");
+            } catch (err) {
+                console.error(err);
+                const msg = (err && err.message) ? err.message : "Terjadi kesalahan pada server.";
+                alert(msg);
+            }
+        });
+
+        /**
+         * Helper: aman parse JSON kalau response JSON,
+         * kalau bukan JSON (mis. HTML error page), ambil text agar tidak throw parse error
+         */
+        async function safeParseResponse(res) {
+            const contentType = res.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+                return await res.json();
+            }
+            const text = await res.text();
+            return {
+                message: text || "Response tidak valid dari server."
+            };
+        }
+
+        // helper
+        function closeModalAndReload() {
+            const modalEl = document.getElementById("modal_tambah_sign");
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+            location.reload();
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+CRITICAL - 2025-11-09 14:30:32 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/mdata_department.php"
+[Method: GET, Route: admin/mdata_department]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 3 APPPATH\Controllers\Admin.php(15): view()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->mdata_department()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('D:\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-11-09 15:50:41 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'quality_patr'
+[Method: GET, Route: testdb]
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 246.
+ 1 APPPATH\Controllers\testDB.php(13): CodeIgniter\Database\MySQLi\Connection->connect()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\testDB->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('D:\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-11-09 15:50:41 --> [Caused by] mysqli_sql_exception: Unknown database 'quality_patr'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 201.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(201): mysqli->real_connect()
+ 2 APPPATH\Controllers\testDB.php(13): CodeIgniter\Database\MySQLi\Connection->connect()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\testDB->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('D:\\Ampps\\www\\quality-patrol\\public\\index.php')

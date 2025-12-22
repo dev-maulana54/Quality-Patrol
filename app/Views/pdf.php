@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Viewer</title>
+    <script src="/_sdk/element_sdk.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+
+        .pdf-container {
+            touch-action: pan-x pan-y;
+        }
+
+        .zoom-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .zoom-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .zoom-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .zoom-btn:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 640px) {
+            .zoom-controls {
+                bottom: 15px;
+                right: 15px;
+                gap: 6px;
+            }
+
+            .zoom-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .bg-abu {
+            background-color: #282828;
+        }
+
+        .text-white-500 {
+            color: #ffffff;
+        }
+    </style>
+
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+
+<body class="h-full font-sans" style="background-color: #282828">
+    <main class="h-full flex flex-col">
+        <!-- Header -->
+        <header class="bg-abu shadow-sm border-b border-gray-200 px-4 py-3" style="border-color: rgb(40 40 40);">
+            <div class="flex justify-between items-center">
+                <h1 id="viewer-title" class="text-xl font-semibold text-gray-800" style="color : #ffffff;">
+                    PDF Viewer
+                </h1>
+                <div id="page-info" class="text-sm text-gray-600 hidden" style="color : #ffffff;">
+                    <span id="total-pages">0</span> halaman
+                </div>
+            </div>
+        </header>
+        <!-- PDF Container -->
+        <div
+            class="flex-1 relative overflow-auto pdf-container"
+            id="pdf-container">
+            <div
+                id="loading"
+                class="absolute inset-0 flex items-center justify-center bg-abu">
+                <div class="text-center">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-gray-600">Memuat PDF...</p>
+                </div>
+            </div>
+            <div
+                id="error-message"
+                class="hidden absolute inset-0 flex items-center justify-center bg-abu">
+                <div class="text-center p-6 max-w-md mx-auto">
+                    <div class="text-red-500 text-5xl mb-4">📄</div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">
+                        PDF Tidak Dapat Dimuat
+                    </h2>
+                    <p class="text-gray-600 mb-4">
+                        File:
+                        <span
+                            id="error-filename"
+                            class="font-mono bg-gray-100 px-2 py-1 rounded">contoh.pdf</span>
+                    </p>
+                    <div
+                        class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-left">
+                        <h3 class="font-semibold text-yellow-800 mb-2">
+                            🚫 Masalah CORS
+                        </h3>
+                        <p class="text-sm text-yellow-700 mb-3">
+                            Browser memblokir akses file lokal karena keamanan. Solusinya:
+                        </p>
+                        <div class="space-y-2 text-sm text-yellow-700">
+                            <div class="flex items-start gap-2">
+                                <span class="font-semibold">1.</span>
+                                <div>
+                                    <strong>Gunakan Local Server:</strong><br />
+                                    • VS Code: Install "Live Server" extension<br />
+                                    • Python:
+                                    <code class="bg-yellow-100 px-1 rounded">python -m http.server 8000</code><br />
+                                    • Node.js:
+                                    <code class="bg-yellow-100 px-1 rounded">npx serve .</code>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="font-semibold">2.</span>
+                                <div>
+                                    <strong>Upload ke hosting:</strong><br />
+                                    • GitHub Pages, Netlify, Vercel<br />
+                                    • Google Drive (public link)
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="font-semibold">3.</span>
+                                <div>
+                                    <strong>Gunakan URL online:</strong><br />
+                                    Ganti dengan link PDF dari internet
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        onclick="loadPDF()"
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                        Coba Lagi
+                    </button>
+                </div>
+            </div>
+            <div id="pdf-pages" class="space-y-8 p-6" style="display: none"></div>
+        </div>
+        <!-- Zoom Controls -->
+        <div class="zoom-controls">
+            <button
+                id="zoom-in"
+                class="zoom-btn bg-blue-500 hover:bg-blue-600 text-white"
+                title="Perbesar">
+                +
+            </button>
+            <button
+                id="zoom-out"
+                class="zoom-btn bg-blue-500 hover:bg-blue-600 text-white"
+                title="Perkecil">
+                −
+            </button>
+            <button
+                id="zoom-reset"
+                class="zoom-btn bg-gray-600 hover:bg-gray-700 text-white text-sm"
+                title="Reset Zoom">
+                1:1
+            </button>
+        </div>
+    </main>
+    <script>
+        const namafile = "<?= $namafile ?>";
+        const pdfUrl = "<?= base_url('assets/uploads/') ?>" + namafile;
+        // Configuration
+        const defaultConfig = {
+            viewer_title: "PDF Viewer",
+            source_type: "local",
+            pdf_filename: pdfUrl,
+            background_color: "#525659",
+            primary_color: "#3b82f6",
+            text_color: "#1f2937",
+        };
+
+        let config = {
+            ...defaultConfig
+        };
+        let pdfDoc = null;
+        let scale = 1.0;
+        let totalPages = 0;
+
+        // Initialize PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+        // Load PDF
+        async function loadPDF() {
+            const sourceType = config.source_type || defaultConfig.source_type;
+            const filename = config.pdf_filename || defaultConfig.pdf_filename;
+            const loadingEl = document.getElementById("loading");
+            const errorEl = document.getElementById("error-message");
+            const pagesEl = document.getElementById("pdf-pages");
+            const pageInfoEl = document.getElementById("page-info");
+
+            loadingEl.classList.remove("hidden");
+            errorEl.classList.add("hidden");
+            pagesEl.style.display = "none";
+            pageInfoEl.classList.add("hidden");
+
+            try {
+                let pdfUrl;
+
+                if (sourceType === "local") {
+                    // Untuk file lokal, coba beberapa path yang mungkin
+                    const possiblePaths = [
+                        filename,
+                        `./${filename}`,
+                        `/${filename}`,
+                        `./pdf/${filename}`,
+                        `/pdf/${filename}`,
+                    ];
+
+                    let loadSuccess = false;
+                    for (const path of possiblePaths) {
+                        try {
+                            const loadingTask = pdfjsLib.getDocument(path);
+                            pdfDoc = await loadingTask.promise;
+                            loadSuccess = true;
+                            break;
+                        } catch (e) {
+                            // Coba path berikutnya
+                            continue;
+                        }
+                    }
+
+                    if (!loadSuccess) {
+                        throw new Error(
+                            `File PDF '${filename}' tidak ditemukan di folder lokal`
+                        );
+                    }
+                } else {
+                    // Untuk URL online
+                    const loadingTask = pdfjsLib.getDocument(filename);
+                    pdfDoc = await loadingTask.promise;
+                }
+
+                totalPages = pdfDoc.numPages;
+                document.getElementById("total-pages").textContent = totalPages;
+
+                loadingEl.classList.add("hidden");
+                pagesEl.style.display = "block";
+                pageInfoEl.classList.remove("hidden");
+
+                await renderAllPages();
+            } catch (error) {
+                console.error("Error loading PDF:", error);
+                loadingEl.classList.add("hidden");
+                document.getElementById("error-filename").textContent = filename;
+                errorEl.classList.remove("hidden");
+            }
+        }
+
+        // Render all pages
+        async function renderAllPages() {
+            if (!pdfDoc) return;
+
+            const pagesContainer = document.getElementById("pdf-pages");
+            pagesContainer.innerHTML = ""; // Clear existing pages
+
+            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                try {
+                    const page = await pdfDoc.getPage(pageNum);
+                    const viewport = page.getViewport({
+                        scale: scale
+                    });
+
+                    // Create canvas for this page
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    canvas.className = "mx-auto block shadow-lg rounded-sm";
+
+                    // Create page container
+                    const pageContainer = document.createElement("div");
+                    pageContainer.className = "text-center";
+
+                    // Add page number label
+                    const pageLabel = document.createElement("div");
+                    pageLabel.className = "text-sm text-white-500 mb-2";
+                    pageLabel.textContent = `Halaman ${pageNum}`;
+
+                    pageContainer.appendChild(pageLabel);
+                    pageContainer.appendChild(canvas);
+                    pagesContainer.appendChild(pageContainer);
+
+                    // Render the page
+                    const renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport,
+                    };
+
+                    await page.render(renderContext).promise;
+                } catch (error) {
+                    console.error(`Error rendering page ${pageNum}:`, error);
+                }
+            }
+        }
+
+        // Re-render all pages with new scale
+        async function reRenderAllPages() {
+            if (!pdfDoc) return;
+
+            const canvases = document.querySelectorAll("#pdf-pages canvas");
+
+            for (let i = 0; i < canvases.length; i++) {
+                const canvas = canvases[i];
+                const ctx = canvas.getContext("2d");
+                const pageNum = i + 1;
+
+                try {
+                    const page = await pdfDoc.getPage(pageNum);
+                    const viewport = page.getViewport({
+                        scale: scale
+                    });
+
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport,
+                    };
+
+                    await page.render(renderContext).promise;
+                } catch (error) {
+                    console.error(`Error re-rendering page ${pageNum}:`, error);
+                }
+            }
+        }
+
+        // Zoom functions
+        function zoomIn() {
+            scale = Math.min(scale * 1.25, 3.0);
+            reRenderAllPages();
+        }
+
+        function zoomOut() {
+            scale = Math.max(scale / 1.25, 0.5);
+            reRenderAllPages();
+        }
+
+        function resetZoom() {
+            scale = 1.0;
+            reRenderAllPages();
+        }
+
+        // Event listeners
+        document.getElementById("zoom-in").addEventListener("click", zoomIn);
+        document.getElementById("zoom-out").addEventListener("click", zoomOut);
+        document
+            .getElementById("zoom-reset")
+            .addEventListener("click", resetZoom);
+
+        // Touch gestures for mobile
+        let initialDistance = 0;
+        let initialScale = 1.0;
+
+        document
+            .getElementById("pdf-container")
+            .addEventListener("touchstart", function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touch1 = e.touches[0];
+                    const touch2 = e.touches[1];
+                    initialDistance = Math.hypot(
+                        touch2.clientX - touch1.clientX,
+                        touch2.clientY - touch1.clientY
+                    );
+                    initialScale = scale;
+                }
+            });
+
+        document
+            .getElementById("pdf-container")
+            .addEventListener("touchmove", function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touch1 = e.touches[0];
+                    const touch2 = e.touches[1];
+                    const currentDistance = Math.hypot(
+                        touch2.clientX - touch1.clientX,
+                        touch2.clientY - touch1.clientY
+                    );
+
+                    const newScale = initialScale * (currentDistance / initialDistance);
+                    scale = Math.max(0.5, Math.min(3.0, newScale));
+                    reRenderAllPages();
+                }
+            });
+
+        // Element SDK implementation
+        async function onConfigChange(newConfig) {
+            config = {
+                ...config,
+                ...newConfig
+            };
+
+            // Update title
+            document.getElementById("viewer-title").textContent =
+                config.viewer_title || defaultConfig.viewer_title;
+
+            // Update colors
+            document.body.style.backgroundColor =
+                config.background_color || defaultConfig.background_color;
+
+            const zoomButtons = document.querySelectorAll(".zoom-btn");
+            zoomButtons.forEach((btn, index) => {
+                if (index < 2) {
+                    // Zoom in and out buttons
+                    btn.style.backgroundColor =
+                        config.primary_color || defaultConfig.primary_color;
+                }
+            });
+
+            // Reload PDF if filename changed
+            if (
+                newConfig.pdf_filename &&
+                newConfig.pdf_filename !== config.pdf_filename
+            ) {
+                loadPDF();
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [{
+                        get: () =>
+                            config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk?.setConfig({
+                                background_color: value
+                            });
+                        },
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            window.elementSdk?.setConfig({
+                                primary_color: value
+                            });
+                        },
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk?.setConfig({
+                                text_color: value
+                            });
+                        },
+                    },
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined,
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["viewer_title", config.viewer_title || defaultConfig.viewer_title],
+                ["source_type", config.source_type || defaultConfig.source_type],
+                ["pdf_filename", config.pdf_filename || defaultConfig.pdf_filename],
+            ]);
+        }
+
+        // Initialize
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues,
+                });
+            }
+
+            loadPDF();
+        });
+    </script>
+    <script>
+        (function() {
+            function c() {
+                var b = a.contentDocument || a.contentWindow.document;
+                if (b) {
+                    var d = b.createElement("script");
+                    d.innerHTML =
+                        "window.__CF$cv$params={r:'99f86ac572dd8a9a',t:'MTc2MzMxMTA4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+                    b.getElementsByTagName("head")[0].appendChild(d);
+                }
+            }
+            if (document.body) {
+                var a = document.createElement("iframe");
+                a.height = 1;
+                a.width = 1;
+                a.style.position = "absolute";
+                a.style.top = 0;
+                a.style.left = 0;
+                a.style.border = "none";
+                a.style.visibility = "hidden";
+                document.body.appendChild(a);
+                if ("loading" !== document.readyState) c();
+                else if (window.addEventListener)
+                    document.addEventListener("DOMContentLoaded", c);
+                else {
+                    var e = document.onreadystatechange || function() {};
+                    document.onreadystatechange = function(b) {
+                        e(b);
+                        "loading" !== document.readyState &&
+                            ((document.onreadystatechange = e), c());
+                    };
+                }
+            }
+        })();
+    </script>
+</body>
+
+</html>

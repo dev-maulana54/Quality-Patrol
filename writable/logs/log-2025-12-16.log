@@ -1,0 +1,650 @@
+DEBUG - 2025-12-16 00:39:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:39:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:39:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:39:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:39:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:40:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:40:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-16 00:46:49 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 00:46:49 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 00:46:49 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 00:46:49 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-16 00:52:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 00:52:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-16 00:53:24 --> Email: sendWithSmtp throwed ErrorException: stream_socket_enable_crypto(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1925
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1925): stream_socket_enable_crypto()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(25): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->sendEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 00:53:24 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 00:53:24 --> 
+hello: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+starttls: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+ERROR - 2025-12-16 00:53:24 --> Email: sendWithSmtp throwed ErrorException: fwrite(): Send of 6 bytes failed with errno=10054 An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:2084
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2084): fwrite()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1993): CodeIgniter\Email\Email->sendData()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2232): CodeIgniter\Email\Email->sendCommand()
+#4 [internal function]: CodeIgniter\Email\Email->__destruct()
+#5 {main}
+CRITICAL - 2025-12-16 00:57:01 --> ErrorException: Maximum execution time of 30 seconds exceeded
+[Method: GET, Route: email/send]
+in SYSTEMPATH\Email\Email.php on line 2122.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-12-16 00:58:00 --> Email: sendWithSmtp throwed ErrorException: stream_socket_enable_crypto(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1925
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1925): stream_socket_enable_crypto()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(15): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->testEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 00:58:00 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 00:58:00 --> 
+hello: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+starttls: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+ERROR - 2025-12-16 00:58:01 --> Email: sendWithSmtp throwed ErrorException: fwrite(): Send of 6 bytes failed with errno=10054 An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:2084
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2084): fwrite()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1993): CodeIgniter\Email\Email->sendData()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2232): CodeIgniter\Email\Email->sendCommand()
+#4 [internal function]: CodeIgniter\Email\Email->__destruct()
+#5 {main}
+ERROR - 2025-12-16 00:59:16 --> Email: sendWithSmtp throwed ErrorException: stream_socket_enable_crypto(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1925
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1925): stream_socket_enable_crypto()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(15): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->testEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 00:59:16 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 00:59:16 --> 
+hello: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+starttls: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+ERROR - 2025-12-16 00:59:16 --> Email: sendWithSmtp throwed ErrorException: fwrite(): Send of 6 bytes failed with errno=10054 An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:2084
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2084): fwrite()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1993): CodeIgniter\Email\Email->sendData()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2232): CodeIgniter\Email\Email->sendCommand()
+#4 [internal function]: CodeIgniter\Email\Email->__destruct()
+#5 {main}
+ERROR - 2025-12-16 01:00:46 --> Email: sendWithSmtp throwed ErrorException: fsockopen(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1905
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1905): fsockopen()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(21): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->testEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 01:00:46 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 01:00:46 --> 
+CRITICAL - 2025-12-16 01:12:55 --> ErrorException: Maximum execution time of 30 seconds exceeded
+[Method: GET, Route: send-email]
+in SYSTEMPATH\Email\Email.php on line 2122.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-12-16 01:15:58 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 01:15:58 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 01:15:58 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 01:15:59 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-16 01:20:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 01:20:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-16 01:20:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-16 01:20:38 --> Email: sendWithSmtp throwed ErrorException: stream_socket_enable_crypto(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1925
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1925): stream_socket_enable_crypto()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(35): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->sendEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 01:20:38 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 01:20:38 --> 
+hello: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+starttls: 452 syntax error (connecting)
+
+The following SMTP error was encountered: 452 syntax error (connecting)
+
+ERROR - 2025-12-16 01:20:38 --> Email: sendWithSmtp throwed ErrorException: fwrite(): Send of 6 bytes failed with errno=10054 An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:2084
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2084): fwrite()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1993): CodeIgniter\Email\Email->sendData()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(2232): CodeIgniter\Email\Email->sendCommand()
+#4 [internal function]: CodeIgniter\Email\Email->__destruct()
+#5 {main}
+ERROR - 2025-12-16 01:22:37 --> Email: sendWithSmtp throwed ErrorException: fsockopen(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1905
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1905): fsockopen()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(36): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->sendEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 01:22:37 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 01:22:37 --> 
+ERROR - 2025-12-16 01:27:36 --> Email: sendWithSmtp throwed ErrorException: fsockopen(): SSL: An existing connection was forcibly closed by the remote host in C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php:1905
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1905): fsockopen()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1818): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1703): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\Program Files\Ampps\www\quality-patrol\system\Email\Email.php(1597): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\EmailController.php(42): CodeIgniter\Email\Email->send()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\EmailController->sendEmail()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#12 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#13 {main}
+ERROR - 2025-12-16 01:27:36 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-12-16 01:27:36 --> 
+CRITICAL - 2025-12-16 02:14:50 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 02:14:51 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 02:14:51 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 02:14:51 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 03:15:31 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 03:15:31 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 03:15:32 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 03:15:32 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 04:14:47 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 04:14:47 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 04:14:47 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 04:14:47 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 05:16:03 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 05:16:03 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 05:16:03 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 05:16:03 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 06:15:38 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 06:15:38 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 06:15:38 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 06:15:38 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 07:15:18 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 07:15:18 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 07:15:18 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 07:15:18 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 08:15:07 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 08:15:08 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 08:15:08 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 08:15:08 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 09:17:44 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 09:17:44 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 09:17:45 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-16 09:17:45 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "swab$"
+[Method: OPTIONS, Route: swab$/TightVNC/]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars()
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle()
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')

@@ -1,0 +1,956 @@
+DEBUG - 2025-12-09 00:59:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:00:04 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:00:04 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:00:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:00:24 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:00:24 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:02:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:02:22 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Models\Model_data_patrol.php(21): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\Summary.php(16): App\Models\Model_data_patrol->getdata_karyawan_byUsername()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\Summary->index()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:02:22 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Models\Model_data_patrol.php(21): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\Summary.php(16): App\Models\Model_data_patrol->getdata_karyawan_byUsername()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:02:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:02:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:02:56 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:02:56 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:13:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:13:35 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:13:35 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:15:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:15:08 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:15:08 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:15:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:15:29 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:15:29 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:16:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 01:17:02 --> Error connecting to the database: Error: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure() in C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Connection.php:131
+Stack trace:
+#0 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(419): CodeIgniter\Database\SQLSRV\Connection->connect()
+#1 C:\Program Files\Ampps\www\quality-patrol\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Program Files\Ampps\www\quality-patrol\system\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+#3 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+#4 C:\Program Files\Ampps\www\quality-patrol\app\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+#5 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+#6 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+#7 C:\Program Files\Ampps\www\quality-patrol\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+#8 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\Program Files\Ampps\www\quality-patrol\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#10 C:\Program Files\Ampps\www\quality-patrol\public\index.php(59): CodeIgniter\Boot::bootWeb()
+#11 C:\Program Files\Ampps\www\quality-patrol\system\rewrite.php(44): require_once('...')
+#12 {main}
+CRITICAL - 2025-12-09 01:17:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [sqlsrv]: Call to undefined function CodeIgniter\Database\SQLSRV\sqlsrv_configure()
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 3 APPPATH\Controllers\CrudController.php(51): CodeIgniter\Database\SQLSRV\Builder->get()
+ 4 APPPATH\Controllers\CrudController.php(28): App\Controllers\CrudController->request_login()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->authLogin()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 01:18:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:22:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:22:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:24:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:37:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:37:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:37:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 01:37:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 01:37:24 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 18.
+ 1 APPPATH\Controllers\Summary.php(18): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 02:33:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 02:33:26 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'db_quality_patrol.dbo.dt_temuan_patrol'.
+CRITICAL - 2025-12-09 02:33:26 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'db_quality_patrol.dbo.dt_temuan_patrol'.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(188): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(24): App\Models\Model_data_patrol->chartByYearNow()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 02:33:26 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'db_quality_patrol.dbo.dt_temuan_patrol'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(188): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(24): App\Models\Model_data_patrol->chartByYearNow()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 03:38:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:39:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:41:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:41:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:41:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:41:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:41:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:41:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:53:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:54:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:56:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 03:56:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 03:56:33 --> ErrorException: Undefined array key "analisa_penyebab"
+[Method: GET, Route: temuan_patrol]
+in APPPATH\Views\users\temuan_patrol.php on line 279.
+ 1 APPPATH\Views\users\temuan_patrol.php(279): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\temuan_patrol.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Temuan_patrol.php(31): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 05:55:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 05:56:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 05:56:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 05:56:36 --> ErrorException: Undefined array key "nama_file"
+[Method: GET, Route: temuan_patrol]
+in APPPATH\Views\users\temuan_patrol.php on line 284.
+ 1 APPPATH\Views\users\temuan_patrol.php(284): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\temuan_patrol.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Temuan_patrol.php(31): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 06:00:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 06:00:48 --> ErrorException: Undefined array key "id_temuan_patrol"
+[Method: GET, Route: temuan_patrol]
+in APPPATH\Views\users\temuan_patrol.php on line 306.
+ 1 APPPATH\Views\users\temuan_patrol.php(306): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\temuan_patrol.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Temuan_patrol.php(31): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 06:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:03:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:05:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:08:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:09:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:11:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:11:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:12:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:12:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:21:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:22:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:22:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:24:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:25:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:25:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:26:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:26:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:28:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:29:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:30:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:32:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 06:35:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 07:27:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:27:40 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Controllers\Summary.php(54): CodeIgniter\Model->__call()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:29:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 07:29:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 07:29:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:29:19 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Controllers\Summary.php(54): CodeIgniter\Model->__call()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:31:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:31:15 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:31:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:31:16 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:32:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:32:40 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:35:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:35:46 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:36:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:36:11 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:36:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:36:12 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:36:13 --> CodeIgniter\Database\Exceptions\DatabaseException: You must set the database table to be used with your query.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 944.
+ 1 SYSTEMPATH\Model.php(713): CodeIgniter\Database\BaseConnection->table()
+ 2 SYSTEMPATH\Model.php(917): CodeIgniter\Model->builder()
+ 3 APPPATH\Models\Model_data_patrol.php(197): CodeIgniter\Model->__call()
+ 4 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:36:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:36:45 --> Error: Call to undefined method CodeIgniter\Database\SQLSRV\Connection::select()
+[Method: GET, Route: summary]
+in APPPATH\Models\Model_data_patrol.php on line 197.
+ 1 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:39:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 07:39:42 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.section.section' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+CRITICAL - 2025-12-09 07:39:42 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.section.section' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(210): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 07:39:42 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.section.section' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(210): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:39:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 07:39:45 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.section.section' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+CRITICAL - 2025-12-09 07:39:45 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.section.section' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(210): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 07:39:45 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.section.section' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(210): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:56:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 07:56:18 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_departemen'.
+CRITICAL - 2025-12-09 07:56:18 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_departemen'.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(205): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 07:56:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_departemen'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(205): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 07:56:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 07:56:29 --> Error: Cannot use object of type stdClass as array
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 61.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:05:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:06:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:12:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:12:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:13:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:13:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:14:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:14:15 --> Error: Cannot use object of type stdClass as array
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 61.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:16:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:18:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:18:46 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'tanggal_temuan'.
+CRITICAL - 2025-12-09 08:18:46 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'tanggal_temuan'.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(208): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:18:46 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'tanggal_temuan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(208): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:19:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:19:00 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_temuan'.
+CRITICAL - 2025-12-09 08:19:00 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_temuan'.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(208): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:19:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_temuan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(208): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:19:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:19:22 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.dt_temuan_patrol.id_departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+CRITICAL - 2025-12-09 08:19:22 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.dt_temuan_patrol.id_departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(208): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:19:22 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.dt_temuan_patrol.id_departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(208): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:23:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:23:38 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'tanggal_temuan'.
+CRITICAL - 2025-12-09 08:23:38 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'tanggal_temuan'.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:23:38 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'tanggal_temuan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:23:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:23:47 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.departement.departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+CRITICAL - 2025-12-09 08:23:47 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.departement.departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:23:47 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.departement.departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:43:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:43:02 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_temuan'.
+CRITICAL - 2025-12-09 08:43:02 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_temuan'.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:43:02 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'id_temuan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:43:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-09 08:43:18 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.departement.departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+CRITICAL - 2025-12-09 08:43:18 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.departement.departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+[Method: GET, Route: summary]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+CRITICAL - 2025-12-09 08:43:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Column 'db_quality_patrol.dbo.departement.departement' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(206): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Summary.php(54): App\Models\Model_data_patrol->totalTemuanByArea()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:44:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:44:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:45:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:46:34 --> TypeError: Unsupported operand types: array + string
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 69.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:47:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:47:21 --> ErrorException: Array to string conversion
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 69.
+ 1 APPPATH\Controllers\Summary.php(69): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:47:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:47:34 --> ErrorException: Array to string conversion
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 69.
+ 1 APPPATH\Controllers\Summary.php(69): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:47:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:47:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:49:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:49:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:49:32 --> ErrorException: Array to string conversion
+[Method: GET, Route: summary]
+in APPPATH\Views\users\summary.php on line 414.
+ 1 APPPATH\Views\users\summary.php(414): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\summary.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Summary.php(74): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:50:25 --> ErrorException: Array to string conversion
+[Method: GET, Route: summary]
+in APPPATH\Views\users\summary.php on line 414.
+ 1 APPPATH\Views\users\summary.php(414): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\summary.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Summary.php(74): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:50:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:50:27 --> ErrorException: Array to string conversion
+[Method: GET, Route: summary]
+in APPPATH\Views\users\summary.php on line 414.
+ 1 APPPATH\Views\users\summary.php(414): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\summary.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Summary.php(74): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:50:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-09 08:50:27 --> ErrorException: Array to string conversion
+[Method: GET, Route: summary]
+in APPPATH\Views\users\summary.php on line 414.
+ 1 APPPATH\Views\users\summary.php(414): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\quality-patrol\\app\\Views\\users\\summary.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Summary.php(74): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\quality-patrol\\public\\index.php')
+DEBUG - 2025-12-09 08:52:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:53:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-09 08:53:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

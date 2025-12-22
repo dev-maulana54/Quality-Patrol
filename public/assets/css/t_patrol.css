@@ -1,0 +1,185 @@
+/* Flatpickr Custom Styling */
+.flatpickr-calendar {
+  background: white !important;
+  box-shadow: 0 15px 35px rgba(13, 110, 253, 0.2) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(13, 110, 253, 0.1) !important;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.dark-theme .flatpickr-calendar {
+  background: #2a2a2a !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #3a3a3a !important;
+  color: #e0e0e0 !important;
+}
+
+.flatpickr-day {
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.flatpickr-day:hover {
+  background: rgba(13, 110, 253, 0.1) !important;
+  transform: scale(1.05) !important;
+}
+
+.flatpickr-day.selected {
+  background: #0d6efd !important;
+  border-color: #0d6efd !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3) !important;
+}
+
+.flatpickr-day.today {
+  border-color: #198754 !important;
+  color: #198754 !important;
+  font-weight: 600 !important;
+}
+
+.flatpickr-months .flatpickr-month {
+  background: linear-gradient(135deg, #0d6efd, #0056b3) !important;
+  color: white !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month input.cur-year {
+  background: transparent !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+  color: white !important;
+  transition: all 0.3s ease !important;
+}
+
+.flatpickr-prev-month:hover,
+.flatpickr-next-month:hover {
+  color: #e3f2fd !important;
+  transform: scale(1.2) !important;
+}
+
+.flatpickr-weekday {
+  background: #f8f9fa !important;
+  color: #495057 !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+}
+
+.dark-theme .flatpickr-weekday {
+  background: #1e1e1e !important;
+  color: #b0b0b0 !important;
+}
+
+/* Date input with calendar icon */
+.form-group:has(#auditDate) {
+  position: relative;
+}
+
+.form-group:has(#auditDate)::after {
+  content: "\F1EC";
+  font-family: "bootstrap-icons";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  pointer-events: none;
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+.dark-theme .form-group:has(#auditDate)::after {
+  color: #8a8a8a;
+}
+.dark-theme .select2-container--default .select2-selection--single {
+  background-color: #1e1e1e !important;
+  border: 1px solid #444 !important;
+  color: #b0b0b0 !important;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.dark-theme
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: #b0b0b0 !important;
+  padding-left: 10px;
+}
+
+.dark-theme.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
+  border-color: #bbb transparent transparent transparent !important;
+}
+
+.dark-theme .select2-dropdown {
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+}
+
+.dark-theme .select2-results__option {
+  color: #b0b0b0 !important;
+  padding: 8px 12px;
+}
+
+.dark-theme .select2-results__option--highlighted {
+  background-color: #3b3b3b !important;
+  color: #fff !important;
+}
+
+.dark-theme .select2-search--dropdown .select2-search__field {
+  background-color: #1e1e1e !important;
+  color: #b0b0b0 !important;
+  border: 1px solid #555 !important;
+  border-radius: 4px;
+}
+.dark-theme .select2-container--default .select2-results__option--selected {
+  background-color: #0d6efd !important;
+}
+.dark-theme table.dataTable thead tr > .dtfc-fixed-left {
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  background-color: #1e1e1e;
+}
+
+.dark-theme table.dataTable tbody tr > .dtfc-fixed-left {
+  z-index: 1;
+  background-color: #1e1e1e;
+}
+
+.dark-theme table.dataTable thead tr > .dtfc-fixed-right {
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  background-color: #1e1e1e;
+}
+.dark-theme table.dataTable tbody tr > .dtfc-fixed-right {
+  z-index: 1;
+  background-color: #1e1e1e;
+}
+
+table.dataTable tbody tr > .dtfc-fixed-right {
+  z-index: 1;
+  background-color: white;
+}
+.dark-theme .form-select {
+  color: var(--bs-body-bg);
+
+  background-color: var(--bs-body-color);
+}
+
+.dark-theme hr {
+  background-color: white;
+}
+hr {
+  background-color: black;
+}
