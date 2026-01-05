@@ -16,9 +16,9 @@ function initializeDatePicker() {
     dateFormat: "d M Y",
     altInput: true,
     altFormat: "d F Y",
-    defaultDate: "today",
-    minDate: "2020-01-01",
-    maxDate: new Date().fp_incr(365), // 1 year from today
+    // defaultDate: "today",
+    // minDate: "2020-01-01",
+    // maxDate: new Date().fp_incr(365), // 1 year from today
     allowInput: false,
     clickOpens: true,
     theme: "material_blue",
@@ -393,7 +393,7 @@ function setupEventListeners() {
         document.body.appendChild(successMsg);
 
         setTimeout(() => {
-          window.location.href = "logout";
+          window.location.href = baseurl + "/logout";
         }, 1000);
 
         backdrop.remove();
@@ -442,6 +442,6 @@ function setupEventListeners() {
 // $("#modal_tambahdata .select2").select2({
 //   dropdownParent: $("#modal_tambahdata"),
 // });
-// $("#modal_editdata .select2").select2({
-//   dropdownParent: $("#modal_editdata"),
-// });
+$("#modal_editdata .select2").select2({
+  dropdownParent: $("#modal_editdata"),
+});

@@ -219,6 +219,76 @@
             touch-action: none;
             /* biar tidak scroll pas teken */
         }
+
+        /* ==== Submenu container ==== */
+        .menu-item.has-submenu {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        /* ==== Toggle row (biar sama kayak menu-item lain) ==== */
+        .menu-item.submenu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        /* kiri: icon + text sejajar */
+        .menu-item.submenu-toggle .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* icon ukuran konsisten (opsional) */
+        .menu-item.submenu-toggle i,
+        .submenu-item i {
+            font-size: 18px;
+            width: 22px;
+            /* bikin icon kolomnya rata */
+            text-align: center;
+        }
+
+        /* chevron di kanan */
+        .chevron {
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        /* open state */
+        .menu-item.has-submenu.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ==== Submenu items ==== */
+        .submenu {
+            display: none;
+            flex-direction: column;
+            padding-left: 42px;
+            /* indent rapi */
+            margin-top: 6px;
+            gap: 6px;
+        }
+
+        .menu-item.has-submenu.open .submenu {
+            display: flex;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-decoration: none;
+            color: #ddd;
+        }
+
+        .submenu-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -263,27 +333,37 @@
                 font-size: 11px;
                 margin: 0;
                 font-weight: 400;
-            "><?php if ($role === 1) {
-                    echo "Administrator";
-                } else if ($role === 2) {
-                    echo "Auditor";
-                } else {
-                    echo "Auditee";
-                } ?></p>
+            "><?= $role ?></p>
         </div>
         <a href="<?= base_url('summary') ?>" class="menu-item " data-page="dashboard">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
-        <a href="<?= base_url('temuan_patrol') ?>" class="menu-item active" data-page="patrol">
-            <i class="bi bi-search"></i>
-            <span>Data Patrol</span>
-        </a>
+        <div class="menu-item has-submenu">
+            <div class="menu-item submenu-toggle">
+                <div class="menu-left">
+                    <i class="bi bi-search"></i>
+                    <span>Data Patrol</span>
+                </div>
+                <i class="bi bi-chevron-down chevron"></i>
+            </div>
+
+            <div class="submenu">
+                <a href="<?= base_url('temuan_patrol/auditor') ?>" class="submenu-item">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Data Auditor</span>
+                </a>
+                <a href="<?= base_url('temuan_patrol/auditee') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Data Auditee</span>
+                </a>
+            </div>
+        </div>
         <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
         </a>
-        <?php if ($role === 1) : ?>
+        <?php if ($role === 'Administrator') : ?>
             <div class="menu-header">
                 Master Data
             </div>
@@ -291,9 +371,7 @@
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
-                <i class="bi bi-building"></i> <span>Departemen</span>
-            </a>
+
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -341,9 +419,11 @@
                                     <td>
                                         <?= $df_hadir['nama'] ?>
                                         <?php if ($df_hadir['keterangan'] == 0) : ?>
-                                            <button class="btn btn-link p-0 ms-2 text-success sign_btn" data-id="<?= $df_hadir['id_sign'] ?>" data-bs-toggle="modal" data-bs-target="#modal_tambah_sign" data-value="sign_user" title="Sign">
-                                                <i class="bi bi-pen"></i>
-                                            </button>
+                                            <?php if ($df_hadir['npk'] == $npk) : ?>
+                                                <button class="btn btn-link p-0 ms-2 text-success sign_btn" data-id="<?= $df_hadir['id_sign'] ?>" data-bs-toggle="modal" data-bs-target="#modal_tambah_sign" data-value="sign_user" title="Sign">
+                                                    <i class="bi bi-pen"></i>
+                                                </button>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     </td>
                                     <td><?= $df_hadir['section'] ?> </td>
@@ -526,6 +606,14 @@
     <script src="<?= base_url() ?>assets/js/temuan_patrol/view-image.js"></script>
     <script src="<?= base_url() ?>assets/js/temuan_patrol/t_patrol.js"></script>
     <script>
+        document.querySelectorAll('.submenu-toggle').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.classList.toggle('open');
+            });
+        });
+        var baseurl = '<?= base_url() ?>';
+    </script>
+    <script>
         const tsList = new TomSelect("#dt_nama", {
             sortField: {
                 field: "text",
@@ -564,15 +652,6 @@
             $('#id_sign').val('');
             $('#value_sign').val('');
 
-            // opsional tambahan kalau kamu pakai digital signature canvas:
-            // $('#signature_data').val('');
-            // kalau punya fungsi clear canvas misal signaturePad.clear():
-            // signaturePad.clear();
-
-            // opsional tambahan kalau pakai upload preview:
-            // $('#sign_file').val('');
-            // $('#upload_preview_wrap').addClass('d-none');
-            // $('#upload_preview').attr('src', '');
         });
 
         let signaturePad = null;

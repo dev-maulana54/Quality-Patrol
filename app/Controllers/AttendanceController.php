@@ -9,10 +9,12 @@ use CodeIgniter\HTTP\ResponseInterface;
 class AttendanceController extends BaseController
 {
     protected $dataPatrol;
+
     public function __construct()
     {
         $this->dataPatrol = new Model_data_patrol();
     }
+
     /**
      * Buat nama file unik jika file sudah ada:
      * contoh: gambar.png -> gambar1.png -> gambar2.png
@@ -35,7 +37,6 @@ class AttendanceController extends BaseController
             $candidate = $name . $i . ($ext ? '.' . $ext : '');
             $i++;
 
-            // Safety break (sangat jarang kepakai)
             if ($i > 9999) {
                 $candidate = $name . '_' . date('YmdHis') . ($ext ? '.' . $ext : '');
                 break;
@@ -74,7 +75,7 @@ class AttendanceController extends BaseController
         $signType    = $get('sign_type');     // digital / upload
         $id_schedule = $get('id_schedule');
         $valueSign   = $get('value_sign');    // tambah_d_hadir / sign_user
-        $id_sign     = $get('id_sign');       // wajib untuk sign_user (update)
+        $id_sign     = $get('id_sign');       // wajib untuk sign_user (update plan)
 
         $npk  = $get('npk');  // wajib untuk tambah_d_hadir
         $role = $get('role'); // wajib untuk tambah_d_hadir
@@ -96,7 +97,7 @@ class AttendanceController extends BaseController
             ]);
         }
 
-        $existing = null;
+        $existingPlan = null;
 
         // =========================
         // VALIDASI MODE
@@ -108,10 +109,15 @@ class AttendanceController extends BaseController
                 ]);
             }
 
-            // ✅ Validasi 1 user cuma bisa sign 1x per schedule (khusus tambah)
-            if ($model->where('npk', $npk)->where('id_schedule', $id_schedule)->countAllResults() > 0) {
+            // ✅ 1 user hanya 1x di list (plan) untuk schedule tsb
+            if (
+                $model->where('npk', $npk)
+                ->where('id_schedule', $id_schedule)
+                ->where('type_data', 'plan')
+                ->countAllResults() > 0
+            ) {
                 return $this->response->setStatusCode(409)->setJSON([
-                    'message' => 'User ini sudah melakukan sign untuk schedule ini.'
+                    'message' => 'User ini sudah ada di daftar hadir (plan) untuk schedule ini.'
                 ]);
             }
         }
@@ -123,23 +129,30 @@ class AttendanceController extends BaseController
                 ]);
             }
 
-            $existing = $model->find($id_sign);
-            if (!$existing) {
+            $existingPlan = $model->find($id_sign);
+            if (!$existingPlan) {
                 return $this->response->setStatusCode(404)->setJSON([
-                    'message' => 'Data sign tidak ditemukan untuk id_sign tersebut.'
+                    'message' => 'Data auditor (plan) tidak ditemukan untuk id_sign tersebut.'
                 ]);
             }
 
-            // Optional: pastikan id_sign sesuai schedule
-            if ((string)($existing['id_schedule'] ?? '') !== (string)$id_schedule) {
+            // Pastikan id_sign sesuai schedule
+            if ((string)($existingPlan['id_schedule'] ?? '') !== (string)$id_schedule) {
                 return $this->response->setStatusCode(409)->setJSON([
                     'message' => 'id_sign tidak sesuai dengan id_schedule.'
                 ]);
             }
 
-            // Untuk update: npk/role tidak wajib dari client (ambil dari existing)
-            $npk  = $npk  ?: ($existing['npk'] ?? null);
-            $role = $role ?: ($existing['role'] ?? null);
+            // ✅ Pastikan yang diupdate adalah PLAN
+            if (($existingPlan['type_data'] ?? '') !== 'plan') {
+                return $this->response->setStatusCode(409)->setJSON([
+                    'message' => 'Data yang di-sign harus berasal dari list (type_data = plan).'
+                ]);
+            }
+
+            // Untuk update: npk/role ambil dari existing plan
+            $npk  = $npk  ?: ($existingPlan['npk'] ?? null);
+            $role = $role ?: ($existingPlan['role'] ?? null);
 
             if (!$npk || !$role) {
                 return $this->response->setStatusCode(422)->setJSON([
@@ -182,7 +195,6 @@ class AttendanceController extends BaseController
                 return $this->response->setStatusCode(413)->setJSON(['message' => 'Ukuran tanda tangan terlalu besar.']);
             }
 
-            // Nama dasar -> kalau duplicate, jadi ...1.png, ...2.png, dst
             $baseName = 'sign_digital_' . $npk . '_' . date('YmdHis') . '.png';
             $filename = $this->makeUniqueFilename($dir, $baseName);
 
@@ -210,7 +222,6 @@ class AttendanceController extends BaseController
                 return $this->response->setStatusCode(413)->setJSON(['message' => 'Ukuran file maksimal 2MB.']);
             }
 
-            // Pakai nama asli file dari user: gambar.png -> gambar1.png -> ...
             $originalName = $file->getName();
             $filename = $this->makeUniqueFilename($dir, $originalName);
 
@@ -221,11 +232,11 @@ class AttendanceController extends BaseController
             return $this->response->setStatusCode(422)->setJSON(['message' => 'Jenis tanda tangan tidak dikenali.']);
         }
 
-        // Path relatif untuk simpan ke DB
         $relativePath = 'uploads/signatures/' . $filename;
+        $signedAt = date('Y-m-d H:i:s');
 
         // =========================
-        // INSERT / UPDATE DB
+        // INSERT PLAN (tambah_d_hadir)
         // =========================
         if ($isTambah) {
             $newId = $model->insert([
@@ -233,12 +244,12 @@ class AttendanceController extends BaseController
                 'role'           => $role,
                 'id_schedule'    => $id_schedule,
                 'signature_path' => $relativePath,
-                'signed_at'      => date('Y-m-d H:i:s'),
+                'signed_at'      => $signedAt,
                 'keterangan'     => 1,
+                'type_data'      => 'actual',
             ], true);
 
             if (!$newId) {
-                @unlink($dir . $filename);
                 return $this->response->setStatusCode(500)->setJSON([
                     'message' => 'Gagal simpan ke database.',
                     'errors'  => $model->errors()
@@ -246,56 +257,94 @@ class AttendanceController extends BaseController
             }
 
             return $this->response->setJSON([
-                'message' => 'Tanda tangan berhasil disimpan (tambah daftar hadir).',
+                'message' => 'Daftar Hadir berhasil',
                 'mode' => 'insert',
-                'id' => $newId,
-                'signature_path' => $relativePath
+                'id' => $newId
             ]);
         }
 
-        // UPDATE (sign_user)
-        $existing = $existing ?: $model->find($id_sign);
-        $oldPath = $existing['signature_path'] ?? null;
+        // =========================
+        // sign_user: UPDATE PLAN + INSERT ACTUAL (selalu)
+        // =========================
+        $plan = $existingPlan ?: $model->find($id_sign);
+        if (!$plan) {
+            @unlink($dir . $filename);
+            return $this->response->setStatusCode(404)->setJSON([
+                'message' => 'Data auditor (plan) tidak ditemukan.'
+            ]);
+        }
 
-        $ok = $model->update($id_sign, [
+        $oldPlanPath = $plan['signature_path'] ?? null;
+
+        $db = $model->db;
+        $db->transStart();
+
+        // 1) Update PLAN (type_data tetap plan)
+        $okPlan = $model->update($id_sign, [
             'signature_path' => $relativePath,
-            'signed_at'      => date('Y-m-d H:i:s'),
+            'signed_at'      => $signedAt,
             'keterangan'     => 1,
         ]);
 
-        if (!$ok) {
+        if (!$okPlan) {
+            $db->transRollback();
             @unlink($dir . $filename);
             return $this->response->setStatusCode(500)->setJSON([
-                'message' => 'Gagal update ke database.',
+                'message' => 'Gagal update data plan.',
                 'errors'  => $model->errors()
             ]);
         }
 
-        /* ===========================
-            * TAMBAHAN: update dt_schedule
-            * (PAKAI PUNYA KAMU, TANPA DIUBAH)
-            * =========================== */
-        $tanggal = date('d/m/Y');
+        // 2) SELALU INSERT ACTUAL BARU
+        $actualId = $model->insert([
+            'npk'            => $npk,
+            'role'           => $role,
+            'id_schedule'    => $id_schedule,
+            'signature_path' => $relativePath,
+            'signed_at'      => $signedAt,
+            'keterangan'     => 1,
+            'type_data'      => 'actual',
+        ], true);
 
+        if (!$actualId) {
+            $db->transRollback();
+            @unlink($dir . $filename);
+            return $this->response->setStatusCode(500)->setJSON([
+                'message' => 'Gagal insert data actual.',
+                'errors'  => $model->errors()
+            ]);
+        }
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            @unlink($dir . $filename);
+            return $this->response->setStatusCode(500)->setJSON([
+                'message' => 'Transaksi database gagal.'
+            ]);
+        }
+
+        // Update dt_schedule hanya tanggal_actual
+        $tanggal = date('d/m/Y');
         $this->dataPatrol->db->table('dt_schedule')
             ->where('id_schedule', $id_schedule)
             ->update([
-                'tanggal_actual' => $tanggal
+                'tanggal_actual' => $tanggal,
             ]);
 
-
-        // Hapus file lama setelah update sukses (opsional)
-        if ($oldPath) {
-            $oldAbs = FCPATH . ltrim($oldPath, '/');
+        // Hapus file lama PLAN setelah update sukses (opsional)
+        if ($oldPlanPath) {
+            $oldAbs = FCPATH . ltrim($oldPlanPath, '/');
             if (is_file($oldAbs)) {
                 @unlink($oldAbs);
             }
         }
 
         return $this->response->setJSON([
-            'message' => 'Tanda tangan berhasil diupdate (sign_user).',
-            'mode' => 'update',
-            'id' => $id_sign,
+            'message' => 'Daftar Hadir berhasil',
+            'mode' => 'update_plan_insert_actual',
+            'id_plan' => $id_sign,
+            'id_actual' => $actualId,
             'signature_path' => $relativePath
         ]);
     }

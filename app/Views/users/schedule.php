@@ -270,6 +270,76 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* ==== Submenu container ==== */
+        .menu-item.has-submenu {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        /* ==== Toggle row (biar sama kayak menu-item lain) ==== */
+        .menu-item.submenu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        /* kiri: icon + text sejajar */
+        .menu-item.submenu-toggle .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* icon ukuran konsisten (opsional) */
+        .menu-item.submenu-toggle i,
+        .submenu-item i {
+            font-size: 18px;
+            width: 22px;
+            /* bikin icon kolomnya rata */
+            text-align: center;
+        }
+
+        /* chevron di kanan */
+        .chevron {
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        /* open state */
+        .menu-item.has-submenu.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ==== Submenu items ==== */
+        .submenu {
+            display: none;
+            flex-direction: column;
+            padding-left: 42px;
+            /* indent rapi */
+            margin-top: 6px;
+            gap: 6px;
+        }
+
+        .menu-item.has-submenu.open .submenu {
+            display: flex;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-decoration: none;
+            color: #ddd;
+        }
+
+        .submenu-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -314,27 +384,37 @@
                 font-size: 11px;
                 margin: 0;
                 font-weight: 400;
-            "><?php if ($role === 1) {
-                    echo "Administrator";
-                } else if ($role === 2) {
-                    echo "Auditor";
-                } else {
-                    echo "Auditee";
-                } ?></p>
+            "><?= $role ?></p>
         </div>
         <a href="<?= base_url('summary') ?>" class="menu-item " data-page="dashboard">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
-        <a href="<?= base_url('temuan_patrol') ?>" class="menu-item " data-page="patrol">
-            <i class="bi bi-search"></i>
-            <span>Data Patrol</span>
-        </a>
+        <div class="menu-item has-submenu">
+            <div class="menu-item submenu-toggle">
+                <div class="menu-left">
+                    <i class="bi bi-search"></i>
+                    <span>Data Patrol</span>
+                </div>
+                <i class="bi bi-chevron-down chevron"></i>
+            </div>
+
+            <div class="submenu">
+                <a href="<?= base_url('temuan_patrol/auditor') ?>" class="submenu-item">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Data Auditor</span>
+                </a>
+                <a href="<?= base_url('temuan_patrol/auditee') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Data Auditee</span>
+                </a>
+            </div>
+        </div>
         <a href="<?= base_url('schedule') ?>" class="menu-item active" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
         </a>
-        <?php if ($role === 1) : ?>
+        <?php if ($role === 'Administrator') : ?>
             <div class="menu-header">
                 Master Data
             </div>
@@ -342,9 +422,7 @@
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
-                <i class="bi bi-building"></i> <span>Departemen</span>
-            </a>
+
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -357,7 +435,7 @@
                         <button class="nav-btn" onclick="app.nextMonth()">Bulan Berikutnya ►</button>
                     </div>
                     <div class="current-month" id="currentMonth"></div>
-                    <?php if ($role == 1) : ?>
+                    <?php if ($role == 'Administrator') : ?>
                         <div class="filter-section">
 
                             <button class="add-row-btn" data-bs-toggle="modal" data-bs-target="#modal_tambahschedule">+ Tambah Schedule</button>
@@ -405,12 +483,19 @@
 
                             <div class="form-group mt-2">
                                 <label for="fill_pic_action" class="form-label">
-                                    <i class="bi bi-building me-1"></i> Nama Auditor </label>
-                                <select class="form-select select2" id="edit_nama_auditor" style="width:100%;">
+                                    <i class="bi bi-building me-1"></i> Nama Auditor [Plan]</label>
+                                <input type="text" class="form-control" id="plan_nama_auditor" placeholder="Nama Auditor" disabled>
+                                <select class="form-select select2" id="edit_nama_auditor" multiple="multiple" style="width:100%;">
 
                                     <option value="">Blank</option>
 
                                 </select>
+                            </div>
+                            <div class="form-group mt-2 actual_container" style="display: none;">
+                                <label for="fill_pic_action" class="form-label">
+                                    <i class="bi bi-building me-1"></i> Nama Auditor [Actual] </label>
+                                <input type="text" class="form-control" id="actual_nama_auditor" placeholder="Nama Auditor" disabled>
+
                             </div>
 
                             <div class="form-group">
@@ -443,10 +528,10 @@
                                     <label for="Departemen" class="form-label">
                                         <i class="bi bi-building me-1"></i>Nama Auditor
                                     </label>
-                                    <select class="form-select select2" id="list_auditor" style="width:100%;">
-                                        <option value="">-- Pilih Auditor --</option>
+                                    <select class="form-select select2" id="list_auditor" multiple="multiple" style="width:100%;">
+
                                         <?php foreach ($getdata_auditor as $gda) : ?>
-                                            <option value="<?= $gda['user_id'] ?>"><?= $gda['nama'] ?></option>
+                                            <option value="<?= $gda['npk'] ?>"><?= $gda['nama'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -509,6 +594,14 @@
         <script src="<?= base_url() ?>assets/js/temuan_patrol/view-image.js"></script>
         <script src="<?= base_url() ?>assets/js/temuan_patrol/schedule.js"></script>
         <script>
+            document.querySelectorAll('.submenu-toggle').forEach(item => {
+                item.addEventListener('click', () => {
+                    item.parentElement.classList.toggle('open');
+                });
+            });
+            var baseurl = '<?= base_url() ?>';
+        </script>
+        <script>
             const localeID = {
                 days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
                 daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
@@ -532,6 +625,11 @@
 
             $("#modal_tambahschedule .select2").select2({
                 dropdownParent: $("#modal_tambahschedule"),
+            });
+            $("#modal_tambahschedule #list_auditor").select2({
+                dropdownParent: $("#modal_tambahschedule"),
+                placeholder: "-- Pilih Auditor --",
+                allowClear: true
             });
             $("#modal .select2").select2({
                 dropdownParent: $("#modal"),
@@ -714,8 +812,65 @@
                 },
 
                 openModal(area, day, type, id_schedule) {
-                    <?php if ($role == 1) : ?>
+                    <?php if ($role == 'Administrator') : ?>
                         if (type == 'plan') {
+                            $('.actual_container').css('display', 'none');
+                            $('#btn_ubahdata').show();
+                            $('#plan_nama_auditor').hide();
+                            $('#edit_nama_auditor')
+                                .show()
+                                .select2({
+                                    width: '100%',
+                                    dropdownParent: $('#modal') // ganti dengan id modal kamu
+                                });
+                            $('#modal').modal('show');
+                            const year = this.currentDate.getFullYear();
+                            const month = this.currentDate.getMonth();
+                            const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                            const dataKey = `${area}-${type}-${dateKey}`;
+                            const id_jadwal = id_schedule;
+                            // console.log(...);
+                            console.log('Opening modal:', dateKey, area, type, id_jadwal);
+                            $('#selectedArea').val(area);
+                            $('#selectedDate').val(dateKey);
+                            $('#selectedType').val(type);
+                            $('#data_id_schedule').val(id_jadwal);
+                            $.ajax({
+                                url: '<?= base_url('sendData') ?>',
+                                type: 'POST',
+                                data: {
+                                    keterangan: 'get_data_schedule',
+                                    type: 'plan',
+                                    id_schedule: id_jadwal,
+                                },
+                                dataType: 'json',
+                                success: function(response) {
+                                    console.log('sukses ambil data');
+                                    $('#edit_nama_auditor').attr('disabled', false);
+                                    $('#edit_tanggal_patrol').attr('disabled', false);
+                                    $('#edit_nama_auditor').html(response.schedule.nama_auditor_plan);
+                                    const dateObj = parseDdMmYyyy(response.schedule.tanggal_patrol); // "23/12/2025"
+
+                                    // misal ini untuk modal edit
+                                    $('#modal').modal('show');
+
+                                    $('#modal').one('shown.bs.modal', function() {
+                                        // pastikan dpEdit sudah dibuat di handler shown.bs.modal
+                                        dpEdit.selectDate(dateObj, {
+                                            silent: true
+                                        });
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error adding temuan patrol:', error);
+                                },
+
+                            });
+                        } else if (type == 'actual') {
+                            $('.actual_container').css('display', 'block');
+                            $('#btn_ubahdata').hide();
+                            $('#plan_nama_auditor').show();
+                            $('#edit_nama_auditor').select2('destroy').hide();
 
 
                             $('#modal').modal('show');
@@ -735,13 +890,19 @@
                                 type: 'POST',
                                 data: {
                                     keterangan: 'get_data_schedule',
+                                    type: 'actual',
                                     id_schedule: id_jadwal,
                                 },
                                 dataType: 'json',
                                 success: function(response) {
                                     console.log('sukses ambil data');
-                                    $('#edit_nama_auditor').html(response.schedule.nama_auditor);
-                                    const dateObj = parseDdMmYyyy(response.schedule.tanggal_patrol); // "23/12/2025"
+
+                                    $('#edit_tanggal_patrol').attr('disabled', true);
+
+                                    $('#plan_nama_auditor').val(response.schedule.nama_auditor_plan);
+                                    $('#actual_nama_auditor').val(response.schedule.nama_auditor_actual);
+
+                                    const dateObj = parseDdMmYyyy(response.schedule.tanggal_actual); // "23/12/2025"
 
                                     // misal ini untuk modal edit
                                     $('#modal').modal('show');
@@ -912,26 +1073,31 @@
                 $btn.prop('disabled', true);
 
                 var tanggal_patrol = $('#tanggal_patrol').val();
-                var auditor = $('#list_auditor').val();
+                var auditors = $('#list_auditor').val(); // array
                 var deptId = $('#list_dept').val();
                 var seksiId = $('#list_seksi').val();
 
-                if (!tanggal_patrol || !deptId || !seksiId || !auditor) {
+                var payload = {
+                    keterangan: 'tambah_schedule_patrol',
+                    tanggal_patrol: tanggal_patrol,
+                    deptId: $('#list_dept').val(),
+                    seksiId: $('#list_seksi').val()
+                };
+                // kirim sebagai auditor[]
+                auditors.forEach(function(val, i) {
+                    payload['auditor[' + i + ']'] = val;
+                });
+                if (!tanggal_patrol || !deptId || !seksiId || !auditors) {
                     alert('Isi data yang kosong!');
                     $btn.prop('disabled', false);
                     return;
                 }
+                // console.log('list Auditor:', auditor);
                 $.ajax({
                     url: '<?= base_url('sendData') ?>',
                     type: 'POST',
-                    data: {
-                        keterangan: 'tambah_schedule_patrol',
-                        tanggal_patrol: tanggal_patrol,
-                        deptId: deptId,
-                        seksiId: seksiId,
-                        auditor: auditor
-                    },
                     dataType: 'json',
+                    data: payload,
                     success: function(response) {
                         alert('Schedule berhasil ditambahkan!');
                         location.reload();
@@ -947,25 +1113,39 @@
 
             });
             $('#btn_ubahdata').click(function() {
-                var nama_auditor = $('#edit_nama_auditor').val();
+
+                var auditors = $('#edit_nama_auditor').val(); // array
                 var tanggal_patrol = $('#edit_tanggal_patrol').val();
                 var id_schedule = $('#data_id_schedule').val();
-                if (nama_auditor == null || tanggal_patrol == null) {
-                    alert('isi data yang kosong !');
+                var payload = {
+                    keterangan: 'edit_schedule',
+                    id_schedule: id_schedule,
+                    tanggal_patrol: tanggal_patrol,
+
+                };
+                // kirim sebagai auditor[]
+                auditors.forEach(function(val, i) {
+                    payload['auditor[' + i + ']'] = val;
+                });
+                if (!tanggal_patrol || !auditors) {
+                    alert('Isi data yang kosong!');
+                    $btn.prop('disabled', false);
+                    return;
                 }
                 $.ajax({
                     url: '<?= base_url('sendData') ?>',
                     type: 'POST',
-                    data: {
-                        keterangan: 'edit_schedule',
-                        id_auditor: nama_auditor,
-                        tanggal_patrol: tanggal_patrol,
-                        id_schedule: id_schedule
-                    },
                     dataType: 'json',
+                    data: payload,
                     success: function(response) {
-                        alert('Schedule berhasil Di update!');
-                        location.reload();
+                        if (response.status === 'error') {
+                            alert(response.message);
+                            return;
+                        } else {
+                            alert(response.message);
+                            location.reload();
+
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error('Error adding temuan patrol:', error);

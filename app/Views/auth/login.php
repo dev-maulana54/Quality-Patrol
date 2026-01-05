@@ -9,7 +9,9 @@
     <link href="<?= base_url() ?>assets/css/uicss.css" rel="stylesheet">
     <script src="/_sdk/element_sdk.js"></script>
     <style>
-
+        body {
+            overflow-y: auto;
+        }
     </style>
     <style>
         /* @view-transition {

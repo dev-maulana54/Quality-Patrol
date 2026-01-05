@@ -16,7 +16,8 @@ $routes->get('logout', 'Login::logout');
 $routes->get('summary', 'Summary::index');
 
 #Route Temuan Patrol
-$routes->get('temuan_patrol', 'Temuan_patrol::index');
+$routes->get('temuan_patrol/auditor', 'Temuan_patrol::index');
+$routes->get('temuan_patrol/auditee', 'Temuan_patrol::auditee');
 $routes->get('temuan_patrol/daftar_hadir/(:num)', 'Temuan_patrol::sign/$1');
 #Route Schedule Audit Patrol
 $routes->get('schedule', 'Schedule::index');
@@ -34,7 +35,8 @@ $routes->get('admin/test_upload', 'Admin::test_upload');
 $routes->get('/download/file/(:any)', 'DownloadController::file/$1');
 
 #route untuk pdf preview
-$routes->get('pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
+$routes->get('temuan_patrol/pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
+
 
 #Route Auth / CrudController
 $routes->post('CrudController/authLogin', 'CrudController::authLogin');

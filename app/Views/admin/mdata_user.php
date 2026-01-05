@@ -16,7 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <!-- Select2 Bootstrap-5 Theme -->
-    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.6.2/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+
     <link href="<?= base_url() ?>assets/css/summary.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/css/t_patrol.css" rel="stylesheet">
 
@@ -24,6 +24,76 @@
         .select2-container .select2-selection--single {
             height: 38px;
             padding: 6px 12px;
+        }
+
+        /* ==== Submenu container ==== */
+        .menu-item.has-submenu {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        /* ==== Toggle row (biar sama kayak menu-item lain) ==== */
+        .menu-item.submenu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        /* kiri: icon + text sejajar */
+        .menu-item.submenu-toggle .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* icon ukuran konsisten (opsional) */
+        .menu-item.submenu-toggle i,
+        .submenu-item i {
+            font-size: 18px;
+            width: 22px;
+            /* bikin icon kolomnya rata */
+            text-align: center;
+        }
+
+        /* chevron di kanan */
+        .chevron {
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        /* open state */
+        .menu-item.has-submenu.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ==== Submenu items ==== */
+        .submenu {
+            display: none;
+            flex-direction: column;
+            padding-left: 42px;
+            /* indent rapi */
+            margin-top: 6px;
+            gap: 6px;
+        }
+
+        .menu-item.has-submenu.open .submenu {
+            display: flex;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-decoration: none;
+            color: #ddd;
+        }
+
+        .submenu-item:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
     </style>
 
@@ -69,22 +139,32 @@
                 font-size: 11px;
                 margin: 0;
                 font-weight: 400;
-            "><?php if ($role === 1) {
-                    echo "Administrator";
-                } else if ($role === 2) {
-                    echo "Auditor";
-                } else {
-                    echo "Auditee";
-                } ?></p>
+            "><?= $role ?></p>
         </div>
         <a href="<?= base_url('summary') ?>" class="menu-item " data-page="dashboard">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
-        <a href="<?= base_url('temuan_patrol') ?>" class="menu-item " data-page="patrol">
-            <i class="bi bi-search"></i>
-            <span>Data Patrol</span>
-        </a>
+        <div class="menu-item has-submenu">
+            <div class="menu-item submenu-toggle">
+                <div class="menu-left">
+                    <i class="bi bi-search"></i>
+                    <span>Data Patrol</span>
+                </div>
+                <i class="bi bi-chevron-down chevron"></i>
+            </div>
+
+            <div class="submenu">
+                <a href="<?= base_url('temuan_patrol/auditor') ?>" class="submenu-item">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Data Auditor</span>
+                </a>
+                <a href="<?= base_url('temuan_patrol/auditee') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Data Auditee</span>
+                </a>
+            </div>
+        </div>
         <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
@@ -92,14 +172,12 @@
         <div class="menu-header">
             Master Data
         </div>
-        <?php if ($role === 1) : ?>
+        <?php if ($role === 'Administrator') : ?>
             <a href="<?= base_url('admin/mdata_user') ?>" class="menu-item active" data-page="user">
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
-                <i class="bi bi-building"></i> <span>Departemen</span>
-            </a>
+
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -169,8 +247,8 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-info btnInfo_user" data-bs-toggle="modal" data-bs-target="#modal_info_user" data-id="<?= $user['id'] ?>"><i class="bi bi-pencil-fill"></i></button>
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-trash3-fill"></i> Hapus</button>
+
+                                    <button type="button" class="btn btn-danger btnhapus_user" data-id="<?= $user['user_id'] ?>"><i class="bi bi-trash3-fill"></i> Hapus</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -204,7 +282,7 @@
                                 </select>
                             </div>
 
-                          
+
                             <div class="form-group col-md-6 mt-2">
                                 <label for="Role" class="form-label">
                                     <i class="bi bi-building me-1"></i>Departemen</label>
@@ -259,10 +337,18 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
     <script src="<?= base_url() ?>assets/js/temuan_patrol/mdata_user.js"></script>
     <script>
+        document.querySelectorAll('.submenu-toggle').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.classList.toggle('open');
+            });
+        });
+        var baseurl = '<?= base_url() ?>';
+    </script>
+    <script>
         $("#auditTable").DataTable({});
         $('#btn_sendData').click(function() {
             // todo : kirim data ke controller admin/sendData
-           
+
             var npk = $('#dt_nama').val();
             var roleUser = $('#list_role').val();
 
@@ -270,7 +356,7 @@
                 url: '<?= base_url('sendData') ?>',
                 type: 'POST',
                 data: {
-                 
+
                     npk_user: npk,
                     role_user: roleUser,
                     keterangan: 'tambah_user'
@@ -308,6 +394,31 @@
                     alert('Terjadi kesalahan saat mengambil data seksi.');
                 }
             });
+        });
+        $('.btnhapus_user').click(function() {
+            var userId = $(this).data('id');
+            console.log('Menghapus user dengan ID:', userId);
+            if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
+                $.ajax({
+                    url: '<?= base_url('sendData') ?>',
+                    type: 'POST',
+                    data: {
+                        id_user: userId,
+                        keterangan: 'hapus_user'
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            alert(response.message);
+                            location.reload(); // muat ulang halaman untuk melihat perubahan
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Terjadi kesalahan saat menghapus user.');
+                    }
+                });
+            }
         });
     </script>
 </body>

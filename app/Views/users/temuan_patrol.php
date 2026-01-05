@@ -12,6 +12,9 @@
     <!-- Flatpickr CSS & JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <!-- Air Datepicker CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
     <!-- Select2 core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css" rel="stylesheet">
@@ -183,6 +186,97 @@
             color: #fff;
             box-shadow: 0 4px 12px rgba(13, 110, 253, .35);
         }
+
+        /* ==== Submenu container ==== */
+        .menu-item.has-submenu {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        /* ==== Toggle row (biar sama kayak menu-item lain) ==== */
+        .menu-item.submenu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        /* kiri: icon + text sejajar */
+        .menu-item.submenu-toggle .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* icon ukuran konsisten (opsional) */
+        .menu-item.submenu-toggle i,
+        .submenu-item i {
+            font-size: 18px;
+            width: 22px;
+            /* bikin icon kolomnya rata */
+            text-align: center;
+        }
+
+        /* chevron di kanan */
+        .chevron {
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        /* open state */
+        .menu-item.has-submenu.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ==== Submenu items ==== */
+        .submenu {
+            display: none;
+            flex-direction: column;
+            padding-left: 42px;
+            /* indent rapi */
+            margin-top: 6px;
+            gap: 6px;
+        }
+
+        .menu-item.has-submenu.open .submenu {
+            display: flex;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-decoration: none;
+            color: #ddd;
+        }
+
+        .submenu-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .submenu-item.active {
+            background-color: #0d6efd;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, .35);
+        }
+
+        .signature-wrap {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Penting: canvas ikut tinggi/lebar wrapper */
+        #signature_pad {
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: none;
+            /* biar tidak scroll pas teken */
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -227,27 +321,37 @@
                 font-size: 11px;
                 margin: 0;
                 font-weight: 400;
-            "><?php if ($role === 1) {
-                    echo "Administrator";
-                } else if ($role === 2) {
-                    echo "Auditor";
-                } else {
-                    echo "Auditee";
-                } ?></p>
+            "><?= $role; ?></p>
         </div>
         <a href="<?= base_url('summary') ?>" class="menu-item " data-page="dashboard">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
-        <a href="<?= base_url('temuan_patrol') ?>" class="menu-item active" data-page="patrol">
-            <i class="bi bi-search"></i>
-            <span>Data Patrol</span>
-        </a>
+        <div class="menu-item has-submenu open">
+            <div class="menu-item submenu-toggle">
+                <div class="menu-left">
+                    <i class="bi bi-search"></i>
+                    <span>Data Patrol</span>
+                </div>
+                <i class="bi bi-chevron-down chevron"></i>
+            </div>
+
+            <div class="submenu">
+                <a href="<?= base_url('temuan_patrol/auditor') ?>" class="submenu-item active">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Data Auditor</span>
+                </a>
+                <a href="<?= base_url('temuan_patrol/auditee') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Data Auditee</span>
+                </a>
+            </div>
+        </div>
         <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
         </a>
-        <?php if ($role === 1) : ?>
+        <?php if ($role === 'Administrator') : ?>
             <div class="menu-header">
                 Master Data
             </div>
@@ -308,10 +412,10 @@
                     <div class="card-header">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Temuan Patrol</h3>
-                            <?php if ($role === 1 || $role === 2) : ?>
-                                <button type="button" class="btn btn-primary cekalert" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
-                                    <i class="bi bi-plus-circle"></i> Tambah Temuan</button>
-                            <?php endif; ?>
+
+                            <button type="button" class="btn btn-primary cekalert" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
+                                <i class="bi bi-plus-circle"></i> Tambah Temuan</button>
+
                         </div>
 
                     </div>
@@ -359,18 +463,19 @@
                                                 <span class="badge bg-success">Close</span>
                                             <?php elseif ($patrol['status'] == 2) : ?>
                                                 <span class="badge bg-warning">In Progress</span>
-
+                                            <?php elseif ($patrol['status'] == 4) : ?>
+                                                <span class="badge bg-danger">Cancel</span>
                                             <?php else: ?>
-                                                <span class="badge bg-danger">Open</span>
+                                                <span class="badge bg-secondary">Open</span>
                                             <?php endif; ?>
                                         </td>
                                         <td class="text-center">
-                                            <?php if ($role === 2 || $role === 3) : ?>
-                                                <?php if ($patrol['status'] == 2 || $patrol['status'] == 3) : ?>
-                                                    <button type="button" class="btn btn-info fill_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_fillData" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-journal-arrow-down"></i> Fill</button>
-                                                <?php endif; ?>
+                                            <?php if ($role === 'user') : ?>
+
+                                                <button type="button" class="btn btn-info fill_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_fillData" data-id="<?= $patrol['id_temuan_patrol'] ?>" data-npkauditor="<?= $patrol['id_auditor'] ?>"><i class="bi bi-journal-arrow-down"></i> Fill</button>
+
                                             <?php endif; ?>
-                                            <?php if ($role === 1) : ?>
+                                            <?php if ($role === 'Administrator') : ?>
                                                 <button type="button" class="btn btn-info mt-2 edit_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_editdata" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-pencil-fill"></i> Edit</button>
                                                 <button type="button" class="btn btn-danger mt-2 hapus_data btn-sm" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-trash3-fill"></i> Hapus</button>
                                             <?php endif; ?>
@@ -448,7 +553,17 @@
                 <div class="modal-body">
                     <form>
                         <input type="hidden" id="fill_id_temuan_patrol">
+                        <input type="hidden" id="fill_id_auditor">
+                        <input type="hidden" id="fill_id_departement_temuan">
+                        <input type="hidden" id="fill_id_section_temuan">
 
+
+                        <div class="form-group">
+
+                            <label for="auditorName" class="form-label">
+                                <i class="bi bi-check-circle-fill text-success"></i> Status </label>
+                            <input type="text" class="form-control" id="fill_status_temuan" value="aaabc" disabled>
+                        </div>
                         <div class="form-group">
 
                             <label for="auditorName" class="form-label">
@@ -486,80 +601,59 @@
                         <div class="form-group mt-2">
                             <label for="auditorName" class="form-label">
                                 <i class="bi bi-journal-text me-1"></i> Deskripsi Temuan </label> <small> <i>Di isi oleh Auditor !!!</i></small>
-                            <?php if ($role === 1 || $role === 2) : ?>
-                                <textarea class="form-control" placeholder="Leave a comment here" id="fill_deskripsi_temuan"></textarea>
-                            <?php endif; ?>
-                            <?php if ($role === 3) : ?>
-                                <textarea class="form-control" placeholder="Leave a comment here" id="fill_deskripsi_temuan" disabled></textarea>
-                            <?php endif; ?>
+
+                            <textarea class="form-control" placeholder="Leave a comment here" id="fill_deskripsi_temuan" disabled></textarea>
+
                         </div>
                         <div class="form-group mt-2">
                             <label for="auditorName" class="form-label">
                                 <i class="bi bi-journal-text me-1"></i> Analisa Penyebab </label><small> <i>Di isi oleh Audite !!!</i></small>
-                            <?php if ($role === 3) : ?>
-                                <textarea class="form-control" placeholder="Leave a comment here" id="fill_analisa_penyebab" required></textarea>
-                            <?php endif; ?>
-                            <?php if ($role === 2 || $role === 1) : ?>
-                                <textarea class="form-control" placeholder="Leave a comment here" id="fill_analisa_penyebab" disabled></textarea>
-                            <?php endif; ?>
+
+                            <textarea class="form-control" placeholder="Leave a comment here" id="fill_analisa_penyebab" disabled></textarea>
+
                         </div>
                         <div class="form-group mt-2">
                             <label for="auditorName" class="form-label">
                                 <i class="bi bi-journal-text me-1"></i> Action </label><small> <i>Di isi oleh Audite !!!</i></small>
-                            <?php if ($role === 3) : ?>
-                                <textarea class="form-control" placeholder="Leave a comment here" id="fill_action" required></textarea>
-                            <?php endif; ?>
-                            <?php if ($role === 2) : ?>
-                                <textarea class="form-control" placeholder="Leave a comment here" id="fill_action" disabled></textarea>
-                            <?php endif; ?>
+
+
+                            <textarea class="form-control" placeholder="Leave a comment here" id="fill_action" disabled></textarea>
+
                         </div>
                         <div class="form-group mt-2">
                             <label for="fill_pic_action" class="form-label">
                                 <i class="bi bi-building me-1"></i> PIC Action </label><small> <i>Di isi oleh Audite !!!</i></small>
-                            <?php if ($role === 3) : ?>
-                                <select class="form-select select2" id="fill_pic_action" style="width:100%;">
 
-                                    <option value="">Blank</option>
+                            <select class="form-select select2" id="fill_pic_action" style="width:100%; " disabled>
 
-                                </select>
-                            <?php endif; ?>
-                            <?php if ($role === 2) : ?>
-                                <input type="text" class="form-control" id="fill_pic_action" disabled>
-                            <?php endif; ?>
+                                <option value="">Blank</option>
+
+                            </select>
+
                         </div>
                         <div class="form-group mt-2">
                             <label for="auditDate" class="form-label">
                                 <i class="bi bi-calendar-fill me-1"></i> Due Date </label><small class="text-danger"> <i>Cek Tanggal Kembali !</i></small>
-                            <?php if ($role === 3) : ?>
-                                <input type="text" class="form-control auditDate" id="fill_due_date" placeholder="Pilih tanggal audit" required readonly>
-                            <?php endif; ?>
-                            <?php if ($role === 2) : ?>
-                                <input type="text" class="form-control auditDate" id="fill_due_date" placeholder="Pilih tanggal audit" required disabled>
-                            <?php endif; ?>
+
+                            <input type="text" class="form-control auditDate" id="fill_due_date" placeholder="Pilih tanggal audit" required disabled>
+
                         </div>
                         <div class="form-group mt-3">
                             <label for="fileUpload" class="form-label">
                                 <i class="bi bi-upload me-1"></i> Upload File (PDF, Word, Excel, Image)
                             </label>
-                            <?php if ($role === 3) : ?>
-                                <input
-                                    type="file"
-                                    class="form-control"
-                                    id="fileUpload"
-                                    accept=".pdf,.doc,.docx,.xls,.xlsx,image/*">
-                            <?php endif; ?>
-                            <?php if ($role === 2) : ?>
-                                <input
-                                    type="file"
-                                    class="form-control"
-                                    id="fileUpload"
-                                    accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" disabled>
-                            <?php endif; ?>
+
+                            <input
+                                type="file"
+                                class="form-control"
+                                id="fileUpload"
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" disabled>
+
                         </div>
                         <div class="form-group col-md-12 mt-3 previewpdf_fill">
-                            <!-- <label for="fileUpload_edit" class="form-label">
-                                        Preview PDF
-                                    </label> -->
+                            <label for="fileUpload_edit" class="form-label">
+                                <!-- Preview PDF -->
+                            </label>
                             <a type="button" id="previewPDF_fill" class="btn btn-primary" target="_blank"> <i class="bi bi-eye me-1"></i> Preview PDF </a>
                         </div>
                         <!-- Preview gambar -->
@@ -576,21 +670,36 @@
                                 <img id="viewerImg" alt="Preview detail">
                             </div>
                         </div>
-                        <?php if ($role === 2) : ?>
 
-                            <div class="form-group mt-2">
-                                <label for="option_status" class="form-label">
-                                    <!-- todo : carikan saya icon yang cocok untuk kata status -->
-                                    <i class="bi bi-collection"></i> Option Status </label>
-                                <select class="form-select" id="list_option_status" style="width:100%;">
-                                    <option value="">-- Pilih Opsi --</option>
-                                    <option value="3">Open</option>
-                                    <option value="1">Close</option>
 
-                                </select>
+                        <div class="form-group mt-2" id="list_option_status_container">
+                            <label for="option_status" class="form-label">
 
-                            </div>
-                        <?php endif; ?>
+                                <i class="bi bi-collection"></i> Option Status </label>
+                            <select class="form-select" id="list_option_status" style="width:100%;">
+                                <option value="">-- Pilih Opsi --</option>
+                                <?php if ($role === 'Administrator') : ?>
+                                    <option value="4">Cancel</option>
+                                <?php endif; ?>
+                                <option value="3">Open</option>
+                                <?php if ($role === 'Administrator') : ?>
+                                    <option value="2">In Progress</option>
+                                <?php endif; ?>
+
+                                <option value="1">Close</option>
+                                <?php if ($role === 'Administrator') : ?>
+                                    <option value="4">Cancel</option>
+                                <?php endif; ?>
+                            </select>
+
+                        </div>
+                        <div class="form-group mt-2" id="row_keterangan_cancel2" style="display: none;">
+                            <label for="keterangan_cancel" class="form-label">
+                                <!-- todo : carikan saya icon yang cocok untuk kata status -->
+                                <i class="bi bi-collection"></i> Keterangan Cancel </label>
+                            <textarea class="form-control" placeholder="Leave a comment here" id="keterangan_cancel2" required></textarea>
+
+                        </div>
 
 
 
@@ -604,164 +713,233 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <?php if ($role === 1 || $role === 2) : ?>
-        <div class="modal fade" id="modal_tambahdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Temuan</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="auditorName" class="form-label">
-                                        <i class="bi bi-person-fill me-1"></i> Schedule Audit </label>
-                                    <select class="" id="list_schedule" style="width:100%;">
-                                        <option value="">-- Pilih Schedule --</option>
-                                        <?php foreach ($schedule_audit as $sa) : ?>
-                                            <option value="<?= $sa['id_schedule'] ?>">[Tanggal Schedule Patrol : <?= $sa['tanggal_patrol'] ?>] - Dept : <?= $sa['departement'] ?>; Sect : <?= $sa['section'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
 
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="auditorName" class="form-label">
-                                        <i class="bi bi-person-fill me-1"></i> Nama Auditor </label>
-                                    <?php if ($role === 2 || $role === 1): ?>
-                                        <input type="text" class="form-control" id="auditorName" value="<?= $nama; ?>" disabled>
-                                    <?php endif; ?>
 
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="auditDate" class="form-label">
-                                        <i class="bi bi-calendar-fill me-1"></i> Tanggal Patrol Actual</label>
-                                    <input type="text" class="form-control auditDate" id="tanggal_patrol" placeholder="Auditee" required readonly>
-                                </div>
+    <div class="modal fade" id="modal_tambahdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Temuan</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="list_schedule" class="form-label">
+                                    <i class="bi bi-person-fill me-1"></i> Schedule Audit </label>
+                                <select class="" id="list_schedule" style="width:100%;">
+                                    <option value="">-- Pilih Schedule --</option>
+                                    <?php foreach ($schedule_audit as $sa) : ?>
+                                        <option value="<?= $sa['id_schedule'] ?>">[Tanggal Schedule Patrol : <?= $sa['tanggal_patrol'] ?>] - Dept : <?= $sa['departement'] ?>; Sect : <?= $sa['section'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
+                            <div class="form-group col-md-6">
+                                <label for="auditorName" class="form-label">
+                                    <i class="bi bi-person-fill me-1"></i> Nama Auditor </label>
 
-                                        Area Patrol
-                                    </label>
-                                    <hr style="height: 2px; border: none;">
-                                </div>
-                                <div class="form-group col-md-4 mt-2">
-                                    <label for="Deskripsi Temuan" class="form-label">
-                                        <i class="bi bi-journal-text me-1"></i>Departement</label>
-                                    <input class="form-control" placeholder="Leave a comment here" id="list_dept" data-id="" disabled>
-                                </div>
-                                <div class="form-group col-md-4 mt-2">
-                                    <label for="Deskripsi Temuan" class="form-label">
-                                        <i class="bi bi-journal-text me-1"></i>Seksi</label>
-                                    <input class="form-control" placeholder="Leave a comment here" id="list_seksi" data-id="" disabled>
-                                </div>
-                                <div class="form-group col-md-4 mt-2">
-                                    <label for="Deskripsi Temuan" class="form-label">
-                                        <i class="bi bi-journal-text me-1"></i>Auditee</label>
-                                    <input type="text" class="form-control Auditee" id="nama_auditee" placeholder="Nama Auditee" disabled>
-                                </div>
+                                <input type="text" class="form-control" id="auditorName" value="<?= $nama; ?>" disabled>
 
 
                             </div>
-                            <div class="form-group mt-2">
-                                <label for="Deskripsi Temuan" class="form-label">
-                                    <i class="bi bi-journal-text me-1"></i>Deskripsi Temuan</label>
-
-                                <textarea class="form-control" placeholder="Leave a comment here" id="deskripsi_temuan"></textarea>
+                            <div class="form-group col-md-6">
+                                <label for="tanggal_patrol" class="form-label">
+                                    <i class="bi bi-calendar-fill me-1"></i> Tanggal Patrol Actual</label>
+                                <input type="text" class="form-control auditDate" id="tanggal_patrol" placeholder="Auditee" required readonly>
                             </div>
-                            <div class="form-group mt-2">
-                                <label for="upload_file" class="form-label">
-                                    <i class="bi bi-upload me-1"></i>Upload File
-                                </label>
-
-                                <input
-                                    type="file"
-                                    class="form-control"
-                                    id="fileUpload_tambah"
-                                    name="fileUpload_tambah"
-                                    onchange="handleFileUpload()">
-
-                                <!-- Preview Image -->
-                                <div class="mt-2">
-                                    <img
-                                        id="preview_image"
-                                        class="img-fluid rounded d-none"
-                                        style="max-height: 200px;"
-                                        alt="Preview Image">
-                                </div>
-                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group">
                                 <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
 
-                                    PIC Action
+                                    Area Patrol
                                 </label>
                                 <hr style="height: 2px; border: none;">
                             </div>
-                            <div class="row">
-                                <div class="form-group col-md-6 mt-2">
-                                    <label for="pic_action_list_dept" class="form-label">
-                                        <i class="bi bi-building me-1"></i>Departemen </label>
-                                    <select class="select_tom" id="pic_action_list_dept" style="width:100%;">
-                                        <option value="">- Pilih Departement -</option>
-                                        <?php foreach ($data_dept as $dept) : ?>
-                                            <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-
-                                </div>
-                                <div class="form-group col-md-6 mt-2">
-                                    <label for="pic_action_list_seksi" class="form-label">
-                                        <i class="bi bi-diagram-3 me-1"></i>Seksi </label>
-                                    <select class="select_tom" id="pic_action_list_seksi" style="width:100%;" disabled>
-                                        <option value="">-- Pilih Opsi --</option>
-
-                                    </select>
-
-                                </div>
+                            <div class="form-group col-md-4 mt-2">
+                                <label for="Deskripsi Temuan" class="form-label">
+                                    <i class="bi bi-journal-text me-1"></i>Departement</label>
+                                <input class="form-control" placeholder="Leave a comment here" id="list_dept" data-id="" disabled>
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
+                            <div class="form-group col-md-4 mt-2">
+                                <label for="Deskripsi Temuan" class="form-label">
+                                    <i class="bi bi-journal-text me-1"></i>Seksi</label>
+                                <input class="form-control" placeholder="Leave a comment here" id="list_seksi" data-id="" disabled>
+                            </div>
+                            <div class="form-group col-md-4 mt-2">
+                                <label for="Deskripsi Temuan" class="form-label">
+                                    <i class="bi bi-journal-text me-1"></i>Auditee</label>
+                                <input type="text" class="form-control Auditee" id="nama_auditee" placeholder="Nama Auditee" disabled>
+                            </div>
 
-                                        Rekap temuan
+
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="Deskripsi Temuan" class="form-label">
+                                <i class="bi bi-journal-text me-1"></i>Deskripsi Temuan</label>
+
+                            <textarea class="form-control" placeholder="Leave a comment here" id="deskripsi_temuan"></textarea>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="upload_file" class="form-label">
+                                <i class="bi bi-upload me-1"></i>Upload File
+                            </label>
+
+                            <input
+                                type="file"
+                                class="form-control"
+                                id="fileUpload_tambah"
+                                name="fileUpload_tambah"
+                                onchange="handleFileUpload()">
+
+                            <!-- Preview Image -->
+                            <div class="mt-2">
+                                <img
+                                    id="preview_image"
+                                    class="img-fluid rounded d-none"
+                                    style="max-height: 200px;"
+                                    alt="Preview Image">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
+
+                                PIC Action
+                            </label>
+                            <hr style="height: 2px; border: none;">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 mt-2">
+                                <label for="pic_action_list_dept" class="form-label">
+                                    <i class="bi bi-building me-1"></i>Departemen </label>
+                                <select class="select_tom" id="pic_action_list_dept" style="width:100%;">
+                                    <option value="">- Pilih Departement -</option>
+                                    <?php foreach ($data_dept as $dept) : ?>
+                                        <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-md-6 mt-2">
+                                <label for="pic_action_list_seksi" class="form-label">
+                                    <i class="bi bi-diagram-3 me-1"></i>Seksi </label>
+                                <select class="select_tom" id="pic_action_list_seksi" style="width:100%;" disabled>
+                                    <option value="">-- Pilih Opsi --</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
+
+                                    Rekap temuan
+                                </label>
+                                <button type="button" class="btn btn-success float-right mt-2 btn_rekaptemuan"><i class="bi bi-plus-circle"></i> Tambah temuan </button>
+                                <hr style="height: 2px; border: none;">
+                            </div>
+
+                        </div>
+                        <div class="form-group mt-2">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Deskripsi temuan</th>
+                                        <th scope="col">File</th>
+                                        <th scope="col">PIC Action Area</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rekap_tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row g-3" id="">
+                            <!-- PILIH JENIS SIGN -->
+                            <div class="form-group col-md-12">
+                                <label for="sign_type" class="form-label">
+                                    <i class="bi bi-pen me-1"></i> Jenis Tanda Tangan
+                                </label>
+                                <select class="form-select" id="sign_type" name="sign_type">
+                                    <option value="digital" selected>Tanda tangan digital</option>
+                                    <option value="upload">Upload file gambar</option>
+                                </select>
+                            </div>
+
+                            <!-- DIGITAL SIGN -->
+                            <div class="col-12" id="digital_section">
+                                <div class="border rounded-3 p-3">
+
+                                    <div class="d-flex flex-wrap gap-3 align-items-end mb-3">
+                                        <div>
+                                            <label class="form-label mb-1">Warna</label>
+                                            <input type="color" id="pen_color" class="form-control form-control-color" value="#ff006a"
+                                                title="Pilih warna">
+                                        </div>
+
+                                        <div style="min-width: 240px;">
+                                            <label class="form-label mb-1">Tebal garis: <span id="pen_width_label">3</span> px</label>
+                                            <input type="range" class="form-range" id="pen_width" min="1" max="12" step="1" value="3">
+                                        </div>
+
+                                        <div class="ms-auto d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-secondary" id="btnClearSign">
+                                                <i class="bi bi-eraser me-1"></i> Clear
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <label class="form-label">
+                                        <i class="bi bi-check2-square me-1"></i> Area Approval
                                     </label>
-                                    <button type="button" class="btn btn-success float-right mt-2 btn_rekaptemuan"><i class="bi bi-plus-circle"></i> Tambah temuan </button>
-                                    <hr style="height: 2px; border: none;">
+
+                                    <div class="rounded-3 border bg-light signature-wrap">
+                                        <canvas id="signature_pad"></canvas>
+                                    </div>
+
+                                    <input type="hidden" name="signature_data" id="signature_data">
+                                    <small class="text-muted d-block mt-2">
+                                        Tulis tanda tangan pada area di atas.
+                                    </small>
                                 </div>
-
                             </div>
-                            <div class="form-group mt-2">
-                                <table class="table">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Deskripsi temuan</th>
-                                            <th scope="col">File</th>
-                                            <th scope="col">PIC Action Area</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="rekap_tbody">
 
-                                    </tbody>
-                                </table>
+                            <!-- UPLOAD SIGN -->
+                            <div class="col-12 d-none" id="upload_section">
+                                <div class="border rounded-3 p-3">
+                                    <label for="sign_file" class="form-label">
+                                        <i class="bi bi-upload me-1"></i> Upload tanda tangan (PNG/JPG)
+                                    </label>
+                                    <input class="form-control" type="file" id="sign_file" name="sign_file"
+                                        accept="image/png,image/jpeg">
+
+                                    <div class="mt-3 d-none" id="upload_preview_wrap">
+                                        <label class="form-label mb-1">Preview</label>
+                                        <div class="border rounded-3 p-2 bg-light">
+                                            <img id="upload_preview" alt="Preview" style="max-width: 100%; max-height: 220px;">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" id="btn_tambahTemuan"><i class="bi bi-plus-circle"></i> Submit </button>
-                    </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btn_tambahTemuan"><i class="bi bi-plus-circle"></i> Submit </button>
                 </div>
             </div>
-
         </div>
-    <?php endif; ?>
-    <?php if ($role === 1) : ?>
+
+    </div>
+
+    <?php if ($role === 'Administrator') : ?>
         <div class="modal fade" id="modal_editdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -777,7 +955,7 @@
 
                                 <label for="auditorName" class="form-label">
                                     <i class="bi bi-person-fill me-1"></i> Tanggal Patrol </label><small class="text-danger"> <i>Cek Tanggal Kembali !</i></small>
-                                <input type="text" class="form-control auditDate" id="edit_tanggal_patrol">
+                                <input type="text" class="form-control" id="edit_tanggal_patrol">
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6 mt-2">
@@ -843,9 +1021,9 @@
                             </div>
 
                             <div class="form-group mt-2">
-                                <label for="auditDate" class="form-label">
+                                <label for="edit_due_date" class="form-label">
                                     <i class="bi bi-calendar-fill me-1"></i> Due Date </label> <small class="text-danger"> <i>Cek Tanggal Kembali !</i></small>
-                                <input type="text" class="form-control auditDate" id="edit_due_date" placeholder="Pilih tanggal audit" required>
+                                <input type="text" class="form-control" id="edit_due_date" placeholder="Pilih tanggal audit" required>
                             </div>
                             <div class="row">
 
@@ -881,22 +1059,29 @@
                                 </div>
                             </div>
 
-                            <?php if ($role === 1 || $role === 2) : ?>
 
-                                <div class="form-group mt-2">
-                                    <label for="option_status" class="form-label">
-                                        <!-- todo : carikan saya icon yang cocok untuk kata status -->
-                                        <i class="bi bi-collection"></i> Option Status </label>
-                                    <select class="form-select" id="list_option_status_edit" style="width:100%;" required>
-                                        <option value="">-- Pilih Opsi --</option>
-                                        <option value="3">Open</option>
-                                        <option value="2">In Progress</option>
-                                        <option value="1">Close</option>
 
-                                    </select>
+                            <div class="form-group mt-2">
+                                <label for="option_status" class="form-label">
+                                    <!-- todo : carikan saya icon yang cocok untuk kata status -->
+                                    <i class="bi bi-collection"></i> Option Status </label>
+                                <select class="form-select" id="list_option_status_edit" style="width:100%;" required>
+                                    <option value="">-- Pilih Opsi --</option>
+                                    <option value="3">Open</option>
+                                    <option value="2">In Progress</option>
+                                    <option value="1">Close</option>
+                                    <option value="4">Cancel</option>
 
-                                </div>
-                            <?php endif; ?>
+                                </select>
+
+                            </div>
+                            <div class="form-group mt-2" id="row_keterangan_cancel">
+                                <label for="keterangan_cancel" class="form-label">
+                                    <!-- todo : carikan saya icon yang cocok untuk kata status -->
+                                    <i class="bi bi-collection"></i> Keterangan Cancel </label>
+                                <textarea class="form-control" placeholder="Leave a comment here" id="keterangan_cancel" required></textarea>
+
+                            </div>
 
                             <!-- Preview gambar -->
                             <!-- <div id="imagePreview" class="mt-3 d-flex flex-wrap gap-2"></div> -->
@@ -931,16 +1116,33 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Air Datepicker JS -->
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
     <!-- Select2 core JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+    <!-- SIGNATURE PAD -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="<?= base_url() ?>assets/js/temuan_patrol/view-image.js"></script>
     <script src="<?= base_url() ?>assets/js/temuan_patrol/t_patrol.js"></script>
+    <script>
+        document.querySelectorAll('.submenu-toggle').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.classList.toggle('open');
+            });
+        });
+        var baseurl = '<?= base_url() ?>';
+    </script>
     <script>
         $(document).ready(function() {
             localStorage.removeItem('rekap_temuan');
             renderTable(); // biar tabel ikut kosong
+        });
+        // Inisialisasi flatpickr
+        const fpTanggalPatrol = flatpickr("#edit_tanggal_patrol", {
+            locale: "id",
+            dateFormat: "d M Y", // sesuaikan dengan format tanggal kamu
         });
 
         function renderEvidenceFinding(finding_evidence) {
@@ -1032,31 +1234,32 @@
         }
 
 
-        <?php if ($role === 1 || $role === 2) : ?>
-            const tsList = new TomSelect("#list_schedule", {
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                }
-            });
 
-            const tsDept = new TomSelect("#pic_action_list_dept", {
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                }
-            });
+        const tsList = new TomSelect("#list_schedule", {
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
 
-            const tsSeksi = new TomSelect("#pic_action_list_seksi", {
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                }
-            });
+        const tsDept = new TomSelect("#pic_action_list_dept", {
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
 
-            // awal: disabled
-            tsSeksi.disable();
-        <?php endif; ?>
+        const tsSeksi = new TomSelect("#pic_action_list_seksi", {
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+
+
+        // awal: disabled
+        tsSeksi.disable();
+
         $('.sign_hadir').click(function() {
             var id = $(this).data('id');
             var url = "<?= base_url('temuan_patrol/daftar_hadir') ?>/" + id;
@@ -1327,85 +1530,221 @@
                 appendRow(item, i + 1);
             });
         }
-        let filesToSend = []; // kumpulan File untuk dikirim saat submit final
-        let selectedFile = null; // File terakhir yang dipilih (untuk 1 rekap)
-        $('#btn_tambahTemuan').click(function(e) {
+        let filesToSend = [];
+        let selectedFile = null;
+
+        $('#btn_tambahTemuan').on('click', async function(e) {
             e.preventDefault();
 
             var $btn = $(this);
             if ($btn.prop('disabled')) return;
             $btn.prop('disabled', true);
 
-            var tanggal_patrol = $('#tanggal_patrol').val();
-            var id_schedule = $('#list_schedule').val();
-            var deptId = $('#list_dept').data('id');
-            var seksiId = $('#list_seksi').data('id');
-            var nama_auditee = $('#nama_auditee').val();
+            try {
+                var tanggal_patrol = $('#tanggal_patrol').val();
+                var id_schedule = $('#list_schedule').val();
+                var deptId = $('#list_dept').data('id');
+                var seksiId = $('#list_seksi').data('id');
+                var nama_auditee = $('#nama_auditee').val();
 
-            let rekap = JSON.parse(localStorage.getItem('rekap_temuan') || '[]');
+                let rekap = JSON.parse(localStorage.getItem('rekap_temuan') || '[]');
 
-            if (!tanggal_patrol) {
-                alert('Isi Tanggal Patrol!');
-                $btn.prop('disabled', false);
-                return;
-            }
-
-            if (rekap.length === 0) {
-                alert('Belum ada rekap temuan yang ditambahkan.');
-                $btn.prop('disabled', false);
-                return;
-            }
-
-            // ✅ FormData agar bisa kirim file
-            const formData = new FormData();
-            formData.append('keterangan', 'tambah_temuan_patrol');
-            formData.append('id_schedule', id_schedule);
-            formData.append('tanggal_patrol', tanggal_patrol);
-            formData.append('nama_auditee', nama_auditee);
-            formData.append('deptId', deptId);
-            formData.append('seksiId', seksiId);
-
-            // kirim JSON rekap (tanpa base64)
-            formData.append('rekap_temuan', JSON.stringify(rekap));
-
-            // kirim semua file yang direferensikan oleh rekap
-            // (kalau ada file yang tidak dipakai, sebaiknya jangan ditambahkan)
-            // kita kirim semua filesToSend sebagai evidence_files[]
-            filesToSend.forEach((f) => {
-                formData.append('evidence_files[]', f);
-            });
-
-            $.ajax({
-                url: '<?= base_url('sendData') ?>',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: function(response) {
-                    alert('Temuan berhasil ditambahkan!');
-
-                    // bersihkan setelah sukses
-                    localStorage.removeItem('rekap_temuan');
-                    filesToSend = [];
-                    selectedFile = null;
-
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error adding temuan patrol:', error);
-                    alert('Gagal menyimpan temuan.');
-                },
-                complete: function() {
-                    $btn.prop('disabled', false);
+                if (!tanggal_patrol) {
+                    alert('Isi Tanggal Patrol!');
+                    return;
                 }
-            });
+
+                if (rekap.length === 0) {
+                    alert('Belum ada rekap temuan yang ditambahkan.');
+                    return;
+                }
+
+                const signType = $('#sign_type').val();
+
+                // ✅ FormData
+                const formData = new FormData();
+                formData.append('keterangan', 'tambah_temuan_patrol');
+                formData.append('id_schedule', id_schedule);
+                formData.append('tanggal_patrol', tanggal_patrol);
+                formData.append('nama_auditee', nama_auditee);
+                formData.append('deptId', deptId);
+                formData.append('seksiId', seksiId);
+
+                formData.append('rekap_temuan', JSON.stringify(rekap));
+
+                // evidence files
+                filesToSend.forEach((f) => {
+                    formData.append('evidence_files[]', f);
+                });
+
+                // ✅ kirim jenis ttd
+                formData.append('sign_type', signType);
+
+                // ✅ kirim ttd sebagai FILE (signature_file)
+                if (signType === 'digital') {
+                    if (!signaturePad || signaturePad.isEmpty()) {
+                        alert("Tanda tangan digital masih kosong.");
+                        return;
+                    }
+
+                    const dataURL = signaturePad.toDataURL('image/png');
+
+                    // convert dataURL -> Blob
+                    const blob = await (await fetch(dataURL)).blob();
+
+                    // append sebagai file
+                    formData.append('signature_file', blob, 'signature.png');
+
+                    // optional: kalau tetap mau simpan base64 di DB, kirim juga
+                    // formData.append('signature_data', dataURL);
+
+                } else {
+                    const file = document.getElementById('sign_file').files[0];
+                    if (!file) {
+                        alert("Silakan pilih file gambar tanda tangan.");
+                        return;
+                    }
+                    formData.append('signature_file', file);
+                }
+
+                $.ajax({
+                    url: '<?= base_url('sendData') ?>',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(response) {
+                        alert('Temuan berhasil ditambahkan!');
+
+                        localStorage.removeItem('rekap_temuan');
+                        filesToSend = [];
+                        selectedFile = null;
+
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error adding temuan patrol:', error);
+                        alert('Gagal menyimpan temuan.');
+                    }
+                });
+
+            } finally {
+                $btn.prop('disabled', false);
+            }
         });
 
 
 
+        function initTomSelect(selector) {
+            document.querySelectorAll(selector).forEach(el => {
+                if (el.tomselect) el.tomselect.destroy();
+
+                // skip kalau disabled
+                if (el.disabled) return;
+
+                new TomSelect(el, {
+                    allowEmptyOption: true,
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    }
+                });
+            });
+        }
+        const localeID = {
+            days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+            daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+            daysMin: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+            months: [
+                'Januari', 'Februari', 'Maret', 'April',
+                'Mei', 'Juni', 'Juli', 'Agustus',
+                'September', 'Oktober', 'November', 'Desember'
+            ],
+            monthsShort: [
+                'Jan', 'Feb', 'Mar', 'Apr',
+                'Mei', 'Jun', 'Jul', 'Agu',
+                'Sep', 'Okt', 'Nov', 'Des'
+            ],
+            today: 'Hari Ini',
+            clear: 'Hapus',
+            dateFormat: 'dd/MM/yyyy',
+            timeFormat: 'HH:mm',
+            firstDay: 1
+        };
+
+        let dpDueDate = null;
+
+        function attachAirDatepickerResponsive(inputId) {
+            const $input = $('#' + inputId);
+
+            // destroy kalau sudah ada instance
+            if (dpDueDate) {
+                dpDueDate.destroy();
+                dpDueDate = null;
+            }
+
+            dpDueDate = new AirDatepicker('#' + inputId, {
+                locale: localeID,
+                dateFormat: 'dd/MM/yyyy',
+                autoClose: true,
+                buttons: ['today', 'clear'],
+
+                // biar gak ke-clip modal & bebas dari stacking context
+                container: 'body',
+                zIndex: 20000,
+
+                position({
+                    $datepicker,
+                    $target
+                }) {
+                    // hitung posisi input relatif viewport (responsive)
+                    const r = $target.getBoundingClientRect();
+                    const dpH = $datepicker.offsetHeight || 280; // fallback
+                    const gap = 6;
+
+                    const spaceBelow = window.innerHeight - r.bottom;
+                    const showAbove = spaceBelow < dpH + gap;
+
+                    $datepicker.style.position = 'fixed';
+                    $datepicker.style.left = `${Math.max(8, r.left)}px`;
+                    $datepicker.style.top = showAbove ?
+                        `${Math.max(8, r.top - dpH - gap)}px` :
+                        `${Math.min(window.innerHeight - dpH - 8, r.bottom + gap)}px`;
+
+                    $datepicker.style.zIndex = 20000;
+                }
+            });
+
+            // helper untuk paksa hitung ulang posisi saat kondisi berubah
+            const reposition = () => {
+                if (!dpDueDate) return;
+                // show() akan trigger position() lagi
+                if (dpDueDate.visible) dpDueDate.show();
+            };
+
+            // saat user scroll halaman / modal scroll / resize
+            window.addEventListener('resize', reposition);
+            window.addEventListener('scroll', reposition, true); // true = capture, ngikut scroll di modal juga
+
+            // saat input fokus / klik
+            $input.on('focus click', function() {
+                dpDueDate.show();
+            });
+        }
+        $('#modal_editdata').on('shown.bs.modal', function() {
+
+            attachAirDatepickerResponsive('edit_due_date');
+        });
+
+        function parseDdMmYyyy(tglStr) {
+            if (!tglStr) return null;
+            const [dd, mm, yyyy] = tglStr.split('/').map(Number);
+            return new Date(yyyy, mm - 1, dd);
+        }
         $('.fill_data').click(function() {
             var temuanId = $(this).data('id');
+
             // TODO : Ambil data temuan berdasarkan temuanId menggunakan jquery ajax
             $.ajax({
                 url: '<?= base_url('sendData') ?>',
@@ -1417,6 +1756,51 @@
                 dataType: 'json',
                 success: function(response) {
                     $('#fill_id_temuan_patrol').val(response.temuan.id_temuan_patrol);
+                    $('#fill_id_auditor').val(response.temuan.id_auditor);
+                    $('#fill_id_departement_temuan').val(response.temuan.id_departement);
+                    $('#fill_id_section_temuan').val(response.temuan.id_section);
+                    if (response.temuan.status_temuan == 1) {
+                        $('#btnSubmit_filldata').hide();
+                        $('#fill_id_temuan_patrol').hide();
+                        $('#fill_id_auditor').hide();
+                        $('#fill_id_departement_temuan').hide();
+                        $('#fill_id_section_temuan').hide();
+                        $('#fill_status_temuan').val('Close');
+                        $('#list_option_status_container').hide();
+                    } else if (response.temuan.status_temuan == 2) {
+                        $('#btnSubmit_filldata').show();
+                        $('#fill_id_temuan_patrol').show();
+                        $('#fill_id_auditor').show();
+                        $('#fill_deskripsi_temuan').attr('disabled', false);
+                        $('#fill_id_departement_temuan').show();
+                        $('#fill_id_section_temuan').show();
+                        $('#fill_status_temuan').val('In Progress');
+                        $('#list_option_status_container').show();
+                    } else if (response.temuan.status_temuan == 3) {
+                        $('#btnSubmit_filldata').show();
+                        $('#fill_deskripsi_temuan').attr('disabled', false);
+                        $('#fill_id_temuan_patrol').show();
+                        $('#fill_id_auditor').show();
+                        $('#fill_id_departement_temuan').show();
+                        $('#fill_id_section_temuan').show();
+                        $('#fill_status_temuan').val('Open');
+                        $('#list_option_status_container').show();
+                    } else if (response.temuan.status_temuan == 4) {
+                        $('#row_keterangan_cancel2').show();
+                        $('#fill_deskripsi_temuan').attr('disabled', true);
+                        $('#keterangan_cancel2').attr('disabled', true);
+                        $('#keterangan_cancel2').val(response.temuan.keterangan_cancel);
+                        $('#btnSubmit_filldata').hide();
+                        $('#fill_id_temuan_patrol').hide();
+                        $('#fill_id_auditor').hide();
+                        $('#fill_id_departement_temuan').hide();
+                        $('#fill_id_section_temuan').hide();
+                        $('#fill_status_temuan').val('Cancel');
+                        $('#list_option_status_container').hide();
+
+                    } else {
+                        $('#fill_status_temuan').val('');
+                    }
                     $('#fill_tanggal_patrol').val(response.temuan.tanggal_patrol);
                     $('#fill_auditorName').val(response.temuan.nama_auditor);
                     $('#fill_auditeeName').val(response.temuan.nama_auditee);
@@ -1424,13 +1808,30 @@
                     $('#fill_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
                     $('#fill_analisa_penyebab').val(response.temuan.analisa_penyebab);
                     $('#fill_action').val(response.temuan.action);
-                    <?php if ($role == 3) : ?>
-                        $('#fill_pic_action').html(response.temuan.pic_section_name);
-                    <?php endif; ?>
-                    <?php if ($role == 1 || $role == 2) : ?>
-                        $('#fill_pic_action').val(response.temuan.pic_section_name);
-                    <?php endif; ?>
+                    $('#fill_pic_action').html(response.temuan.pic_section_name);
+                    $('#keterangan_cancel').val(response.temuan.keterangan_cancel);
+
+                    // todo : saya ingin melakukan set value pada tanggal due date dengan plugin airdatepicker
+                    const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
                     $('#fill_due_date').val(response.temuan.due_date);
+
+                    var id_section_user = '<?= $id_section_user ?>';
+                    var id_dept_user = '<?= $id_dept_user ?>';
+                    // cek apakah user yang akses adalah Auditee dari temuan tersebut
+                    if (id_section_user == response.temuan.id_section || id_dept_user == response.temuan.id_departement) {
+                        $('#fill_analisa_penyebab').attr('disabled', false);
+                        $('#fill_action').attr('disabled', false);
+                        $('#fill_pic_action').attr('disabled', false);
+                        $('#fill_due_date').attr('disabled', false);
+                        $('#fileUpload').attr('disabled', false);
+                        initTomSelect('#fill_pic_action');
+
+
+                    } else {
+                        // $('#fill_deskripsi_temuan').attr('disabled', false);
+
+                    }
+
                     // contoh: response.data.finding_evidence
                     renderEvidenceFinding(response.temuan.finding_evidence);
                     if (response.temuan.nama_file) {
@@ -1484,18 +1885,23 @@
             e.preventDefault();
 
             var fd = new FormData();
+            var npk_user_log = '<?= $npk ?>';
+            var npk_auditor = $('#fill_id_auditor').val();
             fd.append('keterangan', 'update_temuan_patrol');
             fd.append('id_temuan', $('#fill_id_temuan_patrol').val());
+            fd.append('npk_auditor', $('#fill_id_auditor').val());
+            fd.append('id_section_temuan', $('#fill_id_section_temuan').val());
+            fd.append('id_departement_temuan', $('#fill_id_departement_temuan').val());
             fd.append('deskripsi_temuan', $('#fill_deskripsi_temuan').val());
             fd.append('analisa_penyebab', $('#fill_analisa_penyebab').val());
             fd.append('action', $('#fill_action').val());
             fd.append('due_date', $('#fill_due_date').val());
-            <?php if ($role == 2 || $role == 1) : ?>
+            if (npk_user_log == npk_auditor) {
                 fd.append('status', $('#list_option_status').val());
-            <?php endif; ?>
-            <?php if ($role == 3) : ?>
+            } else {
                 fd.append('pic_action', $('#fill_pic_action').val());
-            <?php endif; ?>
+
+            }
             // penting: kirim objek file, bukan file.name
             var file = $('#fileUpload')[0].files[0];
             // cek dulu isi inputnya
@@ -1527,7 +1933,17 @@
                 }
             });
         });
-        <?php if ($role == 1) : ?>
+        <?php if ($role == 'Administrator') : ?>
+            $('#list_option_status_edit').change(function() {
+                var status = $(this).val();
+                console.log('Selected status:', status);
+                if (status == '4') {
+                    $('#row_keterangan_cancel').show();
+                } else {
+                    $('#row_keterangan_cancel').hide();
+
+                }
+            });
             $('#btnSubmit_editdata').click(function(e) {
                 e.preventDefault();
 
@@ -1540,6 +1956,7 @@
                 fd.append('due_date', $('#edit_due_date').val());
                 fd.append('tanggal_patrol', $('#edit_tanggal_patrol').val());
                 fd.append('status', $('#list_option_status_edit').val());
+                fd.append('keterangan_cancel', $('#keterangan_cancel').val());
 
 
                 // --- VALIDASI FILE UPLOAD ---
@@ -1593,7 +2010,7 @@
                 .replace(/\//g, '_') // ganti / jadi _
                 .replace(/=+$/, ''); // hapus semua =
         }
-        <?php if ($role === 3 || $role === 2) : ?>
+        <?php if ($role == 'user') : ?>
             const fileInput = document.getElementById('fileUpload');
             const previewContainer = document.getElementById('imagePreview');
 
@@ -1739,7 +2156,7 @@
                 if (e.key === 'Escape' && viewer.classList.contains('active')) closeViewer();
             });
         <?php endif; ?>
-        <?php if ($role == 1 || $role == 2) : ?>
+        <?php if ($role == 'Administrator') : ?>
             $('.edit_data').click(function() {
                 var temuanId = $(this).data('id');
                 // TODO : Ambil data temuan berdasarkan temuanId menggunakan jquery ajax
@@ -1754,16 +2171,18 @@
                     success: function(response) {
                         // Isi form edit dengan data yang diambil
                         $('#edit_id_temuan_patrol').val(response.temuan.id_temuan_patrol);
-                        $('#edit_tanggal_patrol').val(response.temuan.tanggal_patrol);
+                        const dateObj = parseDdMmYyyy(response.temuan.tanggal_patrol);
+                        fpTanggalPatrol.setDate(response.temuan.tanggal_patrol, true);
                         $('#edit_nama_auditor').html(response.temuan.nama_auditor);
                         $('#edit_nama_auditee').html(response.temuan.nama_auditee);
-                        $('#edit_area_proses').html(response.temuan.section);
+                        $('#edit_area_proses').html(response.temuan.section_name);
                         $('#edit_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
 
                         $('#edit_analisa_penyebab').val(response.temuan.analisa_penyebab);
                         $('#edit_action').val(response.temuan.action);
-                        $('#edit_pic_action').html(response.temuan.pic_action);
+                        $('#edit_pic_action').html(response.temuan.pic_section_name);
                         $('#edit_due_date').val(response.temuan.due_date);
+                        $('#keterangan_cancel').val(response.temuan.keterangan_cancel);
                         if (response.temuan.nama_file) {
 
                             const fileName = response.temuan.nama_file;
@@ -1817,7 +2236,7 @@
             a.click();
             document.body.removeChild(a);
         });
-        <?php if ($role == 1) : ?>
+        <?php if ($role == 'Administrator') : ?>
 
             const fileInput2 = document.getElementById("fileUpload_edit");
             const previewContainer2 = document.getElementById("imagePreview_edit");
@@ -2007,6 +2426,167 @@
                     }
                 });
             }
+        });
+        let signaturePad = null;
+
+        function resizeCanvasToDisplaySize(canvas) {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            const rect = canvas.getBoundingClientRect();
+
+            canvas.width = Math.floor(rect.width * ratio);
+            canvas.height = Math.floor(rect.height * ratio);
+
+            const ctx = canvas.getContext("2d");
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0); // scale untuk retina
+        }
+
+        function fillWhiteBackground(canvas) {
+            // isi putih beneran (bukan cuma property)
+            const ctx = canvas.getContext("2d");
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        }
+
+        function setPenOptions() {
+            if (!signaturePad) return;
+
+            const color = document.getElementById("pen_color").value;
+            const width = Number(document.getElementById("pen_width").value);
+
+            signaturePad.penColor = color;
+            signaturePad.minWidth = width;
+            signaturePad.maxWidth = width;
+
+            document.getElementById("pen_width_label").textContent = width;
+        }
+
+        function initSignaturePad() {
+            const canvas = document.getElementById("signature_pad");
+
+            // resize sesuai ukuran tampilannya
+            resizeCanvasToDisplaySize(canvas);
+
+            // isi background putih (agar tidak ada efek “hitam nyelip”)
+            fillWhiteBackground(canvas);
+
+            // jika ada instance lama, matikan event-nya
+            if (signaturePad) {
+                signaturePad.off();
+                signaturePad = null;
+            }
+
+            signaturePad = new SignaturePad(canvas, {
+                backgroundColor: "rgb(255,255,255)",
+                penColor: document.getElementById("pen_color").value,
+                minWidth: Number(document.getElementById("pen_width").value),
+                maxWidth: Number(document.getElementById("pen_width").value),
+            });
+
+            // clear akan apply backgroundColor
+            signaturePad.clear();
+            setPenOptions();
+        }
+
+        function bindUpdateBeforeDraw() {
+            const canvas = document.getElementById("signature_pad");
+            const update = () => setPenOptions();
+
+            // paksa update pen sebelum mulai coret
+            canvas.addEventListener("pointerdown", update);
+            canvas.addEventListener("mousedown", update);
+            canvas.addEventListener("touchstart", update, {
+                passive: true
+            });
+        }
+
+        function toggleSignType() {
+            const val = document.getElementById("sign_type").value;
+            const digital = document.getElementById("digital_section");
+            const upload = document.getElementById("upload_section");
+
+            if (val === "digital") {
+                digital.classList.remove("d-none");
+                upload.classList.add("d-none");
+
+                // re-init canvas setelah ditampilkan (biar ukuran pas)
+                setTimeout(() => {
+                    initSignaturePad();
+                }, 50);
+            } else {
+                digital.classList.add("d-none");
+                upload.classList.remove("d-none");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // init signature
+            initSignaturePad();
+            bindUpdateBeforeDraw();
+
+            // toggle jenis sign
+            document.getElementById("sign_type").addEventListener("change", toggleSignType);
+
+            // warna & tebal
+            document.getElementById("pen_color").addEventListener("input", setPenOptions);
+            document.getElementById("pen_width").addEventListener("input", setPenOptions);
+
+            // clear
+            document.getElementById("btnClearSign").addEventListener("click", function() {
+                if (!signaturePad) return;
+                signaturePad.clear();
+            });
+
+            // preview upload
+            document.getElementById("sign_file").addEventListener("change", function(e) {
+                const file = e.target.files && e.target.files[0];
+                const wrap = document.getElementById("upload_preview_wrap");
+                const img = document.getElementById("upload_preview");
+
+                if (!file) {
+                    wrap.classList.add("d-none");
+                    img.src = "";
+                    return;
+                }
+
+                img.src = URL.createObjectURL(file);
+                wrap.classList.remove("d-none");
+            });
+
+            // submit
+            document.getElementById("btn_tambahTemuan").addEventListener("click", function() {
+                const signType = document.getElementById("sign_type").value;
+
+                if (signType === "digital") {
+                    if (!signaturePad || signaturePad.isEmpty()) {
+                        alert("Tanda tangan digital masih kosong.");
+                        return;
+                    }
+                    // base64 png
+                    const dataURL = signaturePad.toDataURL("image/png");
+                    document.getElementById("signature_data").value = dataURL;
+                } else {
+                    const file = document.getElementById("sign_file").files[0];
+                    if (!file) {
+                        alert("Silakan pilih file gambar tanda tangan.");
+                        return;
+                    }
+                }
+
+                // TODO: sesuaikan submit
+                // document.getElementById("formSign").submit();
+                console.log("Submit OK. sign_type =", signType);
+            });
+
+            // re-init saat modal muncul (penting supaya ukuran canvas pas)
+            const modalEl = document.getElementById("modal_tambahdata");
+            modalEl.addEventListener("shown.bs.modal", function() {
+                if (document.getElementById("sign_type").value === "digital") {
+                    setTimeout(() => initSignaturePad(), 50);
+                }
+            });
         });
     </script>
 </body>

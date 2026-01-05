@@ -28,7 +28,7 @@ class Schedule extends BaseController
         $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
 
         $data['nama'] = $getdata_user['nama'];
-        $data['getdata_auditor'] = $this->dataPatrol->get_dataAllAuditor();
+        $data['getdata_auditor'] = $this->dataPatrol->getAlldata_karyawan();
         $data['role'] = session()->get('role');
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
         $lop_area = $this->dataPatrol->get_dataSchedule_area();

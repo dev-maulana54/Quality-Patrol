@@ -9,13 +9,13 @@ class Temuan_patrol extends BaseController
     protected $dataPatrol;
     public function __construct()
     {
-        // Cek apakah session isLoggedIn ada dan bernilai true
+        // Cek apakah session isLoggedIn tidak ada atau tidak bernilai true, maka redirect ke login
         if (!session()->get('isLoggedIn') || session()->get('isLoggedIn') !== true) {
             header('Location: ' . base_url('login'));
             exit(); // ✅ WAJIB pakai exit() agar script berhenti
         }
 
-        // Cek juga apakah npk ada di session
+        // Cek juga apakah npk tidak ada di session
         if (!session()->get('npk')) {
             header('Location: ' . base_url('login'));
             exit(); // ✅ WAJIB pakai exit()
@@ -27,26 +27,25 @@ class Temuan_patrol extends BaseController
         $data['title'] = "Temuan Patrol | Quality Patrol";
         $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
         $getuserLog = $this->dataPatrol->getdata_userbyNPK(session()->get('npk'));
-        $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser($getuserLog['id']);
+        $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
         $data['nama'] = $getdata_user['nama'];
-
+        $data['npk'] = session()->get('npk');
+        $data['id_section_user'] = $getdata_user['id_section'];
+        $data['id_dept_user'] = $getdata_user['id_departement'];
         $data['role'] = session()->get('role');
-        if (session()->get('role') == 1) {
+        if (session()->get('role') == 'Administrator') {
             $data['data_patrol'] = $this->dataPatrol->get_data_patrolAll();
-        } elseif (session()->get('role') == 2) {
-            $data['data_patrol'] = $this->dataPatrol->get_data_patrolByIdSection();
         } else {
             $data['data_patrol'] = $this->dataPatrol->get_data_patrolByIdSection();
         }
-        if (session()->get('role') == 1) {
-            $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedule();
-        } elseif (session()->get('role') == 2) {
-            $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedulebyID($getuserLog['id']);
-        }
+
+        $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedule($getdata_user['id_section'], $getdata_user['id_departement']);
+
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
         return view('users/temuan_patrol', $data);
     }
 
+    #function untuk melakukan sign schedule
     public function sign($id)
     {
         $data['title'] = "Temuan Patrol | Quality Patrol";
@@ -54,9 +53,31 @@ class Temuan_patrol extends BaseController
         $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
         $data['data_karyawan'] = $this->dataPatrol->getAlldata_karyawan();
         $data['id'] = $id;
+        $data['npk'] = session()->get('npk');
         $data['nama'] = $getdata_user['nama'];
         $data['role'] = session()->get('role');
         return view('users/sign', $data);
+    }
+    #function untuk mengakses temuan Patrol sebagai auditee
+    public function auditee()
+    {
+        $data['title'] = "Temuan Patrol | Quality Patrol";
+        $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        $getuserLog = $this->dataPatrol->getdata_userbyNPK(session()->get('npk'));
+        $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByAuditee($getdata_user['id_section'], $getdata_user['id_departement']);
+        $data['nama'] = $getdata_user['nama'];
+        $data['npk'] = session()->get('npk');
+        $data['id_section_user'] = $getdata_user['id_section'];
+        $data['id_dept_user'] = $getdata_user['id_departement'];
+        $data['role'] = session()->get('role');
+
+        $data['data_patrol_auditee'] = $this->dataPatrol->get_data_patrolByAuditee();
+
+
+        $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedule($getdata_user['id_section'], $getdata_user['id_departement']);
+
+        $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
+        return view('users/temuan_auditee', $data);
     }
     public function preview($file)
     {

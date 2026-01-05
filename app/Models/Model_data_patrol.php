@@ -10,7 +10,7 @@ class Model_data_patrol extends Model
     public function __construct()
     {
         parent::__construct();
-        $this->db = \Config\Database::connect(); // koneksi database manual
+        $this->db = \Config\Database::connect(); # koneksi database manual
     }
 
     public function getdata_userbyNPK($npk)
@@ -31,7 +31,7 @@ class Model_data_patrol extends Model
 
     public function get_data_patrolAll()
     {
-        #todo : ambil semua data dari tabel dt_temuan_patrol dan join id_dept dan id_seksi untuk menampilkan nama departemen dan nama seksi
+        # ambil semua data dari tabel dt_temuan_patrol dan join id_dept dan id_seksi untuk menampilkan nama departemen dan nama seksi
         return $this->db->table('dt_temuan_patrol')
             ->select('
         dt_temuan_patrol.*,
@@ -61,34 +61,25 @@ class Model_data_patrol extends Model
     }
     public function get_dataAllAuditor()
     {
-        return $this->db->table('users')
-            ->select('users.id AS user_id, master_data_karyawan.id AS karyawan_id, users.npk, users.role, master_data_karyawan.nama')
-            ->join('master_data_karyawan', 'users.npk = master_data_karyawan.npk', 'left')
-            ->whereIn('users.role', [1, 2])
+        return $this->db->table('master_data_karyawan')
             ->get()
             ->getResultArray();
-
-        // return $this->db->table('users')->whereIn('role', [1, 2])->get()->getResultArray();
     }
     public function get_dataAllAuditee()
     {
-        return $this->db->table('users')
-            ->select('users.id AS user_id, master_data_karyawan.id AS karyawan_id, users.npk, users.role, master_data_karyawan.nama')
-            ->join('master_data_karyawan', 'users.npk = master_data_karyawan.npk', 'left')
-            ->where('users.role', 3)
+        return $this->db->table('master_data_karyawan')
             ->get()
             ->getResultArray();
-
-        // return $this->db->table('users')->whereIn('role', [1, 2])->get()->getResultArray();
     }
     public function getAlldata_user()
     {
-        #todo : join tabel dari users dengan master_data_karyawan menggunakan npk
-        return $this->db->table('users')
-            ->join('master_data_karyawan', 'users.npk = master_data_karyawan.npk', 'left')
+        return $this->db->table('users u')
+            ->select('u.id as user_id, u.npk, u.role, m.nama, m.id_departement, m.id_section')
+            ->join('master_data_karyawan m', 'u.npk = m.npk', 'left')
             ->get()
             ->getResultArray();
     }
+
     public function getDept_byId($id)
     {
         return $this->db->table('dt_dept')
@@ -98,7 +89,7 @@ class Model_data_patrol extends Model
     }
     public function getDeptSectionbyId($npk)
     {
-        #todo : ambil departemen dan seksi berdasarkan npk dari users tabel dan join ke master_data_karyawan nantinya dari situ ambil id_dept_user lalu cari seksi berdasarkan id_dept_user
+        # ambil departemen dan seksi berdasarkan npk dari users tabel dan join ke master_data_karyawan nantinya dari situ ambil id_dept_user lalu cari seksi berdasarkan id_dept_user
         return $this->db->table('master_data_karyawan')
             ->join('users', 'master_data_karyawan.npk = users.npk', 'left')
             ->join('departement', 'master_data_karyawan.id_departement = departement.id_departement', 'left')
@@ -124,20 +115,9 @@ class Model_data_patrol extends Model
     {
         return $this->db->table('section')->join('departement', 'section.id_departement = departement.id_departement', 'left')->where('id_section', $id_section)->get()->getRowArray();
     }
-    public function insert_dept($data)
-    {
-        return $this->db->table('dt_dept')->insert($data);
-    }
-    public function insert_seksi($data)
-    {
-        return $this->db->table('dt_seksi')->insert($data);
-    }
-    public function update_dept($data)
-    {
-        return $this->db->table('dt_dept')
-            ->where('id_dept', $data['id_dept'])
-            ->update($data);
-    }
+
+
+
     public function test_query()
     {
         return $this->db->table('master_data_karyawan')
@@ -151,6 +131,7 @@ class Model_data_patrol extends Model
         # data akan tampil berdasarkan nama auditor, nama seksi nya yang sama
         $user       = $this->getdata_karyawan_byUsername(session()->get('npk'));
         $id_section = $user['id_section'];
+        $id_departement = $user['id_departement'];
 
         return $this->db->table('dt_temuan_patrol')
             ->select('
@@ -173,13 +154,59 @@ class Model_data_patrol extends Model
     ')
             ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
             ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
-            ->join('users', 'dt_temuan_patrol.id_auditor = users.id', 'left')
+
+            ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
+            ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+            ->groupStart()
+            // ->where('dt_temuan_patrol.id_section', $id_section)
+            // Hilangkan Command jika ingin munculkan data untuk pic section
+            // ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section)
+            // ->orWhere('dt_temuan_patrol.id_departement', $id_departement)
+            // Hilangkan Command jika ingin munculkan data untuk pic section
+            // ->orWhere('dt_temuan_patrol.pic_action_departement_id', $id_departement)
+            ->where('dt_temuan_patrol.id_auditor', session()->get('npk'))
+            ->groupEnd()
+            ->get()
+            ->getResultArray();
+    }
+    public function get_data_patrolByAuditee()
+    {
+        $user       = $this->getdata_karyawan_byUsername(session()->get('npk'));
+        $id_section = $user['id_section'];
+        $id_departement = $user['id_departement'];
+
+        return $this->db->table('dt_temuan_patrol')
+            ->select('
+        dt_temuan_patrol.*,
+
+       
+        departement.departement AS departement_name,
+
+        
+        section.section AS section_name,
+
+      
+        pic_dept.departement AS pic_departement_name,
+
+  
+        pic_sec.section AS pic_section_name,
+
+      
+        dt_temuan_patrol.nama_auditor AS auditor_name
+    ')
+            ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
+            ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
+            // ->join('users', 'dt_temuan_patrol.id_auditor = users.id', 'left')
             ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
             ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
             ->groupStart()
             ->where('dt_temuan_patrol.id_section', $id_section)
-            ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section)
-            ->orWhere('dt_temuan_patrol.id_auditor', session()->get('user_id'))
+            // Hilangkan Command jika ingin munculkan data untuk pic section
+            // ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section)
+            ->orWhere('dt_temuan_patrol.id_departement', $id_departement)
+            // Hilangkan Command jika ingin munculkan data untuk pic section
+            // ->orWhere('dt_temuan_patrol.pic_action_departement_id', $id_departement)
+
             ->groupEnd()
             ->get()
             ->getResultArray();
@@ -258,33 +285,6 @@ class Model_data_patrol extends Model
             ])
             ->get()
             ->getResultArray();
-
-        //     return $this->db->table('dt_temuan_patrol')
-        //         ->select("
-        //             dt_temuan_patrol.id_departement,
-        //             departement.departement AS nama_departemen,
-        //    MONTH(tanggal_patrol) AS bulan,status,
-        //             dt_temuan_patrol.id_section,
-        //             section.section AS nama_section,
-
-        //             SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_count,
-        //             SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_count,
-        //             SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_count,
-        //             COUNT(*) AS total
-        //         ")
-        //         ->join('departement', 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
-        //         ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
-        //         ->where('dt_temuan_patrol.id_departement', $idDept) // ✅ filter departement
-        //         ->where('YEAR(tanggal_patrol)', $year)
-        //         ->groupBy([
-        //             'dt_temuan_patrol.id_departement',
-        //             'departement.departement',
-        //             'dt_temuan_patrol.id_section',
-        //             'MONTH(tanggal_patrol), status',
-        //             'section.section'
-        //         ])
-        //         ->get()
-        //         ->getResultArray();
     }
 
     public function filterDept2($idDept)
@@ -379,7 +379,7 @@ class Model_data_patrol extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function get_Alldata_schedule()
+    public function get_Alldata_schedule($id_section, $id_dept)
     {
         return $this->db->table('dt_schedule')
             ->select("
@@ -391,9 +391,42 @@ class Model_data_patrol extends Model
     ")
             ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
             ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
-            ->get()->getResultArray();
+            ->where('dt_schedule.id_dept !=', $id_dept)
+            ->where('dt_schedule.id_section !=', $id_section)
+            ->get()
+            ->getResultArray();
     }
-    public function get_Alldata_scheduleByUser($id_auditor)
+    public function get_Alldata_scheduleByUser()
+    {
+        return $this->db->table('dt_schedule')
+            ->select("
+            section.section,
+            departement.departement,
+            dt_schedule.tanggal_patrol,
+            dt_schedule.id_schedule,
+            dt_schedule.tanggal_actual,
+            STRING_AGG(master_data_karyawan.nama, ', ') AS nama_auditor
+        ")
+            ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
+            ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
+            ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
+            ->join('master_data_karyawan', 'master_data_karyawan.npk = dt_daftar_hadir.npk', 'left')
+            ->where('dt_daftar_hadir.role', 2)
+            ->where('dt_daftar_hadir.type_data', 'plan')
+            ->groupBy("
+            section.section,
+            departement.departement,
+            dt_schedule.tanggal_patrol,
+            dt_schedule.id_schedule,
+            dt_schedule.tanggal_actual
+        ")
+            ->get()
+            ->getResultArray();
+    }
+
+
+
+    public function get_Alldata_scheduleByAuditee($id_section, $id_departement)
     {
 
         return $this->db->table('dt_schedule')
@@ -407,60 +440,72 @@ class Model_data_patrol extends Model
     ")
             ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
             ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
-            ->join('users', 'users.id = dt_schedule.id_auditor', 'left')
-            ->join('master_data_karyawan', 'master_data_karyawan.npk = users.npk', 'left')
-            ->where('dt_schedule.id_auditor', $id_auditor)
+            // ->join('users', 'users.id = dt_schedule.id_auditor', 'left')
+            ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
+            ->join('master_data_karyawan', 'master_data_karyawan.npk = dt_daftar_hadir.npk', 'left')
+            ->where('dt_schedule.id_section', $id_section)
+
+            ->orWhere('dt_schedule.id_dept', $id_departement)
             ->get()
             ->getResultArray();
     }
     public function get_data_daftar_hadir($id)
     {
-        return $this->db->table('dt_daftar_hadir')
-            ->select("
-            dt_daftar_hadir.id_sign,
+        # Kalau ada plan & actual untuk npk + id_schedule sama, dan keterangan keduanya = 1 → yang muncul plan saja.
+        $builder = $this->db->table('dt_daftar_hadir dh');
+
+        $builder->select("
+        dh.id_sign,
         section.section,
         departement.departement,
         dt_schedule.tanggal_patrol,
         dt_schedule.id_schedule,
-        dt_daftar_hadir.npk,
-        dt_daftar_hadir.signed_at,
-        dt_daftar_hadir.keterangan,
-        dt_daftar_hadir.role,
-        master_data_karyawan.nama
-    ")
-            ->join('dt_schedule', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
+        dh.npk,
+        dh.signed_at,
+        dh.keterangan,
+        dh.role,
+        master_data_karyawan.nama,
+        dh.type_data
+    ");
+
+        $builder->join('dt_schedule', 'dh.id_schedule = dt_schedule.id_schedule', 'left')
             ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
             ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
-            ->join('users', 'users.id = dt_schedule.id_auditor', 'left')
-            ->join('master_data_karyawan', 'master_data_karyawan.npk = dt_daftar_hadir.npk', 'left')
-            ->where('dt_daftar_hadir.id_schedule', $id)
-            ->get()
-            ->getResultArray();
+            ->join('master_data_karyawan', 'master_data_karyawan.npk = dh.npk', 'left')
+            ->where('dh.id_schedule', $id);
+
+        # Buang baris "actual" jika ada pasangan "plan" untuk npk+schedule yang sama,
+        # dan keduanya keterangan=1
+        $builder->where("
+        NOT (
+            dh.type_data = 'actual'
+            AND dh.keterangan = 1
+            AND EXISTS (
+                SELECT 1
+                FROM dt_daftar_hadir d2
+                WHERE d2.id_schedule = dh.id_schedule
+                  AND d2.npk = dh.npk
+                  AND d2.keterangan = 1
+                  AND d2.type_data = 'plan'
+            )
+        )
+    ", null, false);
+
+        return $builder->get()->getResultArray();
     }
-    public function get_Alldata_schedulebyID($id_auditor)
-    {
-        return $this->db->table('dt_schedule')
-            ->select("
-        section.section,
-        departement.departement,
-        dt_schedule.tanggal_patrol,
-        dt_schedule.id_schedule,
-        dt_schedule.tanggal_actual
-    ")
-            ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
-            ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
-            ->where('id_auditor', $id_auditor)
-            ->get()->getResultArray();
-    }
+
+
     public function get_deptSection_bySchedule($schedule_id)
     {
         return $this->db->table('dt_schedule')
             ->select("
-    dt_schedule.id_dept,
-    departement.departement,
-    dt_schedule.id_section,
+        dt_schedule.id_dept,
+        departement.departement,
+        dt_schedule.id_section,
         section.section,
-        master_data_karyawan.nama
+        ks.nama AS kepala_seksi,
+        kd.nama AS kepala_departement,
+        COALESCE(ks.nama, kd.nama) AS nama_penanggung_jawab
     ")
             ->join(
                 'departement',
@@ -472,10 +517,18 @@ class Model_data_patrol extends Model
                 'section.id_section = dt_schedule.id_section',
                 'left'
             )
+            # Kepala Seksi
             ->join(
-                'master_data_karyawan',
-                "master_data_karyawan.id_section = dt_schedule.id_section
-         AND master_data_karyawan.jabatan = 'Kepala Seksi'",
+                'master_data_karyawan AS ks',
+                "ks.id_section = dt_schedule.id_section
+         AND ks.jabatan = 'Kepala Seksi'",
+                'left'
+            )
+            # Kepala Departemen
+            ->join(
+                'master_data_karyawan AS kd',
+                "kd.id_departement = dt_schedule.id_dept
+         AND kd.jabatan = 'Kepala Departemen'",
                 'left'
             )
             ->where('dt_schedule.id_schedule', $schedule_id)

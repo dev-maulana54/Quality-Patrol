@@ -14,7 +14,8 @@ class AttendanceModel extends Model
         'signature_path',
         'signed_at',
         'id_schedule',
-        'keterangan'
+        'keterangan',
+        'type_data'
     ];
     protected $useTimestamps    = false;
 }
