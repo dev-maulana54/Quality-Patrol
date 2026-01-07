@@ -211,13 +211,13 @@ class Model_data_patrol extends Model
             ->get()
             ->getResultArray();
     }
-    public function chartByYearNow()
+    public function chartByYear()
     {
-        $year = date('Y');
+
 
         return $this->db->table('dt_temuan_patrol')
             ->select("MONTH(tanggal_patrol) AS bulan, status, COUNT(*) AS total")
-            ->where('YEAR(tanggal_patrol)', $year)
+
             ->groupBy('MONTH(tanggal_patrol), status')
             ->orderBy('MONTH(tanggal_patrol)', 'ASC')
             ->get()
@@ -238,31 +238,31 @@ class Model_data_patrol extends Model
     {
         return $this->db->table('dt_temuan_patrol')
             ->select("
-                dt_temuan_patrol.id_section,
-                departement.departement AS nama_departemen,
-                section.section AS nama_section,
-                SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_count,
-                SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_count,
-                SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_count,
-                COUNT(*) AS total
-            ")
+        dt_temuan_patrol.id_section,
+        departement.departement AS nama_departemen,
+        section.section AS nama_section,
+        SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_count,
+        SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_count,
+        SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_count,
+        SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_count,
+        COUNT(*) AS total
+    ", false)
             ->join('departement', 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
             ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
-            ->where('tanggal_patrol >=', $startDate)
-            ->where('tanggal_patrol <=', $endDate)
+            ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) >=", "CONVERT(date, '{$startDate}', 106)", false)
+            ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) <=", "CONVERT(date, '{$endDate}', 106)", false)
             ->groupBy([
                 'dt_temuan_patrol.id_section',
                 'departement.departement',
                 'section.section'
             ])
-            // ->orderBy('nama_area', 'ASC')
             ->get()
             ->getResultArray();
     }
 
     public function filterDept($idDept)
     {
-        $year = date('Y');
+
         return $this->db->table('dt_temuan_patrol')
             ->select("
     dt_temuan_patrol.id_departement,
@@ -271,11 +271,13 @@ class Model_data_patrol extends Model
     SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_total,
     SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_total,
     SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_total,
+    SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_total,
+    
      COUNT(*) AS total
     ")
             ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
             ->where('dt_temuan_patrol.id_departement', $idDept)
-            ->where('YEAR(tanggal_patrol)', $year)
+
             ->groupBy([
 
                 'MONTH(tanggal_patrol)',
@@ -289,33 +291,33 @@ class Model_data_patrol extends Model
 
     public function filterDept2($idDept)
     {
-        $tahun = date('Y');
+
         return $this->db->table('dt_temuan_patrol')
             ->select("
      SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_total,
             SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_total,
             SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_total,
+            SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_total,
     ")
             ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
             ->where('dt_temuan_patrol.id_departement', $idDept)
-            ->where('YEAR(tanggal_patrol)', $tahun)
+
             ->get()->getRowArray();
     }
 
     public function chartByYearNow2()
     {
-        $year = date('Y');
+        // $year = date('Y');
 
         return $this->db->table('dt_temuan_patrol')
             ->select("status, COUNT(*) AS total")
-            ->where('YEAR(tanggal_patrol)', $year)
+            // ->where('YEAR(tanggal_patrol)', $year)
             ->groupBy('status')
             ->get()
             ->getResultArray();
     }
     public function totalTemuanByArea()
     {
-        $tahun = date('Y');
 
         return $this->db->table('dt_temuan_patrol')
             ->select("
@@ -327,12 +329,13 @@ class Model_data_patrol extends Model
             SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS total_open,
             SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS total_progress,
             SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS total_close,
+            SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS total_cancel,
 
             COUNT(dt_temuan_patrol.id_temuan_patrol) AS total_temuan
         ")
             ->join('departement', 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
             ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
-            ->where('YEAR(dt_temuan_patrol.tanggal_patrol)', $tahun)
+
             ->groupBy([
                 'dt_temuan_patrol.id_section',
                 'departement.departement',
@@ -411,7 +414,7 @@ class Model_data_patrol extends Model
             ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
             ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
             ->join('master_data_karyawan', 'master_data_karyawan.npk = dt_daftar_hadir.npk', 'left')
-            ->where('dt_daftar_hadir.role', 2)
+
             ->where('dt_daftar_hadir.type_data', 'plan')
             ->groupBy("
             section.section,

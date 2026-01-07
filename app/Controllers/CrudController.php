@@ -682,6 +682,7 @@ class CrudController extends BaseController
             $open = array_fill(0, 12, 0);
             $inprogress = array_fill(0, 12, 0);
             $close = array_fill(0, 12, 0);
+            $cancel = array_fill(0, 12, 0);
             $total = array_fill(0, 12, 0);
 
             foreach ($dataRaw as $row) {
@@ -693,6 +694,8 @@ class CrudController extends BaseController
                     $inprogress[$bulan] = (int)$row['total'];
                 } elseif ($row['status'] == '1') {
                     $close[$bulan] = (int)$row['total'];
+                } elseif ($row['status'] == '4') {
+                    $cancel[$bulan] = (int)$row['total'];
                 }
 
                 $total[$bulan] += (int)$row['total'];
@@ -704,6 +707,7 @@ class CrudController extends BaseController
                 'open' => $open,         // array numeric (12 nilai)
                 'progress' => $inprogress, // array numeric (12 nilai)
                 'close' => $close,       // array numeric (12 nilai)
+                'cancel' => $cancel,     // array numeric (12 nilai)
                 'total' => $total        // array numeric (12 nilai) -> spline
             ];
 
@@ -723,6 +727,7 @@ class CrudController extends BaseController
             $open       = [];
             $progress   = [];
             $close      = [];
+            $cancel     = [];
             $total      = [];
             $all = [];
 
@@ -733,6 +738,7 @@ class CrudController extends BaseController
                 $open[]     = (int) ($row['open_count'] ?? 0);
                 $progress[] = (int) ($row['progress_count'] ?? 0);
                 $close[]    = (int) ($row['close_count'] ?? 0);
+                $cancel[]   = (int) ($row['cancel_count'] ?? 0);
                 $total[]    = (int) ($row['total'] ?? 0);
             }
 
@@ -741,6 +747,7 @@ class CrudController extends BaseController
                 'open_count'       => $open,
                 'progress_count'   => $progress,
                 'close_count'      => $close,
+                'cancel_count'     => $cancel,
                 'total'      => $total,
             ]);
         } else if ($keterangan  == 'getData_filter_dept') {
@@ -750,6 +757,7 @@ class CrudController extends BaseController
             $open = array_fill(0, 12, 0);
             $inprogress = array_fill(0, 12, 0);
             $close = array_fill(0, 12, 0);
+            $cancel = array_fill(0, 12, 0);
             $total = array_fill(0, 12, 0);
 
 
@@ -764,6 +772,8 @@ class CrudController extends BaseController
                     $inprogress[$bulan] = (int)$row['total'];
                 } elseif ($row['status'] == '1') {
                     $close[$bulan] = (int)$row['total'];
+                } elseif ($row['status'] == '4') {
+                    $cancel[$bulan] = (int)$row['total'];
                 }
 
                 $total[$bulan] += (int)$row['total'];
@@ -776,9 +786,11 @@ class CrudController extends BaseController
                 'open'       => $open,
                 'progress'   => $inprogress,
                 'close'      => $close,
+                'cancel'     => $cancel,
                 'open_count' => $count_temuan['open_total'],
                 'progress_count' => $count_temuan['progress_total'],
                 'close_count' => $count_temuan['close_total'],
+                'cancel_count' => $count_temuan['cancel_total']
             ]);
         } else if ($keterangan == 'tambah_schedule_patrol') { # function untuk menambah schedule patrol
             $tanggal_patrol = $this->request->getPost('tanggal_patrol');

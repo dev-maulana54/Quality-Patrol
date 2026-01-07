@@ -277,6 +277,14 @@
             touch-action: none;
             /* biar tidak scroll pas teken */
         }
+
+        .light-theme .submenu-item {
+            color: #2c3e50;
+        }
+
+        .light-theme .submenu-item.active {
+            color: #e2e2e2ff;
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -345,6 +353,10 @@
                     <i class="bi bi-person-check"></i>
                     <span>Data Auditee</span>
                 </a>
+                <a href="<?= base_url('temuan_patrol/list_daftar_hadir') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Daftar Hadir</span>
+                </a>
             </div>
         </div>
         <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
@@ -359,9 +371,7 @@
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
-                <i class="bi bi-building"></i> <span>Departemen</span>
-            </a>
+
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -380,161 +390,92 @@
 
         <div class="table-card text-light">
 
+            <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">Temuan Patrol</h3>
 
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <div class="nav nav-pills patrol-tabs" role="tablist">
+                    <button type="button" class="btn btn-primary cekalert" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
+                        <i class="bi bi-plus-circle"></i> Tambah Temuan</button>
 
-                        <button class="nav-link active"
-                            data-bs-toggle="pill"
-                            data-bs-target="#tab-temuan"
-                            type="button">
-                            Data Temuan Patrol
-                        </button>
-
-                        <button class="nav-link"
-                            data-bs-toggle="pill"
-                            data-bs-target="#tab-hadir"
-                            type="button">
-                            Daftar Hadir
-                        </button>
-
-                    </div>
                 </div>
+
             </div>
+            <div class="table-responsive mt-3">
+                <div id="filterContainer" class="row g-2 mb-3"></div>
+                <table id="auditTable" class="table table-striped table-hover" style=" font-size: 13px;">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal Patrol</th>
+                            <th>Auditor</th>
+                            <th>Auditee</th>
+                            <th>Area / Proses</th>
+                            <th width="150">Temuan</th>
+                            <th width="150">Analisa Penyebab</th>
+                            <th>Action</th>
+                            <th>PIC Action</th>
+                            <th>Due Date</th>
+                            <th class="text-center">Download Evidence</th>
+                            <th class="text-center">Status</th>
+                            <th width="100" class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($data_patrol as $index => $patrol) : ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= $patrol['tanggal_patrol'] ?></td>
+                                <td><?= $patrol['nama_auditor'] ?></td>
+                                <td><?= $patrol['nama_auditee'] ?></td>
+                                <td><?= $patrol['section_name'] ?></td>
+                                <td><?= $patrol['deskripsi_temuan'] ?></td>
+                                <td><?= $patrol['analisa_penyebab'] ?></td>
+                                <td><?= $patrol['action'] ?></td>
+                                <td><?= $patrol['pic_section_name'] ?></td>
+                                <td><?= $patrol['due_date'] ?></td>
+                                <td class="text-center">
+                                    <?php if ($patrol['nama_file']) : ?>
+                                        <button type="button" class="btn btn-secondary btnDownload" data-namafile="<?= $patrol['nama_file'] ?>"><i class="bi bi-download"></i>
+                                        <?php endif; ?>
+                                        </button>
+                                </td>
+                                <td class="text-center">
+                                    <?php if ($patrol['status'] == 1) : ?>
+                                        <span class="badge bg-success">Close</span>
+                                    <?php elseif ($patrol['status'] == 2) : ?>
+                                        <span class="badge bg-warning">In Progress</span>
+                                    <?php elseif ($patrol['status'] == 4) : ?>
+                                        <span class="badge bg-danger">Cancel</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary">Open</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php if ($role === 'user') : ?>
+
+                                        <button type="button" class="btn btn-info fill_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_fillData" data-id="<?= $patrol['id_temuan_patrol'] ?>" data-npkauditor="<?= $patrol['id_auditor'] ?>"><i class="bi bi-journal-arrow-down"></i> Fill</button>
+
+                                    <?php endif; ?>
+                                    <?php if ($role === 'Administrator') : ?>
+                                        <button type="button" class="btn btn-info mt-2 edit_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_editdata" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-pencil-fill"></i> Edit</button>
+                                        <button type="button" class="btn btn-danger mt-2 hapus_data btn-sm" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-trash3-fill"></i> Hapus</button>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
 
 
 
         </div>
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="tab-temuan">
-                <div class="table-card mt-2">
-                    <div class="card-header">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">Temuan Patrol</h3>
 
-                            <button type="button" class="btn btn-primary cekalert" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
-                                <i class="bi bi-plus-circle"></i> Tambah Temuan</button>
-
-                        </div>
-
-                    </div>
-                    <div class="table-responsive mt-3">
-                        <div id="filterContainer" class="row g-2 mb-3"></div>
-                        <table id="auditTable" class="table table-striped table-hover" style=" font-size: 13px;">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tanggal Patrol</th>
-                                    <th>Auditor</th>
-                                    <th>Auditee</th>
-                                    <th>Area / Proses</th>
-                                    <th width="150">Temuan</th>
-                                    <th width="150">Analisa Penyebab</th>
-                                    <th>Action</th>
-                                    <th>PIC Action</th>
-                                    <th>Due Date</th>
-                                    <th class="text-center">Download Evidence</th>
-                                    <th class="text-center">Status</th>
-                                    <th width="100" class="text-center"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($data_patrol as $index => $patrol) : ?>
-                                    <tr>
-                                        <td><?= $index + 1 ?></td>
-                                        <td><?= $patrol['tanggal_patrol'] ?></td>
-                                        <td><?= $patrol['nama_auditor'] ?></td>
-                                        <td><?= $patrol['nama_auditee'] ?></td>
-                                        <td><?= $patrol['section_name'] ?></td>
-                                        <td><?= $patrol['deskripsi_temuan'] ?></td>
-                                        <td><?= $patrol['analisa_penyebab'] ?></td>
-                                        <td><?= $patrol['action'] ?></td>
-                                        <td><?= $patrol['pic_section_name'] ?></td>
-                                        <td><?= $patrol['due_date'] ?></td>
-                                        <td class="text-center">
-                                            <?php if ($patrol['nama_file']) : ?>
-                                                <button type="button" class="btn btn-secondary btnDownload" data-namafile="<?= $patrol['nama_file'] ?>"><i class="bi bi-download"></i>
-                                                <?php endif; ?>
-                                                </button>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if ($patrol['status'] == 1) : ?>
-                                                <span class="badge bg-success">Close</span>
-                                            <?php elseif ($patrol['status'] == 2) : ?>
-                                                <span class="badge bg-warning">In Progress</span>
-                                            <?php elseif ($patrol['status'] == 4) : ?>
-                                                <span class="badge bg-danger">Cancel</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-secondary">Open</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if ($role === 'user') : ?>
-
-                                                <button type="button" class="btn btn-info fill_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_fillData" data-id="<?= $patrol['id_temuan_patrol'] ?>" data-npkauditor="<?= $patrol['id_auditor'] ?>"><i class="bi bi-journal-arrow-down"></i> Fill</button>
-
-                                            <?php endif; ?>
-                                            <?php if ($role === 'Administrator') : ?>
-                                                <button type="button" class="btn btn-info mt-2 edit_data btn-sm" data-bs-toggle="modal" data-bs-target="#modal_editdata" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-pencil-fill"></i> Edit</button>
-                                                <button type="button" class="btn btn-danger mt-2 hapus_data btn-sm" data-id="<?= $patrol['id_temuan_patrol'] ?>"><i class="bi bi-trash3-fill"></i> Hapus</button>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="tab-hadir">
-                <div class="table-card mt-2">
-                    <div class="card-header">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">Daftar Hadir</h3>
-
-                        </div>
-
-                    </div>
-                    <div class="table-responsive mt-3">
-                        <div id="filterContainer" class="row g-2 mb-3"></div>
-                        <table id="tabel_daftar_hadir" class="table table-striped table-hover" style=" font-size: 13px;">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tanggal Patrol</th>
-                                    <th>Auditor</th>
-
-                                    <th>Area / Proses</th>
-
-                                    <th width="100" class="text-center"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($data_schedule as $index => $schedule) : ?>
-                                    <tr>
-                                        <td><?= $index + 1 ?></td>
-
-                                        <td><?= $schedule['tanggal_patrol'] ?></td>
-                                        <td><?= $schedule['nama_auditor'] ?></td>
-                                        <td><?= $schedule['section'] ?></td>
-
-
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success sign_hadir btn-sm" data-id="<?= $schedule['id_schedule'] ?>"><i class="bi bi-journal-arrow-down"></i> Absen </button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
     </div><!-- Footer -->

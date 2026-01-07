@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css" rel="stylesheet">
     <!-- Select2 Bootstrap-5 Theme -->
-    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.6.2/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
     <link href="<?= base_url() ?>assets/css/summary.css" rel="stylesheet">
 
@@ -178,6 +178,10 @@
         .submenu-item:hover {
             background: rgba(255, 255, 255, 0.08);
         }
+
+        .light-theme .submenu-item {
+            color: #2c3e50;
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -250,6 +254,10 @@
                     <i class="bi bi-person-check"></i>
                     <span>Data Auditee</span>
                 </a>
+                <a href="<?= base_url('temuan_patrol/list_daftar_hadir') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Daftar Hadir</span>
+                </a>
             </div>
         </div>
 
@@ -267,9 +275,7 @@
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
-                <i class="bi bi-building"></i> <span>Departemen</span>
-            </a>
+
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -306,7 +312,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <h3 class="card-title">Temuan Tahun <span id="tahun_xxx">{tahun}</span></h3>
+                            <h3 class="card-title">Temuan Tahun <span id="tahun_xxx">{All}</span></h3>
                             <div class="chart-container">
                                 <div id="clustered_chart"></div>
                             </div>
@@ -330,7 +336,10 @@
                                 <i class="bi bi-calendar-check" style="color: #0d6efd;"></i> Tanggal Akhir </label>
                             <input type="text" class="form-control tanggalpickr" id="endDate" placeholder="Pilih tanggal akhir" readonly>
                         </div>
-                        <div class="col-md-4"><button class="btn btn-primary w-100" id="filterBtn_rangeDate" style="height: 50px;"> <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter </button>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary w-100" id="filterBtn_rangeDate" style="height: 50px;">
+                                <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter
+                            </button>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -360,12 +369,13 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4"><button class="btn btn-primary w-100 btn-sm" id="filterBtn_dept" style="height: 50px;"> <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter </button>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary w-100 btn-sm" id="filterBtn_dept" style="height: 50px;"> <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter </button>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-4">
-                            <h3 class="card-title">Temuan Area {Area}</h3>
+                            <h3 class="card-title">Temuan Area <span id="area_xxx">{All}</span></h3>
                             <div class="chart-container">
                                 <div id="piechart_area"></div>
                             </div>
@@ -418,8 +428,6 @@
 
 
     <script>
-        document.getElementById("tahun_xxx").textContent = new Date().getFullYear();
-
         function renderClusteredChart() {
             const isDarkTheme_chart = localStorage.getItem("theme") === "dark";
 
@@ -483,19 +491,25 @@
                         type: 'column',
                         name: 'Open',
                         data: <?= json_encode($open) ?>,
-                        color: '#ff9eaa'
+                        color: '#686B6F'
                     },
                     {
                         type: 'column',
                         name: 'In Progress',
                         data: <?= json_encode($progress) ?>,
-                        color: '#00a2ff'
+                        color: '#FFC005'
                     },
                     {
                         type: 'column',
                         name: 'Close',
                         data: <?= json_encode($close) ?>,
                         color: '#57e26e'
+                    },
+                    {
+                        type: 'column',
+                        name: 'Cancel',
+                        data: <?= json_encode($cancel) ?>,
+                        color: '#DF3545'
                     },
                     {
                         type: 'spline',
@@ -573,7 +587,13 @@
                         stacking: 'percent',
                         dataLabels: {
                             enabled: true,
-                            format: '{point.percentage:.0f}%',
+                            formatter: function() {
+                                // jangan tampilkan kalau 0%
+                                if (this.percentage === 0) {
+                                    return null;
+                                }
+                                return Highcharts.numberFormat(this.percentage, 0) + '%';
+                            },
                             style: {
                                 color: isDarkTheme_chart ? "#ffffff" : "#000000"
                             }
@@ -588,28 +608,34 @@
 
                         name: 'Open',
                         data: <?= json_encode($total_open) ?>,
-                        color: '#ff9eaa'
+                        color: '#686B6F'
 
                     },
 
                     {
                         name: 'In Progress',
                         data: <?= json_encode($total_progress) ?>,
-                        color: '#00a2ff'
+                        color: '#FFC005'
                     },
                     {
                         name: 'Close',
                         data: <?= json_encode($total_close) ?>,
                         color: '#57e26e'
+                    },
+                    {
+                        name: 'Cancel',
+                        data: <?= json_encode($total_cancel) ?>,
+                        color: '#DF3545'
                     }
                 ]
             });
 
 
             const colors = {
-                open: isDarkTheme_chart ? '#ff7676' : '#FFA3A3',
-                progress: isDarkTheme_chart ? '#0094cc' : '#00A8E8',
+                open: isDarkTheme_chart ? '#686B6F' : '#686B6F',
+                progress: isDarkTheme_chart ? '#FFC005' : '#eccb67ff',
                 close: isDarkTheme_chart ? '#4cd964' : '#66FF99',
+                cancel: isDarkTheme_chart ? '#DF3545' : '#ff6b6b',
                 text: isDarkTheme_chart ? '#ffffff' : '#4b3d3dff'
             };
             Highcharts.chart('piechart_area', {
@@ -687,6 +713,11 @@
                             name: 'Close',
                             y: <?= json_encode($t_progress_year) ?>,
                             color: colors.close
+                        },
+                        {
+                            name: 'Cancel',
+                            y: <?= json_encode($t_cancel_year) ?>,
+                            color: colors.cancel
                         }
                     ]
                 }]
@@ -760,17 +791,22 @@
                 series: [{
                         name: 'Open',
                         data: <?= json_encode($open) ?>,
-                        color: isDarkTheme_chart ? '#ff8a8a' : '#FFA3A3'
+                        color: isDarkTheme_chart ? '#686B6F' : '#686B6F'
                     },
                     {
                         name: 'In Progress',
                         data: <?= json_encode($progress) ?>,
-                        color: isDarkTheme_chart ? '#008cc7' : '#00A8E8'
+                        color: isDarkTheme_chart ? '#FFC005' : '#eccb67ff'
                     },
                     {
                         name: 'Close',
                         data: <?= json_encode($close) ?>,
                         color: isDarkTheme_chart ? '#4cd964' : '#66FF99'
+                    },
+                    {
+                        name: 'Cancel',
+                        data: <?= json_encode($cancel) ?>,
+                        color: isDarkTheme_chart ? '#DF3545' : '#ff6b6b'
                     }
                 ]
             });
@@ -786,8 +822,7 @@
             altInput: true,
             altFormat: "d F Y",
             // defaultDate: "today",
-            minDate: "2020-01-01",
-            maxDate: new Date().fp_incr(365), // 1 year from today
+
             allowInput: false,
             clickOpens: true,
             theme: "material_blue",
@@ -857,8 +892,11 @@
                         if (Array.isArray(response.close)) {
                             chart.series[2].setData(response.close, false);
                         }
+                        if (Array.isArray(response.cancel)) {
+                            chart.series[3].setData(response.cancel, false);
+                        }
                         if (Array.isArray(response.total)) {
-                            chart.series[3].setData(response.total, false);
+                            chart.series[4].setData(response.total, false);
                         }
                         // redraw sekali saja
                         chart.redraw();
@@ -913,6 +951,9 @@
                         }
                         if (Array.isArray(response.close_count)) {
                             chart.series[2].setData(response.close_count, false);
+                        }
+                        if (Array.isArray(response.cancel_count)) {
+                            chart.series[3].setData(response.cancel_count, false);
                         }
 
                         // if (Array.isArray(response.total)) {
@@ -971,6 +1012,9 @@
                             if (Array.isArray(response.close)) {
                                 barChart.series[2].setData(response.close, false);
                             }
+                            if (Array.isArray(response.cancel)) {
+                                barChart.series[3].setData(response.cancel, false);
+                            }
                             barChart.redraw();
                         } catch (e) {
                             console.error('Gagal update series bar chart:', e);
@@ -985,24 +1029,62 @@
                     if (!pieChart) {
                         console.warn('Chart "piechart_area" tidak ditemukan.');
                     } else {
-                        try {
-                            pieChart.series[0].setData([{
-                                    name: 'Open',
-                                    y: parseInt(response.open_count) || 0
-                                },
-                                {
-                                    name: 'In Progress',
-                                    y: parseInt(response.progress_count) || 0
-                                },
-                                {
-                                    name: 'Close',
-                                    y: parseInt(response.close_count) || 0
+
+                        // (opsional tapi disarankan) pastikan pie punya dataLabels & legend aktif
+                        pieChart.update({
+                            plotOptions: {
+                                pie: {
+                                    showInLegend: true,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.name}: {point.percentage:.1f}%'
+                                    }
                                 }
-                            ], true); // true = langsung redraw
-                        } catch (e) {
-                            console.error('Gagal update pie chart:', e);
+                            },
+                            legend: {
+                                enabled: true
+                            }
+                        }, false);
+
+                        // Build data + HILANGKAN yang y=0 (ini yang bikin % & legend ikut gak tampil)
+                        var pieData = [{
+                                name: 'Open',
+                                y: parseInt(response.open_count) || 0,
+                                color: '#686B6F' // sesuaikan dengan warna Open kamu
+                            },
+                            {
+                                name: 'In Progress',
+                                y: parseInt(response.progress_count) || 0,
+                                color: '#FFC005'
+                            },
+                            {
+                                name: 'Close',
+                                y: parseInt(response.close_count) || 0,
+                                color: '#66ff99'
+                            },
+                            {
+                                name: 'Cancel',
+                                y: parseInt(response.cancel_count) || 0,
+                                color: '#ff6666'
+                            }
+                        ].filter(p => p.y > 0);
+
+
+                        // Kalau semua 0, kasih fallback biar chart gak kosong (opsional)
+                        if (pieData.length === 0) {
+                            pieData = [{
+                                name: 'No Data',
+                                y: 1,
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: false
+                            }];
                         }
+
+                        pieChart.series[0].setData(pieData, true); // true = redraw
                     }
+
 
 
                 },

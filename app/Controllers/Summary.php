@@ -35,12 +35,13 @@ class Summary extends BaseController
         $data['role'] = session()->get('role');
 
         // DATA PER BULAN TAHUN SEKARANG
-        $dataRaw = $this->dataPatrol->chartByYearNow();
+        $dataRaw = $this->dataPatrol->chartByYear();
 
         // Siapkan array default 12 bulan
         $open = array_fill(0, 12, 0);
         $inprogress = array_fill(0, 12, 0);
         $close = array_fill(0, 12, 0);
+        $cancel = array_fill(0, 12, 0);
         $total = array_fill(0, 12, 0);
 
         foreach ($dataRaw as $row) {
@@ -52,6 +53,8 @@ class Summary extends BaseController
                 $inprogress[$bulan] = (int)$row['total'];
             } elseif ($row['status'] == '1') {
                 $close[$bulan] = (int)$row['total'];
+            } elseif ($row['status'] == '4') {
+                $cancel[$bulan] = (int)$row['total'];
             }
 
             $total[$bulan] += (int)$row['total'];
@@ -60,6 +63,7 @@ class Summary extends BaseController
         $data['open'] = $open;
         $data['progress'] = $inprogress;
         $data['close'] = $close;
+        $data['cancel'] = $cancel;
         $data['total'] = $total;
 
         // data chart temuan quality patrol area
@@ -70,6 +74,7 @@ class Summary extends BaseController
         $all = [];
         $total_open = [];
         $total_progress = [];
+        $total_cancel = [];
         $total_close = [];
 
         foreach ($dataSection as $row2) {
@@ -82,6 +87,7 @@ class Summary extends BaseController
             $total_open[] = $row2['total_open'];
             $total_progress[] = $row2['total_progress'];
             $total_close[] = $row2['total_close'];
+            $total_cancel[] = $row2['total_cancel'];
             // $status[] = $row2['status'];
             // Kalau perlu nama departement:
             // $row['nama_departement']
@@ -93,6 +99,7 @@ class Summary extends BaseController
         $data['total_open'] = $total_open;
         $data['total_progress'] = $total_progress;
         $data['total_close'] = $total_close;
+        $data['total_cancel'] = $total_cancel;
 
 
         // SEMUA DATA PER TAHUN NYA
@@ -100,6 +107,7 @@ class Summary extends BaseController
         $t_open_year = [];
         $t_progress_year = [];
         $t_close_year = [];
+        $t_cancel_year = [];
         foreach ($datayear as $dy) {
 
             if ($dy['status'] == '3') {
@@ -108,12 +116,15 @@ class Summary extends BaseController
                 $t_progress_year[] = $dy['total'];
             } elseif ($dy['status'] == '1') {
                 $t_close_year[] = $dy['total'];
+            } elseif ($dy['status'] == '4') {
+                $t_cancel_year[] = $dy['total'];
             }
         }
 
         $data['t_open_year']     = array_sum($t_open_year);
         $data['t_progress_year'] = array_sum($t_progress_year);
         $data['t_close_year']    = array_sum($t_close_year);
+        $data['t_cancel_year']    = array_sum($t_cancel_year);
 
         return view('users/summary', $data);
     }

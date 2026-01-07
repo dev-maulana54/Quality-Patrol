@@ -79,6 +79,17 @@ class Temuan_patrol extends BaseController
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
         return view('users/temuan_auditee', $data);
     }
+    public function daftar_hadir()
+    {
+        $data['title'] = "Daftar Hadir | Quality Patrol";
+        $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        $data['nama'] = $getdata_user['nama'];
+        $data['role'] = session()->get('role');
+
+        $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
+
+        return view('users/daftar_hadir', $data);
+    }
     public function preview($file)
     {
         $data['namafile'] = $file;
