@@ -264,6 +264,14 @@
             color: #fff;
             box-shadow: 0 4px 12px rgba(13, 110, 253, .35);
         }
+
+        .light-theme .submenu-item {
+            color: #2c3e50;
+        }
+
+        .light-theme .submenu-item.active {
+            color: #e2e2e2ff;
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -332,6 +340,10 @@
                     <i class="bi bi-person-check"></i>
                     <span>Data Auditee</span>
                 </a>
+                <a href="<?= base_url('temuan_patrol/list_daftar_hadir') ?>" class="submenu-item">
+                    <i class="bi bi-person-check"></i>
+                    <span>Daftar Hadir</span>
+                </a>
             </div>
         </div>
         <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
@@ -346,9 +358,7 @@
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_department') ?>" class="menu-item" data-page="department">
-                <i class="bi bi-building"></i> <span>Departemen</span>
-            </a>
+
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">

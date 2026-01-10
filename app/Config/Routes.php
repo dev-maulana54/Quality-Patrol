@@ -18,6 +18,7 @@ $routes->get('summary', 'Summary::index');
 #Route Temuan Patrol
 $routes->get('temuan_patrol/auditor', 'Temuan_patrol::index');
 $routes->get('temuan_patrol/auditee', 'Temuan_patrol::auditee');
+$routes->get('temuan_patrol/list_daftar_hadir', 'Temuan_patrol::daftar_hadir');
 $routes->get('temuan_patrol/daftar_hadir/(:num)', 'Temuan_patrol::sign/$1');
 #Route Schedule Audit Patrol
 $routes->get('schedule', 'Schedule::index');
