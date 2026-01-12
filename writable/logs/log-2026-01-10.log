@@ -1,0 +1,1269 @@
+DEBUG - 2026-01-10 11:55:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:55:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 11:55:33 --> CodeIgniter\Exceptions\InvalidArgumentException: "henkaten" is not a valid database connection group.
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\Config.php on line 70.
+ 1 APPPATH\Models\Model_data_patrol.php(15): CodeIgniter\Database\Config::connect()
+ 2 APPPATH\Controllers\CrudController.php(14): App\Models\Model_data_patrol->__construct()
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\CrudController->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 11:55:44 --> CodeIgniter\Exceptions\InvalidArgumentException: "henkaten" is not a valid database connection group.
+[Method: POST, Route: CrudController/authLogin]
+in SYSTEMPATH\Database\Config.php on line 70.
+ 1 APPPATH\Models\Model_data_patrol.php(15): CodeIgniter\Database\Config::connect()
+ 2 APPPATH\Controllers\CrudController.php(14): App\Models\Model_data_patrol->__construct()
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\CrudController->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 11:56:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:56:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:56:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:58:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 11:58:11 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: temuan_patrol/auditor]
+in APPPATH\Controllers\Temuan_patrol.php on line 31.
+ 1 APPPATH\Controllers\Temuan_patrol.php(31): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 11:59:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 11:59:18 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 31.
+ 1 APPPATH\Controllers\Summary.php(31): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 11:59:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:59:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 11:59:22 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: summary]
+in APPPATH\Controllers\Summary.php on line 31.
+ 1 APPPATH\Controllers\Summary.php(31): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Summary->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 11:59:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:59:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:59:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:59:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 11:59:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:06:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:06:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:07:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:07:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:27:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:28:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:28:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:28:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:34:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:34:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:34:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:47:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:49:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 13:49:34 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 13:49:34 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 13:49:34 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 13:49:34 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 13:49:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:51:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:51:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 13:51:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:09:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:11:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:15:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:18:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:18:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:19:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:19:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:20:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:20:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:20:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:20:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:20:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:20:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 14:20:50 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:20:50 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:20:50 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:20:50 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:21:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:22:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:22:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:23:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:23:09 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+CRITICAL - 2026-01-10 14:23:09 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+[Method: GET, Route: schedule]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(116): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Schedule.php(31): App\Models\Model_data_patrol->getAlldata_karyawan()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Schedule->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:23:09 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(116): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Schedule.php(31): App\Models\Model_data_patrol->getAlldata_karyawan()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Schedule->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:23:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:23:53 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+CRITICAL - 2026-01-10 14:23:53 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+[Method: GET, Route: schedule]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(116): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Schedule.php(31): App\Models\Model_data_patrol->getAlldata_karyawan()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Schedule->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:23:53 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(116): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Schedule.php(31): App\Models\Model_data_patrol->getAlldata_karyawan()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Schedule->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:25:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:25:00 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:25:00 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: schedule]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(387): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Schedule.php(34): App\Models\Model_data_patrol->get_dataSchedule_area()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Schedule->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:25:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(387): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Schedule.php(34): App\Models\Model_data_patrol->get_dataSchedule_area()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Schedule->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:28:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:28:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:28:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:28:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:28:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:28:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:28:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:29:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:29:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:29:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:29:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:29:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:29:18 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+CRITICAL - 2026-01-10 14:29:18 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(110): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\CrudController.php(233): App\Models\Model_data_patrol->getSeksi_byDeptId()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:29:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(110): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\CrudController.php(233): App\Models\Model_data_patrol->getSeksi_byDeptId()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+ERROR - 2026-01-10 14:29:29 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+CRITICAL - 2026-01-10 14:29:29 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(110): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\CrudController.php(233): App\Models\Model_data_patrol->getSeksi_byDeptId()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:29:29 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(110): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\CrudController.php(233): App\Models\Model_data_patrol->getSeksi_byDeptId()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+ERROR - 2026-01-10 14:29:32 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+CRITICAL - 2026-01-10 14:29:32 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(110): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\CrudController.php(233): App\Models\Model_data_patrol->getSeksi_byDeptId()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:29:32 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(110): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\CrudController.php(233): App\Models\Model_data_patrol->getSeksi_byDeptId()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:31:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:31:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:31:25 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+CRITICAL - 2026-01-10 14:31:25 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Controllers\CrudController.php(939): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\CrudController.php(952): App\Controllers\CrudController->App\Controllers\{closure}()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:31:25 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.master_data_karyawan'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Controllers\CrudController.php(939): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\CrudController.php(952): App\Controllers\CrudController->App\Controllers\{closure}()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:32:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:32:55 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:32:55 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditee]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(457): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(67): App\Models\Model_data_patrol->get_Alldata_scheduleByAuditee()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:32:55 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(457): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(67): App\Models\Model_data_patrol->get_Alldata_scheduleByAuditee()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:33:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:33:09 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:33:09 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/list_daftar_hadir]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(431): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(89): App\Models\Model_data_patrol->get_Alldata_scheduleByUser()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:33:09 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(431): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(89): App\Models\Model_data_patrol->get_Alldata_scheduleByUser()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:35:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 14:35:48 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:48 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:48 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:48 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:48 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:35:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:35:55 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:35:55 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditee]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(457): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(67): App\Models\Model_data_patrol->get_Alldata_scheduleByAuditee()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:35:55 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(457): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(67): App\Models\Model_data_patrol->get_Alldata_scheduleByAuditee()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:35:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 14:35:58 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:58 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:58 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:58 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 14:35:58 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:35:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:35:59 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:35:59 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditor]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(174): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(39): App\Models\Model_data_patrol->get_data_patrolByIdSection()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:35:59 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(174): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(39): App\Models\Model_data_patrol->get_data_patrolByIdSection()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:38:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:38:40 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:38:40 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditor]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(174): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(39): App\Models\Model_data_patrol->get_data_patrolByIdSection()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:38:40 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(174): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(39): App\Models\Model_data_patrol->get_data_patrolByIdSection()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:39:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:39:33 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:39:33 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditor]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(402): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(42): App\Models\Model_data_patrol->get_Alldata_schedule()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:39:33 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(402): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(42): App\Models\Model_data_patrol->get_Alldata_schedule()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:40:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 14:40:09 --> ErrorException: Undefined array key "departement"
+[Method: GET, Route: temuan_patrol/auditor]
+in APPPATH\Views\users\temuan_patrol.php on line 675.
+ 1 APPPATH\Views\users\temuan_patrol.php(675): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\temuan_patrol.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render()
+ 5 APPPATH\Controllers\Temuan_patrol.php(45): view()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:41:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:42:43 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:42:43 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(541): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\CrudController.php(890): App\Models\Model_data_patrol->get_deptSection_bySchedule()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:42:43 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(541): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\CrudController.php(890): App\Models\Model_data_patrol->get_deptSection_bySchedule()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:48:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:48:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 14:48:45 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:48:45 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Controllers\CrudController.php(394): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:48:45 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Controllers\CrudController.php(394): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+ERROR - 2026-01-10 14:48:57 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 14:48:57 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Controllers\CrudController.php(394): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:48:57 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Controllers\CrudController.php(394): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+ERROR - 2026-01-10 14:49:36 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+CRITICAL - 2026-01-10 14:49:36 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(61): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\CrudController.php(399): App\Models\Model_data_patrol->get_Alldata_seksi()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 14:49:36 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.section'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(61): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\CrudController.php(399): App\Models\Model_data_patrol->get_Alldata_seksi()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 14:52:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:52:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:52:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:53:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:59:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:59:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 14:59:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 14:59:12 --> CodeIgniter\Database\Exceptions\DatabaseException: You must use the "set" method to update an entry.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseBuilder.php on line 2575.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2495): CodeIgniter\Database\BaseBuilder->validateUpdate()
+ 2 APPPATH\Controllers\CrudController.php(610): CodeIgniter\Database\BaseBuilder->update()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:07:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:07:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:07:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:07:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:07:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:09:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:09:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:09:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 15:09:36 --> CodeIgniter\Database\Exceptions\DatabaseException: You must use the "set" method to update an entry.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseBuilder.php on line 2575.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2495): CodeIgniter\Database\BaseBuilder->validateUpdate()
+ 2 APPPATH\Controllers\CrudController.php(614): CodeIgniter\Database\BaseBuilder->update()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:18:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 15:18:44 --> CodeIgniter\Database\Exceptions\DatabaseException: You must use the "set" method to update an entry.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseBuilder.php on line 2575.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2495): CodeIgniter\Database\BaseBuilder->validateUpdate()
+ 2 APPPATH\Controllers\CrudController.php(614): CodeIgniter\Database\BaseBuilder->update()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:28:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-10 15:28:29 --> CodeIgniter\Database\Exceptions\DatabaseException: You must use the "set" method to update an entry.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseBuilder.php on line 2575.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2495): CodeIgniter\Database\BaseBuilder->validateUpdate()
+ 2 APPPATH\Controllers\CrudController.php(614): CodeIgniter\Database\BaseBuilder->update()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:33:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:33:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:51:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 15:51:25 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:51:25 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:51:25 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:51:25 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:51:25 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:51:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 15:51:27 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 15:51:27 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/daftar_hadir/17]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(504): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(52): App\Models\Model_data_patrol->get_data_daftar_hadir()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->sign()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 15:51:27 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(504): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(52): App\Models\Model_data_patrol->get_data_daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->sign()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:58:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:58:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:58:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:59:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:59:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 15:59:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 15:59:20 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:59:20 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:59:20 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:59:20 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 15:59:20 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 15:59:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:00:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:01:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 16:01:50 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 16:01:50 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditee]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(459): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(67): App\Models\Model_data_patrol->get_Alldata_scheduleByAuditee()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 16:01:50 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(459): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(67): App\Models\Model_data_patrol->get_Alldata_scheduleByAuditee()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 16:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 16:02:17 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 16:02:17 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: GET, Route: temuan_patrol/auditee]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Models\Model_data_patrol.php(218): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 APPPATH\Controllers\Temuan_patrol.php(74): App\Models\Model_data_patrol->get_data_patrolByAuditee()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 16:02:17 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Models\Model_data_patrol.php(218): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 APPPATH\Controllers\Temuan_patrol.php(74): App\Models\Model_data_patrol->get_data_patrolByAuditee()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->auditee()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 16:02:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:03:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:04:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:05:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:05:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:05:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:06:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:06:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:06:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-01-10 16:06:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 16:06:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 16:06:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 16:06:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+WARNING - 2026-01-10 16:06:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\users\daftar_hadir.php on line 429.
+ 1 SYSTEMPATH\View\View.php(226): include('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\app\\Views\\users\\daftar_hadir.php')
+ 2 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('users/daftar_hadir', [], true)
+ 4 APPPATH\Controllers\Temuan_patrol.php(91): view('users/daftar_hadir', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Temuan_patrol->daftar_hadir()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Temuan_patrol))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 16:06:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:07:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:07:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:11:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:11:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:12:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:12:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:12:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:12:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:12:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:12:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-10 16:12:59 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 16:12:59 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Controllers\CrudController.php(492): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 16:12:59 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Controllers\CrudController.php(492): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+ERROR - 2026-01-10 16:13:12 --> [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+CRITICAL - 2026-01-10 16:13:12 --> CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+[Method: POST, Route: sendData]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 2 APPPATH\Controllers\CrudController.php(492): CodeIgniter\Database\SQLSRV\Builder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+CRITICAL - 2026-01-10 16:13:12 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'new_quality_patrol.dbo.departement'.
+in SYSTEMPATH\Database\SQLSRV\Connection.php on line 505.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\SQLSRV\Connection->execute()
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 3 SYSTEMPATH\Database\SQLSRV\Builder.php(656): CodeIgniter\Database\BaseConnection->query()
+ 4 APPPATH\Controllers\CrudController.php(492): CodeIgniter\Database\SQLSRV\Builder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CrudController->sendData()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController()
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest()
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb()
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Program Files\\Ampps\\www\\new-quality-patrol\\public\\index.php')
+DEBUG - 2026-01-10 16:15:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:15:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:18:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:21:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:23:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:25:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:26:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:27:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:27:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:27:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:27:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-10 16:27:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

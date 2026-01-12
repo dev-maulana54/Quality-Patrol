@@ -597,6 +597,13 @@
                                 <img id="viewerImg" alt="Preview detail">
                             </div>
                         </div>
+                        <div class="form-group mt-2" id="row_keterangan_auditor">
+                            <label for="keterangan_auditor" class="form-label">
+                                <!-- todo : carikan saya icon yang cocok untuk kata status -->
+                                <i class="bi bi-collection"></i> Keterangan Auditor </label>
+                            <textarea class="form-control" id="keterangan_auditor" disabled></textarea>
+
+                        </div>
                         <div class="form-group mt-2" id="row_keterangan_cancel2" style="display: none;">
                             <label for="keterangan_cancel" class="form-label">
                                 <!-- todo : carikan saya icon yang cocok untuk kata status -->
@@ -1114,6 +1121,7 @@
         }
         $('.fill_data').click(function() {
             var temuanId = $(this).data('id');
+            $('.previewpdf_fill').css('display', 'none');
             // TODO : Ambil data temuan berdasarkan temuanId menggunakan jquery ajax
             $.ajax({
                 url: '<?= base_url('sendData') ?>',
@@ -1186,6 +1194,7 @@
                     $('#fill_action').val(response.temuan.action);
                     $('#fill_pic_action').html(response.temuan.pic_section_name);
                     $('#keterangan_cancel2').html(response.temuan.keterangan_cancel);
+                    $('#keterangan_auditor').html(response.temuan.keterangan_auditor);
                     // todo : saya ingin melakukan set value pada tanggal due date dengan plugin airdatepicker
                     const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
                     $('#fill_due_date').val(response.temuan.due_date);
@@ -1389,152 +1398,152 @@
                 .replace(/\//g, '_') // ganti / jadi _
                 .replace(/=+$/, ''); // hapus semua =
         }
-        <?php if ($role === 'user') : ?>
-            const fileInput = document.getElementById('fileUpload');
-            const previewContainer = document.getElementById('imagePreview');
 
-            const viewer = document.getElementById('imgViewer');
-            const stage = document.getElementById('viewerStage');
-            const vImg = document.getElementById('viewerImg');
-            const zoomInBtn = document.getElementById('zoomInBtn');
-            const zoomOutBtn = document.getElementById('zoomOutBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const closeBtn = document.getElementById('closeBtn');
+        const fileInput = document.getElementById('fileUpload');
+        const previewContainer = document.getElementById('imagePreview');
 
-            // State zoom & pan
-            let scale = 1,
-                minScale = 0.5,
-                maxScale = 6;
-            let originX = 0,
-                originY = 0; // posisi pan (px)
-            let isPanning = false,
-                startX = 0,
-                startY = 0;
+        const viewer = document.getElementById('imgViewer');
+        const stage = document.getElementById('viewerStage');
+        const vImg = document.getElementById('viewerImg');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const closeBtn = document.getElementById('closeBtn');
 
-            function renderTransform() {
-                vImg.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+        // State zoom & pan
+        let scale = 1,
+            minScale = 0.5,
+            maxScale = 6;
+        let originX = 0,
+            originY = 0; // posisi pan (px)
+        let isPanning = false,
+            startX = 0,
+            startY = 0;
+
+        function renderTransform() {
+            vImg.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+        }
+
+        function openViewer(src) {
+            vImg.src = src;
+            // reset transform
+            scale = 1;
+            originX = 0;
+            originY = 0;
+            renderTransform();
+            viewer.classList.add('active');
+            viewer.setAttribute('aria-hidden', 'false');
+
+            // opsional: masuk fullscreen
+            if (viewer.requestFullscreen) {
+                viewer.requestFullscreen().catch(() => {});
             }
+        }
 
-            function openViewer(src) {
-                vImg.src = src;
-                // reset transform
-                scale = 1;
-                originX = 0;
-                originY = 0;
-                renderTransform();
-                viewer.classList.add('active');
-                viewer.setAttribute('aria-hidden', 'false');
-
-                // opsional: masuk fullscreen
-                if (viewer.requestFullscreen) {
-                    viewer.requestFullscreen().catch(() => {});
-                }
-            }
-
-            function closeViewer() {
-                viewer.classList.remove('active');
-                viewer.setAttribute('aria-hidden', 'true');
-                if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
-            }
+        function closeViewer() {
+            viewer.classList.remove('active');
+            viewer.setAttribute('aria-hidden', 'true');
+            if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+        }
 
 
-            // Buat thumbnail dari gambar yang dipilih / yang sudah ada di dalam PreviewContainer
+        // Buat thumbnail dari gambar yang dipilih / yang sudah ada di dalam PreviewContainer
 
-            fileInput.addEventListener('change', () => {
-                previewContainer.innerHTML = '';
-                Array.from(fileInput.files).forEach(file => {
-                    if (!file.type.startsWith('image/')) return;
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.alt = file.name;
-                        img.style.cursor = 'pointer'; // biar kelihatan bisa diklik
-                        img.addEventListener('click', () => openViewer(img.src));
-                        previewContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                });
+        fileInput.addEventListener('change', () => {
+            previewContainer.innerHTML = '';
+            Array.from(fileInput.files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = file.name;
+                    img.style.cursor = 'pointer'; // biar kelihatan bisa diklik
+                    img.addEventListener('click', () => openViewer(img.src));
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
             });
+        });
 
 
-            // Zoom via tombol
-            zoomInBtn.addEventListener('click', () => {
-                scale = Math.min(maxScale, scale * 1.2);
-                renderTransform();
-            });
-            zoomOutBtn.addEventListener('click', () => {
-                scale = Math.max(minScale, scale / 1.2);
-                renderTransform();
-            });
-            resetBtn.addEventListener('click', () => {
-                scale = 1;
-                originX = 0;
-                originY = 0;
-                renderTransform();
-            });
-            closeBtn.addEventListener('click', closeViewer);
+        // Zoom via tombol
+        zoomInBtn.addEventListener('click', () => {
+            scale = Math.min(maxScale, scale * 1.2);
+            renderTransform();
+        });
+        zoomOutBtn.addEventListener('click', () => {
+            scale = Math.max(minScale, scale / 1.2);
+            renderTransform();
+        });
+        resetBtn.addEventListener('click', () => {
+            scale = 1;
+            originX = 0;
+            originY = 0;
+            renderTransform();
+        });
+        closeBtn.addEventListener('click', closeViewer);
 
-            // Zoom via scroll
-            stage.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                const delta = Math.sign(e.deltaY);
-                const prevScale = scale;
-                scale = delta > 0 ? Math.max(minScale, scale / 1.1) : Math.min(maxScale, scale * 1.1);
+        // Zoom via scroll
+        stage.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = Math.sign(e.deltaY);
+            const prevScale = scale;
+            scale = delta > 0 ? Math.max(minScale, scale / 1.1) : Math.min(maxScale, scale * 1.1);
 
-                // Zoom ke arah posisi kursor (sedikit math biar nyaman)
-                const rect = vImg.getBoundingClientRect();
-                const cx = e.clientX - rect.left - rect.width / 2;
-                const cy = e.clientY - rect.top - rect.height / 2;
-                originX -= cx * (scale - prevScale);
-                originY -= cy * (scale - prevScale);
+            // Zoom ke arah posisi kursor (sedikit math biar nyaman)
+            const rect = vImg.getBoundingClientRect();
+            const cx = e.clientX - rect.left - rect.width / 2;
+            const cy = e.clientY - rect.top - rect.height / 2;
+            originX -= cx * (scale - prevScale);
+            originY -= cy * (scale - prevScale);
 
-                renderTransform();
-            }, {
-                passive: false
-            });
+            renderTransform();
+        }, {
+            passive: false
+        });
 
-            // Drag untuk pan (desktop & mobile)
-            const startPan = (x, y) => {
-                isPanning = true;
-                startX = x - originX;
-                startY = y - originY;
-            };
-            const movePan = (x, y) => {
-                if (!isPanning) return;
-                originX = x - startX;
-                originY = y - startY;
-                renderTransform();
-            };
-            const endPan = () => {
-                isPanning = false;
-            };
+        // Drag untuk pan (desktop & mobile)
+        const startPan = (x, y) => {
+            isPanning = true;
+            startX = x - originX;
+            startY = y - originY;
+        };
+        const movePan = (x, y) => {
+            if (!isPanning) return;
+            originX = x - startX;
+            originY = y - startY;
+            renderTransform();
+        };
+        const endPan = () => {
+            isPanning = false;
+        };
 
-            stage.addEventListener('pointerdown', e => {
-                e.preventDefault();
-                stage.setPointerCapture(e.pointerId);
-                startPan(e.clientX, e.clientY);
-            });
-            stage.addEventListener('pointermove', e => movePan(e.clientX, e.clientY));
-            stage.addEventListener('pointerup', endPan);
-            stage.addEventListener('pointercancel', endPan);
-            stage.addEventListener('dblclick', () => { // toggle zoom 1x <-> 2x
-                scale = scale > 1 ? 1 : 2;
-                originX = 0;
-                originY = 0;
-                renderTransform();
-            });
+        stage.addEventListener('pointerdown', e => {
+            e.preventDefault();
+            stage.setPointerCapture(e.pointerId);
+            startPan(e.clientX, e.clientY);
+        });
+        stage.addEventListener('pointermove', e => movePan(e.clientX, e.clientY));
+        stage.addEventListener('pointerup', endPan);
+        stage.addEventListener('pointercancel', endPan);
+        stage.addEventListener('dblclick', () => { // toggle zoom 1x <-> 2x
+            scale = scale > 1 ? 1 : 2;
+            originX = 0;
+            originY = 0;
+            renderTransform();
+        });
 
-            // Tutup bila klik area kosong (bukan gambar)
-            viewer.addEventListener('click', (e) => {
-                const clickedStage = e.target === viewer || e.target === stage;
-                if (clickedStage) closeViewer();
-            });
-            // Esc untuk tutup
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && viewer.classList.contains('active')) closeViewer();
-            });
-        <?php endif; ?>
+        // Tutup bila klik area kosong (bukan gambar)
+        viewer.addEventListener('click', (e) => {
+            const clickedStage = e.target === viewer || e.target === stage;
+            if (clickedStage) closeViewer();
+        });
+        // Esc untuk tutup
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && viewer.classList.contains('active')) closeViewer();
+        });
+
         <?php if ($role == 1 || $role == 2) : ?>
             $('.edit_data').click(function() {
                 var temuanId = $(this).data('id');

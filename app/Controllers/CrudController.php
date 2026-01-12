@@ -263,7 +263,7 @@ class CrudController extends BaseController
         } else if ($keterangan == 'find_auditee_by_seksi') {
             # ambil nama seksi yang jabatannya Kepala Seksi berdasarkan id_seksi di master_data_karyawan dan ambil
             $id_seksi = $this->request->getPost('id_seksi');
-            $auditee = $this->dataPatrol->db->table('master_data_karyawan')
+            $auditee = $this->dataPatrol->henkaten->table('master_data_karyawan')
                 ->where('id_section', $id_seksi)
                 ->where('jabatan', 'Kepala Seksi')
                 ->get()
@@ -381,15 +381,15 @@ class CrudController extends BaseController
             $temuan = $this->dataPatrol->db->table('dt_temuan_patrol')
                 ->select('
         dt_temuan_patrol.*,
-        departement.departement AS departement_name,
-        section.section AS section_name,
+        d.departement AS departement_name,
+        s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
     ')
-                ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
-                ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
-                ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-                ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+                ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
+                ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
+                ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
+                ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
                 ->where('dt_temuan_patrol.id_temuan_patrol', $id_temuan)
                 ->get()
                 ->getRowArray();
@@ -446,7 +446,8 @@ class CrudController extends BaseController
                     'finding_evidence' => $temuan['evidence_file'],
                     'status_temuan' => $temuan['status'],
                     'due_date' => $temuan['due_date'],
-                    'keterangan_cancel' => $temuan['keterangan_cancel']
+                    'keterangan_cancel' => $temuan['keterangan_cancel'],
+                    'keterangan_auditor' => $temuan['keterangan_auditor']
                 ];
                 return $this->response->setJSON(['temuan' => $kirim]);
             } else if (session()->get('role') == 'user') {
@@ -467,7 +468,8 @@ class CrudController extends BaseController
                     'due_date' => $temuan['due_date'],
                     'status_temuan' => $temuan['status'],
                     'finding_evidence' => $temuan['evidence_file'],
-                    'keterangan_cancel' => $temuan['keterangan_cancel']
+                    'keterangan_cancel' => $temuan['keterangan_cancel'],
+                    'keterangan_auditor' => $temuan['keterangan_auditor']
                 ];
                 return $this->response->setJSON(['temuan' => $kirim]);
             } else {
@@ -479,15 +481,15 @@ class CrudController extends BaseController
             $temuan = $this->dataPatrol->db->table('dt_temuan_patrol')
                 ->select('
         dt_temuan_patrol.*,
-        departement.departement AS departement_name,
-        section.section AS section_name,
+        d.departement AS departement_name,
+        s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
     ')
-                ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
-                ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
-                ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-                ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+                ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
+                ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
+                ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
+                ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
                 ->where('dt_temuan_patrol.id_temuan_patrol', $id_temuan)
                 ->get()
                 ->getRowArray();
@@ -545,7 +547,8 @@ class CrudController extends BaseController
                 'due_date' => $temuan['due_date'],
                 'status_temuan' => $temuan['status'],
                 'finding_evidence' => $temuan['evidence_file'],
-                'keterangan_cancel' => $temuan['keterangan_cancel']
+                'keterangan_cancel' => $temuan['keterangan_cancel'],
+                'keterangan_auditor' => $temuan['keterangan_auditor']
             ];
             return $this->response->setJSON(['temuan' => $kirim]);
         } else if ($keterangan == 'update_temuan_patrol') {
@@ -561,6 +564,11 @@ class CrudController extends BaseController
                 if ($status !== null && $status !== '') {   # biar '0' juga bisa
                     $data_update['status'] = $status;
                     $data_update['keterangan_cancel'] = $this->request->getPost('keterangan_cancel') ?: null;
+                    $data_update['deskripsi_temuan'] = $this->request->getPost('deskripsi_temuan');
+                    $data_update['keterangan_auditor'] =  $this->request->getPost('keterangan_auditor');
+                } else {
+
+                    $data_update['deskripsi_temuan'] = $this->request->getPost('deskripsi_temuan');
                 }
             } else {
                 # ==== HANDLE FILE ====
@@ -892,9 +900,9 @@ class CrudController extends BaseController
 
             $data = [
                 'id_departement' => $get_data['id_dept'],
-                'departement' => $get_data['departement'],
+                'departement' => $get_data['departement_name'],
                 'id_section' => $get_data['id_section'],
-                'section'     => $get_data['section'],
+                'section'     => $get_data['section_name'],
                 'nama'        => $get_data['nama_penanggung_jawab'] ?? 'Nama Atasan tidak ada',
             ];
 
@@ -933,7 +941,7 @@ class CrudController extends BaseController
                 $npkList = array_values(array_unique(array_filter($npkList)));
                 if (empty($npkList)) return '';
 
-                $karyawan = $this->dataPatrol->db->table('master_data_karyawan')
+                $karyawan = $this->dataPatrol->henkaten->table('master_data_karyawan')
                     ->select('npk, nama')
                     ->whereIn('npk', $npkList)
                     ->get()
