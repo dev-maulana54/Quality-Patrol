@@ -1,0 +1,39 @@
+# =========================
+# CI4 Writable
+# =========================
+/writable/*
+!/writable/.gitkeep
+
+# =========================
+# Cache & Logs
+# =========================
+*.log
+*.cache
+
+# =========================
+# Environment
+# =========================
+.env
+.env.*
+
+# =========================
+# Dependencies
+# =========================
+/vendor/
+
+# =========================
+# Uploads
+# =========================
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+/public/assets/uploads/*
+!/public/assets/uploads/.gitkeep
+
+# =========================
+# IDE & OS
+# =========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
