@@ -7,10 +7,12 @@ use CodeIgniter\Model;
 class Model_data_patrol extends Model
 {
     protected $db;
+    protected $henkaten;
     public function __construct()
     {
         parent::__construct();
         $this->db = \Config\Database::connect(); # koneksi database manual
+        $this->henkaten = \Config\Database::connect('second'); # koneksi database kedua
     }
 
     public function getdata_userbyNPK($npk)
@@ -23,7 +25,7 @@ class Model_data_patrol extends Model
     public function getdata_karyawan_byUsername($npk = null)
     {
         $npk = $npk ?? session()->get('npk');
-        return $this->db->table('master_data_karyawan')
+        return $this->henkaten->table('master_data_karyawan')
             ->where('npk', $npk)
             ->get()
             ->getRowArray();
@@ -35,47 +37,49 @@ class Model_data_patrol extends Model
         return $this->db->table('dt_temuan_patrol')
             ->select('
         dt_temuan_patrol.*,
-        departement.departement AS departement_name,
-        section.section AS section_name,
+        d.departement AS departement_name,
+        s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
     ')
-            ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
-            ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
-            ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-            ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
             ->get()
             ->getResultArray();
     }
     public function get_Alldata_dept()
     {
-        return $this->db->table('departement')
+        return $this->henkaten->table('departement')
+            ->where('keterangan_update', 'new')
             ->get()
             ->getResultArray();
     }
     public function get_Alldata_seksi()
     {
-        return $this->db->table('section')
+        return $this->henkaten->table('section')
             ->get()
             ->getResultArray();
     }
     public function get_dataAllAuditor()
     {
-        return $this->db->table('master_data_karyawan')
+        return $this->henkaten->table('master_data_karyawan')
             ->get()
             ->getResultArray();
     }
     public function get_dataAllAuditee()
     {
-        return $this->db->table('master_data_karyawan')
+        return $this->henkaten->table('master_data_karyawan')
             ->get()
             ->getResultArray();
     }
     public function getAlldata_user()
     {
-        return $this->db->table('users u')
+        return $this->db
+            ->table('new_quality_patrol.dbo.users u')
             ->select('u.id as user_id, u.npk, u.role, m.nama, m.id_departement, m.id_section')
-            ->join('master_data_karyawan m', 'u.npk = m.npk', 'left')
+            ->join('henkaten_assy_dev.dbo.master_data_karyawan m', 'u.npk = m.npk', 'left')
             ->get()
             ->getResultArray();
     }
@@ -90,30 +94,37 @@ class Model_data_patrol extends Model
     public function getDeptSectionbyId($npk)
     {
         # ambil departemen dan seksi berdasarkan npk dari users tabel dan join ke master_data_karyawan nantinya dari situ ambil id_dept_user lalu cari seksi berdasarkan id_dept_user
-        return $this->db->table('master_data_karyawan')
-            ->join('users', 'master_data_karyawan.npk = users.npk', 'left')
-            ->join('departement', 'master_data_karyawan.id_departement = departement.id_departement', 'left')
-            ->join('section', 'master_data_karyawan.id_section = section.id_section', 'left')
-            ->where('master_data_karyawan.npk', $npk)
+        return $this->db
+            ->table('henkaten_assy_dev.dbo.master_data_karyawan m')
+            ->select('m.*, u.*, d.*, s.*')
+            ->join('new_quality_patrol.dbo.users u', 'm.npk = u.npk', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'm.id_departement = d.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 'm.id_section = s.id_section', 'left')
+            ->where('m.npk', $npk)
             ->get()
             ->getRowArray();
     }
     public function getSeksi_byDeptId($deptId)
     {
-        return $this->db->table('section')
+        return $this->henkaten->table('section')
             ->where('id_departement', $deptId)
+            ->where('keterangan_update', 'new')
             ->get()
             ->getResultArray();
     }
     public function getAlldata_karyawan()
     {
-        return $this->db->table('master_data_karyawan')
+        return $this->henkaten->table('master_data_karyawan')
             ->get()
             ->getResultArray();
     }
     public function getSection_andDeptByID($id_section)
     {
-        return $this->db->table('section')->join('departement', 'section.id_departement = departement.id_departement', 'left')->where('id_section', $id_section)->get()->getRowArray();
+        return $this->henkaten->table('section')
+            ->join('henkaten_assy_dev.dbo.departement', 'section.id_departement = departement.id_departement', 'left')
+            ->where('id_section', $id_section)
+            ->get()
+            ->getRowArray();
     }
 
 
@@ -137,12 +148,10 @@ class Model_data_patrol extends Model
             ->select('
         dt_temuan_patrol.*,
 
-       
-        departement.departement AS departement_name,
+        d.departement AS departement_name,
 
         
-        section.section AS section_name,
-
+        s.section AS section_name,
       
         pic_dept.departement AS pic_departement_name,
 
@@ -152,11 +161,11 @@ class Model_data_patrol extends Model
       
         dt_temuan_patrol.nama_auditor AS auditor_name
     ')
-            ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
-            ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
 
-            ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-            ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
             ->groupStart()
             // ->where('dt_temuan_patrol.id_section', $id_section)
             // Hilangkan Command jika ingin munculkan data untuk pic section
@@ -180,10 +189,10 @@ class Model_data_patrol extends Model
         dt_temuan_patrol.*,
 
        
-        departement.departement AS departement_name,
+        d.departement AS departement_name,
 
         
-        section.section AS section_name,
+        s.section AS section_name,
 
       
         pic_dept.departement AS pic_departement_name,
@@ -194,11 +203,11 @@ class Model_data_patrol extends Model
       
         dt_temuan_patrol.nama_auditor AS auditor_name
     ')
-            ->join('departement', 'dt_temuan_patrol.id_departement = departement.id_departement', 'left')
-            ->join('section', 'dt_temuan_patrol.id_section = section.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
             // ->join('users', 'dt_temuan_patrol.id_auditor = users.id', 'left')
-            ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-            ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
             ->groupStart()
             ->where('dt_temuan_patrol.id_section', $id_section)
             // Hilangkan Command jika ingin munculkan data untuk pic section
@@ -247,8 +256,8 @@ class Model_data_patrol extends Model
         SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_count,
         COUNT(*) AS total
     ", false)
-            ->join('departement', 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
-            ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement departement', 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
             ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) >=", "CONVERT(date, '{$startDate}', 106)", false)
             ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) <=", "CONVERT(date, '{$endDate}', 106)", false)
             ->groupBy([
@@ -275,7 +284,7 @@ class Model_data_patrol extends Model
     
      COUNT(*) AS total
     ")
-            ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.section section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
             ->where('dt_temuan_patrol.id_departement', $idDept)
 
             ->groupBy([
@@ -299,7 +308,7 @@ class Model_data_patrol extends Model
             SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_total,
             SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_total,
     ")
-            ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.section section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
             ->where('dt_temuan_patrol.id_departement', $idDept)
 
             ->get()->getRowArray();
@@ -322,8 +331,8 @@ class Model_data_patrol extends Model
         return $this->db->table('dt_temuan_patrol')
             ->select("
             dt_temuan_patrol.id_section,
-            departement.departement AS nama_departemen,
-            section.section AS nama_section,
+            d.departement AS nama_departemen,
+            s.section AS nama_section,
 
             -- COUNT per status numeric
             SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS total_open,
@@ -333,13 +342,13 @@ class Model_data_patrol extends Model
 
             COUNT(dt_temuan_patrol.id_temuan_patrol) AS total_temuan
         ")
-            ->join('departement', 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
-            ->join('section', 'section.id_section = dt_temuan_patrol.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'd.id_departement = dt_temuan_patrol.id_departement', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 's.id_section = dt_temuan_patrol.id_section', 'left')
 
             ->groupBy([
                 'dt_temuan_patrol.id_section',
-                'departement.departement',
-                'section.section'
+                'd.departement',
+                's.section'
             ])
             ->get()
             ->getResultArray();
@@ -366,8 +375,8 @@ class Model_data_patrol extends Model
         ds.tanggal_actual,
         ds.id_schedule
     ')
-            ->join('departement d', 'd.id_departement = ds.id_dept', 'left')
-            ->join('section s', 's.id_section = ds.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'd.id_departement = ds.id_dept', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 's.id_section = ds.id_section', 'left')
             ->join('dt_temuan_patrol tp', 'tp.id_dt_schedule = ds.id_schedule', 'left')
             ->like('ds.tanggal_patrol', '/' . $bulan . '/' . $tahun, 'before');
 
@@ -386,14 +395,14 @@ class Model_data_patrol extends Model
     {
         return $this->db->table('dt_schedule')
             ->select("
-        section.section,
-        departement.departement,
+        s.section AS section_name,
+        d.departement AS departement_name,
         dt_schedule.tanggal_patrol,
         dt_schedule.id_schedule,
         dt_schedule.tanggal_actual
     ")
-            ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
-            ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'd.id_departement = dt_schedule.id_dept', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 's.id_section = dt_schedule.id_section', 'left')
             ->where('dt_schedule.id_dept !=', $id_dept)
             ->where('dt_schedule.id_section !=', $id_section)
             ->get()
@@ -403,22 +412,22 @@ class Model_data_patrol extends Model
     {
         return $this->db->table('dt_schedule')
             ->select("
-            section.section,
-            departement.departement,
+            s.section,
+            d.departement,
             dt_schedule.tanggal_patrol,
             dt_schedule.id_schedule,
             dt_schedule.tanggal_actual,
-            STRING_AGG(master_data_karyawan.nama, ', ') AS nama_auditor
+            STRING_AGG(m.nama, ', ') AS nama_auditor
         ")
-            ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
-            ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'd.id_departement = dt_schedule.id_dept', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 's.id_section = dt_schedule.id_section', 'left')
             ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
-            ->join('master_data_karyawan', 'master_data_karyawan.npk = dt_daftar_hadir.npk', 'left')
+            ->join('henkaten_assy_dev.dbo.master_data_karyawan m', 'm.npk = dt_daftar_hadir.npk', 'left')
 
             ->where('dt_daftar_hadir.type_data', 'plan')
             ->groupBy("
-            section.section,
-            departement.departement,
+            s.section,
+            d.departement,
             dt_schedule.tanggal_patrol,
             dt_schedule.id_schedule,
             dt_schedule.tanggal_actual
@@ -434,18 +443,18 @@ class Model_data_patrol extends Model
 
         return $this->db->table('dt_schedule')
             ->select("
-        section.section,
-        departement.departement,
+        s.section,
+        d.departement,
         dt_schedule.tanggal_patrol,
         dt_schedule.id_schedule,
         dt_schedule.tanggal_actual,
-        master_data_karyawan.nama AS nama_auditor
+        m.nama AS nama_auditor
     ")
-            ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
-            ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'd.id_departement = dt_schedule.id_dept', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 's.id_section = dt_schedule.id_section', 'left')
             // ->join('users', 'users.id = dt_schedule.id_auditor', 'left')
             ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
-            ->join('master_data_karyawan', 'master_data_karyawan.npk = dt_daftar_hadir.npk', 'left')
+            ->join('henkaten_assy_dev.dbo.master_data_karyawan m', 'm.npk = dt_daftar_hadir.npk', 'left')
             ->where('dt_schedule.id_section', $id_section)
 
             ->orWhere('dt_schedule.id_dept', $id_departement)
@@ -459,22 +468,22 @@ class Model_data_patrol extends Model
 
         $builder->select("
         dh.id_sign,
-        section.section,
-        departement.departement,
+        s.section,
+        d.departement,
         dt_schedule.tanggal_patrol,
         dt_schedule.id_schedule,
         dh.npk,
         dh.signed_at,
         dh.keterangan,
         dh.role,
-        master_data_karyawan.nama,
+        m.nama,
         dh.type_data
     ");
 
         $builder->join('dt_schedule', 'dh.id_schedule = dt_schedule.id_schedule', 'left')
-            ->join('departement', 'departement.id_departement = dt_schedule.id_dept', 'left')
-            ->join('section', 'section.id_section = dt_schedule.id_section', 'left')
-            ->join('master_data_karyawan', 'master_data_karyawan.npk = dh.npk', 'left')
+            ->join('henkaten_assy_dev.dbo.departement d', 'd.id_departement = dt_schedule.id_dept', 'left')
+            ->join('henkaten_assy_dev.dbo.section s', 's.id_section = dt_schedule.id_section', 'left')
+            ->join('henkaten_assy_dev.dbo.master_data_karyawan m', 'm.npk = dh.npk', 'left')
             ->where('dh.id_schedule', $id);
 
         # Buang baris "actual" jika ada pasangan "plan" untuk npk+schedule yang sama,
@@ -503,33 +512,33 @@ class Model_data_patrol extends Model
         return $this->db->table('dt_schedule')
             ->select("
         dt_schedule.id_dept,
-        departement.departement,
+        d.departement AS departement_name,
         dt_schedule.id_section,
-        section.section,
+        s.section AS section_name,
         ks.nama AS kepala_seksi,
         kd.nama AS kepala_departement,
         COALESCE(ks.nama, kd.nama) AS nama_penanggung_jawab
     ")
             ->join(
-                'departement',
-                'departement.id_departement = dt_schedule.id_dept',
+                'henkaten_assy_dev.dbo.departement d',
+                'd.id_departement = dt_schedule.id_dept',
                 'left'
             )
             ->join(
-                'section',
-                'section.id_section = dt_schedule.id_section',
+                'henkaten_assy_dev.dbo.section s',
+                's.id_section = dt_schedule.id_section',
                 'left'
             )
             # Kepala Seksi
             ->join(
-                'master_data_karyawan AS ks',
+                'henkaten_assy_dev.dbo.master_data_karyawan AS ks',
                 "ks.id_section = dt_schedule.id_section
          AND ks.jabatan = 'Kepala Seksi'",
                 'left'
             )
             # Kepala Departemen
             ->join(
-                'master_data_karyawan AS kd',
+                'henkaten_assy_dev.dbo.master_data_karyawan AS kd',
                 "kd.id_departement = dt_schedule.id_dept
          AND kd.jabatan = 'Kepala Departemen'",
                 'left'

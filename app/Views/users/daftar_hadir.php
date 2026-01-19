@@ -422,7 +422,12 @@
                             <tr>
                                 <td><?= $index + 1 ?></td>
 
-                                <td><?= $schedule['tanggal_patrol'] ?></td>
+                                <td>
+                                    <?php
+                                    setlocale(LC_TIME, 'id_ID.UTF-8', 'Indonesian_indonesia.1252');
+                                    $date = DateTime::createFromFormat('d/m/Y', $schedule['tanggal_patrol']);
+                                    echo strftime('%d %B %Y', $date->getTimestamp());
+                                    ?></td>
                                 <td><?= $schedule['nama_auditor'] ?></td>
                                 <td><?= $schedule['section'] ?></td>
 

@@ -634,6 +634,13 @@
                             </select>
 
                         </div>
+                        <div class="form-group mt-2" id="row_keterangan_auditor2">
+                            <label for="keterangan_auditor2" class="form-label">
+                                <!-- todo : carikan saya icon yang cocok untuk kata status -->
+                                <i class="bi bi-collection"></i> Keterangan Auditor </label>
+                            <textarea class="form-control" placeholder="Leave a comment here" id="keterangan_auditor2" required></textarea>
+
+                        </div>
                         <div class="form-group mt-2" id="row_keterangan_cancel2" style="display: none;">
                             <label for="keterangan_cancel" class="form-label">
                                 <!-- todo : carikan saya icon yang cocok untuk kata status -->
@@ -672,7 +679,10 @@
                                 <select class="" id="list_schedule" style="width:100%;">
                                     <option value="">-- Pilih Schedule --</option>
                                     <?php foreach ($schedule_audit as $sa) : ?>
-                                        <option value="<?= $sa['id_schedule'] ?>">[Tanggal Schedule Patrol : <?= $sa['tanggal_patrol'] ?>] - Dept : <?= $sa['departement'] ?>; Sect : <?= $sa['section'] ?></option>
+                                        <?php setlocale(LC_TIME, 'id_ID.UTF-8', 'Indonesian_indonesia.1252');
+                                        $date = DateTime::createFromFormat('d/m/Y', $sa['tanggal_patrol']);
+                                        ?>
+                                        <option value="<?= $sa['id_schedule'] ?>">[Tanggal Schedule Patrol : <?php echo strftime('%d %B %Y', $date->getTimestamp()); ?>] - Departement : <?= $sa['departement_name'] ?>; Section : <?= $sa['section_name'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
@@ -942,6 +952,17 @@
                                     </select>
 
                                 </div>
+                                <div class="form-group">
+                                    <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
+
+                                        Evidence Findings
+                                    </label>
+                                    <hr style="height: 2px; border: none;">
+                                </div>
+                                <!-- TEMPAT EVIDENCE DITAMPILKAN -->
+                                <div class="row mt-2" id="evidence_container2">
+                                    <!-- evidence akan di-inject via JS -->
+                                </div>
                             </div>
                             <div class="form-group mt-2">
                                 <label for="auditorName" class="form-label">
@@ -1016,7 +1037,14 @@
                                 </select>
 
                             </div>
-                            <div class="form-group mt-2" id="row_keterangan_cancel">
+                            <div class="form-group mt-2" id="row_keterangan_auditor">
+                                <label for="keterangan_auditor" class="form-label">
+                                    <!-- todo : carikan saya icon yang cocok untuk kata status -->
+                                    <i class="bi bi-collection"></i> Keterangan Auditor </label>
+                                <textarea class="form-control" placeholder="Leave a comment here" id="keterangan_auditor" required></textarea>
+
+                            </div>
+                            <div class="form-group mt-2" id="row_keterangan_cancel" style="display: none;">
                                 <label for="keterangan_cancel" class="form-label">
                                     <!-- todo : carikan saya icon yang cocok untuk kata status -->
                                     <i class="bi bi-collection"></i> Keterangan Cancel </label>
@@ -1089,6 +1117,48 @@
         function renderEvidenceFinding(finding_evidence) {
 
             const container = $('#evidence_container');
+            container.html(''); // reset
+
+            if (!finding_evidence) {
+                container.html('<p class="text-muted">Tidak ada evidence.</p>');
+                return;
+            }
+
+            // path ke folder uploads
+            const fileUrl = '<?= base_url('uploads/findings_evidence/') ?>' + finding_evidence;
+
+            // cek ekstensi gambar
+            const imageExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            const ext = finding_evidence.split('.').pop().toLowerCase();
+
+            if (imageExt.includes(ext)) {
+                // ===== IMAGE PREVIEW =====
+                container.html(`
+      <div class="col-md-4">
+        <img 
+          src="${fileUrl}" 
+          class="img-fluid img-thumbnail mb-2"
+          style="max-height:250px; cursor:pointer"
+          alt="Evidence Finding"
+          onclick="openViewer('${fileUrl}')"
+        >
+      </div>
+    `);
+            } else {
+                // ===== NON IMAGE =====
+                container.html(`
+      <div class="col-md-12">
+        <a href="${fileUrl}" target="_blank" class="btn btn-outline-primary">
+          <i class="bi bi-paperclip"></i> ${finding_evidence}
+        </a>
+      </div>
+    `);
+            }
+        }
+
+        function renderEvidenceFinding2(finding_evidence) {
+
+            const container = $('#evidence_container2');
             container.html(''); // reset
 
             if (!finding_evidence) {
@@ -1289,13 +1359,21 @@
                 },
                 dataType: 'json',
                 success: function(response) {
+                    const $sel = $('#pic_action_list_seksi');
 
                     const htmlOpt = (response && response.options) ? response.options : '';
-                    $('#pic_action_list_seksi').html('<option value="">-- Pilih Opsi --</option>' + htmlOpt);
 
-                    // penting: paksa TomSelect baca ulang option dari <select>
-                    tsSeksi.clear(true);
+                    // 1) bersihkan data option di TomSelect (ini penting supaya tidak nyangkut/duplicate)
+                    tsSeksi.clear(true); // kosongkan selected
+                    tsSeksi.clearOptions(); // hapus semua option di TomSelect
+
+                    // 2) replace isi <select> (bukan append)
+                    $sel.empty().html('<option value="">-- Pilih Opsi --</option>' + htmlOpt);
+
+                    // 3) sync ulang TomSelect dari DOM
                     tsSeksi.sync();
+
+                    // 4) refresh dropdown
                     tsSeksi.refreshOptions(false);
                 },
                 error: function(xhr, status, error) {
@@ -1378,7 +1456,7 @@
 
             // reset input form
             $('#deskripsi_temuan').val('');
-            $('#pic_action_list_dept').prop('selectedIndex', 0).trigger('change');
+            $('#pic_action_list_dept').val('').trigger('change');
             $('#pic_action_list_seksi').val('').trigger('change');
 
             // reset file input + preview + selectedFile
@@ -1701,6 +1779,7 @@
                     $('#fill_id_departement_temuan').val(response.temuan.id_departement);
                     $('#fill_id_section_temuan').val(response.temuan.id_section);
                     if (response.temuan.status_temuan == 1) {
+                        $('#row_keterangan_cancel2').hide();
                         $('#btnSubmit_filldata').hide();
                         $('#fill_id_temuan_patrol').hide();
                         $('#fill_id_auditor').hide();
@@ -1709,6 +1788,7 @@
                         $('#fill_status_temuan').val('Close');
                         $('#list_option_status_container').hide();
                     } else if (response.temuan.status_temuan == 2) {
+                        $('#row_keterangan_cancel2').hide();
                         $('#btnSubmit_filldata').show();
                         $('#fill_id_temuan_patrol').show();
                         $('#fill_id_auditor').show();
@@ -1718,6 +1798,7 @@
                         $('#fill_status_temuan').val('In Progress');
                         $('#list_option_status_container').show();
                     } else if (response.temuan.status_temuan == 3) {
+                        $('#row_keterangan_cancel2').hide();
                         $('#btnSubmit_filldata').show();
                         $('#fill_deskripsi_temuan').attr('disabled', false);
                         $('#fill_id_temuan_patrol').show();
@@ -1751,6 +1832,7 @@
                     $('#fill_action').val(response.temuan.action);
                     $('#fill_pic_action').html(response.temuan.pic_section_name);
                     $('#keterangan_cancel').val(response.temuan.keterangan_cancel);
+                    $('#keterangan_auditor2').val(response.temuan.keterangan_auditor);
 
                     // todo : saya ingin melakukan set value pada tanggal due date dengan plugin airdatepicker
                     const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
@@ -1836,6 +1918,7 @@
             fd.append('deskripsi_temuan', $('#fill_deskripsi_temuan').val());
             fd.append('analisa_penyebab', $('#fill_analisa_penyebab').val());
             fd.append('action', $('#fill_action').val());
+            fd.append('keterangan_auditor', $('#keterangan_auditor2').val());
             fd.append('due_date', $('#fill_due_date').val());
             if (npk_user_log == npk_auditor) {
                 fd.append('status', $('#list_option_status').val());
@@ -1846,15 +1929,24 @@
             // penting: kirim objek file, bukan file.name
             var file = $('#fileUpload')[0].files[0];
             // cek dulu isi inputnya
-            if (
-                !$('#fill_deskripsi_temuan').val().trim() ||
-                !$('#fill_analisa_penyebab').val().trim() ||
-                !$('#fill_due_date').val().trim() ||
-                $('#fill_due_date').val() === "0" // cek jika hasilnya 0
-            ) {
-                alert('isi data yang masih kosong ! [Deskripsi temuan, Analisa Penyebab, due date]');
-                return; // stop di sini, jangan kirim ajax
+            if (npk_user_log == npk_auditor) {
+                if (!$('#fill_deskripsi_temuan').val().trim() === "0" // cek jika hasilnya 0
+                ) {
+                    alert('isi data yang masih kosong ! [Deskripsi temuan]');
+                    return; // stop di sini, jangan kirim ajax
+                }
+            } else {
+                if (
+                    !$('#fill_deskripsi_temuan').val().trim() ||
+                    !$('#fill_analisa_penyebab').val().trim() ||
+                    !$('#fill_due_date').val().trim() ||
+                    $('#fill_due_date').val() === "0" // cek jika hasilnya 0
+                ) {
+                    alert('isi data yang masih kosong ! [Deskripsi temuan, Analisa Penyebab, due date]');
+                    return; // stop di sini, jangan kirim ajax
+                }
             }
+
 
             if (file) fd.append('file', file); // 'file' harus sama dengan getFile('file') di server
 
@@ -1898,6 +1990,7 @@
                 fd.append('tanggal_patrol', $('#edit_tanggal_patrol').val());
                 fd.append('status', $('#list_option_status_edit').val());
                 fd.append('keterangan_cancel', $('#keterangan_cancel').val());
+                fd.append('keterangan_auditor', $('#keterangan_auditor').val());
 
 
                 // --- VALIDASI FILE UPLOAD ---
@@ -2124,6 +2217,25 @@
                         $('#edit_pic_action').html(response.temuan.pic_section_name);
                         $('#edit_due_date').val(response.temuan.due_date);
                         $('#keterangan_cancel').val(response.temuan.keterangan_cancel);
+                        $('#keterangan_auditor').val(response.temuan.keterangan_auditor);
+
+                        renderEvidenceFinding2(response.temuan.finding_evidence);
+                        if (response.temuan.status_temuan == 1) {
+                            $('#row_keterangan_cancel').hide();
+
+                        } else if (response.temuan.status_temuan == 2) {
+                            $('#row_keterangan_cancel').hide();
+
+                        } else if (response.temuan.status_temuan == 3) {
+                            $('#row_keterangan_cancel').hide();
+
+                        } else if (response.temuan.status_temuan == 4) {
+                            $('#row_keterangan_cancel').show();
+
+
+                        } else {
+                            $('#list_option_status_edit').val('');
+                        }
                         if (response.temuan.nama_file) {
 
                             const fileName = response.temuan.nama_file;

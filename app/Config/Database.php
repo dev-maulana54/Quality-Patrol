@@ -25,6 +25,7 @@ class Database extends Config
      * @var array<string, mixed>
      */
     public array $default = [];
+    public array $second = [];
 
     //    /**
     //     * Sample database connection for SQLite3.
@@ -168,12 +169,11 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Ensure that we always set the database group to 'tests' if
-        // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
+
+        // DATABASE DEFAULT
         $this->default = [
             'DSN'      => '',
             'hostname' => env('database.default.hostname'),
@@ -183,7 +183,6 @@ class Database extends Config
             'DBDriver' => env('database.default.DBDriver'),
             'DBPrefix' => env('database.default.DBPrefix'),
             'pConnect' => false,
-
             'DBDebug'  => (ENVIRONMENT !== 'production'),
             'charset'  => 'utf8',
             'DBCollat' => 'utf8_general_ci',
@@ -193,6 +192,28 @@ class Database extends Config
             'strictOn' => false,
             'failover' => [],
             'port'     => env('database.default.port'),
+            'numberNative' => false
+        ];
+
+        // ✅ DATABASE KEDUA
+        $this->second = [
+            'DSN'      => '',
+            'hostname' => env('database.henkaten.hostname'),
+            'username' => env('database.henkaten.username'),
+            'password' => env('database.henkaten.password'),
+            'database' => env('database.henkaten.database'),
+            'DBDriver' => env('database.henkaten.DBDriver'),
+            'DBPrefix' => env('database.henkaten.DBPrefix'),
+            'pConnect' => false,
+            'DBDebug'  => (ENVIRONMENT !== 'production'),
+            'charset'  => 'utf8',
+            'DBCollat' => 'utf8_general_ci',
+            'swapPre'  => '',
+            'encrypt'  => false,
+            'compress' => false,
+            'strictOn' => false,
+            'failover' => [],
+            'port'     => env('database.henkaten.port'),
             'numberNative' => false
         ];
     }
