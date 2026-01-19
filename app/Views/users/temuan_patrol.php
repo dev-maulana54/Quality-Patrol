@@ -1782,6 +1782,8 @@
                         $('#row_keterangan_cancel2').hide();
                         $('#btnSubmit_filldata').hide();
                         $('#fill_id_temuan_patrol').hide();
+                        $('#fill_deskripsi_temuan').attr('disabled', true);
+                        $('#keterangan_auditor2').attr('disabled', true);
                         $('#fill_id_auditor').hide();
                         $('#fill_id_departement_temuan').hide();
                         $('#fill_id_section_temuan').hide();
@@ -1793,6 +1795,7 @@
                         $('#fill_id_temuan_patrol').show();
                         $('#fill_id_auditor').show();
                         $('#fill_deskripsi_temuan').attr('disabled', false);
+                        $('#keterangan_auditor2').attr('disabled', false);
                         $('#fill_id_departement_temuan').show();
                         $('#fill_id_section_temuan').show();
                         $('#fill_status_temuan').val('In Progress');
@@ -1801,6 +1804,7 @@
                         $('#row_keterangan_cancel2').hide();
                         $('#btnSubmit_filldata').show();
                         $('#fill_deskripsi_temuan').attr('disabled', false);
+                        $('#keterangan_auditor2').attr('disabled', false);
                         $('#fill_id_temuan_patrol').show();
                         $('#fill_id_auditor').show();
                         $('#fill_id_departement_temuan').show();
@@ -1813,6 +1817,7 @@
                         $('#keterangan_cancel2').attr('disabled', true);
                         $('#keterangan_cancel2').val(response.temuan.keterangan_cancel);
                         $('#btnSubmit_filldata').hide();
+                        $('#keterangan_auditor2').attr('disabled', true);
                         $('#fill_id_temuan_patrol').hide();
                         $('#fill_id_auditor').hide();
                         $('#fill_id_departement_temuan').hide();
