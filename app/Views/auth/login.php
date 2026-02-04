@@ -84,7 +84,7 @@
                         showAlert(response.msg, 'success');
                         resetButton();
                         setTimeout(function() {
-                            window.location.href = '<?= base_url('summary') ?>';
+                            window.location.href = '<?= base_url('confirmAudit') ?>';
                         }, 1500);
                     } else {
                         showAlert(response.msg, 'danger');

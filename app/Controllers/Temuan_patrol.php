@@ -42,9 +42,34 @@ class Temuan_patrol extends BaseController
         $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedule($getdata_user['id_section'], $getdata_user['id_departement']);
 
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
-        return view('users/temuan_patrol', $data);
-    }
+        $agent = $this->request->getUserAgent();
+        if ($agent->isMobile()) {
 
+            return view('mobile/data_patrol', $data);
+        } else {
+
+            // return view('mobile/data_patrol', $data);
+            return view('users/temuan_patrol', $data);
+            // return view('desktop/users/temuan_patrol', $data);
+        }
+    }
+    public function start_audit()
+    {
+        $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        $data['title'] = "Summary Page | Quality Patrol";
+        $data['nama'] = $getdata_user['nama'];
+        $data['all_dept'] = $this->dataPatrol->get_Alldata_dept();
+        $agent = $this->request->getUserAgent();
+        if ($agent->isMobile()) {
+
+            return view('mobile/start_patrol', $data);
+        } else {
+
+            return view('mobile/start_patrol', $data);
+            // return view('users/temuan_patrol', $data);
+            // return view('desktop/users/temuan_patrol', $data);
+        }
+    }
     #function untuk melakukan sign schedule
     public function sign($id)
     {

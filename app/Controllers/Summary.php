@@ -126,6 +126,49 @@ class Summary extends BaseController
         $data['t_close_year']    = array_sum($t_close_year);
         $data['t_cancel_year']    = array_sum($t_cancel_year);
 
-        return view('users/summary', $data);
+        $agent = $this->request->getUserAgent();
+
+        if ($agent->isMobile()) {
+            $totalAudience = $this->dataPatrol->totalAudience();
+            $data['total_auditor'] = $totalAudience['total_auditor'];
+            $data['total_auditee'] = $totalAudience['total_auditee'];
+            return view('mobile/summary', $data);
+        } else {
+            $totalAudience = $this->dataPatrol->totalAudience();
+            $data['total_auditor'] = $totalAudience['total_auditor'];
+            $data['total_auditee'] = $totalAudience['total_auditee'];
+            // return view('mobile/summary', $data);
+
+            return view('users/summary', $data);
+        }
+    }
+    public function confirmAudit()
+    {
+        $data['title'] = "Summary Page | Quality Patrol";
+        $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        $data['nama'] = $getdata_user['nama'];
+        $data['role'] = session()->get('role');
+        $agent = $this->request->getUserAgent();
+        if ($agent->isMobile()) {
+            return view('mobile/confirm_audit', $data);
+        } else {
+            // return view('mobile/confirm_audit', $data);
+            return view('users/confirm_audit', $data);
+        }
+    }
+    public function profile()
+    {
+        $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        $data['title'] = "Profile Page | Quality Patrol";
+        $data['nama'] = $getdata_user['nama'];
+
+
+        $agent = $this->request->getUserAgent();
+        if ($agent->isMobile()) {
+            return view('mobile/profile', $data);
+        } else {
+            // return view('mobile/profile', $data);
+            // return view('users/summary', $data);
+        }
     }
 }

@@ -13,6 +13,20 @@ class CrudController extends BaseController
         # Inisialisasi Model
         $this->dataPatrol = new Model_data_patrol();
     }
+    private function formatTanggalPatrol($tanggal)
+    {
+        if (!$tanggal) return null;
+
+        try {
+            $dt = new \DateTime($tanggal);
+
+            // format: 09 Apr 2026
+            return $dt->format('d M Y');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
     public function authLogin() # Function untuk proses login
     {
         $username = $this->request->getPost('username');
@@ -260,95 +274,83 @@ class CrudController extends BaseController
             $this->dataPatrol->db->table('users')->insert($data);
 
             return $this->response->setJSON(['status' => 'success', 'message' => 'User berhasil ditambahkan']);
-        } else if ($keterangan == 'find_auditee_by_seksi') {
+        } else if ($keterangan == 'find_auditee_by_id_seksi_dept') {
             # ambil nama seksi yang jabatannya Kepala Seksi berdasarkan id_seksi di master_data_karyawan dan ambil
             $id_seksi = $this->request->getPost('id_seksi');
-            $auditee = $this->dataPatrol->henkaten->table('master_data_karyawan')
-                ->where('id_section', $id_seksi)
-                ->where('jabatan', 'Kepala Seksi')
-                ->get()
-                ->getRowArray();
+            $id_dept = $this->request->getPost('id_dept');
+            $auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_seksi, $id_dept);
+
 
             # Cek apakah data ada atau null
-            if ($auditee && isset($auditee['nama'])) {
-                $nama_auditee = $auditee['nama'];
+            if ($auditee && isset($auditee['nama_penanggung_jawab'])) {
+                $nama_auditee = $auditee['nama_penanggung_jawab'];
             } else {
-                $nama_auditee = 'Kepala seksi tidak ada';
+                $nama_auditee = 'Nama Atasan tidak ada';
             }
             return $this->response->setJSON(['auditee' => $nama_auditee]);
-        } else if ($keterangan == 'tambah_temuan_patrol') { # Function untuk Tambah Temuan Patrol
-            $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        } else if ($keterangan == 'tambah_temuan_patrol') {
 
+            $getdata_user = $this->dataPatrol
+                ->getdata_karyawan_byUsername(session()->get('npk'));
+
+            // Ambil rekap temuan dari localStorage (JSON)
             $rekapJson  = $this->request->getPost('rekap_temuan');
             $rekapList  = json_decode($rekapJson, true) ?? [];
 
-            # evidence_files[]
+            // Evidence files[]
             $allFiles = $this->request->getFiles();
             $uploadedFiles = $allFiles['evidence_files'] ?? [];
 
-            # ✅ ambil sign_type + signature_file
-            $signType = $this->request->getPost('sign_type'); # digital / upload
-            $signatureFile = $this->request->getFile('signature_file'); # UploadedFile
-
-            # ✅ folder tujuan TTD: public/uploads/ttd_patrol/
-            $ttdDir = FCPATH . 'uploads/ttd_patrol/';
-            if (!is_dir($ttdDir)) {
-                mkdir($ttdDir, 0777, true);
-            }
-
-            $savedTtdName = null;
-
-            if ($signatureFile && $signatureFile->isValid() && !$signatureFile->hasMoved()) {
-
-                # boleh cek ekstensi biar aman
-                $ext = strtolower($signatureFile->getClientExtension()); # png/jpg/jpeg
-                $allowed = ['png', 'jpg', 'jpeg'];
-
-                if (in_array($ext, $allowed)) {
-                    $savedTtdName = 'ttd_' . date('Ymd_His') . '_' . bin2hex(random_bytes(5)) . '.' . $ext;
-                    $signatureFile->move($ttdDir, $savedTtdName);
-                } else {
-                    return $this->response->setJSON([
-                        'status' => 'error',
-                        'message' => 'Format tanda tangan tidak valid (harus PNG/JPG).'
-                    ])->setStatusCode(400);
-                }
-            } else {
-                return $this->response->setJSON([
-                    'status' => 'error',
-                    'message' => 'File tanda tangan tidak ditemukan / tidak valid.'
-                ])->setStatusCode(400);
-            }
-
-            # folder evidence: public/uploads/findings_evidence/
+            // Folder evidence: public/uploads/findings_evidence/
             $targetDir = FCPATH . 'uploads/findings_evidence/';
             if (!is_dir($targetDir)) {
                 mkdir($targetDir, 0777, true);
             }
 
             $batchData = [];
+            // ambil tanggal patrol dari form
+            $tanggalRaw = $this->request->getPost('tanggal_patrol');
 
+            // ubah format jadi: 09 Apr 2026
+            $tanggalPatrol = $this->formatTanggalPatrol($tanggalRaw);
+
+            if ($tanggalPatrol === null) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Tanggal patrol tidak valid.'
+                ])->setStatusCode(400);
+            }
             foreach ($rekapList as $item) {
 
                 $savedFileName = null;
-
                 $fileIndex = $item['file_index'] ?? null;
 
+                // ===============================
+                // ✅ Upload evidence jika ada
+                // ===============================
                 if ($fileIndex !== null && isset($uploadedFiles[$fileIndex])) {
+
                     $file = $uploadedFiles[$fileIndex];
 
                     if ($file && $file->isValid() && !$file->hasMoved()) {
+
                         $ext = $file->getClientExtension();
+
                         $newName = 'evidence_' . date('Ymd_His') . '_' . bin2hex(random_bytes(5));
-                        if ($ext) $newName .= '.' . $ext;
+                        if ($ext) {
+                            $newName .= '.' . $ext;
+                        }
 
                         $file->move($targetDir, $newName);
                         $savedFileName = $newName;
                     }
                 }
 
+                // ===============================
+                // ✅ Data insert batch
+                // ===============================
                 $batchData[] = [
-                    'tanggal_patrol'              => $this->request->getPost('tanggal_patrol'),
+                    'tanggal_patrol'              => $tanggalPatrol,
                     'id_auditor'                  => session()->get('npk'),
                     'nama_auditor'                => $getdata_user['nama'],
                     'nama_auditee'                => $this->request->getPost('nama_auditee'),
@@ -359,21 +361,26 @@ class CrudController extends BaseController
                     'pic_action_section_id'       => $item['pic_action_section_id'] ?? null,
                     'due_date'                    => 0,
                     'status'                      => 3,
-                    'id_dt_schedule'              => $this->request->getPost('id_schedule'),
+                    // 'id_dt_schedule'              => $this->request->getPost('id_schedule'),
+
+                    // Evidence file
                     'evidence_file'               => $savedFileName,
 
-                    # ✅ SIMPAN TTD
-                    'sign_type'                   => $signType,      # optional
-                    'ttd_file'                    => $savedTtdName,  # WAJIB biar nyambung file nya
+                    // ✅ Approval default (baru)
+                    'status_approval'             => 1,
                 ];
             }
 
-            $this->dataPatrol->db->table('dt_temuan_patrol')->insertBatch($batchData);
+            // ===============================
+            // ✅ Insert semua temuan sekaligus
+            // ===============================
+            $this->dataPatrol->db
+                ->table('dt_temuan_patrol')
+                ->insertBatch($batchData);
 
             return $this->response->setJSON([
                 'status' => 'success',
                 'message' => 'Temuan patrol berhasil ditambahkan',
-                'ttd_file' => $savedTtdName
             ]);
         } else if ($keterangan == 'get_temuan_by_id') { # function untuk mengambil data temuan patrol based on id_temuan
             $id_temuan = $this->request->getPost('id_temuan');
@@ -1146,6 +1153,15 @@ class CrudController extends BaseController
                 'status'  => 'success',
                 'message' => 'Data user berhasil dihapus',
 
+            ]);
+        } else if ($keterangan == 'hapus_schedule') {
+            $id_schedule = $this->request->getPost('id_schedule');
+
+            // Hapus data schedule dari database
+            $this->dataPatrol->db->table('dt_schedule')->where('id_schedule', $id_schedule)->delete();
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => 'Data schedule berhasil dihapus',
             ]);
         }
     }

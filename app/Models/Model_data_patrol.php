@@ -236,6 +236,16 @@ class Model_data_patrol extends Model
             ->get()
             ->getResultArray();
     }
+    public function totalAudience()
+    {
+        return $this->db->table('users')
+            ->select("
+        SUM(CASE WHEN role = 2 THEN 1 ELSE 0 END) AS total_auditor,
+        SUM(CASE WHEN role = 3 THEN 1 ELSE 0 END) AS total_auditee
+    ")
+            ->get()
+            ->getRowArray();
+    }
     public function Filter_chartByYearNow($tahun)
     {
         return $this->db->table('dt_temuan_patrol')
@@ -249,21 +259,30 @@ class Model_data_patrol extends Model
 
     public function filterRangeDate($startDate, $endDate)
     {
+        $tsStart = strtotime($startDate);
+        $tsEnd   = strtotime($endDate);
+
+        if ($tsStart === false || $tsEnd === false) return [];
+
+        $start = date('Y-m-d', $tsStart);
+        $end   = date('Y-m-d', $tsEnd);
+
         return $this->db->table('dt_temuan_patrol')
             ->select("
-        dt_temuan_patrol.id_section,
-        departement.departement AS nama_departemen,
-        section.section AS nama_section,
-        SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_count,
-        SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_count,
-        SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_count,
-        SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_count,
-        COUNT(*) AS total
-    ", false)
+            dt_temuan_patrol.id_section,
+            departement.departement AS nama_departemen,
+            section.section AS nama_section,
+            SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS open_count,
+            SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS progress_count,
+            SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS close_count,
+            SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS cancel_count,
+            COUNT(*) AS total
+        ", false)
             ->join("{$this->db2}.dbo.departement departement", 'departement.id_departement = dt_temuan_patrol.id_departement', 'left')
             ->join("{$this->db2}.dbo.section section", 'section.id_section = dt_temuan_patrol.id_section', 'left')
-            ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) >=", "CONVERT(date, '{$startDate}', 106)", false)
-            ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) <=", "CONVERT(date, '{$endDate}', 106)", false)
+            ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) >=", $start)
+            ->where("CONVERT(date, dt_temuan_patrol.tanggal_patrol, 106) <=", $end)
+
             ->groupBy([
                 'dt_temuan_patrol.id_section',
                 'departement.departement',
@@ -272,6 +291,7 @@ class Model_data_patrol extends Model
             ->get()
             ->getResultArray();
     }
+
 
     public function filterDept($idDept)
     {
@@ -550,5 +570,46 @@ class Model_data_patrol extends Model
             ->where('dt_schedule.id_schedule', $schedule_id)
             ->get()
             ->getRowArray();
+    }
+    public function get_deptSection_byIdSectDept($id_section, $id_dept = null)
+    {
+        $builder = $this->db->table("{$this->db2}.dbo.section s")
+            ->select("
+            s.id_section,
+            s.section AS section_name,
+            s.id_departement AS id_dept,
+            d.departement AS departement_name,
+            ks.nama AS kepala_seksi,
+            kd.nama AS kepala_departement,
+            COALESCE(ks.nama, kd.nama) AS nama_penanggung_jawab
+        ")
+            // departemen dari section
+            ->join(
+                "{$this->db2}.dbo.departement d",
+                "d.id_departement = s.id_departement",
+                "left"
+            )
+            // prioritas 1: Kepala Seksi by id_section
+            ->join(
+                "{$this->db2}.dbo.master_data_karyawan ks",
+                "ks.id_section = s.id_section
+             AND ks.jabatan = 'Kepala Seksi'",
+                "left"
+            )
+            // prioritas 2: Kepala Departemen by id_departement (fallback)
+            ->join(
+                "{$this->db2}.dbo.master_data_karyawan kd",
+                "kd.id_departement = s.id_departement
+             AND kd.jabatan = 'Kepala Departemen'",
+                "left"
+            )
+            ->where("s.id_section", $id_section);
+
+        // optional: kalau kamu memang ingin memastikan section tsb ada di dept tertentu
+        if ($id_dept !== null) {
+            $builder->where("s.id_departement", $id_dept);
+        }
+
+        return $builder->get()->getRowArray();
     }
 }

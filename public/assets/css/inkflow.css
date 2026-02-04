@@ -1,0 +1,602 @@
+/* ========================================
+       SIGNATURE PAD PLUGIN STYLES
+       ======================================== */
+
+.signature-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px;
+}
+
+.signature-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.signature-modal {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  transform: scale(0.9) translateY(30px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: visible;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.signature-overlay.active .signature-modal {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.signature-header {
+  padding: 24px 28px;
+  border-bottom: 2px solid #f1f5f9;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  flex-shrink: 0;
+}
+
+.signature-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.signature-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.signature-body {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  min-height: 0;
+}
+
+.signature-canvas-wrapper {
+  position: relative;
+  background: #fafafa;
+  border: 3px dashed #cbd5e1;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.signature-canvas-wrapper:hover {
+  border-color: #94a3b8;
+  background: #ffffff;
+}
+
+.signature-canvas-wrapper.signing {
+  border-color: currentColor;
+  border-style: solid;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.signature-canvas {
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.signature-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: #94a3b8;
+  transition: opacity 0.3s ease;
+}
+
+.signature-placeholder.hidden {
+  opacity: 0;
+}
+
+.signature-placeholder svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.signature-placeholder-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.signature-placeholder-subtext {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.signature-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.signature-color-picker {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.signature-color-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.signature-color-btn:hover {
+  transform: scale(1.1);
+}
+
+.signature-color-btn.active {
+  border-color: #1e293b;
+  transform: scale(1.15);
+}
+
+.signature-color-btn.active::after {
+  content: "✓";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Pad Styles */
+.main-canvas-wrapper {
+  position: relative;
+  background: #fafafa;
+  border: 3px dashed #cbd5e1;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.main-canvas-wrapper:hover {
+  border-color: #94a3b8;
+  background: #ffffff;
+}
+
+.main-canvas-wrapper.signing {
+  border-style: solid;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.main-color-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.main-color-btn:hover {
+  transform: scale(1.1);
+}
+
+.main-color-btn.active {
+  border-color: #ffffff;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.main-color-btn.active::after {
+  content: "✓";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.main-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.main-toggle-container:hover {
+  transform: scale(1.05);
+}
+
+.main-toggle-switch {
+  width: 42px;
+  height: 24px;
+  background: #cbd5e1;
+  border-radius: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.main-toggle-switch.active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.main-toggle-knob {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.main-toggle-switch.active .main-toggle-knob {
+  left: 21px;
+}
+
+.main-toggle-container.active .main-toggle-label {
+  color: #000000;
+}
+
+.signature-thickness-slider {
+  flex: 1;
+  min-width: 150px;
+}
+
+.signature-thickness-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  margin-right: 8px;
+}
+
+.signature-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.signature-toggle-container:hover {
+  background: #e2e8f0;
+}
+
+.signature-toggle-switch {
+  width: 42px;
+  height: 24px;
+  background: #cbd5e1;
+  border-radius: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.signature-toggle-switch.active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.signature-toggle-knob {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.signature-toggle-switch.active .signature-toggle-knob {
+  left: 21px;
+}
+
+.signature-toggle-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.signature-toggle-container.active .signature-toggle-label {
+  color: #2563eb;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #e2e8f0 0%, #cbd5e1 100%);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 3px 8px rgba(59, 130, 246, 0.6);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+.signature-info-card {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 2px solid #bae6fd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.signature-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.signature-info-label {
+  font-size: 0.9rem;
+  color: #0369a1;
+  font-weight: 600;
+}
+
+.signature-info-value {
+  font-size: 0.9rem;
+  color: #075985;
+  font-weight: 700;
+}
+
+.signature-footer {
+  padding: 20px 28px 28px;
+  display: flex;
+  gap: 12px;
+  background: #f8fafc;
+  border-top: 2px solid #f1f5f9;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.signature-btn {
+  flex: 1;
+  padding: 16px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.signature-btn:active {
+  transform: scale(0.97);
+}
+
+.signature-btn-clear {
+  background: #fff;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+}
+
+.signature-btn-clear:hover {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.signature-btn-cancel {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.signature-btn-cancel:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.signature-btn-approve {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 4px 14px -3px rgba(59, 130, 246, 0.5);
+  border: 2px solid transparent;
+}
+
+.signature-btn-approve:hover {
+  box-shadow: 0 6px 20px -3px rgba(59, 130, 246, 0.6);
+  transform: translateY(-2px);
+}
+
+.signature-btn-approve:active {
+  transform: scale(0.97) translateY(0);
+}
+
+.signature-btn-approve:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.signature-btn-approve:disabled:hover {
+  transform: none;
+}
+
+/* Toast Notification */
+.signature-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 16px 28px;
+  border-radius: 14px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.signature-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.signature-toast.success {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.signature-toast.error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.signature-toast.info {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.signature-btn-approve::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+/* Feedback animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .signature-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .signature-thickness-slider {
+    min-width: 100%;
+  }
+
+  .signature-footer {
+    flex-direction: column;
+  }
+}

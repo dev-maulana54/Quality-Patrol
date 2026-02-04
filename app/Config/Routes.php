@@ -14,8 +14,13 @@ $routes->get('logout', 'Login::logout');
 
 #Route Summary
 $routes->get('summary', 'Summary::index');
+#Route Button Confirm Audit
+$routes->get('confirmAudit', 'Summary::confirmAudit');
 
+$routes->get('profile', 'Summary::profile');
 #Route Temuan Patrol
+$routes->get('temuan_patrol', 'Temuan_patrol::index');
+$routes->get('temuan_patrol/start_audit', 'Temuan_patrol::start_audit');
 $routes->get('temuan_patrol/auditor', 'Temuan_patrol::index');
 $routes->get('temuan_patrol/auditee', 'Temuan_patrol::auditee');
 $routes->get('temuan_patrol/list_daftar_hadir', 'Temuan_patrol::daftar_hadir');

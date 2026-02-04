@@ -340,6 +340,14 @@
         .submenu-item:hover {
             background: rgba(255, 255, 255, 0.08);
         }
+
+        .btn-group-xs>.btn,
+        .btn-xs {
+            --bs-btn-padding-y: 0.15rem;
+            --bs-btn-padding-x: 0.35rem;
+            --bs-btn-font-size: 0.75rem;
+            --bs-btn-border-radius: 0.2rem;
+        }
     </style>
 
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
@@ -634,6 +642,31 @@
             $("#modal .select2").select2({
                 dropdownParent: $("#modal"),
             });
+            $(document).on('click', '.hapus_schedule', function() {
+                var id_schedule = $(this).data('id');
+                $.ajax({
+                    url: '<?= base_url('sendData') ?>',
+                    type: 'POST',
+                    data: {
+                        keterangan: 'hapus_schedule',
+                        id_schedule: id_schedule
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+
+                        if (response.status == 'success') {
+                            alert('Data schedule berhasil dihapus.');
+                            location.reload();
+                        } else {
+                            alert('Gagal menghapus data schedule.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching seksi data:', error);
+                    }
+                });
+
+            });
             $('#list_dept').change(function() {
                 var deptId = $(this).val();
                 $('#list_seksi').prop('disabled', !deptId);
@@ -777,34 +810,50 @@
                         let planCells = '';
                         let actualCells = '';
 
+                        // ✅ cari id_schedule milik area ini (ambil yang pertama ketemu di bulan itu)
+                        let areaIdSchedule = null;
+
                         for (let day = 1; day <= daysInMonth; day++) {
                             const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
                             const planData = this.data[`${area}-plan-${dateKey}`];
                             const actualData = this.data[`${area}-actual-${dateKey}`];
 
+                            // ✅ simpan id_schedule pertama yang ketemu (plan atau actual)
+                            if (!areaIdSchedule && (planData?.id_schedule || actualData?.id_schedule)) {
+                                areaIdSchedule = planData?.id_schedule ?? actualData?.id_schedule;
+                            }
+
                             const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
                             const todayClass = isToday ? 'today' : '';
 
-                            // Tambahkan class filled-plan dan filled-actual untuk membedakan warna
                             planCells += `<td class="date-cell ${planData ? 'filled filled-plan' : ''} ${todayClass}"
-                            onclick="app.openModal('${area}', ${day}, 'plan', ${planData ? planData.id_schedule : null})"></td>`;
+            onclick="app.openModal('${area}', ${day}, 'plan', ${planData ? planData.id_schedule : null})"></td>`;
 
                             actualCells += `<td class="date-cell ${actualData ? 'filled filled-actual' : ''} ${todayClass}"
-    onclick="app.openModal('${area}', ${day}, 'actual', ${actualData ? actualData.id_schedule : null})"></td>`;
-
+            onclick="app.openModal('${area}', ${day}, 'actual', ${actualData ? actualData.id_schedule : null})"></td>`;
                         }
 
                         planRow.innerHTML = `
-                ${index === 0 || this.areas[index-1] !== area ? `<td class="area-col" rowspan="2">${area}</td>` : ''}
-                <td class="row-type">Plan</td>
-                ${planCells}
-            `;
+        ${index === 0 || this.areas[index - 1] !== area ? `
+            <td class="area-col" rowspan="2">
+                ${area}
+                <button type="button"
+                    class="btn btn-danger btn-xs ms-2 hapus_schedule"
+                    data-id="${areaIdSchedule ?? ''}"
+                    ${areaIdSchedule ? '' : 'disabled'}>
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </td>
+        ` : ''}
+        <td class="row-type">Plan</td>
+        ${planCells}
+    `;
 
                         actualRow.innerHTML = `
-                <td class="row-type">Actual</td>
-                ${actualCells}
-            `;
+        <td class="row-type">Actual</td>
+        ${actualCells}
+    `;
 
                         tbody.appendChild(planRow);
                         tbody.appendChild(actualRow);
