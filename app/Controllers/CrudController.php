@@ -567,6 +567,22 @@ class CrudController extends BaseController
 
             # ==== STATUS ====
             if (session()->get('role') == 'Administrator' || $npk_auditor == session()->get('npk')) {
+                if (session()->get('role') == 'Administrator') {
+
+                    if ($npk_auditor != '') {
+                        $nama_auditor = $this->dataPatrol->getdata_karyawan_byUsername($npk_auditor);
+                        $data_update['id_auditor'] = $npk_auditor;
+                        $data_update['nama_auditor'] = $nama_auditor['nama'];
+                    }
+                    $id_section_pcaudit = $this->request->getPost('area_prosesaudit');
+                    $id_dept = $this->dataPatrol->tb_section($id_section_pcaudit);
+                    if ($id_section_pcaudit != '') {
+                        $nama_auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_section_pcaudit, $id_dept['id_departement']);
+                        $data_update['id_section'] = $id_section_pcaudit;
+                        $data_update['id_departement'] = $id_dept['id_departement'];
+                        $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
+                    }
+                }
                 $status = $this->request->getPost('status');
                 if ($status !== null && $status !== '') {   # biar '0' juga bisa
                     $data_update['status'] = $status;

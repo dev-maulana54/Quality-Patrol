@@ -63,6 +63,11 @@
         </div><!-- Main Content -->
         <div id="mainContent" class="pb-20" style="min-height: calc(100% - 140px);"><!-- Dashboard Page -->
             <div id="dashboardPage" class="page-content">
+                <div class="flex justify-center items-center mt-5">
+                    <button class="bg-blue-600 text-white px-12 py-6 rounded-xl text-2xl font-bold hover:bg-blue-700 startaudit">
+                        <i class="fas fa-clipboard-check text-lg"></i> Mulai Quality Patrol
+                    </button>
+                </div>
                 <div class="px-4 py-4"><!-- Poster Banner -->
 
                     <div class="mb-6 rounded-2xl overflow-hidden shadow-xl" style="height:400px;">
@@ -1386,6 +1391,9 @@
                 calendarDays.appendChild(dayCell);
             }
         }
+        $('.startaudit').on('click', function() {
+            window.location.href = "<?= base_url('temuan_patrol/start_audit') ?>";
+        });
 
         function showScheduleDetail(dateStr, scheduleInfo) {
             const statusBadge = scheduleInfo.status === 'completed' ?

@@ -323,7 +323,7 @@
 
                                     <button type="button"
                                         class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 btn_rekaptemuan">
-                                        <i class="fas fa-plus-circle"></i> Simpan
+                                        <i class="fas fa-plus-circle"></i> Simpan & Tambah
                                     </button>
 
                                 </div>
@@ -633,6 +633,8 @@
                     window.location.href = "<?= base_url('uiElements') ?>";
                 } else if (page == 'profile') {
                     window.location.href = "<?= base_url('profile') ?>";
+                } else if (page == 'dashboard') {
+                    window.location.href = "<?= base_url('summary') ?>";
                 }
             });
         });
@@ -1851,12 +1853,21 @@
                             title: "Berhasil!",
                             text: "Temuan berhasil ditambahkan.",
                         });
+                        Notify.fire({
+                            type: "success",
+                            title: "Berhasil!",
+                            text: "Temuan berhasil ditambahkan.",
+                            showCancelButton: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                localStorage.removeItem('rekap_temuan');
+                                filesToSend = [];
+                                selectedFile = null;
 
-                        localStorage.removeItem('rekap_temuan');
-                        filesToSend = [];
-                        selectedFile = null;
+                                location.reload();
+                            }
+                        });
 
-                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error adding temuan patrol:', error);

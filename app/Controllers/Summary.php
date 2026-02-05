@@ -152,8 +152,8 @@ class Summary extends BaseController
         if ($agent->isMobile()) {
             return view('mobile/confirm_audit', $data);
         } else {
-            // return view('mobile/confirm_audit', $data);
-            return view('users/confirm_audit', $data);
+            return view('mobile/confirm_audit', $data);
+            // return view('users/confirm_audit', $data);
         }
     }
     public function profile()

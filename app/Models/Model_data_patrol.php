@@ -130,7 +130,13 @@ class Model_data_patrol extends Model
             ->get()
             ->getRowArray();
     }
-
+    public function tb_section($id_section)
+    {
+        return $this->henkaten->table('section')
+            ->where('id_section', $id_section)
+            ->get()
+            ->getRowArray();
+    }
 
 
     public function test_query()
