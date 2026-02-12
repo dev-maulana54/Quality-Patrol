@@ -279,6 +279,11 @@
         <?php endif; ?>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
+        <div class="flex justify-center items-center mt-1">
+            <button class="bg-blue-600 text-white px-12 py-6 rounded-xl text-2xl font-bold hover:bg-blue-700 startaudit">
+                <i class="bi bi-clipboard-data"></i> Mulai Quality Patrol
+            </button>
+        </div>
         <h2 class="page-title" id="dashboardTitle">Dashboard Overview</h2><!-- Charts Row 1 -->
         <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -430,6 +435,10 @@
 
 
     <script>
+        $('.startaudit').on('click', function() {
+            window.location.href = "<?= base_url('temuan_patrol/start_audit') ?>";
+        });
+
         function renderClusteredChart() {
             const isDarkTheme_chart = localStorage.getItem("theme") === "dark";
 

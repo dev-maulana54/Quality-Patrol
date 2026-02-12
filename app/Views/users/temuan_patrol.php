@@ -394,7 +394,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Temuan Patrol</h3>
 
-                    <button type="button" class="btn btn-primary cekalert" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
+                    <button type="button" class="btn btn-primary startaudit">
                         <i class="bi bi-plus-circle"></i> Tambah Temuan</button>
 
                 </div>
@@ -1108,6 +1108,10 @@
             localStorage.removeItem('rekap_temuan');
             renderTable(); // biar tabel ikut kosong
         });
+        $('.startaudit').on('click', function() {
+            window.location.href = "<?= base_url('temuan_patrol/start_audit') ?>";
+        });
+
         // Inisialisasi flatpickr
         const fpTanggalPatrol = flatpickr("#edit_tanggal_patrol", {
             locale: "id",

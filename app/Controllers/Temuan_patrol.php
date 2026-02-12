@@ -65,7 +65,8 @@ class Temuan_patrol extends BaseController
             return view('mobile/start_patrol', $data);
         } else {
 
-            return view('mobile/start_patrol', $data);
+            return view('info/info_pengembangan', $data);
+            // return view('mobile/start_patrol', $data);
             // return view('users/temuan_patrol', $data);
             // return view('desktop/users/temuan_patrol', $data);
         }
@@ -102,7 +103,13 @@ class Temuan_patrol extends BaseController
         $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedule($getdata_user['id_section'], $getdata_user['id_departement']);
 
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
-        return view('users/temuan_auditee', $data);
+        $agent = $this->request->getUserAgent();
+        if ($agent->isMobile()) {
+            return view('mobile/data_patrol_auditee', $data);
+        } else {
+            // return view('mobile/data_patrol_auditee', $data);
+            return view('users/temuan_auditee', $data);
+        }
     }
     public function daftar_hadir()
     {
@@ -112,8 +119,8 @@ class Temuan_patrol extends BaseController
         $data['role'] = session()->get('role');
 
         $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
-
-        return view('users/daftar_hadir', $data);
+        return view('info/info_pengembangan', $data);
+        // return view('users/daftar_hadir', $data);
     }
     public function preview($file)
     {

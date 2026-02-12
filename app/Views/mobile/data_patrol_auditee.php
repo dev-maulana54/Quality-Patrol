@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/mobile/style.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/inkflow.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/eleganselect.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/notify_claim.css">
 
     <style>
         :root {
@@ -376,13 +377,13 @@
                     <!-- Tabs -->
                     <div class="flex gap-2 mb-4 card-bg rounded-xl p-1 shadow-md">
                         <button
-                            class="tab-btn active flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
+                            class="tab-btn  flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
                             onclick="window.location.href='<?= base_url('temuan_patrol/auditor') ?>'">
                             <i class="fas fa-user-check mr-1"></i> Auditor
                         </button>
 
                         <button
-                            class="tab-btn flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
+                            class="tab-btn active flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
                             onclick="window.location.href='<?= base_url('temuan_patrol/auditee') ?>'">
                             <i class="fas fa-user-tag mr-1"></i> Auditee
                         </button>
@@ -394,9 +395,10 @@
                         </button>
                     </div>
                     <!-- Tab Content: Data Patrol -->
-                    <div id="AuditorTab" class="tab-content">
+
+                    <div id="AuditeeTab" class="tab-content">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-base font-semibold text-dark">Temuan Auditor</h3>
+                            <h3 class="text-base font-semibold text-dark">Temuan Auditee</h3>
                             <button
                                 class="text-sm text-blue-600 font-semibold hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1"
                                 onclick="toggleFilter('patrolFilter')">
@@ -441,63 +443,199 @@
                         <!-- Patrol Cards -->
                         <div class="space-y-3" id="patrolCardsContainer">
                             <!-- Card 1 -->
-                            <?php foreach ($data_patrol as $patrol) : ?>
+                            <?php foreach ($data_patrol_auditee as $dpa) : ?>
                                 <div class="card-bg rounded-xl p-4 shadow-md">
                                     <div class="flex items-start justify-between mb-3">
                                         <div class="flex-1">
                                             <div class="flex items-center gap-2 mb-2">
                                                 <i class="fas fa-calendar text-blue-600 text-sm"></i>
-                                                <span class="text-sm font-semibold text-dark"><?= $patrol['tanggal_patrol'] ?></span>
+                                                <span class="text-sm font-semibold text-dark"><?= $dpa['tanggal_patrol'] ?></span>
                                             </div>
-                                            <h3 class="text-base font-bold text-dark mb-2"><?= $patrol['deskripsi_temuan'] ?></h3>
+                                            <h3 class="text-base font-bold text-dark mb-2">
+                                                <?= $dpa['deskripsi_temuan'] ?>
+                                            </h3>
                                             <div class="space-y-1">
-                                                <p class="text-sm text-gray"><i class="fas fa-map-marker-alt w-4"></i> <?= $patrol['section_name'] ?></p>
-                                                <p class="text-sm text-gray"><i class="fas fa-user-tie w-4"></i><?= $patrol['nama_auditor'] ?></p>
+                                                <p class="text-sm text-gray">
+                                                    <i class="fas fa-map-marker-alt w-4"></i> <?= $dpa['section_name'] ?>
+                                                </p>
+                                                <p class="text-sm text-gray">
+                                                    <i class="fas fa-user-tie w-4"></i> <?= $dpa['nama_auditor'] ?>
+                                                </p>
                                             </div>
                                         </div>
-                                        <?php if ($patrol['status'] == 3) : ?>
+                                        <?php if ($dpa['status'] == 3) : ?>
                                             <span class="status-badge status-open">Open</span>
-                                        <?php elseif ($patrol['status'] == 2) : ?>
+                                        <?php elseif ($dpa['status'] == 2) : ?>
                                             <span class="status-badge status-progress">Progress</span>
                                         <?php else: ?>
                                             <span class="status-badge status-close">Close</span>
                                         <?php endif; ?>
+
                                     </div>
-                                    <div class="space-y-2">
-                                        <?php if (session()->get('role') == 'Administrator') : ?>
-                                            <button onclick="showDetail(<?= $patrol['id_temuan_patrol'] ?>)" class="w-full btn-primary text-white rounded-lg py-2 text-sm font-semibold"> <i class="fas fa-info-circle mr-1"></i> Lihat Detail </button>
-                                        <?php endif; ?>
-                                        <div class="flex gap-2">
-                                            <button
-                                                onclick="fill_temuan(<?= $patrol['id_temuan_patrol'] ?>)"
-                                                class="flex-1 btn-sm bg-blue-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
-                                                <i class="fas fa-edit"></i> Fill
-                                            </button>
-                                            <button
-                                                onclick="confirmDeletePatrol(<?= $patrol['id_temuan_patrol'] ?>)"
-                                                class="flex-1 btn-sm bg-red-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <button
+                                        onclick="fill_temuan(<?= $dpa['id_temuan_patrol'] ?>)"
+                                        class="w-full btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                                        <i class="fas fa-info-circle mr-1"></i> Jawab Temuan
+                                    </button>
                                 </div>
                             <?php endforeach; ?>
 
-
-
+                        </div>
+                    </div>
+                    <!-- Tab Content: Daftar Hadir -->
+                    <div id="attendanceDataTab" class="tab-content hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base font-semibold text-dark">Daftar Hadir</h3>
+                            <button
+                                class="text-sm text-blue-600 font-semibold hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1"
+                                onclick="toggleFilter('attendanceFilter')">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                        <!-- Filter Panel -->
+                        <div
+                            id="attendanceFilter"
+                            class="hidden mb-4 card-bg rounded-xl p-4 shadow-md filter-panel">
+                            <h3 class="text-sm font-bold text-dark mb-3">
+                                Filter Daftar Hadir
+                            </h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-dark mb-2">Periode</label>
+                                    <div class="flex gap-2">
+                                        <input
+                                            type="date"
+                                            class="form-input card-bg text-dark text-xs flex-1" />
+                                        <span class="text-xs flex items-center text-gray">s/d</span>
+                                        <input
+                                            type="date"
+                                            class="form-input card-bg text-dark text-xs flex-1" />
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 pt-2">
+                                    <button
+                                        class="flex-1 border border-gray-300 text-dark rounded-lg py-2 text-sm font-semibold hover:bg-gray-50">
+                                        Reset
+                                    </button>
+                                    <button
+                                        class="flex-1 btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                                        Terapkan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Attendance Cards -->
+                        <div class="space-y-3" id="attendanceCardsContainer">
+                            <!-- Card 1 -->
+                            <div class="card-bg rounded-xl p-4 shadow-md">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i class="fas fa-calendar text-blue-600 text-sm"></i>
+                                            <span class="text-sm font-semibold text-dark">15 Januari 2024</span>
+                                        </div>
+                                        <div class="space-y-2 mt-3">
+                                            <div class="flex items-center gap-2">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-user text-blue-600 text-xs"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-semibold text-dark">
+                                                        Ahmad Santoso
+                                                    </p>
+                                                    <p class="text-xs text-gray">Auditor</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-10">
+                                                <i
+                                                    class="fas fa-map-marker-alt text-gray text-xs"></i>
+                                                <p class="text-sm text-gray">Warehouse Storage</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge status-close"><i class="fas fa-check mr-1"></i>Hadir</span>
+                                </div>
+                                <button
+                                    onclick="showAttendanceDetail(1)"
+                                    class="w-full btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                                    <i class="fas fa-info-circle mr-1"></i> Lihat Detail
+                                </button>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="card-bg rounded-xl p-4 shadow-md">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i class="fas fa-calendar text-blue-600 text-sm"></i>
+                                            <span class="text-sm font-semibold text-dark">15 Januari 2024</span>
+                                        </div>
+                                        <div class="space-y-2 mt-3">
+                                            <div class="flex items-center gap-2">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-user text-blue-600 text-xs"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-semibold text-dark">
+                                                        Budi Trisno
+                                                    </p>
+                                                    <p class="text-xs text-gray">Auditor</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-10">
+                                                <i
+                                                    class="fas fa-map-marker-alt text-gray text-xs"></i>
+                                                <p class="text-sm text-gray">Warehouse Storage</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge status-close"><i class="fas fa-check mr-1"></i>Hadir</span>
+                                </div>
+                                <button
+                                    onclick="showAttendanceDetail(2)"
+                                    class="w-full btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                                    <i class="fas fa-info-circle mr-1"></i> Lihat Detail
+                                </button>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="card-bg rounded-xl p-4 shadow-md">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i class="fas fa-calendar text-blue-600 text-sm"></i>
+                                            <span class="text-sm font-semibold text-dark">14 Januari 2024</span>
+                                        </div>
+                                        <div class="space-y-2 mt-3">
+                                            <div class="flex items-center gap-2">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-user text-blue-600 text-xs"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-semibold text-dark">
+                                                        Citra Rahayu
+                                                    </p>
+                                                    <p class="text-xs text-gray">Auditor</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-10">
+                                                <i class="fas fa-cogs text-gray text-xs"></i>
+                                                <p class="text-sm text-gray">Production Line 1-3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge status-close"><i class="fas fa-check mr-1"></i>Hadir</span>
+                                </div>
+                                <button
+                                    onclick="showAttendanceDetail(3)"
+                                    class="w-full btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                                    <i class="fas fa-info-circle mr-1"></i> Lihat Detail
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Tab Content: Daftar Hadir -->
-
-                    <!-- FAB Button for Add Data -->
-                    <button
-                        id="btnTambahPatrol"
-                        class="fab-button btnTambahPatrol"
-
-                        aria-label="Tambah Data Patrol">
-                        <i class="fas fa-plus text-white text-2xl"></i>
-                    </button>
                 </div>
             </div>
 
@@ -538,6 +676,9 @@
                 <div id="detailContent" class="space-y-4">
                     <form>
                         <input type="hidden" id="edit_id_temuan_patrol">
+                        <input type="hidden" id="fill_id_auditor">
+                        <input type="hidden" id="fill_id_departement_temuan">
+                        <input type="hidden" id="fill_id_section_temuan">
                         <div class="card-bg border border-gray-200 rounded-lg p-3">
                             <p class="text-xs text-gray mb-1">Status</p>
                             <span class="detail_status status-badge status-open">Open</span>
@@ -565,33 +706,47 @@
                         <div class="row mt-2" id="evidence_container">
                             <!-- evidence akan di-inject via JS -->
                         </div>
-                        <div class="mt-2">
-                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Deskripsi Temuan <small class="text-danger"> *</small></label>
-                            <textarea class="form-input card-bg text-dark detail_deskripsi_temuan" placeholder="Masukkan temuan..." rows="2" required></textarea>
+                        <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
+                            <p class="text-xs text-gray mb-1">Deskripsi Temuan</p>
+
+                            <p class="text-sm font-semibold text-dark detail_deskripsi_temuan"></p>
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
-                            <p class="text-xs text-gray mb-1">Analisa Penyebab <small> <i>Di isi oleh Auditee !!!</i></small></p>
-                            <p class="text-sm font-semibold text-dark detail_analisa_penyebab"></p>
+                            <p class="text-xs text-gray mb-1">Analisa Penyebab <small> <i>Di isi oleh Auditee !!!</i></small><small class="text-danger"> *</small></p>
+
+                            <textarea class="form-input card-bg text-dark detail_analisa_penyebab" placeholder="Masukkan analisa penyebab..." rows="2" required></textarea>
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
-                            <p class="text-xs text-gray mb-1">Action <small> <i>Di isi oleh Auditee !!!</i></small></p>
-                            <p class="text-sm font-semibold text-dark detail_action"></p>
+                            <p class="text-xs text-gray mb-1">Action <small> <i>Di isi oleh Auditee !!!</i></small><small class="text-danger"> *</small></p>
+                            <textarea class="form-input card-bg text-dark detail_action" placeholder="Masukkan action..." rows="2" required></textarea>
+
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
-                            <p class="text-xs text-gray mb-1">Due Date <small> <i>Di isi oleh Auditee !!!</i></small></p>
-                            <p class="text-sm font-semibold text-dark detail_due_date"></p>
+                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">PIC Action</label>
+                            <select id="detail_pic_action" class="form-input card-bg text-dark">
+                                <option value="" disabled selected>-- Pilih PIC --</option>
+
+
+
+                            </select>
+                        </div>
+                        <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
+                            <p class="text-xs text-gray mb-1">Due Date <small> <i>Di isi oleh Auditee !!!</i></small><small class="text-danger"> *</small></p>
+                            <!-- todo : ubah text area menjadi input type date -->
+                            <input type="date" class="form-input card-bg text-dark detail_due_date" placeholder="Masukkan due date..." required>
+
                         </div>
 
-                        <div class="form-group mt-3">
+                        <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
                             <label for="fileUpload" class="form-label">
-                                <i class="bi bi-upload me-1"></i> Upload File (PDF, Word, Excel, Image) <small> <i>Di isi oleh Auditee !!!</i></small>
+                                <i class="bi bi-upload me-1"></i> Upload File (PDF, Word, Excel, Image)
                             </label>
 
                             <input
                                 type="file"
-                                class="form-control"
+                                class="form-input"
                                 id="fileUpload"
-                                accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" disabled>
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,image/*">
 
                         </div>
                         <div class="form-group col-md-12 mt-3 previewpdf_fill">
@@ -616,35 +771,16 @@
                         </div>
                         <div class="mt-2">
                             <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Keterangan Auditor<small class="text-danger"> *</small></label>
-                            <textarea class="form-input card-bg text-dark detail_ket_auditor " placeholder="Masukkan keterangan auditor..." rows="2" required></textarea>
+                            <textarea class="form-input card-bg text-dark detail_ket_auditor " placeholder="keterangan auditor..." rows="2" disabled></textarea>
                         </div>
-                        <div class="mt-2 option_status_temuan_container">
-                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Status</label>
-                            <select id="detail_option_status" class="form-input card-bg text-dark">
-                                <option value="" disabled selected>-- Pilih Opsi --</option>
-                                <?php if ($role === 'Administrator') : ?>
-                                    <option value="4">Cancel</option>
-                                <?php endif; ?>
-                                <option value="3">Open</option>
-                                <?php if ($role === 'Administrator') : ?>
-                                    <option value="2">In Progress</option>
-                                <?php endif; ?>
 
-                                <option value="1">Close</option>
-                                <?php if ($role === 'Administrator') : ?>
-                                    <option value="4">Cancel</option>
-                                <?php endif; ?>
-
-
-                            </select>
-                        </div>
 
 
                     </form>
                 </div>
                 <div class="flex gap-3 mt-6">
                     <button onclick="closeDetail()" class="flex-1 border border-gray-300 text-dark rounded-lg py-2 font-semibold"> Tutup </button>
-                    <button class="flex-1 btn-primary text-white rounded-lg py-2 font-semibold edit_temuan_btn"> <i class="fas fa-edit mr-1"></i> Edit </button>
+                    <button class="flex-1 btn-primary text-white rounded-lg py-2 font-semibold" id="btn_edit"> <i class="fas fa-edit mr-1"></i> Edit </button>
                 </div>
             </div>
         </div>
@@ -657,6 +793,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="<?= base_url() ?>assets/js/inkflow.js"></script>
     <script src="<?= base_url() ?>assets/js/eleganselect.js"></script>
+    <script src="<?= base_url() ?>assets/js/notify_claim.js"></script>
     <script>
         const defaultConfig = {
             app_title: "Patrol Audit Monitor",
@@ -751,11 +888,13 @@
         function fill_temuan(id) {
 
             document.getElementById('detailModal').classList.remove('hidden');
+            $('#imagePreview').css('display', 'none');
+            $('.previewpdf_fill').css('display', 'none');
             $.ajax({
                 url: '<?= base_url('sendData') ?>',
                 type: 'POST',
                 data: {
-                    keterangan: 'get_temuan_by_id',
+                    keterangan: 'get_temuan_auditee_by_id',
                     id_temuan: id
                 },
                 dataType: 'json',
@@ -769,10 +908,6 @@
                             })
                             .addClass('status-close')
                             .text('Close');
-                        $('.option_status_temuan_container').hide();
-                        $('.detail_deskripsi_temuan').prop('disabled', true);
-                        $('.detail_ket_auditor').prop('disabled', true);
-                        $('.edit_temuan_btn').hide();
                     } else if (response.temuan.status_temuan == 2) {
                         $('.detail_status')
                             .removeClass(function(i, cls) {
@@ -780,10 +915,6 @@
                             })
                             .addClass('status-progress')
                             .text('In Progress');
-                        $('.option_status_temuan_container').show();
-                        $('.detail_deskripsi_temuan').prop('disabled', false);
-                        $('.detail_ket_auditor').prop('disabled', false);
-                        $('.edit_temuan_btn').show();
                     } else if (response.temuan.status_temuan == 3) {
                         $('.detail_status')
                             .removeClass(function(i, cls) {
@@ -791,31 +922,38 @@
                             })
                             .addClass('status-open')
                             .text('Open');
-                        $('.option_status_temuan_container').show();
-                        $('.detail_deskripsi_temuan').prop('disabled', false);
-                        $('.detail_ket_auditor').prop('disabled', false);
-                        $('.edit_temuan_btn').show();
                     }
+                    $('#edit_id_temuan_patrol').val(response.temuan.id_temuan_patrol);
+                    $('#fill_id_auditor').val(response.temuan.id_auditor);
+                    $('#fill_id_departement_temuan').val(response.temuan.id_departement);
+                    $('#fill_id_section_temuan').val(response.temuan.id_section);
                     $('.detail_tanggal_patrol').text(response.temuan.tanggal_patrol);
                     $('.detail_auditor').text(response.temuan.nama_auditor);
                     $('.detail_auditee').text(response.temuan.nama_auditee);
                     $('.detail_area_proses').text(response.temuan.section_name);
-                    $('.detail_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
-                    $('.detail_analisa_penyebab').text(response.temuan.analisa_penyebab);
-                    $('.detail_action').text(response.temuan.action);
-                    $('.detail_due_date').text(response.temuan.due_date);
-                    $('.detail_ket_auditor').text(response.temuan.keterangan_auditor);
+                    $('.detail_deskripsi_temuan').html(response.temuan.deskripsi_temuan);
+                    $('.detail_analisa_penyebab').val(response.temuan.analisa_penyebab);
+                    $('.detail_action').val(response.temuan.action);
+                    $('#detail_pic_action').html(response.temuan.pic_section_name);
+                    rebuildPicSelectX();
+
+                    let dueDate = response.temuan.due_date; // "18/03/2026"
+                    let parts = dueDate.split('/'); // ["18","03","2026"]
+
+                    let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                    $('.detail_due_date').val(formattedDate);
+                    // $('#fileUpload').val(response.temuan.nama_file);
 
                     // contoh: response.data.finding_evidence
                     renderEvidenceFinding(response.temuan.finding_evidence);
+
+
                     if (response.temuan.nama_file) {
 
-                        const fileName = response.temuan.nama_file;
+                        const raw = response.temuan.nama_file;
+                        const fileName = (raw || '').trim().split('?')[0].split('#')[0];
 
-                        // cek apakah gambar
                         const isImage = /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(fileName);
-
-                        // cek apakah PDF
                         const isPDF = /\.pdf$/i.test(fileName);
 
                         if (isImage) {
@@ -827,6 +965,7 @@
                             const existingImage = document.getElementById('existingImage');
                             existingImage.addEventListener('click', () => openViewer(existingImage.src));
                             $('.previewpdf_fill').css('display', 'none');
+                            $('#imagePreview').show();
                         } else if (isPDF) {
                             // tampilkan PDF (ikon atau preview mini)
                             //     $('#imagePreview').html(`
@@ -837,9 +976,9 @@
                             // `);
                             // tampilkan PDF (ikon atau preview mini)
                             // const encoded = base64url_encode(fileName);
-                            $('.previewpdf_fill').css('display', 'block');
-                            $('#previewPDF_fill').attr('href', 'pdf/preview/' + fileName);
-                            $('#imagePreview').css('display', 'none');
+                            $('.previewpdf_fill').removeClass('hidden').show();
+                            $('#previewPDF_fill').attr('href', 'pdf/preview/' + encodeURIComponent(fileName));
+                            $('#imagePreview').hide();
                             // const pdfPreview = document.getElementById('pdfPreview');
                             // pdfPreview.addEventListener('click', () => openViewer("<?= base_url('assets/uploads/') ?>" + fileName));
 
@@ -855,104 +994,95 @@
                 }
             });
         }
+        $('#btn_edit').on('click', function(e) {
 
-        // function fill_temuan_auditee(id) {
+            e.preventDefault();
+            const id_temuan_patrol = $('#edit_id_temuan_patrol').val();
 
-        //     document.getElementById('fill_temuan').classList.remove('hidden');
-        //     $.ajax({
-        //         url: '<?= base_url('sendData') ?>',
-        //         type: 'POST',
-        //         data: {
-        //             keterangan: 'get_temuan_auditee_by_id',
-        //             id_temuan: id
-        //         },
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             // Isi form edit dengan data yang diambil
+            var fd = new FormData();
+            var npk_user_log = '<?= $npk ?>';
+            var npk_auditor = $('#fill_id_auditor').val();
+            fd.append('keterangan', 'update_temuan_patrol_auditee');
+            fd.append('id_temuan', $('#edit_id_temuan_patrol').val());
+            fd.append('npk_auditor', $('#fill_id_auditor').val());
+            fd.append('id_section_temuan', $('#fill_id_section_temuan').val());
+            fd.append('id_departement_temuan', $('#fill_id_departement_temuan').val());
 
-        //             if (response.temuan.status_temuan == 1) {
-        //                 $('.fill_detail_status')
-        //                     .removeClass(function(i, cls) {
-        //                         return (cls.match(/(^|\s)status-(open|close|progress|cancel)\b/g) || []).join(' ');
-        //                     })
-        //                     .addClass('status-close')
-        //                     .text('Close');
-        //             } else if (response.temuan.status_temuan == 2) {
-        //                 $('.fill_detail_status')
-        //                     .removeClass(function(i, cls) {
-        //                         return (cls.match(/(^|\s)status-(open|close|progress|cancel)\b/g) || []).join(' ');
-        //                     })
-        //                     .addClass('status-progress')
-        //                     .text('In Progress');
-        //             } else if (response.temuan.status_temuan == 3) {
-        //                 $('.fill_detail_status')
-        //                     .removeClass(function(i, cls) {
-        //                         return (cls.match(/(^|\s)status-(open|close|progress|cancel)\b/g) || []).join(' ');
-        //                     })
-        //                     .addClass('status-open')
-        //                     .text('Open');
-        //             }
-        //             $('.detail_tanggal_patrol').text(response.temuan.tanggal_patrol);
-        //             $('.detail_auditor').text(response.temuan.nama_auditor);
-        //             $('.detail_auditee').text(response.temuan.nama_auditee);
-        //             $('.detail_area_proses').text(response.temuan.section_name);
-        //             $('.detail_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
+            fd.append('analisa_penyebab', $('.detail_analisa_penyebab').val());
+            fd.append('action', $('.detail_action').val());
+            fd.append('due_date', $('.detail_due_date').val());
+            if (npk_user_log == npk_auditor) {
+                fd.append('status', $('#list_option_status').val());
+            } else {
+                fd.append('pic_action', $('#detail_pic_action').val());
 
-        //             // contoh: response.data.finding_evidence
-        //             renderEvidenceFinding(response.temuan.finding_evidence);
-        //             if (response.temuan.nama_file) {
+            }
 
-        //                 const fileName = response.temuan.nama_file;
+            // penting: kirim objek file, bukan file.name
+            var file = $('#fileUpload')[0].files[0];
+            // cek dulu isi inputnya
+            if (
 
-        //                 // cek apakah gambar
-        //                 const isImage = /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(fileName);
+                !$('.detail_analisa_penyebab').val().trim() ||
+                !$('.detail_action').val().trim() ||
+                !$('.detail_due_date').val().trim() ||
+                $('.detail_due_date').val() === "0" // cek jika hasilnya 0
+            ) {
+                Notify.fire({
+                    type: "error",
+                    title: "Oops!",
+                    text: "Data temuan belum lengkap! Mohon lengkapi semua field yang wajib diisi.",
+                });
+                return; // stop di sini, jangan kirim ajax
+            }
 
-        //                 // cek apakah PDF
-        //                 const isPDF = /\.pdf$/i.test(fileName);
+            if (file) fd.append('file', file); // 'file' harus sama dengan getFile('file') di server
+            // DEBUG: lihat isi FormData
+            for (var pair of fd.entries()) {
+                console.log(pair[0] + ' : ', pair[1]);
+            }
 
-        //                 if (isImage) {
-        //                     // tampilkan gambar
-        //                     $('#imagePreview').html(`<img src="<?= base_url('assets/uploads/') ?>${fileName}" alt="Preview Image" id="existingImage"style="cursor: pointer; max-width: 200px;"
-        //                         >
-        //                     `);
+            $.ajax({
+                url: '<?= base_url("sendData") ?>',
+                type: 'POST',
+                data: fd,
+                processData: false, // jangan ubah FormData jadi query string
+                contentType: false, // biar otomatis multipart/form-data + boundary
+                dataType: 'json',
+                success: function() {
+                    // klik button OK dulu baru trigger logout
 
-        //                     const existingImage = document.getElementById('existingImage');
-        //                     existingImage.addEventListener('click', () => openViewer(existingImage.src));
-        //                     $('.previewpdf_fill').css('display', 'none');
-        //                 } else if (isPDF) {
-        //                     // tampilkan PDF (ikon atau preview mini)
-        //                     //     $('#imagePreview').html(`
-        //                     //     <div style="cursor: pointer; color: blue; text-decoration: underline;" id="pdfPreview">
-        //                     //         Lihat PDF (${fileName})
-        //                     //     </div>
+                    Notify.fire({
+                        type: "success",
+                        title: "Berhasil!",
+                        text: "Data temuan berhasil diperbarui.",
+                        showCancelButton: false,
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
 
-        //                     // `);
-        //                     // tampilkan PDF (ikon atau preview mini)
-        //                     // const encoded = base64url_encode(fileName);
-        //                     $('.previewpdf_fill').css('display', 'block');
-        //                     $('#previewPDF_fill').attr('href', 'pdf/preview/' + fileName);
-        //                     $('#imagePreview').css('display', 'none');
-        //                     // const pdfPreview = document.getElementById('pdfPreview');
-        //                     // pdfPreview.addEventListener('click', () => openViewer("<?= base_url('assets/uploads/') ?>" + fileName));
 
-        //                 } else {
-        //                     // bukan gambar atau pdf
-        //                     $('#imagePreview').html(`<p>File: ${fileName}</p>`);
-        //                 }
-        //             }
-        //             // Tambahkan field lain sesuai kebutuhan
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.error('Error fetching temuan data for edit:', error);
-        //         }
-        //     });
-        // }
-        new SelectX('#detail_option_status', {
-            searchable: true,
-            clearable: true,
-            placeholder: 'Pilih sesuatu...',
-            onChange: (value) => console.log(value)
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error updating temuan patrol:', error);
+                }
+            });
+
         });
+
+        function rebuildPicSelectX() {
+            if (sxaction && typeof sxaction.destroy === 'function') sxaction.destroy();
+            sxaction = new SelectX('#detail_pic_action', {
+                searchable: true,
+                clearable: true,
+                placeholder: 'Pilih sesuatu...'
+            });
+        }
+
+
 
         function renderEvidenceFinding(finding_evidence) {
 
@@ -1047,6 +1177,7 @@
 
         fileInput.addEventListener('change', () => {
             previewContainer.innerHTML = '';
+            previewContainer.style.display = 'block'; // ⬅️ munculin container
             Array.from(fileInput.files).forEach(file => {
                 if (!file.type.startsWith('image/')) return;
                 const reader = new FileReader();
@@ -1141,7 +1272,7 @@
         });
         let sxDept = null;
         let sxSeksi = null;
-
+        let sxaction = null;
 
 
         function closeAddPatrolModal() {
@@ -1628,9 +1759,7 @@
         }
         // jQuery version (inti penting saja)
 
-        $('.btnTambahPatrol').on('click', function() {
-            window.location.href = "<?= base_url('temuan_patrol/start_audit') ?>";
-        });
+
         $('#list_schedule').change(function() {
             var scheduleid = $(this).val();
 

@@ -348,7 +348,7 @@
 
                             <div class="flex gap-3 pt-2 mt-5">
                                 <button type="button" class="flex-1 border border-gray-300 text-dark rounded-lg py-3 text-sm font-semibold hover:bg-gray-50 backhistory"> Batal </button>
-                                <button type="button" class="flex-1 btn-primary text-white rounded-lg py-3 text-sm font-semibold" id="btn_tambahTemuan"> <i class="fas fa-save mr-1"></i> Submit </button>
+                                <button type="button" class="flex-1 btn btn-primary text-white rounded-lg py-3 text-sm font-semibold" id="btn_tambahTemuan"> <i class="fas fa-save mr-1"></i> Submit </button>
                             </div>
                         </div><!-- Stacked Bar by Area -->
                     </div>
@@ -370,9 +370,7 @@
                 <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="schedule">
                     <i class="fas fa-calendar text-lg"></i> <span class="text-xs whitespace-nowrap">Schedule</span>
                 </button>
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="uiElements">
-                    <i class="fas fa-palette text-lg"></i> <span class="text-xs whitespace-nowrap">UI</span>
-                </button>
+
                 <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="profile">
                     <i class="fas fa-user text-lg"></i> <span class="text-xs whitespace-nowrap">Profile</span>
                 </button>
@@ -440,150 +438,13 @@
         let currentDate = new Date(2024, 0, 1); // Start with January 2024
         const TODAY_REFERENCE = new Date(2024, 0, 15); // Set today as Jan 15, 2024 for demo purposes
 
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
 
-            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-            ];
 
-            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
 
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            const calendarDays = document.getElementById('calendarDays');
-            calendarDays.innerHTML = '';
-
-            // Empty cells before first day
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.className = 'aspect-square';
-                calendarDays.appendChild(emptyCell);
-            }
-
-            // Days of the month
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const scheduleInfo = scheduleData[dateStr];
-
-                const dayCell = document.createElement('div');
-                dayCell.className = 'aspect-square flex flex-col items-center justify-center rounded-lg text-sm font-semibold cursor-pointer transition-all';
-
-                // Check if this day is today (using reference date)
-                const cellDate = new Date(year, month, day);
-                cellDate.setHours(0, 0, 0, 0);
-
-                const todayRef = new Date(TODAY_REFERENCE);
-                todayRef.setHours(0, 0, 0, 0);
-
-                const isToday = cellDate.getTime() === todayRef.getTime();
-
-                if (isToday) {
-                    dayCell.classList.add('border-2', 'border-blue-500');
-                }
-
-                if (scheduleInfo) {
-                    if (scheduleInfo.status === 'completed') {
-                        // Patrol sudah selesai - HIJAU
-                        dayCell.classList.add('bg-green-500', 'text-white', 'hover:bg-green-600');
-                    } else if (scheduleInfo.status === 'scheduled') {
-                        // Check if date has passed
-                        if (cellDate.getTime() < todayRef.getTime()) {
-                            // Jadwal sudah lewat tapi belum dilaksanakan - KUNING
-                            dayCell.classList.add('bg-yellow-500', 'text-white', 'hover:bg-yellow-600');
-                        } else {
-                            // Jadwal yang akan datang - BIRU
-                            dayCell.classList.add('bg-blue-500', 'text-white', 'hover:bg-blue-600');
-                        }
-                    }
-
-                    dayCell.addEventListener('click', () => showScheduleDetail(dateStr, scheduleInfo));
-                } else {
-                    dayCell.classList.add('text-dark', 'hover:bg-gray-100');
-                }
-
-                dayCell.innerHTML = `
-          <span class="text-base">${day}</span>
-          ${scheduleInfo ? '<i class="fas fa-clipboard-check text-xs mt-1"></i>' : ''}
-        `;
-
-                calendarDays.appendChild(dayCell);
-            }
-        }
-
-        function showScheduleDetail(dateStr, scheduleInfo) {
-            const statusBadge = scheduleInfo.status === 'completed' ?
-                '<span class="status-badge status-close">Selesai</span>' :
-                '<span class="status-badge status-progress">Terjadwal</span>';
-
-            const actualInfo = scheduleInfo.actual ?
-                `<div class="card-bg border-2 border-green-200 rounded-lg p-3 bg-green-50">
-            <p class="text-xs text-gray mb-1">Actual Tanggal Patrol</p>
-            <p class="text-sm font-bold text-green-700"><i class="fas fa-check-circle mr-1"></i>${scheduleInfo.actual}</p>
-          </div>` :
-                `<div class="card-bg border-2 border-yellow-200 rounded-lg p-3 bg-yellow-50">
-            <p class="text-xs text-gray mb-1">Actual Tanggal Patrol</p>
-            <p class="text-sm font-bold text-yellow-700"><i class="far fa-clock mr-1"></i>Belum dilaksanakan</p>
-          </div>`;
-
-            const detailContent = document.getElementById('detailContent');
-            detailContent.innerHTML = `
-        <div class="card-bg border border-gray-200 rounded-lg p-3">
-          <p class="text-xs text-gray mb-1">Status</p>
-          ${statusBadge}
-        </div>
-
-        <div class="card-bg border border-gray-200 rounded-lg p-3">
-          <p class="text-xs text-gray mb-1">Tanggal Rencana Patrol</p>
-          <p class="text-sm font-semibold text-dark"><i class="fas fa-calendar-alt text-blue-600 mr-1"></i>${scheduleInfo.planned}</p>
-        </div>
-
-        ${actualInfo}
-
-        <div class="card-bg border border-gray-200 rounded-lg p-3">
-          <p class="text-xs text-gray mb-1">Area Patrol</p>
-          <p class="text-sm font-semibold text-dark"><i class="fas fa-map-marker-alt text-blue-600 mr-1"></i>${scheduleInfo.area}</p>
-        </div>
-
-        <div class="card-bg border border-gray-200 rounded-lg p-3">
-          <p class="text-xs text-gray mb-2">Auditor</p>
-          ${scheduleInfo.auditor.map(auditor => `
-            <div class="flex items-center gap-2 mb-1">
-              <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                <i class="fas fa-user text-blue-600 text-xs"></i>
-              </div>
-              <span class="text-sm font-semibold text-dark">${auditor}</span>
-            </div>
-          `).join('')}
-        </div>
-
-        ${scheduleInfo.status === 'completed' ? `
-          <div class="card-bg border-2 border-green-200 rounded-lg p-4 bg-green-50">
-            <div class="flex items-center gap-2 mb-2">
-              <i class="fas fa-check-circle text-green-600 text-lg"></i>
-              <h4 class="text-sm font-bold text-dark">Patrol Completed</h4>
-            </div>
-            <p class="text-xs text-gray">Patrol telah selesai dilaksanakan dan laporan sudah tersedia.</p>
-          </div>
-        ` : `
-          <div class="card-bg border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
-            <div class="flex items-center gap-2 mb-2">
-              <i class="fas fa-calendar-check text-blue-600 text-lg"></i>
-              <h4 class="text-sm font-bold text-dark">Scheduled Patrol</h4>
-            </div>
-            <p class="text-xs text-gray">Patrol dijadwalkan akan dilaksanakan sesuai rencana. Pastikan auditor siap melakukan patrol.</p>
-          </div>
-        `}
-      `;
-
-            document.getElementById('detailModal').classList.remove('hidden');
-        }
 
         function changeMonth(direction) {
             currentDate.setMonth(currentDate.getMonth() + direction);
-            renderCalendar();
+
         }
 
 
@@ -601,19 +462,7 @@
             }
         }
 
-        // Navigation
-        // document.querySelectorAll('.nav-item').forEach(item => {
-        //     item.addEventListener('click', () => {
-        //         const page = item.dataset.page;
 
-        //         document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-        //         item.classList.add('active');
-
-        //         document.querySelectorAll('.page-content').forEach(content => content.classList.add('hidden'));
-        //         document.getElementById(page + 'Page').classList.remove('hidden');
-        //     });
-        // });
-        // Dengan opsi
         new SelectX('#list_dept', {
             searchable: true,
             clearable: true,
@@ -942,7 +791,7 @@
 
         window.addEventListener('load', () => {
 
-            renderCalendar();
+
             initPlugins();
         });
 
@@ -991,27 +840,7 @@
                 }
             });
 
-            // Initialize Choices.js for single select
-            const selectChoice = new Choices('#selectInput', {
-                searchEnabled: true,
-                searchPlaceholderValue: 'Search area...',
-                itemSelectText: 'Press to select',
-                noResultsText: 'No results found',
-                noChoicesText: 'No choices available',
-                shouldSort: false
-            });
 
-            // Initialize Choices.js for multi-select
-            const multiSelectChoice = new Choices('#multiSelectInput', {
-                removeItemButton: true,
-                searchEnabled: true,
-                searchPlaceholderValue: 'Search categories...',
-                maxItemCount: 5,
-                placeholder: true,
-                placeholderValue: 'Select categories...',
-                itemSelectText: 'Press to select',
-                noResultsText: 'No results found'
-            });
 
             // Initialize Glide.js
             if (document.querySelector('.glide')) {
@@ -1611,10 +1440,28 @@
                 }
             });
         });
+        // helper: update required (mandatory) untuk #pic_action_list_seksi
+        function updateSeksiRequirement() {
+            var $seksi = $('#pic_action_list_seksi');
+
+            // hitung option selain placeholder (value kosong)
+            var optionValidCount = $seksi.find('option[value!=""]').length;
+
+            if (optionValidCount > 0) {
+                // ada pilihan lain -> wajib
+                $seksi.prop('required', true);
+            } else {
+                // cuma placeholder -> tidak wajib
+                $seksi.prop('required', false);
+            }
+
+            return optionValidCount; // kalau butuh dipakai
+        }
         $('.btn_rekaptemuan').click(function() {
 
             const deskripsi = String($('#deskripsi_temuan').val() ?? '').trim();
             const tanggal_patrol_actual = $('#tanggal_patrol').val();
+
             if (!tanggal_patrol_actual) {
                 Notify.fire({
                     type: "error",
@@ -1623,13 +1470,13 @@
                 });
                 return;
             }
+
             if (!$('#list_dept').val()) {
                 Notify.fire({
                     type: "error",
                     title: "Oops!",
                     text: "Pilih Departemen Area Patrol",
                 });
-
                 return;
             }
 
@@ -1648,10 +1495,19 @@
                     title: "Oops!",
                     text: "Pilih PIC Action",
                 });
-
                 return;
             }
 
+            // ✅ IMPLEMENTASI: seksi hanya mandatory kalau memang ada opsi selain placeholder
+            var optionValidCount = updateSeksiRequirement();
+            if (optionValidCount > 0 && !$('#pic_action_list_seksi').val()) {
+                Notify.fire({
+                    type: "error",
+                    title: "Oops!",
+                    text: "Pilih Seksi PIC Action",
+                });
+                return;
+            }
 
             // cegah double submit
             var $btn = $(this);
@@ -1676,7 +1532,7 @@
             }
 
             let data = {
-                deskripsi_temuan: deskripsi, // ✅ pakai yang sudah trim & aman
+                deskripsi_temuan: deskripsi,
                 pic_action_section: $('#pic_action_list_seksi option:selected').data('section') ?? null,
                 pic_action_section_id: $('#pic_action_list_seksi').val() ?? "",
                 pic_action_dept_id: $('#pic_action_list_dept').val() ?? "",
@@ -1693,32 +1549,28 @@
 
             // reset input form
             $('#deskripsi_temuan').val('');
-            // reset dept ke placeholder
 
             $('#pic_action_list_seksi')
                 .next('.selectx-container')
                 .find('.selectx-clear')
                 .trigger('click');
+
             $('#pic_action_list_dept')
                 .next('.selectx-container')
                 .find('.selectx-clear')
                 .trigger('click');
-            // $('#pic_action_list_dept')
-            //     .closest('.selectx') // wrapper SelectX (sesuaikan kalau beda)
-            //     .find('.selectx-clear')
-            //     .trigger('click');
-
-            // $('#pic_action_list_seksi')
-            //     .closest('.selectx')
-            //     .find('.selectx-clear')
-            //     .trigger('click');
 
             // disable seksi lagi
             $('#pic_action_list_seksi')
                 .next('.selectx-container')
                 .find('.selectx-trigger')
                 .addClass('disabled');
+
             $('#pic_action_list_seksi').prop('disabled', true);
+
+            // ✅ IMPLEMENTASI: setelah reset/disable, pastikan required sesuai kondisi option
+            updateSeksiRequirement();
+
             // reset file input + preview + selectedFile
             $('#fileUpload_tambah').val('');
             $('#preview_image').attr('src', '').addClass('d-none');
@@ -1767,9 +1619,10 @@
             e.preventDefault();
 
             const $btn = $(this);
-            if ($btn.prop('disabled')) return;
-            $btn.prop('disabled', true);
 
+
+            $('#btn_tambahTemuan').prop('disabled', true);
+            $btn.html('Tunggu Sebentar...');
             try {
                 // ===== ambil data form =====
                 const tanggal_patrol = $('#tanggal_patrol').val();
@@ -1876,7 +1729,8 @@
                 });
 
             } finally {
-                $btn.prop('disabled', false);
+                $('#btn_tambahTemuan').prop('disabled', false);
+                $('#btn_tambahTemuan').html('<i class="fas fa-save mr-1"></i> Submit');
             }
         });
 

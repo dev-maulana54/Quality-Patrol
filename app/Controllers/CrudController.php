@@ -673,20 +673,46 @@ class CrudController extends BaseController
             $data_update['pic_action_departement_id'] = $get_section_dept['id_departement'];
 
             $data_update['status'] = 2; // langsung simpan
-            $data_update['deskripsi_temuan'] = $this->request->getPost('deskripsi_temuan');
-            $data_update['analisa_penyebab'] = $this->request->getPost('analisa_penyebab');
-            $data_update['action']           = $this->request->getPost('action');
+            $deskripsi_temuan = $this->request->getPost('deskripsi_temuan');
+            $analisa_penyebab = $this->request->getPost('analisa_penyebab');
+            $action = $this->request->getPost('action');
+
             $tanggal_patrol = $this->request->getPost('tanggal_patrol');
             $due_date       = $this->request->getPost('due_date');
 
 
-
+            if (!empty($deskripsi_temuan)) {
+                $data_update['deskripsi_temuan'] = $deskripsi_temuan;
+            }
+            if (!empty($analisa_penyebab)) {
+                $data_update['analisa_penyebab'] = $analisa_penyebab;
+            }
+            if (!empty($action)) {
+                $data_update['action'] = $action;
+            }
             if (!empty($tanggal_patrol)) {
                 $data_update['tanggal_patrol'] = $tanggal_patrol;
             }
 
             if (!empty($due_date)) {
-                $data_update['due_date'] = $due_date;
+
+                // Cek apakah sudah format d/m/Y
+                $dateObj = \DateTime::createFromFormat('d/m/Y', $due_date);
+                $isValidDMY = $dateObj && $dateObj->format('d/m/Y') === $due_date;
+
+                if ($isValidDMY) {
+                    // Sudah d/m/Y, langsung pakai
+                    $data_update['due_date'] = $due_date;
+                } else {
+                    // Format lain, coba konversi pakai strtotime
+                    $timestamp = strtotime($due_date);
+
+                    if ($timestamp !== false) {
+                        $data_update['due_date'] = date('d/m/Y', $timestamp);
+                    } else {
+                        $data_update['due_date'] = null;
+                    }
+                }
             }
 
 
