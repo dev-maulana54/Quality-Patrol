@@ -48,8 +48,8 @@ class Temuan_patrol extends BaseController
             return view('mobile/data_patrol', $data);
         } else {
 
-            // return view('mobile/data_patrol', $data);
-            return view('users/temuan_patrol', $data);
+            return view('mobile/data_patrol', $data);
+            // return view('users/temuan_patrol', $data);
             // return view('desktop/users/temuan_patrol', $data);
         }
     }
@@ -65,8 +65,8 @@ class Temuan_patrol extends BaseController
             return view('mobile/start_patrol', $data);
         } else {
 
-            return view('info/info_pengembangan', $data);
-            // return view('mobile/start_patrol', $data);
+            // return view('info/info_pengembangan', $data);
+            return view('mobile/start_patrol', $data);
             // return view('users/temuan_patrol', $data);
             // return view('desktop/users/temuan_patrol', $data);
         }
@@ -107,8 +107,8 @@ class Temuan_patrol extends BaseController
         if ($agent->isMobile()) {
             return view('mobile/data_patrol_auditee', $data);
         } else {
-            // return view('mobile/data_patrol_auditee', $data);
-            return view('users/temuan_auditee', $data);
+            return view('mobile/data_patrol_auditee', $data);
+            // return view('users/temuan_auditee', $data);
         }
     }
     public function daftar_hadir()

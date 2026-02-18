@@ -278,7 +278,9 @@ class CrudController extends BaseController
             # ambil nama seksi yang jabatannya Kepala Seksi berdasarkan id_seksi di master_data_karyawan dan ambil
             $id_seksi = $this->request->getPost('id_seksi');
             $id_dept = $this->request->getPost('id_dept');
-            $auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_seksi, $id_dept);
+            $id_dept_henk = $this->dataPatrol->db->table('departement')->where('id_departement', $id_dept)->get()->getRowArray();
+            $id_sect_henk = $this->dataPatrol->db->table('section')->where('id_section', $id_seksi)->get()->getRowArray();
+            $auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_sect_henk['id_section_henk'], $id_dept_henk['id_departement_henk']);
 
 
             # Cek apakah data ada atau null
@@ -290,8 +292,16 @@ class CrudController extends BaseController
             return $this->response->setJSON(['auditee' => $nama_auditee]);
         } else if ($keterangan == 'tambah_temuan_patrol') {
 
-            $getdata_user = $this->dataPatrol
-                ->getdata_karyawan_byUsername(session()->get('npk'));
+            $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+
+            // AREA PATROL
+            $id_seksi = $this->request->getPost('seksiId');
+            $id_dept = $this->request->getPost('deptId');
+            $id_dept_henk = $this->dataPatrol->db->table('departement')->where('id_departement', $id_dept)->get()->getRowArray();
+            $id_sect_henk = $this->dataPatrol->db->table('section')->where('id_section', $id_seksi)->get()->getRowArray();
+
+
+
 
             // Ambil rekap temuan dari localStorage (JSON)
             $rekapJson  = $this->request->getPost('rekap_temuan');
@@ -326,6 +336,18 @@ class CrudController extends BaseController
                 $fileIndex = $item['file_index'] ?? null;
 
                 // ===============================
+                // ✅ Query id_dept_henk dari pic_action_dept_id
+                // ===============================
+                $idDeptHenk_pic = null;
+                $idsectHenk_pic = null;
+                if (!empty($item['pic_action_dept_id']) || !empty($item['pic_action_section_id'])) {
+                    $deptData = $this->dataPatrol->db->table('departement')->where('id_departement', $item['pic_action_dept_id'])->get()->getRowArray();
+                    $sectData = $this->dataPatrol->db->table('section')->where('id_section', $item['pic_action_section_id'])->get()->getRowArray();
+                    $idDeptHenk_pic = $deptData['id_departement_henk'] ?? null;
+                    $idsectHenk_pic = $sectData['id_section_henk'] ?? null;
+                }
+
+                // ===============================
                 // ✅ Upload evidence jika ada
                 // ===============================
                 if ($fileIndex !== null && isset($uploadedFiles[$fileIndex])) {
@@ -354,11 +376,11 @@ class CrudController extends BaseController
                     'id_auditor'                  => session()->get('npk'),
                     'nama_auditor'                => $getdata_user['nama'],
                     'nama_auditee'                => $this->request->getPost('nama_auditee'),
-                    'id_departement'              => $this->request->getPost('deptId'),
-                    'id_section'                  => $this->request->getPost('seksiId'),
+                    'id_departement'              => $id_dept_henk['id_departement_henk'],
+                    'id_section'                  => $id_sect_henk['id_section_henk'],
                     'deskripsi_temuan'            => $item['deskripsi_temuan'] ?? null,
-                    'pic_action_departement_id'   => $item['pic_action_dept_id'] ?? null,
-                    'pic_action_section_id'       => $item['pic_action_section_id'] ?? null,
+                    'pic_action_departement_id'   => $idDeptHenk_pic,
+                    'pic_action_section_id'       => $idsectHenk_pic,
                     'due_date'                    => 0,
                     'status'                      => 3,
                     // 'id_dt_schedule'              => $this->request->getPost('id_schedule'),
@@ -393,22 +415,22 @@ class CrudController extends BaseController
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
     ')
-                ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
-                ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
-                ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-                ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+                ->join('departement d', 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
+                ->join('section s', 'dt_temuan_patrol.id_section = s.id_section_henk', 'left')
+                ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
+                ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk', 'left')
                 ->where('dt_temuan_patrol.id_temuan_patrol', $id_temuan)
                 ->get()
                 ->getRowArray();
 
 
             # PIC Action 
-            $pic_action = $this->dataPatrol->get_Alldata_seksi();
+            $pic_action = $this->dataPatrol->get_Alldata_dept();
             $nama_pic = '';
 
             foreach ($pic_action as $pa) {
-                $isSelected5 = $temuan['pic_action_section_id'] == $pa['id_section'] ? 'selected' : '';
-                $nama_pic .= "<option value='{$pa['id_section']}' {$isSelected5}>{$pa['section']}</option>";
+                $isSelected5 = $temuan['pic_action_departement_id'] == $pa['id_departement_henk'] ? 'selected' : '';
+                $nama_pic .= "<option value='{$pa['id_departement_henk']}' {$isSelected5}>{$pa['departement']}</option>";
             }
             # Data User Login dengan Role Auditor
             $data_auditor = $this->dataPatrol->get_dataAllAuditor();
@@ -493,22 +515,22 @@ class CrudController extends BaseController
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
     ')
-                ->join('henkaten_assy_dev.dbo.departement d', 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
-                ->join('henkaten_assy_dev.dbo.section s', 'dt_temuan_patrol.id_section = s.id_section', 'left')
-                ->join('henkaten_assy_dev.dbo.departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-                ->join('henkaten_assy_dev.dbo.section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+                ->join('departement d', 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
+                ->join('section s', 'dt_temuan_patrol.id_section = s.id_section_henk', 'left')
+                ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
+                ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk', 'left')
                 ->where('dt_temuan_patrol.id_temuan_patrol', $id_temuan)
                 ->get()
                 ->getRowArray();
 
 
             #PIC Action 
-            $pic_action = $this->dataPatrol->get_Alldata_seksi();
+            $pic_action = $this->dataPatrol->get_Alldata_dept();
             $nama_pic = '';
 
             foreach ($pic_action as $pa) {
-                $isSelected5 = $temuan['pic_action_section_id'] == $pa['id_section'] ? 'selected' : '';
-                $nama_pic .= "<option value='{$pa['id_section']}' {$isSelected5}>{$pa['section']}</option>";
+                $isSelected5 = $temuan['pic_action_departement_id'] == $pa['id_departement_henk'] ? 'selected' : '';
+                $nama_pic .= "<option value='{$pa['id_departement_henk']}' {$isSelected5}>{$pa['departement']}</option>";
             }
             # Data User Login dengan Role Auditor
             $data_auditor = $this->dataPatrol->get_dataAllAuditor();
@@ -582,6 +604,9 @@ class CrudController extends BaseController
                         $data_update['id_departement'] = $id_dept['id_departement'];
                         $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
                     }
+                    $get_section_dept = $this->dataPatrol->getSection_andDeptByID($this->request->getPost('area_pic_action'));
+                    $data_update['pic_action_section_id'] = $this->request->getPost('area_pic_action');
+                    $data_update['pic_action_departement_id'] = $get_section_dept['id_departement'];
                 }
                 $status = $this->request->getPost('status');
                 if ($status !== null && $status !== '') {   # biar '0' juga bisa
@@ -1204,6 +1229,25 @@ class CrudController extends BaseController
             return $this->response->setJSON([
                 'status'  => 'success',
                 'message' => 'Data schedule berhasil dihapus',
+            ]);
+        } else if ($keterangan == 'get_detail_dept_qp') {
+            $id_dept = $this->request->getPost('id_dept');
+            $loop = $this->dataPatrol->getSeksi_byDeptId($id_dept);
+            $html = '';
+            $i = 1;
+            foreach ($loop as $l) {
+                $html .= '  <tr>';
+                $html .= '  <td>' . $i++ . '</td>';
+                $html .= ' <td>' . $l['section'] . '</td>';
+                $html .= '<td class="text-center">';
+                $html .= ' <button class="btn btn-sm btn-primary btn_section_edit" data-id="' . $l['id_section'] . '">Edit</button>';
+                $html .= '  <button class="btn btn-sm btn-danger btn_section_hapus" data-id="' . $l['id_section'] . '">Hapus</button>';
+                $html .= ' </td>';
+            }
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'data' => $html
             ]);
         }
     }

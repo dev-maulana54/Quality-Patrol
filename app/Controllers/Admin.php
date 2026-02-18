@@ -27,8 +27,13 @@ class Admin extends BaseController
     }
     public function mdata_department(): string
     {
-        $data['title'] = "Master Data Departemen | Admin";
+        $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
+        $data['title'] = "Master Data User | Admin";
+        $data['nama'] = $getdata_user['nama'];
+        $data['role'] = session()->get('role');
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
+        $data['data_dept_henk'] = $this->dataPatrol->get_Alldata_dept_henk();
+        $data['data_karyawan'] = $this->dataPatrol->getAlldata_karyawan();
         return view('admin/mdata_departement', $data);
     }
     public function test_upload()

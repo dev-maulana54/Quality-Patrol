@@ -1701,11 +1701,7 @@
                     contentType: false,
                     dataType: 'json',
                     success: function(response) {
-                        Notify.fire({
-                            type: "success",
-                            title: "Berhasil!",
-                            text: "Temuan berhasil ditambahkan.",
-                        });
+
                         Notify.fire({
                             type: "success",
                             title: "Berhasil!",
@@ -1723,14 +1719,36 @@
 
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error adding temuan patrol:', error);
-                        alert('Gagal menyimpan temuan.');
+                        let msg = "Server gagal menyimpan temuan";
+
+                        // Kalau server balikin JSON
+                        if (xhr.responseJSON) {
+                            // CI4 custom: { message: "..." }
+                            if (xhr.responseJSON.message) msg = xhr.responseJSON.message;
+
+                            // CI4 validation biasanya bisa kamu bikin: { errors: {field: "..." } }
+                            if (xhr.responseJSON.errors) {
+                                msg = Object.values(xhr.responseJSON.errors).join("\n");
+                            }
+                        } else if (xhr.responseText) {
+                            // fallback kalau bukan JSON
+                            msg = xhr.responseText;
+                        }
+
+                        Notify.fire({
+                            type: "error",
+                            title: "Error!",
+                            text: msg
+                        });
+                    },
+                    complete: function() {
+                        $('#btn_tambahTemuan').prop('disabled', false);
+                        $('#btn_tambahTemuan').html('<i class="fas fa-save mr-1"></i> Submit');
                     }
                 });
 
             } finally {
-                $('#btn_tambahTemuan').prop('disabled', false);
-                $('#btn_tambahTemuan').html('<i class="fas fa-save mr-1"></i> Submit');
+                console.log('finally function');
             }
         });
 

@@ -1994,6 +1994,7 @@
                 fd.append('id_temuan', $('#edit_id_temuan_patrol').val());
                 fd.append('npk_auditor', $('#edit_nama_auditor').val());
                 fd.append('area_prosesaudit', $('#edit_area_proses').val());
+                fd.append('area_pic_action', $('#edit_pic_action').val());
                 fd.append('deskripsi_temuan', $('#edit_deskripsi_temuan').val());
                 fd.append('analisa_penyebab', $('#edit_analisa_penyebab').val());
                 fd.append('action', $('#edit_action').val());
@@ -2037,8 +2038,8 @@
                     contentType: false,
                     dataType: 'json',
                     success: function() {
-                        // alert('Temuan berhasil diperbarui!');
-                        // location.reload();
+                        alert('Temuan berhasil diperbarui!');
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error updating temuan patrol:', error);

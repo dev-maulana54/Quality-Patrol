@@ -173,11 +173,11 @@
             Master Data
         </div>
         <?php if ($role === 'Administrator') : ?>
-            <a href="<?= base_url('admin/mdata_user') ?>" class="menu-item active" data-page="user">
+            <a href="<?= base_url('admin/mdata_user') ?>" class="menu-item " data-page="user">
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
-            <a href="<?= base_url('admin/mdata_departemen') ?>" class="menu-item" data-page="departemen">
+            <a href="<?= base_url('admin/mdata_departemen') ?>" class="menu-item active" data-page="departemen">
                 <i class="bi bi-building"></i>
                 <span>Departemen</span>
             </a>
@@ -191,7 +191,7 @@
         <div class="table-card">
             <div class="card-header">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title">Data User</h3>
+                    <h3 class="card-title">Data Departemen Quality Patrol</h3>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
                         <i class="bi bi-plus-circle"></i> Tambah Data</button>
                 </div>
@@ -202,61 +202,70 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width="100">NPK</th>
-                            <th width="200">Nama</th>
-                            <!-- <th>Departemen</th>
-                            <th width="200">Seksi</th> -->
-                            <th>Role</th>
+                            <th>Departement</th>
+                            <th>ID Dept Henkanten</th>
+                            <th width="100">Section</th>
 
-                            <th></th>
+                            <th width="150"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data_user as $index => $user) : ?>
+                        <?php
+                        $i = 1;
+                        foreach ($data_dept as $dd) : ?>
                             <tr>
-                                <td><?= $index + 1 ?></td>
-                                <td><?= $user['npk'] ?></td>
-                                <td><?= $user['nama'] ?></td><!-- todo : ambil departemen berdasarkan id dept -->
-                                <!-- <td>
-                                    <?php
-                                    foreach ($data_dept as $dept) {
-                                        if ($dept['id_departement'] == $user['id_departement']) {
-                                            echo $dept['departement'];
-                                            break;
-                                        }
-                                    }
-                                    ?>
-                                </td> -->
-                                <!-- <td>
-                                    
-                                    <?php foreach ($data_seksi as $seksi) {
-                                        if ($seksi['id_section'] == $user['id_section']) {
-                                            echo $seksi['section'];
-                                            break;
-                                        }
-                                    } ?>
-                                </td> -->
+                                <td><?= $i++ ?></td>
+                                <td><?= $dd['departement'] ?></td>
+                                <td><?= $dd['id_departement_henk'] ?></td>
                                 <td>
-                                    <?php if ($user['role'] == 1) {
-                                        echo "Admin";
-                                    } elseif ($user['role'] == 2) {
-                                        echo "Auditor";
-                                    } elseif ($user['role'] == 3) {
-                                        echo "Auditee";
-                                    } else {
-                                        echo "Unknown";
-                                    }
-                                    ?>
-
+                                    <button type="button" class="btn btn-primary btn_lihatsection" data-id="<?= $dd['id_departement'] ?>"><i class="bi bi-eye"></i> Lihat</button>
                                 </td>
-
-                                <td class="text-center">
-
-                                    <button type="button" class="btn btn-danger btnhapus_user" data-id="<?= $user['user_id'] ?>"><i class="bi bi-trash3-fill"></i> Hapus</button>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn_editdept" data-id="<?= $dd['id_departement'] ?>"><i class="bi bi-pencil-square"></i> </button>
+                                    <button type="button" class="btn btn-danger btn_hapusdept" data-id="<?= $dd['id_departement'] ?>"><i class="bi bi-trash"></i> </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="table-card">
+            <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">Data Departemen Henkaten</h3>
+                </div>
+
+            </div>
+            <div class="table-responsive mt-3">
+                <table id="auditTable2" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Dept</th>
+                            <th>Departement</th>
+                            <th width="100">Section</th>
+
+                            <th width="150"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $i = 1;
+                        foreach ($data_dept_henk as $ddh) : ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td><?= $ddh['id_departement'] ?></td>
+                                <td><?= $ddh['departement'] ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn_lihatsection2" data-id="<?= $ddh['id_departement'] ?>"><i class="bi bi-eye"></i> Lihat</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn_hapusdept" data-id="<?= $ddh['id_departement'] ?>"><i class="bi bi-trash"></i> </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
 
                     </tbody>
                 </table>
@@ -323,6 +332,84 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal_lihatsection" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Section</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-header d-flex justify-content-end align-items-center">
+
+                        <button type="button" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Tambah Data
+                        </button>
+                    </div>
+
+                    <div class="row mt-2">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Section</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_section1">
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btn_sendData"><i class="bi bi-plus-circle"></i> Tambah Data User </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_edit_dept" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Departemen</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="row mt-2">
+                        <div class="form-group">
+                            <label for="Role" class="form-label">
+                                <i class="bi bi-building me-1"></i>Departemen
+                            </label>
+                            <select class="form-select select2" id="edit_data_dept" style="width:100%;">
+                                <option value="">-- Pilih Opsi --</option>
+
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btn_sendData"><i class="bi bi-plus-circle"></i> Tambah Data User </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="footer" id="footer">
         <p id="footerText">© 2025 Quality Patrol — All rights reserved</p>
     </div>
@@ -350,6 +437,7 @@
     </script>
     <script>
         $("#auditTable").DataTable({});
+        $("#auditTable2").DataTable({});
         $('#btn_sendData').click(function() {
             // todo : kirim data ke controller admin/sendData
 
@@ -377,6 +465,52 @@
                     alert('Terjadi kesalahan saat mengirim data.');
                 }
             });
+        });
+        $('.btn_lihatsection').click(function() {
+            $('#modal_lihatsection').modal('show');
+            var id = $(this).data('id');
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                data: {
+                    id_dept: id,
+                    keterangan: 'get_detail_dept_qp'
+                },
+                success: function(response) {
+                    // Perbarui elemen seksi berdasarkan response.html_seksi
+                    $('#tbody_section1').html(response.data);
+
+                },
+                error: function(xhr, status, error) {
+                    alert('Terjadi kesalahan saat mengambil data seksi.');
+                }
+            });
+        });
+        $(document).on('click', '.btn_section_edit', function() {
+            var id = $(this).data('id');
+            alert(id);
+        });
+        $('.btn_editdept').click(function() {
+            $('#modal_edit_dept').modal('show');
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                data: {
+                    npk: selectNPK,
+                    keterangan: 'get_detail_dept'
+                },
+                success: function(response) {
+                    // Perbarui elemen seksi berdasarkan response.html_seksi
+                    $('#dept_user').val(response.nama_dept_user);
+                    $('#seksi_user').val(response.nama_seksi_user);
+                },
+                error: function(xhr, status, error) {
+                    alert('Terjadi kesalahan saat mengambil data seksi.');
+                }
+            });
+
         });
         $('#dt_nama').change(function() {
             var selectNPK = $(this).val();

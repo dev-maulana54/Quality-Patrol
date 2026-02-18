@@ -350,6 +350,14 @@
         .table td {
             font-size: 13px;
         }
+
+        .selectx-trigger.disabled {
+            pointer-events: none;
+            /* semua klik mati */
+            opacity: 0.6;
+            /* efek visual disabled */
+            cursor: not-allowed;
+        }
     </style>
 
 </head>
@@ -473,11 +481,13 @@
                                                 class="flex-1 btn-sm bg-blue-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
                                                 <i class="fas fa-edit"></i> Fill
                                             </button>
-                                            <button
-                                                onclick="confirmDeletePatrol(<?= $patrol['id_temuan_patrol'] ?>)"
-                                                class="flex-1 btn-sm bg-red-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
+                                            <?php if (session()->get('role') == 'Administrator') : ?>
+                                                <button
+                                                    onclick="confirmDeletePatrol(<?= $patrol['id_temuan_patrol'] ?>)"
+                                                    class="flex-1 btn-sm bg-red-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -516,9 +526,7 @@
                 <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="schedule">
                     <i class="fas fa-calendar text-lg"></i> <span class="text-xs whitespace-nowrap">Schedule</span>
                 </button>
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="uiElements">
-                    <i class="fas fa-palette text-lg"></i> <span class="text-xs whitespace-nowrap">UI</span>
-                </button>
+
                 <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="profile">
                     <i class="fas fa-user text-lg"></i> <span class="text-xs whitespace-nowrap">Profile</span>
                 </button>
@@ -549,15 +557,42 @@
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
                             <p class="text-xs text-gray mb-1">Auditor</p>
-                            <p class="text-sm font-semibold text-dark detail_auditor"></p>
+                            <?php if (session()->get('role') != 'Administrator') : ?>
+                                <p class="text-sm font-semibold text-dark detail_auditor"></p>
+                            <?php else : ?>
+                                <select id="detail_auditor" class="form-input card-bg text-dark detail_auditor" disabled>
+
+
+
+
+                                </select>
+                            <?php endif; ?>
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
                             <p class="text-xs text-gray mb-1">Auditee</p>
-                            <p class="text-sm font-semibold text-dark detail_auditee"></p>
+                            <?php if (session()->get('role') != 'Administrator') : ?>
+                                <p class="text-sm font-semibold text-dark detail_auditee"></p>
+                            <?php else : ?>
+                                <select id="detail_auditee" class="form-input card-bg text-dark detail_auditee" disabled>
+
+
+
+
+                                </select>
+                            <?php endif; ?>
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
                             <p class="text-xs text-gray mb-1">Area / Proses</p>
-                            <p class="text-sm font-semibold text-dark detail_area_proses"></p>
+                            <?php if (session()->get('role') != 'Administrator') : ?>
+                                <p class="text-sm font-semibold text-dark detail_area_proses"></p>
+                            <?php else : ?>
+                                <select id="detail_area_proses" class="form-input card-bg text-dark detail_area_proses" disabled>
+
+
+
+
+                                </select>
+                            <?php endif; ?>
                         </div>
                         <label for="patrolTime" class="form-label text-dark" style="margin-bottom: 0.1rem !important;font-size:20px;">Evidence Findings</label>
                         <hr style="border: none; border-top: 1px solid #ccc;">
@@ -576,6 +611,15 @@
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
                             <p class="text-xs text-gray mb-1">Action <small> <i>Di isi oleh Auditee !!!</i></small></p>
                             <p class="text-sm font-semibold text-dark detail_action"></p>
+                        </div>
+                        <div class="mt-2 pic_action_temuan_container">
+                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">PIC Action</label>
+                            <select id="detail_pic_action" class="form-input card-bg text-dark detail_pic_action" disabled>
+
+
+
+
+                            </select>
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
                             <p class="text-xs text-gray mb-1">Due Date <small> <i>Di isi oleh Auditee !!!</i></small></p>
@@ -614,10 +658,6 @@
                                 <img id="viewerImg" alt="Preview detail">
                             </div>
                         </div>
-                        <div class="mt-2">
-                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Keterangan Auditor<small class="text-danger"> *</small></label>
-                            <textarea class="form-input card-bg text-dark detail_ket_auditor " placeholder="Masukkan keterangan auditor..." rows="2" required></textarea>
-                        </div>
                         <div class="mt-2 option_status_temuan_container">
                             <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Status</label>
                             <select id="detail_option_status" class="form-input card-bg text-dark">
@@ -638,6 +678,11 @@
 
                             </select>
                         </div>
+                        <div class="mt-2">
+                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Keterangan Auditor<small class="text-danger"> *</small></label>
+                            <textarea class="form-input card-bg text-dark detail_ket_auditor " placeholder="Masukkan keterangan auditor..." rows="2" required></textarea>
+                        </div>
+
 
 
                     </form>
@@ -748,8 +793,9 @@
         }
 
 
-        function fill_temuan(id) {
 
+        function fill_temuan(id) {
+            let selectPic = null;
             document.getElementById('detailModal').classList.remove('hidden');
             $.ajax({
                 url: '<?= base_url('sendData') ?>',
@@ -797,15 +843,47 @@
                         $('.edit_temuan_btn').show();
                     }
                     $('.detail_tanggal_patrol').text(response.temuan.tanggal_patrol);
-                    $('.detail_auditor').text(response.temuan.nama_auditor);
-                    $('.detail_auditee').text(response.temuan.nama_auditee);
-                    $('.detail_area_proses').text(response.temuan.section_name);
+                    <?php if (session()->get('role') != 'Administrator') : ?>
+                        $('.detail_auditor').text(response.temuan.nama_auditor);
+                    <?php endif; ?>
+                    <?php if (session()->get('role') == 'Administrator') : ?>
+                        $('.detail_auditor').html(response.temuan.nama_auditor);
+                    <?php endif; ?>
+                    <?php if (session()->get('role') != 'Administrator') : ?>
+                        $('.detail_auditee').text(response.temuan.nama_auditee);
+                    <?php endif; ?>
+                    <?php if (session()->get('role') == 'Administrator') : ?>
+                        $('.detail_auditee').html(response.temuan.nama_auditee);
+                    <?php endif; ?>
+                    <?php if (session()->get('role') != 'Administrator') : ?>
+                        $('.detail_area_proses').text(response.temuan.section_name);
+                    <?php endif; ?>
+                    <?php if (session()->get('role') == 'Administrator') : ?>
+                        $('.detail_area_proses').html(response.temuan.section_name);
+                    <?php endif; ?>
                     $('.detail_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
                     $('.detail_analisa_penyebab').text(response.temuan.analisa_penyebab);
                     $('.detail_action').text(response.temuan.action);
                     $('.detail_due_date').text(response.temuan.due_date);
                     $('.detail_ket_auditor').text(response.temuan.keterangan_auditor);
+                    $('.detail_pic_action').html(response.temuan.pic_section_name);
+                    // kalau sudah pernah dibuat, destroy dulu
+                    // if (selectPic) {
+                    //     selectPic.destroy();
+                    // }
+                    // // update option
+                    // $('#detail_pic_action')
+                    //     .empty()
+                    //     .append(response.temuan.pic_section_name);
 
+                    // // buat ulang
+                    // selectPic = new SelectX('#detail_pic_action', {
+                    //     searchable: true,
+                    //     clearable: true
+                    // });
+
+                    // // set value
+                    // selectPic.setValue(String(response.temuan.pic_action_departement_id));
                     // contoh: response.data.finding_evidence
                     renderEvidenceFinding(response.temuan.finding_evidence);
                     if (response.temuan.nama_file) {
@@ -953,6 +1031,7 @@
             placeholder: 'Pilih sesuatu...',
             onChange: (value) => console.log(value)
         });
+
 
         function renderEvidenceFinding(finding_evidence) {
 
@@ -1229,8 +1308,6 @@
                 } else if (page == 'schedule') {
                     window.location.href = "<?= base_url('schedule') ?>";
 
-                } else if (page == 'uiElements') {
-                    window.location.href = "<?= base_url('uiElements') ?>";
                 } else if (page == 'profile') {
                     window.location.href = "<?= base_url('profile') ?>";
                 } else if (page == 'dashboard') {

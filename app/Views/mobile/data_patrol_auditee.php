@@ -654,9 +654,7 @@
                 <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="schedule">
                     <i class="fas fa-calendar text-lg"></i> <span class="text-xs whitespace-nowrap">Schedule</span>
                 </button>
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="uiElements">
-                    <i class="fas fa-palette text-lg"></i> <span class="text-xs whitespace-nowrap">UI</span>
-                </button>
+
                 <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="profile">
                     <i class="fas fa-user text-lg"></i> <span class="text-xs whitespace-nowrap">Profile</span>
                 </button>
@@ -1360,8 +1358,6 @@
                 } else if (page == 'schedule') {
                     window.location.href = "<?= base_url('schedule') ?>";
 
-                } else if (page == 'uiElements') {
-                    window.location.href = "<?= base_url('uiElements') ?>";
                 } else if (page == 'profile') {
                     window.location.href = "<?= base_url('profile') ?>";
                 } else if (page == 'dashboard') {

@@ -275,6 +275,10 @@
                 <i class="bi bi-people"></i>
                 <span>User</span>
             </a>
+            <a href="<?= base_url('admin/mdata_departemen') ?>" class="menu-item" data-page="departemen">
+                <i class="bi bi-building"></i>
+                <span>Departemen</span>
+            </a>
 
         <?php endif; ?>
     </div><!-- Main Content -->

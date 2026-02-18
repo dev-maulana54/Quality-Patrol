@@ -29,7 +29,7 @@ $routes->get('temuan_patrol/daftar_hadir/(:num)', 'Temuan_patrol::sign/$1');
 $routes->get('schedule', 'Schedule::index');
 #Route Master data
 $routes->get('admin/mdata_user', 'Admin::mdata_user');
-$routes->get('admin/mdata_department', 'Admin::mdata_department');
+$routes->get('admin/mdata_departemen', 'Admin::mdata_department');
 
 #Route Semua CRUD disini 
 $routes->post('sendData', 'CrudController::sendData');
@@ -57,3 +57,7 @@ $routes->get('cct', 'EmailController::testConnection');
 
 
 $routes->post('attendance/sign-digital', 'AttendanceController::signDigital');
+
+$routes->set404Override(function () {
+    return view('info/404');
+});

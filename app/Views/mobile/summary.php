@@ -202,7 +202,7 @@
                                     <select class="w-full text-sm card-bg border border-gray-300 rounded px-2 py-1 text-dark" id="list_dept">
                                         <option value="" disabled selected>- Pilih Departement -</option>
                                         <?php foreach ($data_dept as $dept) : ?>
-                                            <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
+                                            <option value="<?= $dept['id_departement_henk'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -227,7 +227,7 @@
                                     <select class="w-full text-sm card-bg border border-gray-300 rounded px-2 py-1 text-dark" id="list_dept2">
                                         <option value="" disabled selected>- Pilih Departement -</option>
                                         <?php foreach ($data_dept as $dept) : ?>
-                                            <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
+                                            <option value="<?= $dept['id_departement_henk'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
