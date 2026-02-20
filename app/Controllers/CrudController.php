@@ -300,7 +300,9 @@ class CrudController extends BaseController
             $id_dept_henk = $this->dataPatrol->db->table('departement')->where('id_departement', $id_dept)->get()->getRowArray();
             $id_sect_henk = $this->dataPatrol->db->table('section')->where('id_section', $id_seksi)->get()->getRowArray();
 
-
+            $idSectionFinal = (!empty($id_sect_henk) && $id_sect_henk['id_section_henk'] != 0)
+                ? $id_sect_henk['id_section_henk']
+                : $id_seksi;
 
 
             // Ambil rekap temuan dari localStorage (JSON)
@@ -344,7 +346,9 @@ class CrudController extends BaseController
                     $deptData = $this->dataPatrol->db->table('departement')->where('id_departement', $item['pic_action_dept_id'])->get()->getRowArray();
                     $sectData = $this->dataPatrol->db->table('section')->where('id_section', $item['pic_action_section_id'])->get()->getRowArray();
                     $idDeptHenk_pic = $deptData['id_departement_henk'] ?? null;
-                    $idsectHenk_pic = $sectData['id_section_henk'] ?? null;
+                    $idsectHenk_pic = (!empty($sectData) && !empty($sectData['id_section_henk']) && $sectData['id_section_henk'] != 0)
+                        ? $sectData['id_section_henk']
+                        : $item['pic_action_section_id'];
                 }
 
                 // ===============================
@@ -377,7 +381,7 @@ class CrudController extends BaseController
                     'nama_auditor'                => $getdata_user['nama'],
                     'nama_auditee'                => $this->request->getPost('nama_auditee'),
                     'id_departement'              => $id_dept_henk['id_departement_henk'],
-                    'id_section'                  => $id_sect_henk['id_section_henk'],
+                    'id_section'                  => $idSectionFinal,
                     'deskripsi_temuan'            => $item['deskripsi_temuan'] ?? null,
                     'pic_action_departement_id'   => $idDeptHenk_pic,
                     'pic_action_section_id'       => $idsectHenk_pic,
@@ -693,10 +697,9 @@ class CrudController extends BaseController
                 $data_update['nama_file'] = $newName;
             }
 
-            $get_section_dept = $this->dataPatrol->getSection_andDeptByID($this->request->getPost('pic_action'));
-            $data_update['pic_action_section_id'] = $this->request->getPost('pic_action');
-            $data_update['pic_action_departement_id'] = $get_section_dept['id_departement'];
-
+            // $get_section_dept = $this->dataPatrol->getDataDept_basedOnID($this->request->getPost('pic_action'));
+            // $data_update['pic_action_section_id'] = $this->request->getPost('pic_action');
+            $data_update['pic_action_departement_id'] = $this->request->getPost('pic_action');
             $data_update['status'] = 2; // langsung simpan
             $deskripsi_temuan = $this->request->getPost('deskripsi_temuan');
             $analisa_penyebab = $this->request->getPost('analisa_penyebab');

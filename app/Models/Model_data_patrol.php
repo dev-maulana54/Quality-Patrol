@@ -39,17 +39,39 @@ class Model_data_patrol extends Model
     {
         # ambil semua data dari tabel dt_temuan_patrol dan join id_dept dan id_seksi untuk menampilkan nama departemen dan nama seksi
         return $this->db->table('dt_temuan_patrol')
-            ->select('
+            ->select("
         dt_temuan_patrol.*,
         d.departement AS departement_name,
         s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
-    ')
-            ->join("departement d", 'dt_temuan_patrol.id_departement = d.id_departement', 'left')
-            ->join("section s", 'dt_temuan_patrol.id_section = s.id_section', 'left')
-            ->join("departement AS pic_dept", 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement', 'left')
-            ->join("section AS pic_sec", 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section', 'left')
+    ")
+            ->join(
+                'departement d',
+                'dt_temuan_patrol.id_departement = d.id_departement_henk',
+                'left'
+            )
+            ->join(
+                'section s',
+                '(dt_temuan_patrol.id_section = s.id_section_henk 
+          OR 
+         (dt_temuan_patrol.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join(
+                'departement pic_dept',
+                'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk',
+                'left'
+            )
+            ->join(
+                'section pic_sec',
+                '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk 
+          OR 
+         (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+                'left',
+                false
+            )
             ->get()
             ->getResultArray();
     }
@@ -140,6 +162,13 @@ class Model_data_patrol extends Model
             ->get()
             ->getRowArray();
     }
+    public function getDataDept_basedOnID($id_dept)
+    {
+        return $this->db->table('departement')
+            ->where('id_departement_henk', $id_dept)
+            ->get()
+            ->getRowArray();
+    }
     public function tb_section($id_section)
     {
         return $this->db->table('section')
@@ -165,39 +194,39 @@ class Model_data_patrol extends Model
         $id_departement = $user['id_departement'];
 
         return $this->db->table('dt_temuan_patrol')
-            ->select('
+            ->select("
         dt_temuan_patrol.*,
-
         d.departement AS departement_name,
-
-        
         s.section AS section_name,
-      
         pic_dept.departement AS pic_departement_name,
-
-  
         pic_sec.section AS pic_section_name,
-
-      
         dt_temuan_patrol.nama_auditor AS auditor_name
-    ')
-            ->join("departement d", 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
-            ->join("section s", 'dt_temuan_patrol.id_section = s.id_section_henk', 'left')
-
-            ->join("departement AS pic_dept", 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
-            ->join("section AS pic_sec", 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk', 'left')
-            ->groupStart()
-            // ->where('dt_temuan_patrol.id_section', $id_section)
-            // Hilangkan Command jika ingin munculkan data untuk pic section
-            // ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section)
-            // ->orWhere('dt_temuan_patrol.id_departement', $id_departement)
-            // Hilangkan Command jika ingin munculkan data untuk pic section
-            // ->orWhere('dt_temuan_patrol.pic_action_departement_id', $id_departement)
+    ")
+            ->join('departement d', 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
+            ->join(
+                'section s',
+                '(dt_temuan_patrol.id_section = s.id_section_henk OR (dt_temuan_patrol.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join('departement pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
+            ->join(
+                'section pic_sec',
+                '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk OR (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+                'left',
+                false
+            )
             ->where('dt_temuan_patrol.id_auditor', session()->get('npk'))
             ->orderBy("CONVERT(date, tanggal_patrol, 106) DESC", false)
-            ->groupEnd()
             ->get()
             ->getResultArray();
+
+
+
+        // ->where('dt_temuan_patrol.id_section', $id_section) // Hilangkan Command jika ingin munculkan data untuk pic section // 
+        // ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section) // 
+        // ->orWhere('dt_temuan_patrol.id_departement', $id_departement) // Hilangkan Command jika ingin munculkan data untuk pic section // 
+        // ->orWhere('dt_temuan_patrol.pic_action_departement_id', $id_departement)
     }
     public function get_data_patrolByAuditee()
     {
