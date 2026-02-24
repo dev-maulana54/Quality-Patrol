@@ -597,20 +597,51 @@ class CrudController extends BaseController
 
                     if ($npk_auditor != '') {
                         $nama_auditor = $this->dataPatrol->getdata_karyawan_byUsername($npk_auditor);
+
                         $data_update['id_auditor'] = $npk_auditor;
                         $data_update['nama_auditor'] = $nama_auditor['nama'];
                     }
+
                     $id_section_pcaudit = $this->request->getPost('area_prosesaudit');
                     $id_dept = $this->dataPatrol->tb_section($id_section_pcaudit);
                     if ($id_section_pcaudit != '') {
-                        $nama_auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_section_pcaudit, $id_dept['id_departement']);
-                        $data_update['id_section'] = $id_section_pcaudit;
-                        $data_update['id_departement'] = $id_dept['id_departement'];
+                        $nama_auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_section_pcaudit, $id_dept['id_departement_henk']);
+
+                        $data_update['id_section'] = (int)$id_section_pcaudit;
+                        $data_update['id_departement'] = $id_dept['id_departement_henk'];
                         $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
                     }
-                    $get_section_dept = $this->dataPatrol->getSection_andDeptByID($this->request->getPost('area_pic_action'));
-                    $data_update['pic_action_section_id'] = $this->request->getPost('area_pic_action');
-                    $data_update['pic_action_departement_id'] = $get_section_dept['id_departement'];
+                    $get_section_dept = $this->dataPatrol->getSection_andDeptByIDNEW($this->request->getPost('area_pic_action'));
+                    $data_update['pic_action_section_id'] = (int)$this->request->getPost('area_pic_action');
+                    $data_update['pic_action_departement_id'] = $get_section_dept['id_departement_henk'];
+                    $data_update['deskripsi_temuan'] = $this->request->getPost('deskripsi_temuan');
+                    $data_update['analisa_penyebab'] = $this->request->getPost('analisa_penyebab');
+                    $data_update['action']           = $this->request->getPost('action');
+                    $tanggal_patrol = $this->request->getPost('tanggal_patrol');
+                    $due_date       = $this->request->getPost('due_date');
+                    if (!empty($tanggal_patrol)) {
+                        $data_update['tanggal_patrol'] = $tanggal_patrol;
+                    }
+
+                    if (!empty($due_date)) {
+                        $data_update['due_date'] = $due_date;
+                    }
+                    # ==== HANDLE FILE ====
+                    if ($file && $file->isValid() && !$file->hasMoved()) {
+                        $originalName = $file->getClientName();
+                        $cleanName    = preg_replace('/[^A-Za-z0-9._-]/', '_', $originalName);
+                        $timestamp    = time();
+                        $newName      = $timestamp . '_' . $cleanName;
+
+                        $target = FCPATH . 'assets/uploads/';
+                        if (!is_dir($target)) {
+                            mkdir($target, 0775, true);
+                        }
+
+                        $file->move($target, $newName);
+
+                        $data_update['nama_file'] = $newName;
+                    }
                 }
                 $status = $this->request->getPost('status');
                 if ($status !== null && $status !== '') {   # biar '0' juga bisa
@@ -623,6 +654,7 @@ class CrudController extends BaseController
                     $data_update['deskripsi_temuan'] = $this->request->getPost('deskripsi_temuan');
                 }
             } else {
+
                 # ==== HANDLE FILE ====
                 if ($file && $file->isValid() && !$file->hasMoved()) {
                     $originalName = $file->getClientName();
@@ -640,9 +672,9 @@ class CrudController extends BaseController
                     $data_update['nama_file'] = $newName;
                 }
 
-                $get_section_dept = $this->dataPatrol->getSection_andDeptByID($this->request->getPost('pic_action'));
-                $data_update['pic_action_section_id'] = $this->request->getPost('pic_action');
-                $data_update['pic_action_departement_id'] = $get_section_dept['id_departement'];
+                $get_section_dept = $this->dataPatrol->getSection_andDeptByIDNEW($this->request->getPost('pic_action'));
+                $data_update['pic_action_section_id'] = (int)$this->request->getPost('pic_action');
+                $data_update['pic_action_departement_id'] = $get_section_dept['id_departement_henk'];
 
                 $data_update['status'] = 2; # langsung simpan
                 $data_update['deskripsi_temuan'] = $this->request->getPost('deskripsi_temuan');
@@ -670,6 +702,7 @@ class CrudController extends BaseController
                 ->update($data_update);
             return $this->response->setJSON([
                 'status'  => 'success',
+                'data_update' => $data_update,
                 'message' => 'Data temuan patrol berhasil diperbarui'
             ]);
         } else if ($keterangan == 'update_temuan_patrol_auditee') { # function update temuan patrol by Auditee

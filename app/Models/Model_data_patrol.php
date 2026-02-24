@@ -162,6 +162,13 @@ class Model_data_patrol extends Model
             ->get()
             ->getRowArray();
     }
+    public function getSection_andDeptByIDNEW($id_departement)
+    {
+        return $this->db->table('departement')
+            ->where('id_departement_henk', $id_departement)
+            ->get()
+            ->getRowArray();
+    }
     public function getDataDept_basedOnID($id_dept)
     {
         return $this->db->table('departement')
@@ -172,6 +179,7 @@ class Model_data_patrol extends Model
     public function tb_section($id_section)
     {
         return $this->db->table('section')
+            ->join("departement", 'section.id_departement = departement.id_departement', 'left')
             ->where('id_section', $id_section)
             ->get()
             ->getRowArray();
@@ -648,7 +656,7 @@ class Model_data_patrol extends Model
                 "left",
                 false
             )
-            ->where("s.id_section_henk", $id_section_henk);
+            ->where("d.id_departement_henk", $id_dept_henk);
 
         // opsional: kalau mau validasi bahwa section tsb memang berada di dept HENK yang dipilih
         // ini butuh mapping dept_henk dari tabel departement:

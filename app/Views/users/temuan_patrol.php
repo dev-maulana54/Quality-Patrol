@@ -922,7 +922,7 @@
                                 <div class="form-group col-md-6 mt-2">
                                     <label for="auditorName" class="form-label">
                                         <i class="bi bi-person-fill me-1"></i> Auditee </label>
-                                    <select class="form-select select2" id="edit_nama_auditee" style="width:100%;">
+                                    <select class="form-select select2" id="edit_nama_auditee" style="width:100%;" disabled>
 
                                         <option value="">Blank</option>
 
@@ -1993,6 +1993,7 @@
                 fd.append('keterangan', 'update_temuan_patrol');
                 fd.append('id_temuan', $('#edit_id_temuan_patrol').val());
                 fd.append('npk_auditor', $('#edit_nama_auditor').val());
+
                 fd.append('area_prosesaudit', $('#edit_area_proses').val());
                 fd.append('area_pic_action', $('#edit_pic_action').val());
                 fd.append('deskripsi_temuan', $('#edit_deskripsi_temuan').val());
@@ -2039,7 +2040,7 @@
                     dataType: 'json',
                     success: function() {
                         alert('Temuan berhasil diperbarui!');
-                        location.reload();
+                        // location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error updating temuan patrol:', error);
