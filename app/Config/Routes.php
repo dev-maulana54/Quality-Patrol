@@ -58,6 +58,13 @@ $routes->get('cct', 'EmailController::testConnection');
 
 $routes->post('attendance/sign-digital', 'AttendanceController::signDigital');
 
+
+
+
+
+// API
+$routes->get('api/get-atasan', 'Api::getAtasan');
+$routes->get('api/get-section', 'Api::getSectionByDepartement');
 $routes->set404Override(function () {
     return view('info/404');
 });

@@ -271,6 +271,47 @@
                 </table>
             </div>
         </div>
+        <div class="table-card">
+            <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">Master Data Karyawan (Henkaten)</h3>
+                </div>
+
+            </div>
+            <div class="table-responsive mt-3">
+                <table id="auditTable3" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NPK</th>
+                            <th>Nama</th>
+                            <th width="100">ID Departement</th>
+                            <th width="100">ID Section</th>
+                            <th width="100">Jabatan</th>
+                            <th width="100">Email</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $i = 1;
+                        foreach ($data_karyawan as $dkh) : ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td><?= $dkh['npk'] ?></td>
+                                <td><?= $dkh['nama'] ?></td>
+                                <td><?= $dkh['id_departement'] ?></td>
+                                <td><?= $dkh['id_section'] ?></td>
+                                <td><?= $dkh['jabatan'] ?></td>
+                                <td><?= $dkh['email'] ?></td>
+
+                            </tr>
+                        <?php endforeach; ?>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div><!-- Footer -->
     <div class="modal fade" id="modal_tambahdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -438,6 +479,7 @@
     <script>
         $("#auditTable").DataTable({});
         $("#auditTable2").DataTable({});
+        $("#auditTable3").DataTable({});
         $('#btn_sendData').click(function() {
             // todo : kirim data ke controller admin/sendData
 
