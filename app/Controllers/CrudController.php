@@ -591,10 +591,11 @@ class CrudController extends BaseController
             $data_update = []; # mulai dari array kosong
 
 
-            # ==== STATUS ====
+            # hanya admin atau auditor yang ditunjuk yang bisa update temuan (termasuk upload file)
             if (session()->get('role') == 'Administrator' || $npk_auditor == session()->get('npk')) {
+                # hanya admin yang bisa update semua field
                 if (session()->get('role') == 'Administrator') {
-
+                    # update auditor jika npk_auditor tidak kosong
                     if ($npk_auditor != '') {
                         $nama_auditor = $this->dataPatrol->getdata_karyawan_byUsername($npk_auditor);
 
@@ -604,12 +605,33 @@ class CrudController extends BaseController
 
                     $id_section_pcaudit = $this->request->getPost('area_prosesaudit');
                     $id_dept = $this->dataPatrol->tb_section($id_section_pcaudit);
+                    # jika area proses audit tidak kosong
                     if ($id_section_pcaudit != '') {
+                        #ambil nama auditee berdasarkan id_section dan id_departement
                         $nama_auditee = $this->dataPatrol->get_deptSection_byIdSectDept($id_section_pcaudit, $id_dept['id_departement_henk']);
+                        #ambil nama auditee di master data karyawan berdasarkan npk auditee yang dipilih
+                        $validasi_auditee_sama = $this->dataPatrol->getdata_karyawan_byUsername($this->request->getPost('npk_auditee'));
+                        #ambil nama auditee di temuan patrol berdasarkan id_temuan_patrol
+                        $get_auditee_temuan = $this->dataPatrol->db->table('dt_temuan_patrol')->where('id_temuan_patrol', $id_temuan)->get()->getRowArray();
+                        /* cek jika nama auditee yang dipilih di master data karyawan tidak sama dengan nama auditee di temuan patrol, 
+                        maka update nama auditee dengan nama auditee yang dipilih di master data karyawan */
 
+                        if ($validasi_auditee_sama['nama'] != $get_auditee_temuan['nama_auditee']) {
+                            $data_update['nama_auditee'] = $validasi_auditee_sama['nama'];
+                        } else {
+                            /* RULES :
+                            1. Jika nama auditee master karyawan sama dengan nama auditee di temuan patrol
+                            2. Dan jika Area Proses Audit yang di pilih tidak sama dengan area proses di temuan patrol
+                            3. Maka update nama auditee dengan nama penanggung jawab di master data karyawan
+
+                            */
+                            if ($id_section_pcaudit != $get_auditee_temuan['id_section']) {
+                                $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
+                            }
+                            // $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
+                        }
                         $data_update['id_section'] = (int)$id_section_pcaudit;
                         $data_update['id_departement'] = $id_dept['id_departement_henk'];
-                        $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
                     }
                     $get_section_dept = $this->dataPatrol->getSection_andDeptByIDNEW($this->request->getPost('area_pic_action'));
                     $data_update['pic_action_section_id'] = (int)$this->request->getPost('area_pic_action');

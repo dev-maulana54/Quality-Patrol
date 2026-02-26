@@ -55,7 +55,7 @@ class Model_data_patrol extends Model
                 'section s',
                 '(dt_temuan_patrol.id_section = s.id_section_henk 
           OR 
-         (dt_temuan_patrol.id_section = s.id_section AND s.id_section_henk = 0))',
+         (dt_temuan_patrol.id_section = s.id_section))',
                 'left',
                 false
             )
