@@ -2041,7 +2041,7 @@
                     dataType: 'json',
                     success: function() {
                         alert('Temuan berhasil diperbarui!');
-                        //location.reload();
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error updating temuan patrol:', error);
