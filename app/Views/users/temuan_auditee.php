@@ -417,7 +417,7 @@
                                 <td><?= $patrol['deskripsi_temuan'] ?></td>
                                 <td><?= $patrol['analisa_penyebab'] ?></td>
                                 <td><?= $patrol['action'] ?></td>
-                                <td><?= $patrol['pic_section_name'] ?></td>
+                                <td><?= $patrol['pic_departement_name'] ?></td>
                                 <td><?= $patrol['due_date'] ?></td>
                                 <td class="text-center">
                                     <?php if ($patrol['nama_file']) : ?>

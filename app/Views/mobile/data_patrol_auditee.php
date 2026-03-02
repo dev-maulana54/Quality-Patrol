@@ -995,6 +995,11 @@
         $('#btn_edit').on('click', function(e) {
 
             e.preventDefault();
+            const $btn = $(this);
+
+
+            $('#btn_edit').prop('disabled', true);
+            $btn.html('Tunggu Sebentar...');
             const id_temuan_patrol = $('#edit_id_temuan_patrol').val();
 
             var fd = new FormData();
@@ -1066,6 +1071,10 @@
                 },
                 error: function(xhr, status, error) {
                     console.error('Error updating temuan patrol:', error);
+                },
+                complete: function() {
+                    $('#btn_edit').prop('disabled', false);
+                    $('#btn_edit').html('<i class="fas fa-edit mr-1"></i> Edit ');
                 }
             });
 

@@ -210,7 +210,11 @@ class Model_data_patrol extends Model
         pic_sec.section AS pic_section_name,
         dt_temuan_patrol.nama_auditor AS auditor_name
     ")
-            ->join('departement d', 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
+            ->join(
+                'departement d',
+                'dt_temuan_patrol.id_departement = d.id_departement_henk',
+                'left'
+            )
             ->join(
                 'section s',
                 '(dt_temuan_patrol.id_section = s.id_section_henk OR (dt_temuan_patrol.id_section = s.id_section AND s.id_section_henk = 0))',
@@ -261,19 +265,33 @@ class Model_data_patrol extends Model
       
         dt_temuan_patrol.nama_auditor AS auditor_name
     ')
-            ->join("departement d", 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
-            ->join("section s", 'dt_temuan_patrol.id_section = s.id_section_henk', 'left')
+            ->join(
+                "departement d",
+                'dt_temuan_patrol.id_departement = d.id_departement_henk',
+                'left'
+            )
+            ->join(
+                "section s",
+                '(dt_temuan_patrol.id_section = s.id_section_henk OR (dt_temuan_patrol.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
             // ->join('users', 'dt_temuan_patrol.id_auditor = users.id', 'left')
             ->join("departement AS pic_dept", 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
-            ->join("section AS pic_sec", 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk', 'left')
+            ->join(
+                "section AS pic_sec",
+                '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk OR (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+                'left',
+                false
+            )
             ->groupStart()
             ->where('dt_temuan_patrol.id_section', $id_section)
             // Hilangkan Command jika ingin munculkan data untuk pic section
-            // ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section)
+            ->orWhere('dt_temuan_patrol.pic_action_section_id', $id_section)
             ->orWhere('dt_temuan_patrol.id_departement', $id_departement)
             ->orderBy("CONVERT(date, tanggal_patrol, 106) DESC", false)
             // Hilangkan Command jika ingin munculkan data untuk pic section
-            // ->orWhere('dt_temuan_patrol.pic_action_departement_id', $id_departement)
+            ->orWhere('dt_temuan_patrol.pic_action_departement_id', $id_departement)
 
             ->groupEnd()
             ->get()
