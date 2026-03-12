@@ -400,6 +400,45 @@ function initializeDataTable() {
           form.submit();
           form.remove();
         });
+
+        // =========================
+        // BUTTON CLEAR FILTER
+        // =========================
+        var clearWrapper = $(`
+      <div class="col-12 col-md-12 mb-2">
+        <button type="button" id="btnClearFilter_${tableId}" class="btn btn-secondary btn-sm w-100">
+          <i class="bi bi-arrow-clockwise"></i> Clear Filter
+        </button>
+      </div>
+    `);
+
+        filterContainer.append(clearWrapper);
+
+        $(`#btnClearFilter_${tableId}`).on("click", function () {
+          // reset date filter
+          fromInput.val("");
+          toInput.val("");
+
+          // reset global search
+          api.search("");
+
+          // reset column search
+          api.columns().search("");
+
+          // reset select filter biasa / select2
+          filterContainer.find(".filter-select").each(function () {
+            $(this).val("");
+
+            if ($.fn.select2) {
+              $(this).trigger("change.select2");
+            } else {
+              $(this).trigger("change");
+            }
+          });
+
+          // redraw table
+          api.draw();
+        });
       },
     });
     // ===== DATATABLE UNTUK #tabel_schedule =====

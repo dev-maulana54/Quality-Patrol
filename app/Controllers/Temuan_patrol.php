@@ -119,8 +119,8 @@ class Temuan_patrol extends BaseController
         $data['role'] = session()->get('role');
 
         $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
-        return view('info/info_pengembangan', $data);
-        // return view('users/daftar_hadir', $data);
+        // return view('info/info_pengembangan', $data);
+        return view('users/daftar_hadir', $data);
     }
     public function preview($file)
     {

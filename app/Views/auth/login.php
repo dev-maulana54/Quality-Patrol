@@ -81,11 +81,8 @@
                 },
                 success: function(response) {
                     if (response.ok === true) {
-                        showAlert(response.msg, 'success');
-                        resetButton();
-                        setTimeout(function() {
-                            window.location.href = '<?= base_url('summary') ?>';
-                        }, 1500);
+                        window.location.href = '<?= base_url('summary') ?>';
+
                     } else {
                         showAlert(response.msg, 'danger');
                         resetButton();

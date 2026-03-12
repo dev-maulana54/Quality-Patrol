@@ -697,8 +697,8 @@ class Model_data_patrol extends Model
             d.departement AS departement_name,
             s.section AS section_name,
             pic_dept.departement AS pic_departement_name,
-            pic_sec.section AS pic_section_name,
-            tp.nama_auditor AS auditor_name
+           
+            tp.nama_auditor AS auditor_name,
          
             tp.nama_auditee,
            
@@ -716,12 +716,12 @@ class Model_data_patrol extends Model
                 false
             )
             ->join('departement pic_dept', 'tp.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
-            ->join(
-                'section pic_sec',
-                '(tp.pic_action_section_id = pic_sec.id_section_henk OR (tp.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
-                'left',
-                false
-            )
+            // ->join(
+            //     'section pic_sec',
+            //     '(tp.pic_action_section_id = pic_sec.id_section_henk OR (tp.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+            //     'left',
+            //     false
+            // )
             ->whereIn('tp.id_temuan_patrol', $ids)
             ->get()
             ->getResultArray();

@@ -94,13 +94,36 @@ class DownloadController extends Controller
             $col++;
         }
 
+        /*
+    ======================
+    STYLE HEADER
+    ======================
+    */
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'rgb' => 'BFBFBF' // RGB 191,191,191
+                ]
+            ]
+        ];
+
+        $sheet->getStyle('A1:L1')->applyFromArray($headerStyle);
+
         $rowNum = 2;
         $no = 1;
 
         foreach ($data as $row) {
             $sheet->setCellValue('A' . $rowNum, $no++);
             $sheet->setCellValue('B' . $rowNum, $row['tanggal_patrol']);
-            $sheet->setCellValue('C' . $rowNum, $row['nama_auditor']);
+            $sheet->setCellValue('C' . $rowNum, $row['auditor_name']);
             $sheet->setCellValue('D' . $rowNum, $row['nama_auditee']);
             $sheet->setCellValue('E' . $rowNum, $row['section_name']);
             $sheet->setCellValue('F' . $rowNum, $row['deskripsi_temuan']);
@@ -131,6 +154,73 @@ class DownloadController extends Controller
             $rowNum++;
         }
 
+        $lastRow = $rowNum - 1;
+
+        /*
+    ======================
+    BORDER TABLE
+    ======================
+    */
+        $borderStyle = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A1:L' . $lastRow)->applyFromArray($borderStyle);
+
+        /*
+    ======================
+    GLOBAL ALIGNMENT
+    ======================
+    */
+        $sheet->getStyle('A1:L' . $lastRow)->getAlignment()->setVertical(
+            \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+        );
+
+        $sheet->getStyle('A1:L' . $lastRow)->getAlignment()->setHorizontal(
+            \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER
+        );
+
+        /*
+    ======================
+    WRAP TEXT
+    ======================
+    */
+        $sheet->getStyle('F2:H' . $lastRow)->getAlignment()->setWrapText(true);
+
+        /*
+    ======================
+    SHRINK TO FIT
+    ======================
+    */
+        $sheet->getStyle('C2:C' . $lastRow)->getAlignment()->setShrinkToFit(true);
+
+        /*
+    ======================
+    OPTIONAL: KHUSUS KOLOM TEKS PANJANG
+    BIAR LEBIH ENAK DIBACA BISA LEFT ALIGN
+    ======================
+    */
+        $sheet->getStyle('F2:H' . $lastRow)->getAlignment()->setHorizontal(
+            \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT
+        );
+
+        /*
+    ======================
+    SET HEIGHT HEADER
+    ======================
+    */
+        $sheet->getRowDimension(1)->setRowHeight(25);
+
+        /*
+    ======================
+    AUTO SIZE
+    ======================
+    */
         foreach (range('A', 'L') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }

@@ -352,16 +352,17 @@
                     <i class="bi bi-person-check"></i>
                     <span>Data Auditee</span>
                 </a>
+
                 <a href="<?= base_url('temuan_patrol/list_daftar_hadir') ?>" class="submenu-item">
                     <i class="bi bi-person-check"></i>
                     <span>Daftar Hadir</span>
                 </a>
             </div>
         </div>
-        <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
+        <!-- <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
-        </a>
+        </a> -->
         <?php if ($role === 'Administrator') : ?>
             <div class="menu-header">
                 Master Data
