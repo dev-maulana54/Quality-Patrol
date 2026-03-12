@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title><!-- Bootstrap 5 CSS -->
+    <title>Temuan Patrol | Quality Patrol</title><!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- DataTables Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"><!-- Google Fonts - Poppins -->
@@ -22,9 +22,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
     <!-- Select2 Bootstrap-5 Theme -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.6.2/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" /> -->
-    <link href="<?= base_url() ?>assets/css/summary.css" rel="stylesheet">
-    <link href="<?= base_url() ?>assets/css/t_patrol.css" rel="stylesheet">
-
+    <link href="<?php echo base_url('assets/css/summary.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/t_patrol.css'); ?>" rel="stylesheet">
     <style>
         .select2-container .select2-selection--single {
             height: 38px;
@@ -395,7 +394,9 @@
                     <h3 class="card-title">Temuan Patrol</h3>
 
                     <button type="button" class="btn btn-primary startaudit">
-                        <i class="bi bi-plus-circle"></i> Tambah Temuan</button>
+                        <i class="bi bi-plus-circle"></i> Tambah Temuan
+                    </button>
+
 
                 </div>
 
@@ -422,7 +423,7 @@
                     </thead>
                     <tbody>
                         <?php foreach ($data_patrol as $index => $patrol) : ?>
-                            <tr>
+                            <tr data-id="<?= $patrol['id_temuan_patrol'] ?>">
                                 <td><?= $index + 1 ?></td>
                                 <td><?= $patrol['tanggal_patrol'] ?></td>
                                 <td><?= $patrol['nama_auditor'] ?></td>
@@ -436,8 +437,8 @@
                                 <td class="text-center">
                                     <?php if ($patrol['nama_file']) : ?>
                                         <button type="button" class="btn btn-secondary btnDownload" data-namafile="<?= $patrol['nama_file'] ?>"><i class="bi bi-download"></i>
-                                        <?php endif; ?>
                                         </button>
+                                    <?php endif; ?>
                                 </td>
                                 <td class="text-center">
                                     <?php if ($patrol['status'] == 1) : ?>
@@ -1078,7 +1079,6 @@
             </div>
         </div>
     <?php endif; ?>
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script><!-- DataTables -->
@@ -1101,7 +1101,7 @@
                 item.parentElement.classList.toggle('open');
             });
         });
-        var baseurl = '<?= base_url() ?>';
+        const baseurl = "<?= rtrim(base_url(), '/') . '/'; ?>";
     </script>
     <script>
         $(document).ready(function() {
@@ -1109,7 +1109,7 @@
             renderTable(); // biar tabel ikut kosong
         });
         $('.startaudit').on('click', function() {
-            window.location.href = "<?= base_url('temuan_patrol/start_audit') ?>";
+            window.open("<?= base_url('temuan_patrol/start_audit') ?>", "_blank", "noopener,noreferrer");
         });
 
         // Inisialisasi flatpickr

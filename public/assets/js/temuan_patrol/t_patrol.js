@@ -230,61 +230,175 @@ function initializeDataTable() {
       initComplete: function () {
         var api = this.api();
         var filterContainer = $("#filterContainer");
+        var tableId = api.table().node().id;
 
+        // =========================
+        // FILTER DATE RANGE DINAMIS
+        // =========================
+        var dateColIdx = 1;
+
+        var dateFilterWrapper = $(`
+      <div class="col-6">
+        <input type="date" id="filterDateFrom_${tableId}" class="form-control form-control-sm" placeholder="From">
+      </div>
+      <div class="col-6">
+        <input type="date" id="filterDateTo_${tableId}" class="form-control form-control-sm" placeholder="To">
+      </div>
+    `);
+
+        filterContainer.append(dateFilterWrapper);
+
+        var fromInput = $(`#filterDateFrom_${tableId}`);
+        var toInput = $(`#filterDateTo_${tableId}`);
+
+        function parseDate(value) {
+          if (!value) return null;
+
+          value = value.toString().trim();
+
+          if (/^\d{4}[-/]\d{2}[-/]\d{2}$/.test(value)) {
+            var parts = value.split(/[-/]/);
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+          }
+
+          if (/^\d{2}[-/]\d{2}[-/]\d{4}$/.test(value)) {
+            var parts = value.split(/[-/]/);
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+          }
+
+          var d = new Date(value);
+          return isNaN(d.getTime()) ? null : d;
+        }
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+          if (settings.nTable.id !== tableId) {
+            return true;
+          }
+
+          var min = parseDate(fromInput.val());
+          var max = parseDate(toInput.val());
+          var rowDate = parseDate(data[dateColIdx]);
+
+          if (!rowDate) {
+            return true;
+          }
+
+          rowDate.setHours(0, 0, 0, 0);
+          if (min) min.setHours(0, 0, 0, 0);
+          if (max) max.setHours(0, 0, 0, 0);
+
+          if (!min && !max) return true;
+          if (min && !max) return rowDate >= min;
+          if (!min && max) return rowDate <= max;
+
+          return rowDate >= min && rowDate <= max;
+        });
+
+        fromInput.on("change", function () {
+          api.draw();
+        });
+
+        toInput.on("change", function () {
+          api.draw();
+        });
+
+        // =========================
+        // FILTER KOLOM LAINNYA
+        // =========================
         api.columns().every(function (colIdx) {
           var column = this;
 
-          // Kolom TANPA filter:
-          // 0 = No
-          // 5 = Temuan
-          // 6 = Analisa Penyebab
-          // 7 = Action
-          // 10 = Download Evidence
-          // 12 = Tombol Aksi
-          // (STATUS = 11 sengaja TIDAK dimasukkan agar ikut difilter)
-          if ([0, 5, 9, 6, 7, 10, 12].includes(colIdx)) return;
+          if ([0, 1, 5, 6, 7, 9, 10, 12].includes(colIdx)) return;
 
           var headerTitle = $(column.header()).text().trim();
 
           var filterWrapper = $(`
-  <div class="col-12 col-md-4 mb-2">
-    <select class="form-select form-select-sm filter-select" data-col="${colIdx}">
-      <option value=""></option>
-   </select>
-  </div>
-`);
+        <div class="col-12 col-md-4 mb-2">
+          <select class="form-select form-select-sm filter-select" data-col="${colIdx}">
+            <option value=""></option>
+          </select>
+        </div>
+      `);
 
           var select = filterWrapper.find("select");
+          var uniqueData = [];
 
-          // Isi option dari data unik kolom
-          column
-            .data()
-            .unique()
-            .sort()
-            .each(function (d) {
-              // kalau ada HTML (badge status), ambil text-nya saja
-              var text = $("<div>").html(d).text().trim();
-              if (text !== "") {
-                select.append(`<option value="${text}">${text}</option>`);
-              }
-            });
+          column.data().each(function (d) {
+            var text = $("<div>").html(d).text().trim();
+            if (text !== "" && !uniqueData.includes(text)) {
+              uniqueData.push(text);
+            }
+          });
+
+          uniqueData.sort().forEach(function (text) {
+            select.append(`<option value="${text}">${text}</option>`);
+          });
 
           filterContainer.append(filterWrapper);
 
-          // Inisialisasi Select2 kalau ada
           if ($.fn.select2) {
             select.select2({
-              placeholder: headerTitle, // misal "Status"
+              placeholder: headerTitle,
               allowClear: true,
               width: "100%",
             });
           }
 
-          // Event filter
           select.on("change", function () {
             var val = $.fn.dataTable.util.escapeRegex($(this).val());
             column.search(val ? "^" + val + "$" : "", true, false).draw();
           });
+        });
+
+        // =========================
+        // BUTTON EXPORT EXCEL
+        // =========================
+        var exportWrapper = $(`
+      <div class="col-12 col-md-4 mb-2">
+        <button type="button" id="btnExportExcel_${tableId}" class="btn btn-success btn-sm w-100">
+          <i class="bi bi-file-earmark-excel"></i> Export Excel
+        </button>
+      </div>
+    `);
+
+        filterContainer.append(exportWrapper);
+
+        $(`#btnExportExcel_${tableId}`).on("click", function () {
+          var visibleIds = [];
+
+          api
+            .rows({ search: "applied" })
+            .nodes()
+            .each(function (row) {
+              var id = $(row).attr("data-id");
+              if (id) {
+                visibleIds.push(id);
+              }
+            });
+
+          if (visibleIds.length === 0) {
+            alert("Tidak ada data yang bisa di-export.");
+            return;
+          }
+
+          var form = $("<form>", {
+            method: "POST",
+            action: baseurl + "unduh/export_excel",
+          });
+
+          visibleIds.forEach(function (id) {
+            form.append(
+              $("<input>", {
+                type: "hidden",
+                name: "ids[]",
+                value: id,
+              }),
+            );
+          });
+
+          $("body").append(form);
+          form.submit();
+          form.remove();
         });
       },
     });

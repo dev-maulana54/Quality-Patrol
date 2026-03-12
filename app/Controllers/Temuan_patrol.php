@@ -65,8 +65,8 @@ class Temuan_patrol extends BaseController
             return view('mobile/start_patrol', $data);
         } else {
 
-            return view('info/info_pengembangan', $data);
-            // return view('mobile/start_patrol', $data);
+            // return view('info/info_pengembangan', $data);
+            return view('users/start_patrol', $data);
             // return view('users/temuan_patrol', $data);
             // return view('desktop/users/temuan_patrol', $data);
         }

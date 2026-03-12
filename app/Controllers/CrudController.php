@@ -411,19 +411,39 @@ class CrudController extends BaseController
         } else if ($keterangan == 'get_temuan_by_id') { # function untuk mengambil data temuan patrol based on id_temuan
             $id_temuan = $this->request->getPost('id_temuan');
             # ambil data temuan patrol berdasarkan id_temuan_patrol dan join tabel departement dan section
-            $temuan = $this->dataPatrol->db->table('dt_temuan_patrol')
+            $temuan = $this->dataPatrol->db->table('dt_temuan_patrol tp')
                 ->select('
-        dt_temuan_patrol.*,
+        tp.*,
         d.departement AS departement_name,
         s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
         pic_sec.section AS pic_section_name
     ')
-                ->join('departement d', 'dt_temuan_patrol.id_departement = d.id_departement_henk', 'left')
-                ->join('section s', 'dt_temuan_patrol.id_section = s.id_section_henk', 'left')
-                ->join('departement AS pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
-                ->join('section AS pic_sec', 'dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk', 'left')
-                ->where('dt_temuan_patrol.id_temuan_patrol', $id_temuan)
+                ->join(
+                    'departement d',
+                    'tp.id_departement = d.id_departement_henk',
+                    'left'
+                )
+                ->join(
+                    'section s',
+                    'tp.id_section = CASE 
+            WHEN s.id_section_henk = 0 THEN s.id_section
+            ELSE s.id_section_henk
+        END',
+                    'left',
+                    false
+                )
+                ->join(
+                    'departement pic_dept',
+                    'tp.pic_action_departement_id = pic_dept.id_departement_henk',
+                    'left'
+                )
+                ->join(
+                    'section pic_sec',
+                    'pic_sec.id_section_henk = tp.pic_action_section_id',
+                    'left'
+                )
+                ->where('tp.id_temuan_patrol', $id_temuan)
                 ->get()
                 ->getRowArray();
 

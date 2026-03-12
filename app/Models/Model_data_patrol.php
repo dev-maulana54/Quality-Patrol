@@ -44,7 +44,7 @@ class Model_data_patrol extends Model
         d.departement AS departement_name,
         s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
-        pic_sec.section AS pic_section_name
+
     ")
             ->join(
                 'departement d',
@@ -64,14 +64,14 @@ class Model_data_patrol extends Model
                 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk',
                 'left'
             )
-            ->join(
-                'section pic_sec',
-                '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk 
-          OR 
-         (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
-                'left',
-                false
-            )
+            //     ->join(
+            //         'section pic_sec',
+            //         '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk 
+            //   OR 
+            //  (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section))',
+            //         'left',
+            //         false
+            //     )
             ->get()
             ->getResultArray();
     }
@@ -207,7 +207,7 @@ class Model_data_patrol extends Model
         d.departement AS departement_name,
         s.section AS section_name,
         pic_dept.departement AS pic_departement_name,
-        pic_sec.section AS pic_section_name,
+      
         dt_temuan_patrol.nama_auditor AS auditor_name
     ")
             ->join(
@@ -222,12 +222,12 @@ class Model_data_patrol extends Model
                 false
             )
             ->join('departement pic_dept', 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
-            ->join(
-                'section pic_sec',
-                '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk OR (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
-                'left',
-                false
-            )
+            // ->join(
+            //     'section pic_sec',
+            //     '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk OR (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+            //     'left',
+            //     false
+            // )
             ->where('dt_temuan_patrol.id_auditor', session()->get('npk'))
             ->orderBy("CONVERT(date, tanggal_patrol, 106) DESC", false)
             ->get()
@@ -260,7 +260,7 @@ class Model_data_patrol extends Model
         pic_dept.departement AS pic_departement_name,
 
   
-        pic_sec.section AS pic_section_name,
+      
 
       
         dt_temuan_patrol.nama_auditor AS auditor_name
@@ -278,12 +278,12 @@ class Model_data_patrol extends Model
             )
             // ->join('users', 'dt_temuan_patrol.id_auditor = users.id', 'left')
             ->join("departement AS pic_dept", 'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
-            ->join(
-                "section AS pic_sec",
-                '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk OR (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
-                'left',
-                false
-            )
+            // ->join(
+            //     "section AS pic_sec",
+            //     '(dt_temuan_patrol.pic_action_section_id = pic_sec.id_section_henk OR (dt_temuan_patrol.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+            //     'left',
+            //     false
+            // )
             ->groupStart()
             ->where('dt_temuan_patrol.id_section', $id_section)
             // Hilangkan Command jika ingin munculkan data untuk pic section
@@ -681,5 +681,49 @@ class Model_data_patrol extends Model
         // ->where("d.id_departement_henk", $id_dept_henk);
 
         return $builder->get()->getRowArray();
+    }
+    public function getPatrolByIds(array $ids)
+    {
+        return $this->db->table('dt_temuan_patrol tp')
+            ->select('
+            tp.id_temuan_patrol,
+            tp.tanggal_patrol,
+            tp.deskripsi_temuan,
+            tp.analisa_penyebab,
+            tp.action,
+            tp.due_date,
+            tp.status,
+            tp.evidence_file,
+            d.departement AS departement_name,
+            s.section AS section_name,
+            pic_dept.departement AS pic_departement_name,
+            pic_sec.section AS pic_section_name,
+            tp.nama_auditor AS auditor_name
+         
+            tp.nama_auditee,
+           
+           
+        ')
+            ->join(
+                'departement d',
+                'tp.id_departement = d.id_departement_henk',
+                'left'
+            )
+            ->join(
+                'section s',
+                '(tp.id_section = s.id_section_henk OR (tp.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join('departement pic_dept', 'tp.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
+            ->join(
+                'section pic_sec',
+                '(tp.pic_action_section_id = pic_sec.id_section_henk OR (tp.pic_action_section_id = pic_sec.id_section AND pic_sec.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->whereIn('tp.id_temuan_patrol', $ids)
+            ->get()
+            ->getResultArray();
     }
 }

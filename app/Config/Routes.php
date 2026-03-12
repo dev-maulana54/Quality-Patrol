@@ -39,6 +39,8 @@ $routes->get('admin/test_upload', 'Admin::test_upload');
 
 #route download file 
 $routes->get('/download/file/(:any)', 'DownloadController::file/$1');
+$routes->post('unduh/export_excel', 'DownloadController::export_excel');
+$routes->get('unduh/test_excel', 'DownloadController::test_excel');
 
 #route untuk pdf preview
 $routes->get('temuan_patrol/pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
@@ -65,6 +67,6 @@ $routes->post('attendance/sign-digital', 'AttendanceController::signDigital');
 // API
 $routes->get('api/get-atasan', 'Api::getAtasan');
 $routes->get('api/get-section', 'Api::getSectionByDepartement');
-$routes->set404Override(function () {
-    return view('info/404');
-});
+// $routes->set404Override(function () {
+//     return view('info/404');
+// });

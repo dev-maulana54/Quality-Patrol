@@ -199,158 +199,180 @@
         .table td {
             font-size: 13px;
         }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .justify-content-center {
+            justify-content: center !important;
+        }
+
+        @media (min-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        .card-bg {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.15) !important;
+        }
     </style>
 
 </head>
 
 <body class="h-full">
     <div id="app" class="app-wrapper h-full w-full overflow-auto"><!-- Header -->
-        <div class="sticky top-0 z-50 card-bg shadow-md">
+        <div class="sticky top-0 z-50 card-bg shadow-md" style="padding: 10px !important;">
             <div class="flex items-center justify-between px-4 py-4">
                 <div>
                     <h1 class="text-xl font-bold text-dark" id="appTitle">Quality Patrol</h1>
                     <p class="text-sm text-gray" id="companyName">PT. Century Batteries Indonesia</p>
                 </div>
-                <div class="flex items-center gap-3"><button id="darkModeToggle" class="toggle-switch" aria-label="Toggle Dark Mode">
-                        <div class="toggle-thumb"></div>
-                    </button> <i class="fas fa-bell text-xl text-gray"></i>
-                </div>
+
             </div>
         </div><!-- Main Content -->
         <div id="mainContent" class="pb-20" style="min-height: calc(100% - 140px);"><!-- Dashboard Page -->
             <div id="dashboardPage" class="page-content">
-                <div class="px-4 py-4">
-                    <div class="space-y-4"><!-- Combined Chart -->
-                        <div class="card-bg card-animated rounded-xl p-5 shadow-md hover:shadow-xl">
-                            <div class="flex flex-col gap-3 mb-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 px-4 py-4">
+                        <div class="space-y-4"><!-- Combined Chart -->
+                            <div class="card-bg card-animated rounded-xl p-5 shadow-md hover:shadow-xl">
+                                <div class="flex flex-col gap-3 mb-4">
 
-                                <div class="flex items-center gap-2">
-                                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center"><i class="fas fa-clipboard-list text-lg"></i>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center"><i class="fas fa-clipboard-list text-lg"></i>
+
+                                        </div>
+                                        <h3 class="text-base font-bold text-dark">Tambah Temuan</h3>
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="auditorname" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Auditor</label>
+                                        <input type="text" id="auditorName" value="<?= $nama; ?>" disabled class="form-input card-bg text-dark">
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="tanggal_patrol" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Tanggal Patrol <small class="text-danger"> *</small></label>
+                                        <input type="date" id="tanggal_patrol" class="form-input card-bg text-dark" required>
+                                    </div>
+                                    <div style="margin-top: 0.7rem;">
+                                        <label for="patrolTime" class="form-label text-dark" style="margin-bottom: 0.1rem !important;font-size:20px;"> Area Patrol</label>
+                                        <hr style="border: none; border-top: 1px solid #ccc;">
 
                                     </div>
-                                    <h3 class="text-base font-bold text-dark">Tambah Temuan</h3>
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="auditorname" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Auditor</label>
-                                    <input type="text" id="auditorName" value="<?= $nama; ?>" disabled class="form-input card-bg text-dark">
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="tanggal_patrol" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Tanggal Patrol <small class="text-danger"> *</small></label>
-                                    <input type="date" id="tanggal_patrol" class="form-input card-bg text-dark" required>
-                                </div>
-                                <div style="margin-top: 0.7rem;">
-                                    <label for="patrolTime" class="form-label text-dark" style="margin-bottom: 0.1rem !important;font-size:20px;"> Area Patrol</label>
-                                    <hr style="border: none; border-top: 1px solid #ccc;">
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="list_dept" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Departement</label>
 
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="list_dept" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Departement</label>
+                                        <select id="list_dept" class="form-input card-bg text-dark" required>
+                                            <option value="" disabled selected>-- Pilih Departement --</option>
+                                            <?php foreach ($all_dept as $sa) : ?>
+                                                <option value="<?= $sa['id_departement'] ?>"><?= $sa['departement'] ?></option>
 
-                                    <select id="list_dept" class="form-input card-bg text-dark" required>
-                                        <option value="" disabled selected>-- Pilih Departement --</option>
-                                        <?php foreach ($all_dept as $sa) : ?>
-                                            <option value="<?= $sa['id_departement'] ?>"><?= $sa['departement'] ?></option>
-
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="list_seksi" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Seksi</label>
-                                    <select id="list_seksi" class="form-input card-bg text-dark" required disabled>
-                                        <option value="" disabled selected>-- Pilih Seksi --</option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="list_seksi" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Seksi</label>
+                                        <select id="list_seksi" class="form-input card-bg text-dark" required disabled>
+                                            <option value="" disabled selected>-- Pilih Seksi --</option>
 
 
-                                    </select>
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="list_auditee" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Nama Auditee</label>
-                                    <input type="text" id="nama_auditee" disabled class="form-input card-bg text-dark">
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Deskripsi Temuan <small class="text-danger"> *</small></label>
-                                    <textarea id="deskripsi_temuan"
-                                        class="form-input card-bg text-dark"
-                                        placeholder="Masukkan temuan..."
-                                        rows="4"
-                                        required></textarea>
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="list_auditee" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Upload Evidence <small class="text-danger" style="font-style: italic;">Maksimal 1 gambar!</small></label>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="list_auditee" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Nama Auditee</label>
+                                        <input type="text" id="nama_auditee" disabled class="form-input card-bg text-dark">
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Deskripsi Temuan <small class="text-danger"> *</small></label>
+                                        <textarea id="deskripsi_temuan"
+                                            class="form-input card-bg text-dark"
+                                            placeholder="Masukkan temuan..."
+                                            rows="4"
+                                            required></textarea>
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="list_auditee" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Upload Evidence <small class="text-danger" style="font-style: italic;">Maksimal 1 gambar!</small></label>
 
-                                    <input
-                                        type="file"
-                                        class="form-input card-bg text-dark"
-                                        id="fileUpload_tambah"
-                                        name="fileUpload_tambah"
-                                        onchange="handleFileUpload()">
+                                        <input
+                                            type="file"
+                                            class="form-input card-bg text-dark"
+                                            id="fileUpload_tambah"
+                                            name="fileUpload_tambah"
+                                            onchange="handleFileUpload()">
 
-                                    <!-- Preview Image -->
-                                    <div class="mt-2">
-                                        <img
-                                            id="preview_image"
-                                            class="img-fluid rounded d-none"
-                                            style="max-height: 200px;"
-                                            alt="Preview Image">
+                                        <!-- Preview Image -->
+                                        <div class="mt-2">
+                                            <img
+                                                id="preview_image"
+                                                class="img-fluid rounded d-none"
+                                                style="max-height: 200px;"
+                                                alt="Preview Image">
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 0.7rem;">
+                                        <label for="patrolTime" class="form-label text-dark" style="margin-bottom: 0.1rem !important;font-size:20px;"> PIC Action</label>
+                                        <hr style="border: none; border-top: 1px solid #ccc;">
+
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="pic_action_list_dept" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Departement <small class="text-danger"> *</small></label>
+                                        <select id="pic_action_list_dept" class="form-input card-bg text-dark" required>
+                                            <option value="" disabled selected>- Pilih Departement -</option>
+                                            <?php foreach ($all_dept as $dept) : ?>
+                                                <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 0.3rem;">
+                                        <label for="pic_action_list_seksi" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Seksi</label>
+                                        <select id="pic_action_list_seksi" class="form-input card-bg text-dark" disabled>
+                                            <option value="" disabled selected>- Pilih Seksi -</option>
+
+
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 0.7rem; display: flex; align-items: center; justify-content: space-between;">
+
+                                        <label for="Departemen" class="form-label" style="font-size: 20px; margin: 0;">
+                                            Rekap temuan
+                                        </label>
+
+                                        <button type="button"
+                                            class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 btn_rekaptemuan">
+                                            <i class="fas fa-plus-circle"></i> Simpan & Tambah
+                                        </button>
+
+                                    </div>
+                                    <hr style="border: none; border-top: 1px solid #ccc; margin-top: 1px;">
+                                    <div style="margin-top:0.3em;">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Deskripsi temuan</th>
+                                                        <th>File</th>
+                                                        <th>PIC Action Area</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="rekap_tbody"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                <div style="margin-top: 0.7rem;">
-                                    <label for="patrolTime" class="form-label text-dark" style="margin-bottom: 0.1rem !important;font-size:20px;"> PIC Action</label>
-                                    <hr style="border: none; border-top: 1px solid #ccc;">
 
+                                <div class="flex gap-3 pt-2 mt-5">
+                                    <button type="button" class="flex-1 border border-gray-300 text-dark rounded-lg py-3 text-sm font-semibold hover:bg-gray-50 backhistory"> Batal </button>
+                                    <button type="button" class="flex-1 btn btn-primary text-white rounded-lg py-3 text-sm font-semibold" id="btn_tambahTemuan"> <i class="fas fa-save mr-1"></i> Submit </button>
                                 </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="pic_action_list_dept" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Departement <small class="text-danger"> *</small></label>
-                                    <select id="pic_action_list_dept" class="form-input card-bg text-dark" required>
-                                        <option value="" disabled selected>- Pilih Departement -</option>
-                                        <?php foreach ($all_dept as $dept) : ?>
-                                            <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div style="margin-top: 0.3rem;">
-                                    <label for="pic_action_list_seksi" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Seksi</label>
-                                    <select id="pic_action_list_seksi" class="form-input card-bg text-dark" disabled>
-                                        <option value="" disabled selected>- Pilih Seksi -</option>
-
-
-                                    </select>
-                                </div>
-                                <div style="margin-top: 0.7rem; display: flex; align-items: center; justify-content: space-between;">
-
-                                    <label for="Departemen" class="form-label" style="font-size: 20px; margin: 0;">
-                                        Rekap temuan
-                                    </label>
-
-                                    <button type="button"
-                                        class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 btn_rekaptemuan">
-                                        <i class="fas fa-plus-circle"></i> Simpan & Tambah
-                                    </button>
-
-                                </div>
-                                <hr style="border: none; border-top: 1px solid #ccc; margin-top: 1px;">
-                                <div style="margin-top:0.3em;">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Deskripsi temuan</th>
-                                                    <th>File</th>
-                                                    <th>PIC Action Area</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="rekap_tbody"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex gap-3 pt-2 mt-5">
-                                <button type="button" class="flex-1 border border-gray-300 text-dark rounded-lg py-3 text-sm font-semibold hover:bg-gray-50 backhistory"> Batal </button>
-                                <button type="button" class="flex-1 btn btn-primary text-white rounded-lg py-3 text-sm font-semibold" id="btn_tambahTemuan"> <i class="fas fa-save mr-1"></i> Submit </button>
-                            </div>
-                        </div><!-- Stacked Bar by Area -->
+                            </div><!-- Stacked Bar by Area -->
+                        </div>
                     </div>
                 </div>
             </div><!-- Data Patrol Page -->
@@ -359,23 +381,7 @@
 
 
         </div><!-- Bottom Navigation -->
-        <div class="fixed bottom-0 left-0 right-0 navbar-bg shadow-lg">
-            <div class="flex justify-between items-center px-2 py-2">
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="dashboard">
-                    <i class="fas fa-home text-lg"></i> <span class="text-xs whitespace-nowrap">Dashboard</span>
-                </button>
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="dataPatrol">
-                    <i class="fas fa-clipboard-list text-lg"></i> <span class="text-xs whitespace-nowrap">Data</span>
-                </button>
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="schedule">
-                    <i class="fas fa-calendar text-lg"></i> <span class="text-xs whitespace-nowrap">Schedule</span>
-                </button>
-
-                <button class="nav-item flex flex-col items-center gap-1 px-2 py-2 flex-1" data-page="profile">
-                    <i class="fas fa-user text-lg"></i> <span class="text-xs whitespace-nowrap">Profile</span>
-                </button>
-            </div>
-        </div><!-- Logout Modal -->
+        <!-- Logout Modal -->
 
 
     </div>
@@ -522,21 +528,7 @@
             list.forEach((it, i) => appendRow(it, i + 1));
         });
         // Dark Mode Toggle
-        document.getElementById('darkModeToggle').addEventListener('click', function() {
-            isDarkMode = !isDarkMode;
-            const app = document.getElementById('app');
-            const toggle = document.getElementById('darkModeToggle');
 
-            if (isDarkMode) {
-                app.classList.add('dark-mode');
-                toggle.classList.add('active');
-            } else {
-                app.classList.remove('dark-mode');
-                toggle.classList.remove('active');
-            }
-
-
-        });
 
 
 
@@ -1616,6 +1608,7 @@
         let filesToSend = [];
         let selectedFile = null;
         let isSubmitting = false;
+
         $('#btn_tambahTemuan').on('click', function(e) {
             e.preventDefault();
 
