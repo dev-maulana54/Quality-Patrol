@@ -505,33 +505,31 @@ class Model_data_patrol extends Model
             ->get()
             ->getResultArray();
     }
-    public function get_Alldata_scheduleByUser()
-    {
-        return $this->db->table('dt_schedule')
-            ->select("
-            s.section,
-            d.departement,
-            dt_schedule.tanggal_patrol,
-            dt_schedule.id_schedule,
-            dt_schedule.tanggal_actual,
-            STRING_AGG(m.nama, ', ') AS nama_auditor
-        ")
-            ->join("departement d", 'd.id_departement = dt_schedule.id_dept', 'left')
-            ->join("section s", 's.id_section = dt_schedule.id_section', 'left')
-            ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
-            ->join("{$this->db2}.dbo.master_data_karyawan m", 'm.npk = dt_daftar_hadir.npk', 'left')
+    // public function get_Alldata_daftarHadir()
+    // {
+    //     return $this->db->table('dt_daftar_Hadir')
+    //         ->select("
+    //         s.section,
+    //         d.departement,
+    //         dt_daftar_hadir.*,
 
-            ->where('dt_daftar_hadir.type_data', 'plan')
-            ->groupBy("
-            s.section,
-            d.departement,
-            dt_schedule.tanggal_patrol,
-            dt_schedule.id_schedule,
-            dt_schedule.tanggal_actual
-        ")
-            ->get()
-            ->getResultArray();
-    }
+
+    //         STRING_AGG(m.nama, ', ') AS nama_auditor
+    //     ")
+    //         ->join("departement d", 'd.id_departement = dt_schedule.id_dept', 'left')
+    //         ->join("section s", 's.id_section = dt_schedule.id_section', 'left')
+    //         ->join('dt_daftar_hadir', 'dt_daftar_hadir.id_schedule = dt_schedule.id_schedule', 'left')
+    //         ->join("{$this->db2}.dbo.master_data_karyawan m", 'm.npk = dt_daftar_hadir.npk', 'left')
+
+    //         ->where('dt_daftar_hadir.type_data', 'plan')
+    //         ->groupBy("
+    //         s.section,
+    //         d.departement,
+    //         dt_schedule.tanggal_patrol,
+    //     ")
+    //         ->get()
+    //         ->getResultArray();
+    // }
 
 
 
@@ -725,5 +723,51 @@ class Model_data_patrol extends Model
             ->whereIn('tp.id_temuan_patrol', $ids)
             ->get()
             ->getResultArray();
+    }
+
+    public function getFilterData($status = null, $auditor = null, $area_patrol = null)
+    {
+        $builder = $this->db->table('dt_temuan_patrol')
+            ->select("
+            dt_temuan_patrol.*,
+            d.departement AS departement_name,
+            s.section AS section_name,
+            pic_dept.departement AS pic_departement_name
+        ")
+            ->join(
+                'departement d',
+                'dt_temuan_patrol.id_departement = d.id_departement_henk',
+                'left'
+            )
+            ->join(
+                'section s',
+                '(dt_temuan_patrol.id_section = s.id_section_henk 
+              OR 
+             dt_temuan_patrol.id_section = s.id_section)',
+                'left',
+                false
+            )
+            ->join(
+                'departement pic_dept',
+                'dt_temuan_patrol.pic_action_departement_id = pic_dept.id_departement_henk',
+                'left'
+            );
+
+        // filter status
+        if (!empty($status)) {
+            $builder->whereIn('dt_temuan_patrol.status', $status);
+        }
+
+        // filter auditor -> id_auditor
+        if (!empty($auditor)) {
+            $builder->where('dt_temuan_patrol.id_auditor', $auditor);
+        }
+
+        // filter area patrol -> id_section
+        if (!empty($area_patrol)) {
+            $builder->where('dt_temuan_patrol.id_section', $area_patrol);
+        }
+
+        return $builder->get()->getResultArray();
     }
 }

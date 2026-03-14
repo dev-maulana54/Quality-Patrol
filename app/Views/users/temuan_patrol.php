@@ -334,7 +334,11 @@
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
-        <div class="menu-item has-submenu open">
+        <a href="<?= base_url('temuan_patrol/daftar_temuan') ?>" class="menu-item active mt-2" data-page="daftar_temuan">
+            <i class="bi bi-list-check"></i>
+            <span>Daftar Temuan</span>
+        </a>
+        <!-- <div class="menu-item has-submenu open">
             <div class="menu-item submenu-toggle">
                 <div class="menu-left">
                     <i class="bi bi-search"></i>
@@ -358,7 +362,7 @@
                     <span>Daftar Hadir</span>
                 </a>
             </div>
-        </div>
+        </div> -->
         <!-- <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
@@ -550,14 +554,14 @@
                         </div>
                         <div class="form-group mt-2">
                             <label for="auditorName" class="form-label">
-                                <i class="bi bi-journal-text me-1"></i> Analisa Penyebab </label><small> <i>Di isi oleh Audite !!!</i></small>
+                                <i class="bi bi-journal-text me-1"></i> Analisa Penyebab </label><small> <i>Di isi oleh Auditee !!!</i></small>
 
                             <textarea class="form-control" placeholder="Leave a comment here" id="fill_analisa_penyebab" disabled></textarea>
 
                         </div>
                         <div class="form-group mt-2">
                             <label for="auditorName" class="form-label">
-                                <i class="bi bi-journal-text me-1"></i> Action </label><small> <i>Di isi oleh Audite !!!</i></small>
+                                <i class="bi bi-journal-text me-1"></i> Action </label><small> <i>Di isi oleh Auditee !!!</i></small>
 
 
                             <textarea class="form-control" placeholder="Leave a comment here" id="fill_action" disabled></textarea>
@@ -565,7 +569,7 @@
                         </div>
                         <div class="form-group mt-2">
                             <label for="fill_pic_action" class="form-label">
-                                <i class="bi bi-building me-1"></i> PIC Action </label><small> <i>Di isi oleh Audite !!!</i></small>
+                                <i class="bi bi-building me-1"></i> PIC Action </label><small> <i>Di isi oleh Auditee !!!</i></small>
 
                             <select class="form-select select2" id="fill_pic_action" style="width:100%; " disabled>
 
@@ -578,7 +582,7 @@
                             <label for="auditDate" class="form-label">
                                 <i class="bi bi-calendar-fill me-1"></i> Due Date </label><small class="text-danger"> <i>Cek Tanggal Kembali !</i></small>
 
-                            <input type="text" class="form-control auditDate" id="fill_due_date" placeholder="Pilih tanggal audit" required disabled>
+                            <input type="text" class="form-control auditDate" id="fill_due_date" placeholder="Pilih Due Date" required disabled>
 
                         </div>
                         <div class="form-group mt-3">
@@ -665,232 +669,7 @@
     </div>
 
 
-    <div class="modal fade" id="modal_tambahdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Temuan</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label for="list_schedule" class="form-label">
-                                    <i class="bi bi-person-fill me-1"></i> Schedule Audit </label>
-                                <select class="" id="list_schedule" style="width:100%;">
-                                    <option value="">-- Pilih Schedule --</option>
-                                    <?php foreach ($schedule_audit as $sa) : ?>
-                                        <?php setlocale(LC_TIME, 'id_ID.UTF-8', 'Indonesian_indonesia.1252');
-                                        $date = DateTime::createFromFormat('d/m/Y', $sa['tanggal_patrol']);
-                                        ?>
-                                        <option value="<?= $sa['id_schedule'] ?>">[Tanggal Schedule Patrol : <?php echo strftime('%d %B %Y', $date->getTimestamp()); ?>] - Departement : <?= $sa['departement_name'] ?>; Section : <?= $sa['section_name'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
 
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="auditorName" class="form-label">
-                                    <i class="bi bi-person-fill me-1"></i> Nama Auditor </label>
-
-                                <input type="text" class="form-control" id="auditorName" value="<?= $nama; ?>" disabled>
-
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="tanggal_patrol" class="form-label">
-                                    <i class="bi bi-calendar-fill me-1"></i> Tanggal Patrol Actual</label>
-                                <input type="text" class="form-control auditDate" id="tanggal_patrol" placeholder="Auditee" required readonly>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
-
-                                    Area Patrol
-                                </label>
-                                <hr style="height: 2px; border: none;">
-                            </div>
-                            <div class="form-group col-md-4 mt-2">
-                                <label for="Deskripsi Temuan" class="form-label">
-                                    <i class="bi bi-journal-text me-1"></i>Departement</label>
-                                <input class="form-control" placeholder="Leave a comment here" id="list_dept" data-id="" disabled>
-                            </div>
-                            <div class="form-group col-md-4 mt-2">
-                                <label for="Deskripsi Temuan" class="form-label">
-                                    <i class="bi bi-journal-text me-1"></i>Seksi</label>
-                                <input class="form-control" placeholder="Leave a comment here" id="list_seksi" data-id="" disabled>
-                            </div>
-                            <div class="form-group col-md-4 mt-2">
-                                <label for="Deskripsi Temuan" class="form-label">
-                                    <i class="bi bi-journal-text me-1"></i>Auditee</label>
-                                <input type="text" class="form-control Auditee" id="nama_auditee" placeholder="Nama Auditee" disabled>
-                            </div>
-
-
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="Deskripsi Temuan" class="form-label">
-                                <i class="bi bi-journal-text me-1"></i>Deskripsi Temuan</label>
-
-                            <textarea class="form-control" placeholder="Leave a comment here" id="deskripsi_temuan"></textarea>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="upload_file" class="form-label">
-                                <i class="bi bi-upload me-1"></i>Upload File
-                            </label>
-
-                            <input
-                                type="file"
-                                class="form-control"
-                                id="fileUpload_tambah"
-                                name="fileUpload_tambah"
-                                onchange="handleFileUpload()">
-
-                            <!-- Preview Image -->
-                            <div class="mt-2">
-                                <img
-                                    id="preview_image"
-                                    class="img-fluid rounded d-none"
-                                    style="max-height: 200px;"
-                                    alt="Preview Image">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
-
-                                PIC Action
-                            </label>
-                            <hr style="height: 2px; border: none;">
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6 mt-2">
-                                <label for="pic_action_list_dept" class="form-label">
-                                    <i class="bi bi-building me-1"></i>Departemen </label>
-                                <select class="select_tom" id="pic_action_list_dept" style="width:100%;">
-                                    <option value="">- Pilih Departement -</option>
-                                    <?php foreach ($data_dept as $dept) : ?>
-                                        <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-
-                            </div>
-                            <div class="form-group col-md-6 mt-2">
-                                <label for="pic_action_list_seksi" class="form-label">
-                                    <i class="bi bi-diagram-3 me-1"></i>Seksi </label>
-                                <select class="select_tom" id="pic_action_list_seksi" style="width:100%;" disabled>
-                                    <option value="">-- Pilih Opsi --</option>
-
-                                </select>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="Departemen" class="form-label mt-3" style="font-size: 20px;">
-
-                                    Rekap temuan
-                                </label>
-                                <button type="button" class="btn btn-success float-right mt-2 btn_rekaptemuan"><i class="bi bi-plus-circle"></i> Tambah temuan </button>
-                                <hr style="height: 2px; border: none;">
-                            </div>
-
-                        </div>
-                        <div class="form-group mt-2">
-                            <table class="table">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Deskripsi temuan</th>
-                                        <th scope="col">File</th>
-                                        <th scope="col">PIC Action Area</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="rekap_tbody">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row g-3" id="">
-                            <!-- PILIH JENIS SIGN -->
-                            <div class="form-group col-md-12">
-                                <label for="sign_type" class="form-label">
-                                    <i class="bi bi-pen me-1"></i> Jenis Tanda Tangan
-                                </label>
-                                <select class="form-select" id="sign_type" name="sign_type">
-                                    <option value="digital" selected>Tanda tangan digital</option>
-                                    <option value="upload">Upload file gambar</option>
-                                </select>
-                            </div>
-
-                            <!-- DIGITAL SIGN -->
-                            <div class="col-12" id="digital_section">
-                                <div class="border rounded-3 p-3">
-
-                                    <div class="d-flex flex-wrap gap-3 align-items-end mb-3">
-                                        <div>
-                                            <label class="form-label mb-1">Warna</label>
-                                            <input type="color" id="pen_color" class="form-control form-control-color" value="#ff006a"
-                                                title="Pilih warna">
-                                        </div>
-
-                                        <div style="min-width: 240px;">
-                                            <label class="form-label mb-1">Tebal garis: <span id="pen_width_label">3</span> px</label>
-                                            <input type="range" class="form-range" id="pen_width" min="1" max="12" step="1" value="3">
-                                        </div>
-
-                                        <div class="ms-auto d-flex gap-2">
-                                            <button type="button" class="btn btn-outline-secondary" id="btnClearSign">
-                                                <i class="bi bi-eraser me-1"></i> Clear
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <label class="form-label">
-                                        <i class="bi bi-check2-square me-1"></i> Area Approval
-                                    </label>
-
-                                    <div class="rounded-3 border bg-light signature-wrap">
-                                        <canvas id="signature_pad"></canvas>
-                                    </div>
-
-                                    <input type="hidden" name="signature_data" id="signature_data">
-                                    <small class="text-muted d-block mt-2">
-                                        Tulis tanda tangan pada area di atas.
-                                    </small>
-                                </div>
-                            </div>
-
-                            <!-- UPLOAD SIGN -->
-                            <div class="col-12 d-none" id="upload_section">
-                                <div class="border rounded-3 p-3">
-                                    <label for="sign_file" class="form-label">
-                                        <i class="bi bi-upload me-1"></i> Upload tanda tangan (PNG/JPG)
-                                    </label>
-                                    <input class="form-control" type="file" id="sign_file" name="sign_file"
-                                        accept="image/png,image/jpeg">
-
-                                    <div class="mt-3 d-none" id="upload_preview_wrap">
-                                        <label class="form-label mb-1">Preview</label>
-                                        <div class="border rounded-3 p-2 bg-light">
-                                            <img id="upload_preview" alt="Preview" style="max-width: 100%; max-height: 220px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="btn_tambahTemuan"><i class="bi bi-plus-circle"></i> Submit </button>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
     <?php if ($role === 'Administrator') : ?>
         <div class="modal fade" id="modal_editdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1251,30 +1030,32 @@
 
 
 
-        const tsList = new TomSelect("#list_schedule", {
-            sortField: {
-                field: "text",
-                direction: "asc"
-            }
-        });
+        // const tsList = new TomSelect("#list_schedule", {
+        //     sortField: {
+        //         field: "text",
+        //         direction: "asc"
+        //     }
+        // });
 
-        const tsDept = new TomSelect("#pic_action_list_dept", {
-            sortField: {
-                field: "text",
-                direction: "asc"
-            }
-        });
+        // const tsDept = new TomSelect("#pic_action_list_dept", {
+        //     sortField: {
+        //         field: "text",
+        //         direction: "asc"
+        //     }
+        // });
 
-        const tsSeksi = new TomSelect("#pic_action_list_seksi", {
-            sortField: {
-                field: "text",
-                direction: "asc"
-            }
-        });
+        // const tsSeksi = new TomSelect("#pic_action_list_seksi", {
+        //     sortField: {
+        //         field: "text",
+        //         direction: "asc"
+        //     }
+        // });
 
-
+        initTomSelect("#list_schedule");
+        initTomSelect("#pic_action_list_dept");
+        initTomSelect("#pic_action_list_seksi");
         // awal: disabled
-        tsSeksi.disable();
+        // tsSeksi.disable();
 
         $('.sign_hadir').click(function() {
             var id = $(this).data('id');
@@ -1661,19 +1442,31 @@
 
 
         function initTomSelect(selector) {
-            document.querySelectorAll(selector).forEach(el => {
-                if (el.tomselect) el.tomselect.destroy();
+            const elements = document.querySelectorAll(selector);
+
+            if (!elements.length) return; // kalau tidak ada element, langsung stop
+
+            elements.forEach(el => {
 
                 // skip kalau disabled
                 if (el.disabled) return;
 
-                new TomSelect(el, {
-                    allowEmptyOption: true,
-                    sortField: {
-                        field: "text",
-                        direction: "asc"
-                    }
-                });
+                // destroy kalau sudah ada tomselect
+                if (el.tomselect) {
+                    el.tomselect.destroy();
+                }
+
+                try {
+                    new TomSelect(el, {
+                        allowEmptyOption: true,
+                        sortField: {
+                            field: "text",
+                            direction: "asc"
+                        }
+                    });
+                } catch (e) {
+                    console.warn("TomSelect gagal di-init:", el, e);
+                }
             });
         }
         const localeID = {
@@ -1779,6 +1572,7 @@
                 },
                 dataType: 'json',
                 success: function(response) {
+
                     $('#fill_id_temuan_patrol').val(response.temuan.id_temuan_patrol);
                     $('#fill_id_auditor').val(response.temuan.id_auditor);
                     $('#fill_id_departement_temuan').val(response.temuan.id_departement);
@@ -1845,26 +1639,70 @@
                     $('#keterangan_auditor2').val(response.temuan.keterangan_auditor);
 
                     // todo : saya ingin melakukan set value pada tanggal due date dengan plugin airdatepicker
-                    const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
+                    // const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
+                    flatpickr("#fill_due_date", {
+                        dateFormat: "d M Y"
+                    });
+                    $("#fill_due_date")[0]._flatpickr.setDate(response.temuan.due_date);
                     $('#fill_due_date').val(response.temuan.due_date);
 
                     var id_section_user = '<?= $id_section_user ?>';
                     var id_dept_user = '<?= $id_dept_user ?>';
+                    var npk_auditor = '<?= $npk ?>';
+                    var npk_auditor_temuan = response.temuan.id_auditor;
                     // cek apakah user yang akses adalah Auditee dari temuan tersebut
-                    if (id_section_user == response.temuan.id_section || id_dept_user == response.temuan.id_departement) {
-                        $('#fill_analisa_penyebab').attr('disabled', false);
-                        $('#fill_action').attr('disabled', false);
-                        $('#fill_pic_action').attr('disabled', false);
-                        $('#fill_due_date').attr('disabled', false);
-                        $('#fileUpload').attr('disabled', false);
-                        initTomSelect('#fill_pic_action');
-
-
-                    } else {
-                        // $('#fill_deskripsi_temuan').attr('disabled', false);
-
+                    // --- FUNGSI HELPER UNTUK TOMSELECT (Agar Kode Lebih Rapi) ---
+                    function disableTomSelect(selector) {
+                        const el = document.querySelector(selector);
+                        if (el && el.tomselect) {
+                            el.tomselect.destroy();
+                        }
+                        $(selector).prop('disabled', true);
                     }
 
+                    // --- LOGIKA UTAMA ---
+
+                    if (npk_auditor == npk_auditor_temuan) {
+                        /** * KONDISI 1: USER ADALAH AUDITOR 
+                         * Hak akses: Mengedit deskripsi, status, dan keterangan auditor.
+                         */
+                        $('#fill_deskripsi_temuan').prop('disabled', false);
+                        $('#list_option_status_container, #row_keterangan_auditor2').show();
+                        $('#btnSubmit_filldata').show();
+
+                        // Auditor biasanya tidak mengisi bagian teknis auditee
+                        $('#fill_analisa_penyebab, #fill_action, #fill_due_date, #fileUpload, .auditDate').prop('disabled', true);
+                        disableTomSelect('#fill_pic_action');
+
+                    } else if (id_section_user == response.temuan.id_section || id_dept_user == response.temuan.id_departement) {
+                        /** * KONDISI 2: USER ADALAH AUDITEE 
+                         * Hak akses: Mengisi analisa, tindakan, PIC, dan upload bukti.
+                         */
+                        $('#fill_analisa_penyebab, #fill_action, #fill_due_date, #fill_pic_action, #fileUpload, .auditDate').prop('disabled', false);
+                        initTomSelect('#fill_pic_action'); // Aktifkan TomSelect
+                        $('#btnSubmit_filldata').show();
+
+                        // Auditee dilarang ubah deskripsi temuan & status audit
+                        $('#fill_deskripsi_temuan').prop('disabled', true);
+                        $('#list_option_status_container, #row_keterangan_auditor2').hide();
+
+                    } else {
+                        /** * KONDISI 3: BUKAN AUDITOR MAUPUN AUDITEE (VIEWER ONLY)
+                         * Hak akses: Hanya melihat, semua input dimatikan.
+                         */
+                        // Kunci semua field input & textarea
+                        $('#fill_analisa_penyebab, #fill_action, #fill_due_date, #fileUpload, #fill_deskripsi_temuan').prop('disabled', true);
+                        $('.auditDate').prop('disabled', true);
+
+                        // Matikan TomSelect
+                        disableTomSelect('#fill_pic_action');
+
+                        // Sembunyikan elemen khusus & tombol submit
+                        $('#list_option_status_container, #row_keterangan_auditor2').hide();
+                        $('#btnSubmit_filldata').hide();
+                    }
+                    $('.previewpdf_fill').hide();
+                    $('#imagePreview').hide();
                     // contoh: response.data.finding_evidence
                     renderEvidenceFinding(response.temuan.finding_evidence);
                     if (response.temuan.nama_file) {
@@ -2494,167 +2332,6 @@
                     }
                 });
             }
-        });
-        let signaturePad = null;
-
-        function resizeCanvasToDisplaySize(canvas) {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            const rect = canvas.getBoundingClientRect();
-
-            canvas.width = Math.floor(rect.width * ratio);
-            canvas.height = Math.floor(rect.height * ratio);
-
-            const ctx = canvas.getContext("2d");
-            ctx.setTransform(ratio, 0, 0, ratio, 0, 0); // scale untuk retina
-        }
-
-        function fillWhiteBackground(canvas) {
-            // isi putih beneran (bukan cuma property)
-            const ctx = canvas.getContext("2d");
-            ctx.save();
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.fillStyle = "#fff";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.restore();
-        }
-
-        function setPenOptions() {
-            if (!signaturePad) return;
-
-            const color = document.getElementById("pen_color").value;
-            const width = Number(document.getElementById("pen_width").value);
-
-            signaturePad.penColor = color;
-            signaturePad.minWidth = width;
-            signaturePad.maxWidth = width;
-
-            document.getElementById("pen_width_label").textContent = width;
-        }
-
-        function initSignaturePad() {
-            const canvas = document.getElementById("signature_pad");
-
-            // resize sesuai ukuran tampilannya
-            resizeCanvasToDisplaySize(canvas);
-
-            // isi background putih (agar tidak ada efek “hitam nyelip”)
-            fillWhiteBackground(canvas);
-
-            // jika ada instance lama, matikan event-nya
-            if (signaturePad) {
-                signaturePad.off();
-                signaturePad = null;
-            }
-
-            signaturePad = new SignaturePad(canvas, {
-                backgroundColor: "rgb(255,255,255)",
-                penColor: document.getElementById("pen_color").value,
-                minWidth: Number(document.getElementById("pen_width").value),
-                maxWidth: Number(document.getElementById("pen_width").value),
-            });
-
-            // clear akan apply backgroundColor
-            signaturePad.clear();
-            setPenOptions();
-        }
-
-        function bindUpdateBeforeDraw() {
-            const canvas = document.getElementById("signature_pad");
-            const update = () => setPenOptions();
-
-            // paksa update pen sebelum mulai coret
-            canvas.addEventListener("pointerdown", update);
-            canvas.addEventListener("mousedown", update);
-            canvas.addEventListener("touchstart", update, {
-                passive: true
-            });
-        }
-
-        function toggleSignType() {
-            const val = document.getElementById("sign_type").value;
-            const digital = document.getElementById("digital_section");
-            const upload = document.getElementById("upload_section");
-
-            if (val === "digital") {
-                digital.classList.remove("d-none");
-                upload.classList.add("d-none");
-
-                // re-init canvas setelah ditampilkan (biar ukuran pas)
-                setTimeout(() => {
-                    initSignaturePad();
-                }, 50);
-            } else {
-                digital.classList.add("d-none");
-                upload.classList.remove("d-none");
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            // init signature
-            initSignaturePad();
-            bindUpdateBeforeDraw();
-
-            // toggle jenis sign
-            document.getElementById("sign_type").addEventListener("change", toggleSignType);
-
-            // warna & tebal
-            document.getElementById("pen_color").addEventListener("input", setPenOptions);
-            document.getElementById("pen_width").addEventListener("input", setPenOptions);
-
-            // clear
-            document.getElementById("btnClearSign").addEventListener("click", function() {
-                if (!signaturePad) return;
-                signaturePad.clear();
-            });
-
-            // preview upload
-            document.getElementById("sign_file").addEventListener("change", function(e) {
-                const file = e.target.files && e.target.files[0];
-                const wrap = document.getElementById("upload_preview_wrap");
-                const img = document.getElementById("upload_preview");
-
-                if (!file) {
-                    wrap.classList.add("d-none");
-                    img.src = "";
-                    return;
-                }
-
-                img.src = URL.createObjectURL(file);
-                wrap.classList.remove("d-none");
-            });
-
-            // submit
-            document.getElementById("btn_tambahTemuan").addEventListener("click", function() {
-                const signType = document.getElementById("sign_type").value;
-
-                if (signType === "digital") {
-                    if (!signaturePad || signaturePad.isEmpty()) {
-                        alert("Tanda tangan digital masih kosong.");
-                        return;
-                    }
-                    // base64 png
-                    const dataURL = signaturePad.toDataURL("image/png");
-                    document.getElementById("signature_data").value = dataURL;
-                } else {
-                    const file = document.getElementById("sign_file").files[0];
-                    if (!file) {
-                        alert("Silakan pilih file gambar tanda tangan.");
-                        return;
-                    }
-                }
-
-                // TODO: sesuaikan submit
-                // document.getElementById("formSign").submit();
-                console.log("Submit OK. sign_type =", signType);
-            });
-
-            // re-init saat modal muncul (penting supaya ukuran canvas pas)
-            const modalEl = document.getElementById("modal_tambahdata");
-            modalEl.addEventListener("shown.bs.modal", function() {
-                if (document.getElementById("sign_type").value === "digital") {
-                    setTimeout(() => initSignaturePad(), 50);
-                }
-            });
         });
     </script>
 </body>

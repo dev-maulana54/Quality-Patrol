@@ -21,8 +21,9 @@ $routes->get('profile', 'Summary::profile');
 #Route Temuan Patrol
 $routes->get('temuan_patrol', 'Temuan_patrol::index');
 $routes->get('temuan_patrol/start_audit', 'Temuan_patrol::start_audit');
-$routes->get('temuan_patrol/auditor', 'Temuan_patrol::index');
-$routes->get('temuan_patrol/auditee', 'Temuan_patrol::auditee');
+$routes->get('temuan_patrol/daftar_temuan', 'Temuan_patrol::index');
+// $routes->get('temuan_patrol/auditor', 'Temuan_patrol::index');
+// $routes->get('temuan_patrol/auditee', 'Temuan_patrol::auditee');
 $routes->get('temuan_patrol/list_daftar_hadir', 'Temuan_patrol::daftar_hadir');
 $routes->get('temuan_patrol/daftar_hadir/(:num)', 'Temuan_patrol::sign/$1');
 #Route Schedule Audit Patrol
@@ -43,7 +44,7 @@ $routes->post('unduh/export_excel', 'DownloadController::export_excel');
 $routes->get('unduh/test_excel', 'DownloadController::test_excel');
 
 #route untuk pdf preview
-$routes->get('temuan_patrol/pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
+$routes->get('pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
 
 
 #Route Auth / CrudController

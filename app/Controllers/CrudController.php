@@ -426,10 +426,7 @@ class CrudController extends BaseController
                 )
                 ->join(
                     'section s',
-                    'tp.id_section = CASE 
-            WHEN s.id_section_henk = 0 THEN s.id_section
-            ELSE s.id_section_henk
-        END',
+                    '(tp.id_section = s.id_section_henk OR tp.id_section = s.id_section)',
                     'left',
                     false
                 )
@@ -477,7 +474,10 @@ class CrudController extends BaseController
             $list_section = $this->dataPatrol->get_Alldata_seksi();
             $section = '';
             foreach ($list_section as $ls) {
-                $isSelected3 = $temuan['id_section'] == $ls['id_section'] ? 'selected' : '';
+                $isSelected3 =
+                    ($temuan['id_section'] == $ls['id_section'] || $temuan['id_section'] == $ls['id_section_henk'])
+                    ? 'selected'
+                    : '';
                 $section .=  "<option value='{$ls['id_section']}' {$isSelected3}>{$ls['section']}</option>";
             }
 
@@ -798,24 +798,7 @@ class CrudController extends BaseController
             }
 
             if (!empty($due_date)) {
-
-                // Cek apakah sudah format d/m/Y
-                $dateObj = \DateTime::createFromFormat('d/m/Y', $due_date);
-                $isValidDMY = $dateObj && $dateObj->format('d/m/Y') === $due_date;
-
-                if ($isValidDMY) {
-                    // Sudah d/m/Y, langsung pakai
-                    $data_update['due_date'] = $due_date;
-                } else {
-                    // Format lain, coba konversi pakai strtotime
-                    $timestamp = strtotime($due_date);
-
-                    if ($timestamp !== false) {
-                        $data_update['due_date'] = date('d/m/Y', $timestamp);
-                    } else {
-                        $data_update['due_date'] = null;
-                    }
-                }
+                $data_update['due_date'] = $due_date;
             }
 
 
@@ -1326,6 +1309,27 @@ class CrudController extends BaseController
             return $this->response->setJSON([
                 'status' => 'success',
                 'data' => $html
+            ]);
+        } else if ($keterangan == 'filter_data_patrol_mobile') {
+            if (!$this->request->isAJAX()) {
+                return $this->response->setJSON([
+                    'status'  => false,
+                    'message' => 'Invalid request'
+                ]);
+            }
+
+            $status      = $this->request->getPost('status'); // array
+            $auditor     = $this->request->getPost('auditor');
+            $area_patrol = $this->request->getPost('area_patrol');
+
+
+
+            $data = $this->dataPatrol->getFilterData($status, $auditor, $area_patrol);
+
+            return $this->response->setJSON([
+                'status'  => true,
+                'message' => 'Data berhasil diambil',
+                'data'    => $data
             ]);
         }
     }

@@ -24,7 +24,8 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.6.2/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" /> -->
     <link href="<?= base_url() ?>assets/css/summary.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/css/t_patrol.css" rel="stylesheet">
-
+    <link href="<?= base_url() ?>assets/css/eleganselect.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/notify_claim.css">
     <style>
         .select2-container .select2-selection--single {
             height: 38px;
@@ -359,10 +360,10 @@
                 </a>
             </div>
         </div>
-        <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
+        <!-- <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
             <i class="bi bi-calendar-check"></i>
             <span>Schedule</span>
-        </a>
+        </a> -->
         <?php if ($role === 'Administrator') : ?>
             <div class="menu-header">
                 Master Data
@@ -399,7 +400,9 @@
             <div class="card-header">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Daftar Hadir</h3>
-
+                    <button type="button" class="btn btn-primary tambah_daftar_hadir" data-bs-toggle="modal" data-bs-target="#modal_tambahdaftarHadir">
+                        <i class="bi bi-plus-circle"></i> Tambah Daftar Hadir
+                    </button>
                 </div>
 
             </div>
@@ -410,7 +413,7 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal Patrol</th>
-                            <th>Auditor</th>
+
 
                             <th>Area / Proses</th>
 
@@ -418,25 +421,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data_schedule as $index => $schedule) : ?>
-                            <tr>
-                                <td><?= $index + 1 ?></td>
 
-                                <td>
-                                    <?php
-                                    setlocale(LC_TIME, 'id_ID.UTF-8', 'Indonesian_indonesia.1252');
-                                    $date = DateTime::createFromFormat('d/m/Y', $schedule['tanggal_patrol']);
-                                    echo strftime('%d %B %Y', $date->getTimestamp());
-                                    ?></td>
-                                <td><?= $schedule['nama_auditor'] ?></td>
-                                <td><?= $schedule['section'] ?></td>
-
-
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-success sign_hadir btn-sm" data-id="<?= $schedule['id_schedule'] ?>"><i class="bi bi-journal-arrow-down"></i> Absen </button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
 
 
                     </tbody>
@@ -453,7 +438,88 @@
         <p id="footerText">© 2025 Quality Patrol — All rights reserved</p>
     </div>
     <!-- Button trigger modal -->
+    <div class="modal fade" id="modal_tambahdaftarHadir" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Daftar Hadir</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
 
+
+                            <div class="form-group col-md-6">
+                                <label for="tanggal_patrol" class="form-label">
+                                    <i class="bi bi-calendar-fill me-1"></i> Tanggal Patrol Actual</label>
+                                <input type="text" class="form-control auditDate" id="tanggal_patrol" placeholder="Auditee" required readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="auditorName" class="form-label">
+                                    <i class="bi bi-building me-1"></i>Departement</label>
+
+                                <select id="list_dept" class="form-input card-bg text-dark" required>
+                                    <option value="" disabled selected>- Pilih Departement -</option>
+                                    <?php foreach ($all_dept as $dept) : ?>
+                                        <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="auditorName" class="form-label">
+                                    <i class="bi bi-diagram-3 me-1"></i> Seksi</label>
+
+                                <select id="list_seksi" class="form-input card-bg text-dark" disabled>
+                                    <option value="" disabled selected>- Pilih Seksi -</option>
+
+
+                                </select>
+
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="auditorName" class="form-label">
+                                    <i class="bi bi-person-fill me-1"></i> Auditor </label>
+
+                                <select class="form-select select2" id="nama_auditor_list" name="nama_auditor_list[]"
+                                    style="width:100%;" multiple="multiple">
+                                    <option value="" disabled>-- Pilih Opsi --</option>
+                                    <?php foreach ($data_karyawan as $karyawan) : ?>
+                                        <option value="<?= $karyawan['npk'] ?>"><?= $karyawan['npk'] ?> - <?= $karyawan['nama'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="auditorName" class="form-label">
+                                    <i class="bi bi-person-fill me-1"></i> Auditee </label>
+
+                                <select class="form-select select2" id="nama_auditee_list" name="nama_auditee_list[]"
+                                    style="width:100%;" multiple="multiple">
+                                    <option value="" disabled>-- Pilih Opsi --</option>
+                                    <?php foreach ($data_karyawan as $karyawan) : ?>
+                                        <option value="<?= $karyawan['npk'] ?>"><?= $karyawan['npk'] ?> - <?= $karyawan['nama'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btn_tambahDaftarHadir"><i class="bi bi-plus-circle"></i> Tambah </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 
 
@@ -477,6 +543,8 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="<?= base_url() ?>assets/js/temuan_patrol/view-image.js"></script>
     <script src="<?= base_url() ?>assets/js/temuan_patrol/t_patrol.js"></script>
+    <script src="<?= base_url() ?>assets/js/notify_claim.js"></script>
+    <script src="<?= base_url() ?>assets/js/eleganselect.js"></script>
     <script>
         document.querySelectorAll('.submenu-toggle').forEach(item => {
             item.addEventListener('click', () => {
@@ -491,6 +559,119 @@
             var url = "<?= base_url('temuan_patrol/daftar_hadir') ?>/" + id;
 
             window.open(url, '_blank');
+        });
+        $('#list_dept').on('change', function() {
+            const deptId = $(this).val();
+
+            // kalau kosong => disable & reset seksi
+            if (!deptId) {
+                $('#list_seksi').prop('disabled', true);
+
+                $('#list_seksi')
+                    .empty()
+                    .html('<option value="">-- Pilih Opsi --</option>')
+                    .val('');
+
+
+                return;
+            }
+
+            // enable seksi
+            $('#list_seksi').prop('disabled', false);
+            $('#list_seksi')
+                .next('.selectx-container')
+                .find('.selectx-trigger')
+                .removeClass('disabled');
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                data: {
+                    keterangan: 'get_seksi_by_dept',
+                    id_dept: deptId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    const htmlOpt = (response && response.options) ? response.options : '';
+                    const selectedSeksiId = (response && response.selected_seksi_id) ? response.selected_seksi_id : '';
+
+                    // replace options seksi
+                    $('#list_seksi')
+                        .empty()
+                        .html('<option value="">-- Pilih Opsi --</option>' + htmlOpt)
+                        .val(selectedSeksiId);
+
+
+
+                    // kalau SelectX punya setValue, sync juga (opsional)
+                    if (selectedSeksiId && sxSeksi && typeof sxSeksi.setValue === 'function') {
+                        sxSeksi.setValue(selectedSeksiId);
+                    }
+
+                    // =========================
+                    // OPTIONAL: reset dept juga
+                    // =========================
+                    // Kalau Anda benar-benar mau dept balik kosong setelah sukses:
+                    // $('#list_dept').val('');
+                    // if (sxDept && typeof sxDept.setValue === 'function') sxDept.setValue('');
+                    // (kalau perlu rebuild juga dept, sama polanya)
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching seksi data:', error);
+                }
+            });
+        });
+        new SelectX('#nama_auditor_list', {
+            multiple: true, // Paksa menjadi multiple
+            searchable: true,
+            clearable: true,
+            placeholder: 'Pilih sesuatu...',
+            onChange: (value) => console.log(value)
+        });
+        new SelectX('#nama_auditee_list', {
+            multiple: true, // Paksa menjadi multiple
+            searchable: true,
+            clearable: true,
+            placeholder: 'Pilih sesuatu...',
+            onChange: (value) => console.log(value)
+        });
+        new SelectX('#list_dept', {
+            multiple: true, // Paksa menjadi multiple
+            searchable: true,
+            clearable: true,
+            placeholder: 'Pilih sesuatu...',
+            onChange: (value) => console.log(value)
+        });
+        new SelectX('#list_seksi', {
+            multiple: true, // Paksa menjadi multiple
+            searchable: true,
+            clearable: true,
+            placeholder: 'Pilih sesuatu...',
+            onChange: (value) => console.log(value)
+        });
+        $('#btn_tambahDaftarHadir').click(function() {
+            var tanggal_patrol = $('#tanggal_patrol').val();
+
+            // Ambil semua value (NPK) yang dipilih
+            var nama_auditor_npk = $('#nama_auditor_list').val(); // ['NPK001', 'NPK002']
+
+            if (!tanggal_patrol) {
+
+                Notify.fire({
+                    type: "error",
+                    title: "Oops!",
+                    text: "Tanggal Patrol harus diisi!",
+                });
+                return;
+            }
+            if (!nama_auditor_npk || nama_auditor_npk.length === 0) {
+
+                Notify.fire({
+                    type: "error",
+                    title: "Oops!",
+                    text: "Nama Auditor harus dipilih!",
+                });
+                return;
+            }
         });
     </script>
 </body>

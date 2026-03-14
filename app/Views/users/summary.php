@@ -236,7 +236,11 @@
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
-        <div class="menu-item has-submenu">
+        <a href="<?= base_url('temuan_patrol/daftar_temuan') ?>" class="menu-item mt-2" data-page="daftar_temuan">
+            <i class="bi bi-list-check"></i>
+            <span>Daftar Temuan</span>
+        </a>
+        <!-- <div class="menu-item has-submenu">
             <div class="menu-item submenu-toggle">
                 <div class="menu-left">
                     <i class="bi bi-search"></i>
@@ -261,7 +265,7 @@
                 </a>
 
             </div>
-        </div>
+        </div> -->
 
 
 

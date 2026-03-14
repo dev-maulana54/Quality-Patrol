@@ -27,20 +27,19 @@ class Temuan_patrol extends BaseController
         $data['title'] = "Temuan Patrol | Quality Patrol";
         $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
         $getuserLog = $this->dataPatrol->getdata_userbyNPK(session()->get('npk'));
-        $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
+        // $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
         $data['nama'] = $getdata_user['nama'];
         $data['npk'] = session()->get('npk');
         $data['id_section_user'] = $getdata_user['id_section'];
         $data['id_dept_user'] = $getdata_user['id_departement'];
         $data['role'] = session()->get('role');
-        if (session()->get('role') == 'Administrator') {
-            $data['data_patrol'] = $this->dataPatrol->get_data_patrolAll();
-        } else {
-            $data['data_patrol'] = $this->dataPatrol->get_data_patrolByIdSection();
-        }
+
+        $data['data_patrol'] = $this->dataPatrol->get_data_patrolAll();
+
 
         $data['schedule_audit'] = $this->dataPatrol->get_Alldata_schedule($getdata_user['id_section'], $getdata_user['id_departement']);
-
+        $data['data_karyawan'] = $this->dataPatrol->getAlldata_karyawan();
+        $data['data_area_patrol'] = $this->dataPatrol->get_Alldata_seksi();
         $data['data_dept'] = $this->dataPatrol->get_Alldata_dept();
         $agent = $this->request->getUserAgent();
         if ($agent->isMobile()) {
@@ -117,8 +116,9 @@ class Temuan_patrol extends BaseController
         $getdata_user = $this->dataPatrol->getdata_karyawan_byUsername(session()->get('npk'));
         $data['nama'] = $getdata_user['nama'];
         $data['role'] = session()->get('role');
-
-        $data['data_schedule'] = $this->dataPatrol->get_Alldata_scheduleByUser();
+        $data['all_dept'] = $this->dataPatrol->get_Alldata_dept();
+        $data['data_karyawan'] = $this->dataPatrol->getAlldata_karyawan();
+        // $data['data_schedule'] = $this->dataPatrol->get_Alldata_daftarHadir();
         // return view('info/info_pengembangan', $data);
         return view('users/daftar_hadir', $data);
     }

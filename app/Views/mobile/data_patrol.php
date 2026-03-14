@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/mobile/style.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/inkflow.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/eleganselect.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/notify_claim.css">
 
     <style>
         :root {
@@ -358,6 +359,14 @@
             /* efek visual disabled */
             cursor: not-allowed;
         }
+
+        .btn:disabled {
+            opacity: 0.4;
+            /* transparan */
+            cursor: not-allowed !important;
+            pointer-events: auto !important;
+            /* tidak bisa diklik */
+        }
     </style>
 
 </head>
@@ -380,31 +389,13 @@
             <!-- Data Patrol Page -->
             <div id="dataPatrolPage" class="page-content">
                 <div class="px-4 py-4">
-                    <h2 class="text-lg font-semibold text-dark mb-4">Data Patrol</h2>
+                    <!-- <h2 class="text-lg font-semibold text-dark mb-4">Data Patrol</h2> -->
                     <!-- Tabs -->
-                    <div class="flex gap-2 mb-4 card-bg rounded-xl p-1 shadow-md">
-                        <button
-                            class="tab-btn active flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
-                            onclick="window.location.href='<?= base_url('temuan_patrol/auditor') ?>'">
-                            <i class="fas fa-user-check mr-1"></i> Auditor
-                        </button>
 
-                        <button
-                            class="tab-btn flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
-                            onclick="window.location.href='<?= base_url('temuan_patrol/auditee') ?>'">
-                            <i class="fas fa-user-tag mr-1"></i> Auditee
-                        </button>
-
-                        <button
-                            class="tab-btn flex-1 py-2 px-4 rounded-lg font-semibold text-sm transition-all"
-                            onclick="window.location.href='<?= base_url('data-patrol/attendance') ?>'">
-                            <i class="fas fa-tasks mr-1"></i> Daftar Hadir
-                        </button>
-                    </div>
                     <!-- Tab Content: Data Patrol -->
                     <div id="AuditorTab" class="tab-content">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-base font-semibold text-dark">Temuan Auditor</h3>
+                            <h2 class="text-base font-semibold text-dark">Daftar Temuan</h2>
                             <button
                                 class="text-sm text-blue-600 font-semibold hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1"
                                 onclick="toggleFilter('patrolFilter')">
@@ -423,24 +414,43 @@
                                     <label class="block text-xs font-semibold text-dark mb-2">Status</label>
                                     <div class="flex gap-3 flex-wrap">
                                         <label class="flex items-center text-xs">
-                                            <input type="checkbox" checked class="mr-1" /> Open
+                                            <input type="checkbox" name="filter_status" value="3" class="mr-1" /> Open
                                         </label>
                                         <label class="flex items-center text-xs">
-                                            <input type="checkbox" checked class="mr-1" /> In
-                                            Progress
+                                            <input type="checkbox" name="filter_status" value="2" class="mr-1" /> In Progress
                                         </label>
                                         <label class="flex items-center text-xs">
-                                            <input type="checkbox" checked class="mr-1" /> Close
+                                            <input type="checkbox" name="filter_status" value="1" class="mr-1" /> Close
                                         </label>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <select id="filter_auditor" class="form-input card-bg text-dark">
+                                        <option value="" selected>- Pilih Auditor -</option>
+                                        <?php foreach ($data_karyawan as $karyawan) : ?>
+                                            <option value="<?= $karyawan['npk'] ?>"><?= $karyawan['nama'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <select id="filter_area_patrol" class="form-input card-bg text-dark">
+                                        <option value="" selected>- Pilih Area Patrol -</option>
+                                        <?php foreach ($data_area_patrol as $area) : ?>
+                                            <option value="<?= $area['id_section']  ?>"><?= $area['section'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
                                 <div class="flex gap-2 pt-2">
-                                    <button
+                                    <button type="button" id="btn_resetfilter"
                                         class="flex-1 border border-gray-300 text-dark rounded-lg py-2 text-sm font-semibold hover:bg-gray-50">
                                         Reset
                                     </button>
-                                    <button
-                                        class="flex-1 btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                                    <button type="button"
+                                        class="btn flex-1 btn-primary text-white rounded-lg py-2 text-sm font-semibold"
+                                        id="btn_terapkanfilter">
                                         Terapkan
                                     </button>
                                 </div>
@@ -546,6 +556,10 @@
                 <div id="detailContent" class="space-y-4">
                     <form>
                         <input type="hidden" id="edit_id_temuan_patrol">
+
+                        <input type="hidden" id="fill_id_auditor">
+                        <input type="hidden" id="fill_id_departement_temuan">
+                        <input type="hidden" id="fill_id_section_temuan">
                         <div class="card-bg border border-gray-200 rounded-lg p-3">
                             <p class="text-xs text-gray mb-1">Status</p>
                             <span class="detail_status status-badge status-open">Open</span>
@@ -601,19 +615,20 @@
                             <!-- evidence akan di-inject via JS -->
                         </div>
                         <div class="mt-2">
-                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Deskripsi Temuan <small class="text-danger"> *</small></label>
+                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Deskripsi Temuan <small class="text-danger">* Di isi oleh Auditor</small></label>
                             <textarea class="form-input card-bg text-dark detail_deskripsi_temuan" placeholder="Masukkan temuan..." rows="2" required></textarea>
                         </div>
-                        <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
-                            <p class="text-xs text-gray mb-1">Analisa Penyebab <small> <i>Di isi oleh Auditee !!!</i></small></p>
-                            <p class="text-sm font-semibold text-dark detail_analisa_penyebab"></p>
+                        <div class="mt-2">
+                            <label for="detail_analisa_penyebab" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Analisa Penyebab <small class="text-danger">* Di isi oleh Auditee !!!</small></label>
+                            <textarea class="form-input card-bg text-dark detail_analisa_penyebab" placeholder="Masukkan temuan..." rows="2" required></textarea>
                         </div>
-                        <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
-                            <p class="text-xs text-gray mb-1">Action <small> <i>Di isi oleh Auditee !!!</i></small></p>
-                            <p class="text-sm font-semibold text-dark detail_action"></p>
+                        <div class="mt-2">
+                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Action <small class="text-danger">* Di isi oleh Auditee !!!</small></label>
+                            <textarea class="form-input card-bg text-dark detail_action" placeholder="Masukkan temuan..." rows="2" required></textarea>
                         </div>
+
                         <div class="mt-2 pic_action_temuan_container">
-                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">PIC Action</label>
+                            <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">PIC Action <small class="text-danger">* Di isi oleh Auditee !!!</small></label>
                             <select id="detail_pic_action" class="form-input card-bg text-dark detail_pic_action" disabled>
 
 
@@ -622,8 +637,9 @@
                             </select>
                         </div>
                         <div class="card-bg border border-gray-200 rounded-lg p-3 mt-2">
-                            <p class="text-xs text-gray mb-1">Due Date <small> <i>Di isi oleh Auditee !!!</i></small></p>
-                            <p class="text-sm font-semibold text-dark detail_due_date"></p>
+                            <p class="text-xs text-gray mb-1">Due Date <small> <i>Di isi oleh Auditee !!!</i></small><small class="text-danger"> *</small></p>
+
+                            <input type="date" class="form-input card-bg text-dark detail_due_date" placeholder="Masukkan due date..." required>
                         </div>
 
                         <div class="form-group mt-3">
@@ -678,7 +694,7 @@
 
                             </select>
                         </div>
-                        <div class="mt-2">
+                        <div class="mt-2 text_keterangan_auditor_container">
                             <label for="deskripsi_temuan" class="form-label text-dark" style="margin-bottom: 0.1rem !important;">Keterangan Auditor<small class="text-danger"> *</small></label>
                             <textarea class="form-input card-bg text-dark detail_ket_auditor " placeholder="Masukkan keterangan auditor..." rows="2" required></textarea>
                         </div>
@@ -702,6 +718,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="<?= base_url() ?>assets/js/inkflow.js"></script>
     <script src="<?= base_url() ?>assets/js/eleganselect.js"></script>
+    <script src="<?= base_url() ?>assets/js/notify_claim.js"></script>
     <script>
         const defaultConfig = {
             app_title: "Patrol Audit Monitor",
@@ -713,19 +730,7 @@
             background_color: "#f8fafc",
             card_color: "#ffffff"
         };
-        $(document).ready(function() {
-            localStorage.removeItem('rekap_temuan');
-            renderTable(); // biar tabel ikut kosong
-        });
 
-        function renderTable() {
-            let list = JSON.parse(localStorage.getItem('rekap_temuan')) || [];
-            $('#rekap_tbody').html('');
-
-            list.forEach((item, i) => {
-                appendRow(item, i + 1);
-            });
-        }
         let config = {
             ...defaultConfig
         };
@@ -733,50 +738,7 @@
         let isDarkMode = false;
         let selectedFileData = null; // {file_name, file_type, file_size, file_dataurl}
 
-        function handleFileUpload() {
-            var fileInput = $('#fileUpload_tambah')[0];
-            var preview = document.getElementById('preview_image');
 
-            // reset
-            selectedFile = null;
-            preview.src = '';
-            preview.classList.add('d-none');
-
-            if (!fileInput || !fileInput.files || fileInput.files.length === 0) return;
-
-            var file = fileInput.files[0];
-
-            const allowedTypes = [
-                "image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp",
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            ];
-
-            if (!allowedTypes.includes(file.type)) {
-                alert("Tipe file tidak diperbolehkan!");
-                fileInput.value = "";
-                return;
-            }
-
-            // optional: batasi ukuran (misal 10MB)
-            const maxSize = 10 * 1024 * 1024;
-            if (file.size > maxSize) {
-                alert("Ukuran file terlalu besar. Maksimal 10MB.");
-                fileInput.value = "";
-                return;
-            }
-
-            selectedFile = file;
-
-            // preview hanya untuk gambar (pakai objectURL)
-            if (file.type.startsWith("image/")) {
-                preview.src = URL.createObjectURL(file);
-                preview.classList.remove('d-none');
-            }
-        }
 
 
 
@@ -794,6 +756,7 @@
 
 
 
+
         function fill_temuan(id) {
             let selectPic = null;
             document.getElementById('detailModal').classList.remove('hidden');
@@ -807,7 +770,48 @@
                 dataType: 'json',
                 success: function(response) {
                     // Isi form edit dengan data yang diambil
+                    var id_section_user = '<?= $id_section_user ?>';
+                    var id_dept_user = '<?= $id_dept_user ?>';
+                    var npk_auditor = '<?= $npk ?>';
+                    var npk_auditor_temuan = response.temuan.id_auditor;
+                    // cek apakah user yang akses adalah Auditee dari temuan tersebut
+                    // 1. Reset awal (Opsional: sembunyikan semua atau kunci semua dulu agar aman)
+                    $('.edit_temuan_btn').hide();
 
+                    if (npk_auditor == npk_auditor_temuan) {
+                        /** * KONDISI: USER ADALAH AUDITOR
+                         * Fokus: Mengedit deskripsi dan memberikan status audit
+                         */
+                        $('.detail_deskripsi_temuan').prop('disabled', false);
+                        $('.option_status_temuan_container, .text_keterangan_auditor_container').show();
+
+                        // Auditor biasanya tidak mengisi analisa penyebab/action (itu tugas auditee)
+                        $('.detail_analisa_penyebab, .detail_action, .detail_due_date, #fileUpload, .auditDate').prop('disabled', true);
+                        $('.detail_pic_action').prop('disabled', true);
+
+                        $('.edit_temuan_btn').show();
+
+                    } else if (id_section_user == response.temuan.id_section || id_dept_user == response.temuan.id_departement) {
+                        /** * KONDISI: USER ADALAH AUDITEE (TAPI BUKAN AUDITOR)
+                         * Fokus: Mengisi analisa, tindakan, dan upload bukti
+                         */
+                        $('.detail_analisa_penyebab, .detail_action, .detail_pic_action').prop('disabled', false);
+                        $('.detail_due_date, .auditDate, #fileUpload').prop('disabled', false);
+
+                        // Auditee tidak boleh ubah deskripsi temuan atau status auditor
+                        $('.detail_deskripsi_temuan').prop('disabled', true);
+                        $('.option_status_temuan_container, .text_keterangan_auditor_container').hide();
+
+                        $('.edit_temuan_btn').show();
+
+                    } else {
+                        /** * KONDISI: USER HANYA VIEWER (BUKAN AUDITOR MAUPUN AUDITEE)
+                         * Fokus: Hanya melihat data (Read-only)
+                         */
+                        $('input, textarea, select').prop('disabled', true); // Kunci semua input
+                        $('.option_status_temuan_container, .text_keterangan_auditor_container').hide();
+                        $('.edit_temuan_btn').hide();
+                    }
                     if (response.temuan.status_temuan == 1) {
                         $('.detail_status')
                             .removeClass(function(i, cls) {
@@ -818,6 +822,11 @@
                         $('.option_status_temuan_container').hide();
                         $('.detail_deskripsi_temuan').prop('disabled', true);
                         $('.detail_ket_auditor').prop('disabled', true);
+                        $('.detail_analisa_penyebab').attr('disabled', true);
+                        $('.detail_action').attr('disabled', true);
+                        $('.detail_due_date').prop('disabled', true);
+                        $('.detail_pic_action').prop('disabled', true);
+                        $('#fileUpload').prop('disabled', true);
                         $('.edit_temuan_btn').hide();
                     } else if (response.temuan.status_temuan == 2) {
                         $('.detail_status')
@@ -842,6 +851,18 @@
                         $('.detail_ket_auditor').prop('disabled', false);
                         $('.edit_temuan_btn').show();
                     }
+                    $('#edit_id_temuan_patrol').val(response.temuan.id_temuan_patrol);
+                    $('#fill_id_auditor').val(response.temuan.id_auditor);
+                    $('#fill_id_departement_temuan').val(response.temuan.id_departement);
+                    $('#fill_id_section_temuan').val(response.temuan.id_section);
+                    $('.detail_tanggal_patrol').text(response.temuan.tanggal_patrol);
+                    $('.detail_auditor').text(response.temuan.nama_auditor);
+                    $('.detail_auditee').text(response.temuan.nama_auditee);
+                    $('.detail_area_proses').text(response.temuan.section_name);
+                    $('.detail_deskripsi_temuan').html(response.temuan.deskripsi_temuan);
+                    $('.detail_analisa_penyebab').val(response.temuan.analisa_penyebab);
+                    $('.detail_action').val(response.temuan.action);
+                    $('#detail_pic_action').html(response.temuan.pic_section_name);
                     $('.detail_tanggal_patrol').text(response.temuan.tanggal_patrol);
                     <?php if (session()->get('role') != 'Administrator') : ?>
                         $('.detail_auditor').text(response.temuan.nama_auditor);
@@ -864,27 +885,18 @@
                     $('.detail_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
                     $('.detail_analisa_penyebab').text(response.temuan.analisa_penyebab);
                     $('.detail_action').text(response.temuan.action);
-                    $('.detail_due_date').text(response.temuan.due_date);
+                    // $('.detail_due_date').text(response.temuan.due_date);
+                    flatpickr(".detail_due_date", {
+                        dateFormat: "d M Y"
+                    });
+                    if (response.temuan.due_date && response.temuan.due_date != 0) {
+                        $(".detail_due_date")[0]._flatpickr.setDate(response.temuan.due_date);
+                    }
                     $('.detail_ket_auditor').text(response.temuan.keterangan_auditor);
                     $('.detail_pic_action').html(response.temuan.pic_section_name);
-                    // kalau sudah pernah dibuat, destroy dulu
-                    // if (selectPic) {
-                    //     selectPic.destroy();
-                    // }
-                    // // update option
-                    // $('#detail_pic_action')
-                    //     .empty()
-                    //     .append(response.temuan.pic_section_name);
 
-                    // // buat ulang
-                    // selectPic = new SelectX('#detail_pic_action', {
-                    //     searchable: true,
-                    //     clearable: true
-                    // });
-
-                    // // set value
-                    // selectPic.setValue(String(response.temuan.pic_action_departement_id));
-                    // contoh: response.data.finding_evidence
+                    $('.previewpdf_fill').hide();
+                    $('#imagePreview').hide();
                     renderEvidenceFinding(response.temuan.finding_evidence);
                     if (response.temuan.nama_file) {
 
@@ -901,10 +913,10 @@
                             $('#imagePreview').html(`<img src="<?= base_url('assets/uploads/') ?>${fileName}" alt="Preview Image" id="existingImage"style="cursor: pointer; max-width: 200px;"
                                 >
                             `);
-
+                            $('#imagePreview').hide();
                             const existingImage = document.getElementById('existingImage');
                             existingImage.addEventListener('click', () => openViewer(existingImage.src));
-                            $('.previewpdf_fill').css('display', 'none');
+
                         } else if (isPDF) {
                             // tampilkan PDF (ikon atau preview mini)
                             //     $('#imagePreview').html(`
@@ -917,7 +929,7 @@
                             // const encoded = base64url_encode(fileName);
                             $('.previewpdf_fill').css('display', 'block');
                             $('#previewPDF_fill').attr('href', 'pdf/preview/' + fileName);
-                            $('#imagePreview').css('display', 'none');
+
                             // const pdfPreview = document.getElementById('pdfPreview');
                             // pdfPreview.addEventListener('click', () => openViewer("<?= base_url('assets/uploads/') ?>" + fileName));
 
@@ -933,105 +945,260 @@
                 }
             });
         }
+        $('.edit_temuan_btn').on('click', function(e) {
 
-        // function fill_temuan_auditee(id) {
+            e.preventDefault();
+            const $btn = $(this);
 
-        //     document.getElementById('fill_temuan').classList.remove('hidden');
-        //     $.ajax({
-        //         url: '<?= base_url('sendData') ?>',
-        //         type: 'POST',
-        //         data: {
-        //             keterangan: 'get_temuan_auditee_by_id',
-        //             id_temuan: id
-        //         },
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             // Isi form edit dengan data yang diambil
 
-        //             if (response.temuan.status_temuan == 1) {
-        //                 $('.fill_detail_status')
-        //                     .removeClass(function(i, cls) {
-        //                         return (cls.match(/(^|\s)status-(open|close|progress|cancel)\b/g) || []).join(' ');
-        //                     })
-        //                     .addClass('status-close')
-        //                     .text('Close');
-        //             } else if (response.temuan.status_temuan == 2) {
-        //                 $('.fill_detail_status')
-        //                     .removeClass(function(i, cls) {
-        //                         return (cls.match(/(^|\s)status-(open|close|progress|cancel)\b/g) || []).join(' ');
-        //                     })
-        //                     .addClass('status-progress')
-        //                     .text('In Progress');
-        //             } else if (response.temuan.status_temuan == 3) {
-        //                 $('.fill_detail_status')
-        //                     .removeClass(function(i, cls) {
-        //                         return (cls.match(/(^|\s)status-(open|close|progress|cancel)\b/g) || []).join(' ');
-        //                     })
-        //                     .addClass('status-open')
-        //                     .text('Open');
-        //             }
-        //             $('.detail_tanggal_patrol').text(response.temuan.tanggal_patrol);
-        //             $('.detail_auditor').text(response.temuan.nama_auditor);
-        //             $('.detail_auditee').text(response.temuan.nama_auditee);
-        //             $('.detail_area_proses').text(response.temuan.section_name);
-        //             $('.detail_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
+            $('.edit_temuan_btn').prop('disabled', true);
+            $btn.html('Tunggu Sebentar...');
+            const id_temuan_patrol = $('#edit_id_temuan_patrol').val();
 
-        //             // contoh: response.data.finding_evidence
-        //             renderEvidenceFinding(response.temuan.finding_evidence);
-        //             if (response.temuan.nama_file) {
+            var fd = new FormData();
+            var npk_user_log = '<?= $npk ?>';
+            var npk_auditor = $('#fill_id_auditor').val();
+            fd.append('keterangan', 'update_temuan_patrol_auditee');
+            fd.append('id_temuan', $('#edit_id_temuan_patrol').val());
+            fd.append('npk_auditor', $('#fill_id_auditor').val());
+            fd.append('id_section_temuan', $('#fill_id_section_temuan').val());
+            fd.append('id_departement_temuan', $('#fill_id_departement_temuan').val());
 
-        //                 const fileName = response.temuan.nama_file;
+            fd.append('analisa_penyebab', $('.detail_analisa_penyebab').val());
+            fd.append('action', $('.detail_action').val());
 
-        //                 // cek apakah gambar
-        //                 const isImage = /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(fileName);
+            fd.append('due_date', $('.detail_due_date').val());
 
-        //                 // cek apakah PDF
-        //                 const isPDF = /\.pdf$/i.test(fileName);
+            // // Convert dari DD/MM/YYYY ke "28 Feb 2026"
+            // const [day, month, year] = rawDate.split('/');
+            // const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            // const formattedDate = `${day} ${monthNames[parseInt(month) - 1]} ${year}`;
 
-        //                 if (isImage) {
-        //                     // tampilkan gambar
-        //                     $('#imagePreview').html(`<img src="<?= base_url('assets/uploads/') ?>${fileName}" alt="Preview Image" id="existingImage"style="cursor: pointer; max-width: 200px;"
-        //                         >
-        //                     `);
+            // fd.append('due_date', formattedDate); // "28 Feb 2026"
+            if (npk_user_log == npk_auditor) {
+                fd.append('status', $('#list_option_status').val());
+            } else {
+                fd.append('pic_action', $('#detail_pic_action').val());
 
-        //                     const existingImage = document.getElementById('existingImage');
-        //                     existingImage.addEventListener('click', () => openViewer(existingImage.src));
-        //                     $('.previewpdf_fill').css('display', 'none');
-        //                 } else if (isPDF) {
-        //                     // tampilkan PDF (ikon atau preview mini)
-        //                     //     $('#imagePreview').html(`
-        //                     //     <div style="cursor: pointer; color: blue; text-decoration: underline;" id="pdfPreview">
-        //                     //         Lihat PDF (${fileName})
-        //                     //     </div>
+            }
 
-        //                     // `);
-        //                     // tampilkan PDF (ikon atau preview mini)
-        //                     // const encoded = base64url_encode(fileName);
-        //                     $('.previewpdf_fill').css('display', 'block');
-        //                     $('#previewPDF_fill').attr('href', 'pdf/preview/' + fileName);
-        //                     $('#imagePreview').css('display', 'none');
-        //                     // const pdfPreview = document.getElementById('pdfPreview');
-        //                     // pdfPreview.addEventListener('click', () => openViewer("<?= base_url('assets/uploads/') ?>" + fileName));
+            // penting: kirim objek file, bukan file.name
+            var file = $('#fileUpload')[0].files[0];
+            // cek dulu isi inputnya
+            if (
 
-        //                 } else {
-        //                     // bukan gambar atau pdf
-        //                     $('#imagePreview').html(`<p>File: ${fileName}</p>`);
-        //                 }
-        //             }
-        //             // Tambahkan field lain sesuai kebutuhan
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.error('Error fetching temuan data for edit:', error);
-        //         }
-        //     });
-        // }
+                !$('.detail_analisa_penyebab').val().trim() ||
+                !$('.detail_action').val().trim() ||
+                !$('.detail_due_date').val().trim() ||
+                $('.detail_due_date').val() === "0" // cek jika hasilnya 0
+            ) {
+                Notify.fire({
+                    type: "error",
+                    title: "Oops!",
+                    text: "Data temuan belum lengkap! Mohon lengkapi semua field yang wajib diisi.",
+                });
+                return; // stop di sini, jangan kirim ajax
+            }
+
+            if (file) fd.append('file', file); // 'file' harus sama dengan getFile('file') di server
+            // DEBUG: lihat isi FormData
+            for (var pair of fd.entries()) {
+                console.log(pair[0] + ' : ', pair[1]);
+            }
+
+            $.ajax({
+                url: '<?= base_url("sendData") ?>',
+                type: 'POST',
+                data: fd,
+                processData: false, // jangan ubah FormData jadi query string
+                contentType: false, // biar otomatis multipart/form-data + boundary
+                dataType: 'json',
+                success: function() {
+                    // klik button OK dulu baru trigger logout
+
+                    Notify.fire({
+                        type: "success",
+                        title: "Berhasil!",
+                        text: "Data temuan berhasil diperbarui.",
+                        showCancelButton: false,
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+
+
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error updating temuan patrol:', error);
+                },
+                complete: function() {
+                    $('.edit_temuan_btn').prop('disabled', false);
+                    $('.edit_temuan_btn').html('<i class="fas fa-edit mr-1"></i> Edit ');
+                }
+            });
+
+        });
+        let isSubmitting = false;
+        $('#btn_terapkanfilter').on('click', function() {
+            let status = [];
+
+            if (isSubmitting) return;
+
+            const $btn = $(this);
+            isSubmitting = true;
+            $btn.prop('disabled', true).html('Tunggu Sebentar...');
+
+            const resetButton = () => {
+                isSubmitting = false;
+                $btn.prop('disabled', false).html('<i class="fas fa-save mr-1"></i> Submit');
+            };
+            $('input[name="filter_status"]:checked').each(function() {
+                status.push($(this).val());
+            });
+
+            let auditor = $('#filter_auditor').val();
+            let area_patrol = $('#filter_area_patrol').val();
+
+            let filterData = {
+                keterangan: 'filter_data_patrol_mobile',
+                status: status,
+                auditor: auditor,
+                area_patrol: area_patrol
+            };
+
+            console.log(filterData);
+
+            // Contoh AJAX kirim ke server
+            $.ajax({
+                url: '<?= base_url("sendData") ?>',
+                type: 'POST',
+                data: filterData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status) {
+                        renderPatrolCards(response.data);
+                        resetButton();
+                    } else {
+                        $('#patrolCardsContainer').html(`
+                    <div class="card-bg rounded-xl p-4 shadow-md text-center text-gray-500">
+                        Data tidak ditemukan
+                    </div>
+                    
+                `);
+
+                    }
+                    resetButton();
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    $('#patrolCardsContainer').html(`
+                <div class="card-bg rounded-xl p-4 shadow-md text-center text-red-500">
+                    Terjadi kesalahan saat mengambil data
+                </div>
+            `);
+                }
+            });
+        });
+
+        function renderPatrolCards(data) {
+            let html = '';
+
+            if (!data || data.length === 0) {
+                html = `
+            <div class="card-bg rounded-xl p-4 shadow-md text-center text-gray-500">
+                Data tidak ditemukan
+            </div>
+        `;
+                $('#patrolCardsContainer').html(html);
+                return;
+            }
+
+            $.each(data, function(index, patrol) {
+                let statusBadge = '';
+                if (patrol.status == 3) {
+                    statusBadge = `<span class="status-badge status-open">Open</span>`;
+                } else if (patrol.status == 2) {
+                    statusBadge = `<span class="status-badge status-progress">Progress</span>`;
+                } else {
+                    statusBadge = `<span class="status-badge status-close">Close</span>`;
+                }
+
+                html += `
+            <div class="card-bg rounded-xl p-4 shadow-md">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fas fa-calendar text-blue-600 text-sm"></i>
+                            <span class="text-sm font-semibold text-dark">${patrol.tanggal_patrol ?? '-'}</span>
+                        </div>
+                        <h3 class="text-base font-bold text-dark mb-2">${patrol.deskripsi_temuan ?? '-'}</h3>
+                        <div class="space-y-1">
+                            <p class="text-sm text-gray">
+                                <i class="fas fa-map-marker-alt w-4"></i> ${patrol.section_name ?? '-'}
+                            </p>
+                            <p class="text-sm text-gray">
+                                <i class="fas fa-user-tie w-4"></i> ${patrol.nama_auditor ?? '-'}
+                            </p>
+                        </div>
+                    </div>
+                    ${statusBadge}
+                </div>
+
+                <div class="space-y-2">
+                    <?php if (session()->get('role') == 'Administrator') : ?>
+                        <button onclick="showDetail(${patrol.id_temuan_patrol})"
+                            class="w-full btn-primary text-white rounded-lg py-2 text-sm font-semibold">
+                            <i class="fas fa-info-circle mr-1"></i> Lihat Detail
+                        </button>
+                    <?php endif; ?>
+
+                    <div class="flex gap-2">
+                        <button
+                            onclick="fill_temuan(${patrol.id_temuan_patrol})"
+                            class="flex-1 btn-sm bg-blue-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
+                            <i class="fas fa-edit"></i> Fill
+                        </button>
+
+                        <?php if (session()->get('role') == 'Administrator') : ?>
+                            <button
+                                onclick="confirmDeletePatrol(${patrol.id_temuan_patrol})"
+                                class="flex-1 btn-sm bg-red-500 text-white flex items-center justify-center gap-1 rounded-lg py-2">
+                                <i class="fas fa-trash"></i> Hapus
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        `;
+            });
+
+            $('#patrolCardsContainer').html(html);
+        }
+        $('#btn_resetfilter').on('click', function() {
+            $('input[name="filter_status"]').prop('checked', false);
+            $('#filter_auditor').val('');
+            $('#filter_area_patrol').val('');
+        });
         new SelectX('#detail_option_status', {
             searchable: true,
             clearable: true,
             placeholder: 'Pilih sesuatu...',
             onChange: (value) => console.log(value)
         });
-
+        new SelectX('#filter_auditor', {
+            searchable: true,
+            clearable: true,
+            placeholder: 'Pilih Auditor...',
+            onChange: (value) => console.log(value)
+        });
+        new SelectX('#filter_area_patrol', {
+            searchable: true,
+            clearable: true,
+            placeholder: 'Pilih Area Patrol...',
+            onChange: (value) => console.log(value)
+        });
 
         function renderEvidenceFinding(finding_evidence) {
 
@@ -1423,286 +1590,8 @@
             });
         }
 
-        // Filter Functions for Data Patrol
-        function applyPatrolFilter() {
-            const filterOpen = document.getElementById('filterOpen').checked;
-            const filterProgress = document.getElementById('filterProgress').checked;
-            const filterClose = document.getElementById('filterClose').checked;
-            const filterArea = document.getElementById('filterArea').value;
-            const filterAuditor = document.getElementById('filterAuditor').value;
-            const filterPriority = document.getElementById('filterPriority').value;
-            const filterDateFrom = document.getElementById('filterDateFrom').value;
-            const filterDateTo = document.getElementById('filterDateTo').value;
-            const filterSearch = document.getElementById('filterSearch').value.toLowerCase();
-
-            const container = document.getElementById('patrolCardsContainer');
-            const cards = container.querySelectorAll('.card-bg');
-            let visibleCount = 0;
-
-            Object.keys(patrolData).forEach((id, index) => {
-                const data = patrolData[id];
-                const card = cards[index];
-
-                if (!card) return;
-
-                let shouldShow = true;
-
-                // Status filter
-                if (!filterOpen && data.status === 'Open') shouldShow = false;
-                if (!filterProgress && data.status === 'In Progress') shouldShow = false;
-                if (!filterClose && data.status === 'Close') shouldShow = false;
-
-                // Area filter
-                if (filterArea && data.area !== filterArea) shouldShow = false;
-
-                // Auditor filter
-                if (filterAuditor && data.auditor !== filterAuditor) shouldShow = false;
-
-                // Priority filter
-                if (filterPriority && data.prioritas !== filterPriority) shouldShow = false;
-
-                // Search filter
-                if (filterSearch && !data.temuan.toLowerCase().includes(filterSearch) && !data.deskripsi.toLowerCase().includes(filterSearch)) {
-                    shouldShow = false;
-                }
-
-                // Date filter (simplified - comparing date strings)
-                if (filterDateFrom || filterDateTo) {
-                    const dataDate = convertDateToISO(data.tanggal);
-                    if (filterDateFrom && dataDate < filterDateFrom) shouldShow = false;
-                    if (filterDateTo && dataDate > filterDateTo) shouldShow = false;
-                }
-
-                if (shouldShow) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Show message if no results
-            let noResultsMsg = document.getElementById('noResultsMsg');
-            if (visibleCount === 0) {
-                if (!noResultsMsg) {
-                    noResultsMsg = document.createElement('div');
-                    noResultsMsg.id = 'noResultsMsg';
-                    noResultsMsg.className = 'card-bg rounded-xl p-8 text-center';
-                    noResultsMsg.innerHTML = `
-            <i class="fas fa-search text-4xl text-gray-400 mb-3"></i>
-            <p class="text-gray font-semibold">Tidak ada data yang sesuai dengan filter</p>
-            <p class="text-gray text-sm mt-1">Coba ubah kriteria filter Anda</p>
-          `;
-                    container.appendChild(noResultsMsg);
-                }
-            } else {
-                if (noResultsMsg) {
-                    noResultsMsg.remove();
-                }
-            }
-        }
-
-        function resetPatrolFilter() {
-            document.getElementById('filterOpen').checked = true;
-            document.getElementById('filterProgress').checked = true;
-            document.getElementById('filterClose').checked = true;
-            document.getElementById('filterArea').value = '';
-            document.getElementById('filterAuditor').value = '';
-            document.getElementById('filterPriority').value = '';
-            document.getElementById('filterDateFrom').value = '';
-            document.getElementById('filterDateTo').value = '';
-            document.getElementById('filterSearch').value = '';
-
-            applyPatrolFilter();
-        }
-
-        function convertDateToISO(dateStr) {
-            // Convert "15 Januari 2024" to "2024-01-15"
-            const months = {
-                'Januari': '01',
-                'Februari': '02',
-                'Maret': '03',
-                'April': '04',
-                'Mei': '05',
-                'Juni': '06',
-                'Juli': '07',
-                'Agustus': '08',
-                'September': '09',
-                'Oktober': '10',
-                'November': '11',
-                'Desember': '12'
-            };
-
-            const parts = dateStr.split(' ');
-            const day = parts[0].padStart(2, '0');
-            const month = months[parts[1]];
-            const year = parts[2];
-
-            return `${year}-${month}-${day}`;
-        }
-
-        window.addEventListener('load', () => {
 
 
-            initPlugins();
-        });
-
-        // Initialize all plugins
-        function initPlugins() {
-            // Initialize Flatpickr for single date picker
-            flatpickr("#datePickerInput", {
-                dateFormat: "d M Y",
-                altInput: true,
-                altFormat: "j F Y",
-                locale: {
-                    firstDayOfWeek: 1,
-                    weekdays: {
-                        shorthand: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-                        longhand: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-                    },
-                    months: {
-                        shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                        longhand: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-                    },
-                },
-                onChange: function(selectedDates, dateStr, instance) {
-                    console.log("Selected date:", dateStr);
-                }
-            });
-
-            // Initialize Flatpickr for date range picker
-            flatpickr("#dateRangeInput", {
-                mode: "range",
-                dateFormat: "d M Y",
-                altInput: true,
-                altFormat: "j F Y",
-                locale: {
-                    firstDayOfWeek: 1,
-                    weekdays: {
-                        shorthand: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-                        longhand: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-                    },
-                    months: {
-                        shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                        longhand: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-                    },
-                },
-                onChange: function(selectedDates, dateStr, instance) {
-                    console.log("Selected range:", dateStr);
-                }
-            });
-
-
-
-            // Initialize Glide.js
-            if (document.querySelector('.glide')) {
-                const glide = new Glide('.glide', {
-                    type: 'carousel',
-                    startAt: 0,
-                    perView: 1,
-                    focusAt: 'center',
-                    gap: 0,
-                    autoplay: 3000,
-                    hoverpause: true,
-                    keyboard: true,
-                    animationDuration: 500,
-                    animationTimingFunc: 'ease-in-out',
-                    dragThreshold: 80,
-                    touchRatio: 0.5,
-                    rewind: true,
-                    swipeThreshold: 80,
-                    dragDistance: true
-                });
-
-                glide.mount();
-            }
-
-            // Initialize Hammer.js for gestures
-            const gestureDemo = document.getElementById('gestureDemo');
-            const gestureFeedback = document.getElementById('gestureFeedback');
-            const gestureLogText = document.getElementById('gestureLogText');
-
-            if (gestureDemo && typeof Hammer !== 'undefined') {
-                const hammer = new Hammer(gestureDemo);
-
-                // Enable all directions for swipe
-                hammer.get('swipe').set({
-                    direction: Hammer.DIRECTION_ALL
-                });
-
-                // Enable press (long tap)
-                hammer.get('press').set({
-                    time: 500
-                });
-
-                // Tap event
-                hammer.on('tap', function(e) {
-                    animateGesture('👆 Tap Detected!', '#3b82f6');
-                    gestureLogText.textContent = 'Single tap detected at ' + new Date().toLocaleTimeString();
-                });
-
-                // Double tap event
-                hammer.on('doubletap', function(e) {
-                    animateGesture('👆👆 Double Tap!', '#10b981');
-                    gestureLogText.textContent = 'Double tap detected at ' + new Date().toLocaleTimeString();
-                });
-
-                // Press (long tap) event
-                hammer.on('press', function(e) {
-                    animateGesture('✊ Press & Hold!', '#f59e0b');
-                    gestureLogText.textContent = 'Press and hold detected at ' + new Date().toLocaleTimeString();
-                });
-
-                // Swipe events
-                hammer.on('swipeleft', function(e) {
-                    animateGesture('👈 Swipe Left!', '#ef4444');
-                    gestureLogText.textContent = 'Swipe left detected at ' + new Date().toLocaleTimeString();
-                });
-
-                hammer.on('swiperight', function(e) {
-                    animateGesture('👉 Swipe Right!', '#8b5cf6');
-                    gestureLogText.textContent = 'Swipe right detected at ' + new Date().toLocaleTimeString();
-                });
-
-                hammer.on('swipeup', function(e) {
-                    animateGesture('👆 Swipe Up!', '#06b6d4');
-                    gestureLogText.textContent = 'Swipe up detected at ' + new Date().toLocaleTimeString();
-                });
-
-                hammer.on('swipedown', function(e) {
-                    animateGesture('👇 Swipe Down!', '#ec4899');
-                    gestureLogText.textContent = 'Swipe down detected at ' + new Date().toLocaleTimeString();
-                });
-            }
-
-            function animateGesture(text, color) {
-                gestureFeedback.innerHTML = `
-          <i class="fas fa-check-circle text-5xl mb-3"></i>
-          <p class="text-2xl font-bold mb-2">${text}</p>
-          <p class="text-sm opacity-90">Gesture successfully recognized!</p>
-        `;
-                gestureDemo.style.background = `linear-gradient(135deg, ${color} 0%, ${adjustColor(color, -30)} 100%)`;
-
-                // Reset after animation
-                setTimeout(() => {
-                    gestureFeedback.innerHTML = `
-            <i class="fas fa-hand-paper text-5xl mb-3"></i>
-            <p class="text-xl font-bold mb-2">Try Touch Gestures!</p>
-            <p class="text-sm opacity-90">Tap, Double Tap, Swipe, or Press & Hold</p>
-          `;
-                    gestureDemo.style.background = 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)';
-                }, 1500);
-            }
-
-            function adjustColor(color, amount) {
-                // Simple color adjustment function
-                const num = parseInt(color.replace('#', ''), 16);
-                const r = Math.max(0, Math.min(255, (num >> 16) + amount));
-                const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
-                const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
-                return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
-            }
-        }
         // jQuery version (inti penting saja)
 
         $('.btnTambahPatrol').on('click', function() {
@@ -1811,74 +1700,6 @@
 
 
         // FUNGSI UNTUK MENAMBAH BARIS
-        function appendRow(item, number) {
-
-            let fileHtml = '-';
-            if (item.file_meta && item.file_meta.file_name) {
-                if (item.file_meta.file_type && item.file_meta.file_type.startsWith('image/')) {
-                    // preview gambar: ambil File dari filesToSend berdasarkan file_index
-                    const f = (item.file_index !== null && filesToSend[item.file_index]) ? filesToSend[item.file_index] : null;
-                    if (f) {
-                        fileHtml = `<img src="${URL.createObjectURL(f)}" class="img-thumbnail" style="max-height:80px; max-width:120px;" alt="preview">`;
-                    } else {
-                        fileHtml = `<span><i class="bi bi-paperclip"></i> ${item.file_meta.file_name}</span>`;
-                    }
-                } else {
-                    fileHtml = `<span><i class="bi bi-paperclip"></i> ${item.file_meta.file_name}</span>`;
-                }
-            }
-
-            let picText = item.pic_action_section ?? '-';
-            let index = number - 1;
-
-            $('#rekap_tbody').append(`
-                <tr>
-                <td>${number}</td>
-                <td>${item.deskripsi_temuan}</td>
-                <td>${fileHtml}</td>
-                <td>${picText}</td>
-                <td>
-                    <button type="button" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 btn-hapus-temuan" data-index="${index}">
-                    <i class="bi bi-trash"></i> Hapus
-                    </button>
-                </td>
-                </tr>
-            `);
-        }
-        $(document).on('click', '.btn-hapus-temuan', function() {
-            const index = parseInt($(this).data('index'), 10);
-
-            let list = JSON.parse(localStorage.getItem('rekap_temuan')) || [];
-            if (Number.isNaN(index) || index < 0 || index >= list.length) return;
-
-            const removed = list[index];
-            const removedFileIndex = (removed && removed.file_index !== null) ? removed.file_index : null;
-
-            // hapus item dari list
-            list.splice(index, 1);
-
-            // kalau item punya file, hapus file-nya dari filesToSend dan rapikan file_index lainnya
-            if (removedFileIndex !== null) {
-                filesToSend.splice(removedFileIndex, 1);
-
-                // item lain yang file_index > removedFileIndex harus dikurangi 1
-                list = list.map(it => {
-                    if (it.file_index !== null && it.file_index > removedFileIndex) {
-                        return {
-                            ...it,
-                            file_index: it.file_index - 1
-                        };
-                    }
-                    return it;
-                });
-            }
-
-            localStorage.setItem('rekap_temuan', JSON.stringify(list));
-
-            // render ulang
-            $('#rekap_tbody').html('');
-            list.forEach((it, i) => appendRow(it, i + 1));
-        });
     </script>
 
 </body>
