@@ -45,6 +45,7 @@ $routes->get('unduh/test_excel', 'DownloadController::test_excel');
 
 #route untuk pdf preview
 $routes->get('pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
+$routes->get('temuan_patrol/pdf/preview/(:any)', 'Temuan_patrol::preview/$1');
 
 
 #Route Auth / CrudController

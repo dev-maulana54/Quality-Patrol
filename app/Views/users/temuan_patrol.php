@@ -1559,8 +1559,26 @@
             const [dd, mm, yyyy] = tglStr.split('/').map(Number);
             return new Date(yyyy, mm - 1, dd);
         }
+
+        function disableTomSelect(selector) {
+            const el = document.querySelector(selector);
+            if (el && el.tomselect) {
+                el.tomselect.destroy();
+            }
+            $(selector).prop('disabled', true);
+        }
         $('.fill_data').click(function() {
             var temuanId = $(this).data('id');
+
+            $('#fill_deskripsi_temuan').attr('disabled', true);
+            $('#fill_analisa_penyebab').attr('disabled', true);
+            $('#fill_action').attr('disabled', true);
+            disableTomSelect('#fill_pic_action');
+            $('#fill_due_date, .auditDate').prop('disabled', true);
+            $('#fileUpload').attr('disabled', true);
+            $('#list_option_status_container').hide();
+            $('#row_keterangan_auditor2').hide();
+
 
             // TODO : Ambil data temuan berdasarkan temuanId menggunakan jquery ajax
             $.ajax({
@@ -1577,88 +1595,13 @@
                     $('#fill_id_auditor').val(response.temuan.id_auditor);
                     $('#fill_id_departement_temuan').val(response.temuan.id_departement);
                     $('#fill_id_section_temuan').val(response.temuan.id_section);
-                    if (response.temuan.status_temuan == 1) {
-                        $('#row_keterangan_cancel2').hide();
-                        $('#btnSubmit_filldata').hide();
-                        $('#fill_id_temuan_patrol').hide();
-                        $('#fill_deskripsi_temuan').attr('disabled', true);
-                        $('#keterangan_auditor2').attr('disabled', true);
-                        $('#fill_id_auditor').hide();
-                        $('#fill_id_departement_temuan').hide();
-                        $('#fill_id_section_temuan').hide();
-                        $('#fill_status_temuan').val('Close');
-                        $('#list_option_status_container').hide();
-                    } else if (response.temuan.status_temuan == 2) {
-                        $('#row_keterangan_cancel2').hide();
-                        $('#btnSubmit_filldata').show();
-                        $('#fill_id_temuan_patrol').show();
-                        $('#fill_id_auditor').show();
-                        $('#fill_deskripsi_temuan').attr('disabled', false);
-                        $('#keterangan_auditor2').attr('disabled', false);
-                        $('#fill_id_departement_temuan').show();
-                        $('#fill_id_section_temuan').show();
-                        $('#fill_status_temuan').val('In Progress');
-                        $('#list_option_status_container').show();
-                    } else if (response.temuan.status_temuan == 3) {
-                        $('#row_keterangan_cancel2').hide();
-                        $('#btnSubmit_filldata').show();
-                        $('#fill_deskripsi_temuan').attr('disabled', false);
-                        $('#keterangan_auditor2').attr('disabled', false);
-                        $('#fill_id_temuan_patrol').show();
-                        $('#fill_id_auditor').show();
-                        $('#fill_id_departement_temuan').show();
-                        $('#fill_id_section_temuan').show();
-                        $('#fill_status_temuan').val('Open');
-                        $('#list_option_status_container').show();
-                    } else if (response.temuan.status_temuan == 4) {
-                        $('#row_keterangan_cancel2').show();
-                        $('#fill_deskripsi_temuan').attr('disabled', true);
-                        $('#keterangan_cancel2').attr('disabled', true);
-                        $('#keterangan_cancel2').val(response.temuan.keterangan_cancel);
-                        $('#btnSubmit_filldata').hide();
-                        $('#keterangan_auditor2').attr('disabled', true);
-                        $('#fill_id_temuan_patrol').hide();
-                        $('#fill_id_auditor').hide();
-                        $('#fill_id_departement_temuan').hide();
-                        $('#fill_id_section_temuan').hide();
-                        $('#fill_status_temuan').val('Cancel');
-                        $('#list_option_status_container').hide();
 
-                    } else {
-                        $('#fill_status_temuan').val('');
-                    }
-                    $('#fill_tanggal_patrol').val(response.temuan.tanggal_patrol);
-                    $('#fill_auditorName').val(response.temuan.nama_auditor);
-                    $('#fill_auditeeName').val(response.temuan.nama_auditee);
-                    $('#fill_area_proses').val(response.temuan.section_name);
-                    $('#fill_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
-                    $('#fill_analisa_penyebab').val(response.temuan.analisa_penyebab);
-                    $('#fill_action').val(response.temuan.action);
-                    $('#fill_pic_action').html(response.temuan.pic_section_name);
-                    $('#keterangan_cancel').val(response.temuan.keterangan_cancel);
-                    $('#keterangan_auditor2').val(response.temuan.keterangan_auditor);
-
-                    // todo : saya ingin melakukan set value pada tanggal due date dengan plugin airdatepicker
-                    // const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
-                    flatpickr("#fill_due_date", {
-                        dateFormat: "d M Y"
-                    });
-                    $("#fill_due_date")[0]._flatpickr.setDate(response.temuan.due_date);
-                    $('#fill_due_date').val(response.temuan.due_date);
 
                     var id_section_user = '<?= $id_section_user ?>';
                     var id_dept_user = '<?= $id_dept_user ?>';
                     var npk_auditor = '<?= $npk ?>';
                     var npk_auditor_temuan = response.temuan.id_auditor;
-                    // cek apakah user yang akses adalah Auditee dari temuan tersebut
-                    // --- FUNGSI HELPER UNTUK TOMSELECT (Agar Kode Lebih Rapi) ---
-                    function disableTomSelect(selector) {
-                        const el = document.querySelector(selector);
-                        if (el && el.tomselect) {
-                            el.tomselect.destroy();
-                        }
-                        $(selector).prop('disabled', true);
-                    }
+
 
                     // --- LOGIKA UTAMA ---
 
@@ -1679,7 +1622,7 @@
                          * Hak akses: Mengisi analisa, tindakan, PIC, dan upload bukti.
                          */
                         $('#fill_analisa_penyebab, #fill_action, #fill_due_date, #fill_pic_action, #fileUpload, .auditDate').prop('disabled', false);
-                        initTomSelect('#fill_pic_action'); // Aktifkan TomSelect
+
                         $('#btnSubmit_filldata').show();
 
                         // Auditee dilarang ubah deskripsi temuan & status audit
@@ -1701,6 +1644,78 @@
                         $('#list_option_status_container, #row_keterangan_auditor2').hide();
                         $('#btnSubmit_filldata').hide();
                     }
+
+                    // Jika status temuan sudah "Close"
+                    if (response.temuan.status_temuan == 1) {
+                        $('#row_keterangan_cancel2').hide();
+                        $('#row_keterangan_auditor2').show();
+                        $('#btnSubmit_filldata').hide();
+
+                        $('#fill_deskripsi_temuan').attr('disabled', true);
+                        $('#fill_analisa_penyebab').attr('disabled', true);
+                        $('#fill_action').attr('disabled', true);
+                        disableTomSelect('#fill_pic_action');
+                        $('#fill_due_date, .auditDate').prop('disabled', true);
+                        $('#keterangan_auditor2').attr('disabled', true);
+                        $('#fileUpload').attr('disabled', true);
+                        $('#fill_status_temuan').val('Close');
+
+
+                        // jika status temuan "In Progress" atau "Open"
+                    } else if (response.temuan.status_temuan == 2) {
+                        $('#row_keterangan_cancel2').hide();
+
+                        $('#keterangan_auditor2').attr('disabled', false);
+                        $('#fill_status_temuan').val('In Progress');
+
+
+
+
+
+                    } else if (response.temuan.status_temuan == 3) {
+                        $('#row_keterangan_cancel2').hide();
+                        $('#keterangan_auditor2').attr('disabled', false);
+                        $('#fill_status_temuan').val('Open');
+                    }
+                    //   else if (response.temuan.status_temuan == 4) {
+                    //     $('#row_keterangan_cancel2').show();
+                    //     $('#fill_deskripsi_temuan').attr('disabled', true);
+                    //     $('#keterangan_cancel2').attr('disabled', true);
+                    //     $('#keterangan_cancel2').val(response.temuan.keterangan_cancel);
+                    //     $('#btnSubmit_filldata').hide();
+                    //     $('#keterangan_auditor2').attr('disabled', true);
+                    //     $('#fill_id_temuan_patrol').hide();
+                    //     $('#fill_id_auditor').hide();
+                    //     $('#fill_id_departement_temuan').hide();
+                    //     $('#fill_id_section_temuan').hide();
+                    //     $('#fill_status_temuan').val('Cancel');
+                    //     $('#list_option_status_container').hide();
+
+                    // } 
+                    $('#fill_tanggal_patrol').val(response.temuan.tanggal_patrol);
+                    $('#fill_auditorName').val(response.temuan.nama_auditor);
+                    $('#fill_auditeeName').val(response.temuan.nama_auditee);
+                    $('#fill_area_proses').val(response.temuan.section_name);
+                    $('#fill_deskripsi_temuan').val(response.temuan.deskripsi_temuan);
+                    $('#fill_analisa_penyebab').val(response.temuan.analisa_penyebab);
+                    $('#fill_action').val(response.temuan.action);
+                    $('#fill_pic_action').html(response.temuan.pic_section_name);
+                    $('#keterangan_cancel').val(response.temuan.keterangan_cancel);
+                    $('#keterangan_auditor2').val(response.temuan.keterangan_auditor);
+                    // // todo : saya ingin melakukan set value pada tanggal due date dengan plugin airdatepicker
+                    const dateObj = parseDdMmYyyy(response.temuan.due_date); // "23/12/2025"
+                    flatpickr("#fill_due_date", {
+                        dateFormat: "d M Y"
+                    });
+                    $("#fill_due_date")[0]._flatpickr.setDate(response.temuan.due_date);
+                    $('#fill_due_date').val(response.temuan.due_date);
+
+
+                    initTomSelect('#fill_pic_action');
+
+
+
+
                     $('.previewpdf_fill').hide();
                     $('#imagePreview').hide();
                     // contoh: response.data.finding_evidence
