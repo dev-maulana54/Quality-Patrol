@@ -378,6 +378,7 @@
                                 <i class="bi bi-calendar-event" style="color: #0d6efd;"></i> Departement
                             </label>
                             <select class="form-select select2" id="list_dept" style="width:100%;">
+                                <option value="" selected disabled>- Pilih Departemen -</option>
                                 <?php foreach ($data_dept as $dept) : ?>
                                     <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
                                 <?php endforeach; ?>
@@ -411,6 +412,45 @@
 
 
     </div><!-- Footer -->
+    <!-- Modal Detail Temuan -->
+    <div class="modal fade" id="modalDetailTemuan" tabindex="-1" aria-labelledby="modalDetailTemuanLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDetailTemuanLabel">Detail Temuan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="filterInfo" class="mb-3"></div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="tableDetailTemuan">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal Patrol</th>
+                                    <th>Departemen</th>
+                                    <th>Section</th>
+                                    <th>Auditor</th>
+                                    <th>Auditee</th>
+                                    <th>Status</th>
+                                    <th>Deskripsi Temuan</th>
+                                    <th>Action</th>
+                                    <th>Due Date</th>
+                                    <th>Evidence</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detailTemuanBody">
+                                <tr>
+                                    <td colspan="11" class="text-center">Belum ada data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="footer" id="footer">
         <p id="footerText">© 2025 Quality Patrol — All rights reserved</p>
     </div>
@@ -421,12 +461,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
     <!-- HighChart -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/non-cartesian-zoom.js"></script>
-    <script src="https://code.highcharts.com/modules/mouse-wheel-zoom.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/themes/adaptive.js"></script>
+    <script src="<?= base_url() ?>assets/js/highchart/highcharts.js"></script>
+    <script src="<?= base_url() ?>assets/js/highchart/modules/exporting.js"></script>
+
+
+    <script src="<?= base_url() ?>assets/js/highchart/modules/accessibility.js"></script>
 
     <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -448,6 +487,8 @@
         $('.startaudit').on('click', function() {
             window.location.href = "<?= base_url('temuan_patrol/start_audit') ?>";
         });
+        let currentDeptFilter = null;
+        let currentDeptName = 'Semua Departemen';
 
         function renderClusteredChart() {
             const isDarkTheme_chart = localStorage.getItem("theme") === "dark";
@@ -502,7 +543,36 @@
                         point: {
                             events: {
                                 click: function() {
-                                    alert("Bulan: " + this.category + "\nTotal Temuan: " + this.y);
+                                    const seriesName = this.series.name;
+                                    const bulanNama = this.category;
+
+                                    const bulanMap = {
+                                        'Jan': 1,
+                                        'Feb': 2,
+                                        'Mar': 3,
+                                        'Apr': 4,
+                                        'Mei': 5,
+                                        'Jun': 6,
+                                        'Jul': 7,
+                                        'Agu': 8,
+                                        'Sep': 9,
+                                        'Okt': 10,
+                                        'Nov': 11,
+                                        'Des': 12
+                                    };
+
+                                    const statusMap = {
+                                        'Open': 3,
+                                        'In Progress': 2,
+                                        'Close': 1,
+                                        'Cancel': 4
+                                    };
+
+                                    const bulan = bulanMap[bulanNama];
+                                    const tahun = $('#list_year').val() || new Date().getFullYear();
+                                    const status = (seriesName === 'Total Temuan') ? null : statusMap[seriesName];
+
+                                    loadDetailTemuan(tahun, bulan, status, seriesName, bulanNama);
                                 }
                             }
                         }
@@ -601,15 +671,15 @@
                 plotOptions: {
                     series: {
                         animation: {
-                            duration: 800 // 0.8 detik, boleh diganti 500 / 1000 dll
+                            duration: 800
                         }
                     },
                     column: {
                         stacking: 'percent',
+                        cursor: 'pointer',
                         dataLabels: {
                             enabled: true,
                             formatter: function() {
-                                // jangan tampilkan kalau 0%
                                 if (this.percentage === 0) {
                                     return null;
                                 }
@@ -617,6 +687,27 @@
                             },
                             style: {
                                 color: isDarkTheme_chart ? "#ffffff" : "#000000"
+                            }
+                        },
+                        point: {
+                            events: {
+                                click: function() {
+                                    const areaName = this.category;
+                                    const seriesName = this.series.name;
+
+                                    const statusMap = {
+                                        'Open': 3,
+                                        'In Progress': 2,
+                                        'Close': 1,
+                                        'Cancel': 4
+                                    };
+
+                                    const status = statusMap[seriesName];
+                                    const startDate = $('#startDate').val();
+                                    const endDate = $('#endDate').val();
+
+                                    loadDetailTemuanByArea(areaName, status, seriesName, startDate, endDate);
+                                }
                             }
                         }
                     }
@@ -659,6 +750,7 @@
                 cancel: isDarkTheme_chart ? '#DF3545' : '#ff6b6b',
                 text: isDarkTheme_chart ? '#ffffff' : '#4b3d3dff'
             };
+
             Highcharts.chart('piechart_area', {
                 chart: {
                     type: 'pie',
@@ -681,7 +773,7 @@
                 <b>${this.point.name}</b><br>
                 Jumlah: <b>${this.point.y}</b><br>
                 Persentase: <b>${this.point.percentage.toFixed(1)}%</b>
-                `;
+            `;
                     }
                 },
 
@@ -690,7 +782,6 @@
                         size: '90%',
                         allowPointSelect: true,
                         cursor: 'pointer',
-
                         dataLabels: {
                             enabled: true,
                             distance: -40,
@@ -701,8 +792,25 @@
                                 color: colors.text
                             }
                         },
+                        showInLegend: true,
+                        point: {
+                            events: {
+                                click: function() {
+                                    const statusName = this.name;
 
-                        showInLegend: true
+                                    const statusMap = {
+                                        'Open': 3,
+                                        'In Progress': 2,
+                                        'Close': 1,
+                                        'Cancel': 4
+                                    };
+
+                                    const status = statusMap[statusName];
+
+                                    loadDetailTemuanByDept(currentDeptFilter, currentDeptName, status, statusName);
+                                }
+                            }
+                        }
                     }
                 },
 
@@ -732,7 +840,7 @@
                         },
                         {
                             name: 'Close',
-                            y: <?= json_encode($t_progress_year) ?>,
+                            y: <?= json_encode($t_close_year) ?>,
                             color: colors.close
                         },
                         {
@@ -801,11 +909,59 @@
                 },
 
                 plotOptions: {
+                    series: {
+                        animation: {
+                            duration: 800
+                        }
+                    },
                     column: {
                         stacking: 'normal',
                         borderWidth: 0,
                         borderRadiusTopLeft: 10,
-                        borderRadiusTopRight: 10
+                        borderRadiusTopRight: 10,
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function() {
+                                    const bulanNama = this.category;
+                                    const statusName = this.series.name;
+
+                                    const bulanMap = {
+                                        'Jan': 1,
+                                        'Feb': 2,
+                                        'Mar': 3,
+                                        'Apr': 4,
+                                        'Mei': 5,
+                                        'Jun': 6,
+                                        'Jul': 7,
+                                        'Agu': 8,
+                                        'Sep': 9,
+                                        'Okt': 10,
+                                        'Nov': 11,
+                                        'Des': 12
+                                    };
+
+                                    const statusMap = {
+                                        'Open': 3,
+                                        'In Progress': 2,
+                                        'Close': 1,
+                                        'Cancel': 4
+                                    };
+
+                                    const bulan = bulanMap[bulanNama];
+                                    const status = statusMap[statusName];
+
+                                    loadDetailTemuanByDeptMonth(
+                                        currentDeptFilter,
+                                        currentDeptName,
+                                        bulan,
+                                        bulanNama,
+                                        status,
+                                        statusName
+                                    );
+                                }
+                            }
+                        }
                     }
                 },
 
@@ -833,9 +989,547 @@
             });
         }
 
+        function loadDetailTemuanByArea(areaName, status, statusText, startDate, endDate) {
 
+            $('#modalDetailTemuanLabel').text('Detail Temuan Area');
 
+            $('#filterInfo').html(`
+        <div class="alert alert-info mb-2">
+            Area <strong>${areaName}</strong> - Status <strong>${statusText}</strong><br>
+            Periode: <strong>${startDate || '-'} s/d ${endDate || '-'}</strong>
+        </div>
+    `);
 
+            resetDetailTemuanTable();
+
+            $('#detailTemuanBody').html(`
+        <tr>
+            <td colspan="11" class="text-center">
+                Loading...
+                <div class="spinner-border spinner-border-sm ms-2"></div>
+            </td>
+        </tr>
+    `);
+
+            const modal = new bootstrap.Modal(document.getElementById('modalDetailTemuan'));
+            modal.show();
+
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    keterangan: 'getDetailTemuanByArea',
+                    area: areaName,
+                    status: status,
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                success: function(response) {
+
+                    let html = '';
+
+                    resetDetailTemuanTable();
+
+                    if (!response.data || response.data.length === 0) {
+                        html = `
+                    <tr>
+                        <td colspan="11" class="text-center">Data tidak ditemukan</td>
+                    </tr>
+                `;
+                        $('#detailTemuanBody').html(html);
+                        return;
+                    }
+
+                    response.data.forEach((item, index) => {
+
+                        let evidenceHtml = '-';
+
+                        if (item.evidence_file) {
+                            let fileUrl = "<?= base_url('uploads/findings_evidence/') ?>" + item.evidence_file;
+
+                            evidenceHtml = `
+                        <a href="${fileUrl}" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    `;
+                        }
+
+                        html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.tanggal_patrol ?? '-'}</td>
+                        <td>${item.departement_name ?? '-'}</td>
+                        <td>${item.section_name ?? '-'}</td>
+                        <td>${item.auditor_name ?? '-'}</td>
+                        <td>${item.nama_auditee ?? '-'}</td>
+                        <td>${item.status_label ?? '-'}</td>
+                        <td>${item.deskripsi_temuan ?? '-'}</td>
+                        <td>${item.action ?? '-'}</td>
+                        <td>${item.due_date ?? '-'}</td>
+                        <td>${evidenceHtml}</td>
+                    </tr>
+                `;
+                    });
+
+                    $('#detailTemuanBody').html(html);
+
+                    let table = $('#tableDetailTemuan').DataTable({
+                        destroy: true,
+                        responsive: true,
+                        pageLength: 10
+                    });
+
+                    table.on('order.dt search.dt draw.dt', function() {
+                        let info = table.page.info();
+                        table.column(0, {
+                            page: 'current'
+                        }).nodes().each(function(cell, i) {
+                            cell.innerHTML = info.start + i + 1;
+                        });
+                    }).draw();
+                }
+            });
+        }
+
+        function loadDetailTemuanByDept(deptId, deptName, status, statusText) {
+            const isAllDept = !deptId;
+
+            $('#modalDetailTemuanLabel').text('Detail Temuan');
+
+            $('#filterInfo').html(`
+        <div class="alert alert-info mb-2">
+            ${isAllDept
+                ? `Semua Departemen - Status <strong>${statusText}</strong>`
+                : `Departemen <strong>${deptName}</strong> - Status <strong>${statusText}</strong>`
+            }
+        </div>
+    `);
+
+            resetDetailTemuanTable();
+
+            $('#detailTemuanBody').html(`
+        <tr>
+            <td colspan="11" class="text-center">
+                Loading...
+                <div class="spinner-border spinner-border-sm ms-2"></div>
+            </td>
+        </tr>
+    `);
+
+            const modal = new bootstrap.Modal(document.getElementById('modalDetailTemuan'));
+            modal.show();
+
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    keterangan: 'getDetailTemuanByDept',
+                    dept: deptId,
+                    status: status
+                },
+                success: function(response) {
+                    let html = '';
+
+                    resetDetailTemuanTable();
+
+                    if (!response || !response.data || response.data.length === 0) {
+                        $('#detailTemuanBody').html(`
+                    <tr>
+                        <td colspan="11" class="text-center">Data tidak ditemukan</td>
+                    </tr>
+                `);
+                        return;
+                    }
+
+                    response.data.forEach((item, index) => {
+                        let evidenceHtml = '-';
+
+                        if (item.evidence_file) {
+                            let fileUrl = "<?= base_url('uploads/findings_evidence/') ?>" + item.evidence_file;
+                            evidenceHtml = `
+                        <a href="${fileUrl}" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    `;
+                        }
+
+                        html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.tanggal_patrol ?? '-'}</td>
+                        <td>${item.departement_name ?? '-'}</td>
+                        <td>${item.section_name ?? '-'}</td>
+                        <td>${item.auditor_name ?? '-'}</td>
+                        <td>${item.nama_auditee ?? '-'}</td>
+                        <td>${item.status_label ?? '-'}</td>
+                        <td>${item.deskripsi_temuan ?? '-'}</td>
+                        <td>${item.action ?? '-'}</td>
+                        <td>${item.due_date ?? '-'}</td>
+                        <td>${evidenceHtml}</td>
+                    </tr>
+                `;
+                    });
+
+                    $('#detailTemuanBody').html(html);
+
+                    let table = $('#tableDetailTemuan').DataTable({
+                        destroy: true,
+                        responsive: true,
+                        autoWidth: false,
+                        pageLength: 10,
+                        lengthMenu: [
+                            [10, 25, 50, 100],
+                            [10, 25, 50, 100]
+                        ],
+                        ordering: true,
+                        searching: true,
+                        paging: true,
+                        info: true,
+                        language: {
+                            search: "Cari:",
+                            lengthMenu: "Tampilkan _MENU_ data",
+                            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                            zeroRecords: "Data tidak ditemukan",
+                            emptyTable: "Data tidak tersedia",
+                            paginate: {
+                                first: "Awal",
+                                last: "Akhir",
+                                next: "Berikutnya",
+                                previous: "Sebelumnya"
+                            }
+                        },
+                        columnDefs: [{
+                            targets: 0,
+                            orderable: false,
+                            searchable: false
+                        }]
+                    });
+
+                    table.on('order.dt search.dt draw.dt', function() {
+                        let info = table.page.info();
+                        table.column(0, {
+                            search: 'applied',
+                            order: 'applied',
+                            page: 'current'
+                        }).nodes().each(function(cell, i) {
+                            cell.innerHTML = info.start + i + 1;
+                        });
+                    }).draw();
+                },
+                error: function(xhr, statusText, error) {
+                    resetDetailTemuanTable();
+
+                    $('#detailTemuanBody').html(`
+                <tr>
+                    <td colspan="11" class="text-center text-danger">
+                        Gagal mengambil data
+                    </td>
+                </tr>
+            `);
+
+                    console.error('Error detail temuan by dept:', error);
+                }
+            });
+        }
+
+        function resetDetailTemuanTable() {
+            if ($.fn.DataTable.isDataTable('#tableDetailTemuan')) {
+                $('#tableDetailTemuan').DataTable().clear().destroy();
+            }
+        }
+
+        function loadDetailTemuan(tahun, bulan, status, statusText, bulanNama) {
+            let labelStatus = (status === null || status === undefined) ? 'Semua Status' : statusText;
+
+            $('#modalDetailTemuanLabel').text('Detail Temuan');
+            $('#filterInfo').html(`
+        <div class="alert alert-info mb-2">
+            Menampilkan data <strong>${labelStatus}</strong> bulan <strong>${bulanNama}</strong> tahun <strong>${tahun}</strong>
+        </div>
+    `);
+
+            resetDetailTemuanTable();
+
+            $('#detailTemuanBody').html(`
+        <tr>
+            <td colspan="11" class="text-center">
+                Loading...
+                <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
+            </td>
+        </tr>
+    `);
+
+            const modal = new bootstrap.Modal(document.getElementById('modalDetailTemuan'));
+            modal.show();
+
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    keterangan: 'getDetailTemuanChart',
+                    tahun: tahun,
+                    bulan: bulan,
+                    status: status
+                },
+                success: function(response) {
+                    let html = '';
+
+                    resetDetailTemuanTable();
+
+                    if (!response || !response.data || response.data.length === 0) {
+                        html = `
+                    <tr>
+                        <td colspan="11" class="text-center">Data tidak ditemukan</td>
+                    </tr>
+                `;
+                        $('#detailTemuanBody').html(html);
+                        return;
+                    }
+
+                    response.data.forEach((item, index) => {
+                        let evidenceHtml = '-';
+
+                        if (item.evidence_file) {
+                            let fileUrl = "<?= base_url('uploads/findings_evidence/') ?>" + item.evidence_file;
+
+                            evidenceHtml = `
+        <a href="${fileUrl}" target="_blank" class="btn btn-sm btn-primary">
+            <i class="bi bi-eye"></i> View
+        </a>
+    `;
+                        }
+
+                        html += `
+<tr>
+    <td>${index + 1}</td>
+    <td>${item.tanggal_patrol ?? '-'}</td>
+    <td>${item.departement_name ?? '-'}</td>
+    <td>${item.section_name ?? '-'}</td>
+    <td>${item.auditor_name ?? '-'}</td>
+    <td>${item.nama_auditee ?? '-'}</td>
+    <td>${item.status_label ?? '-'}</td>
+    <td>${item.deskripsi_temuan ?? '-'}</td>
+    <td>${item.action ?? '-'}</td>
+    <td>${item.due_date ?? '-'}</td>
+    <td>${evidenceHtml}</td>
+</tr>
+`;
+                    });
+
+                    $('#detailTemuanBody').html(html);
+
+                    let table = $('#tableDetailTemuan').DataTable({
+                        destroy: true,
+                        responsive: true,
+                        autoWidth: false,
+                        pageLength: 10,
+                        lengthMenu: [
+                            [10, 25, 50, 100],
+                            [10, 25, 50, 100]
+                        ],
+                        ordering: true,
+                        searching: true,
+                        paging: true,
+                        info: true,
+                        language: {
+                            search: "Cari:",
+                            lengthMenu: "Tampilkan _MENU_ data",
+                            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                            zeroRecords: "Data tidak ditemukan",
+                            emptyTable: "Data tidak tersedia",
+                            paginate: {
+                                first: "Awal",
+                                last: "Akhir",
+                                next: "Berikutnya",
+                                previous: "Sebelumnya"
+                            }
+                        },
+                        columnDefs: [{
+                            targets: 0,
+                            orderable: false,
+                            searchable: false
+                        }]
+                    });
+
+                    table.on('order.dt search.dt draw.dt', function() {
+                        let info = table.page.info();
+                        table.column(0, {
+                            search: 'applied',
+                            order: 'applied',
+                            page: 'current'
+                        }).nodes().each(function(cell, i) {
+                            cell.innerHTML = info.start + i + 1;
+                        });
+                    }).draw();
+                },
+                error: function(xhr, statusText, error) {
+                    resetDetailTemuanTable();
+
+                    $('#detailTemuanBody').html(`
+                <tr>
+                    <td colspan="11" class="text-center text-danger">
+                        Gagal mengambil data
+                    </td>
+                </tr>
+            `);
+
+                    console.error('Error detail temuan:', error);
+                }
+            });
+        }
+
+        function loadDetailTemuanByDeptMonth(deptId, deptName, bulan, bulanNama, status, statusText) {
+            const isAllDept = !deptId;
+            const tahun = new Date().getFullYear();
+
+            $('#modalDetailTemuanLabel').text('Detail Temuan');
+
+            $('#filterInfo').html(`
+        <div class="alert alert-info mb-2">
+            ${isAllDept
+                ? `Semua Departemen`
+                : `Departemen <strong>${deptName}</strong>`
+            }
+            - Bulan <strong>${bulanNama}</strong>
+            - Status <strong>${statusText}</strong>
+        </div>
+    `);
+
+            resetDetailTemuanTable();
+
+            $('#detailTemuanBody').html(`
+        <tr>
+            <td colspan="11" class="text-center">
+                Loading...
+                <div class="spinner-border spinner-border-sm ms-2"></div>
+            </td>
+        </tr>
+    `);
+
+            const modal = new bootstrap.Modal(document.getElementById('modalDetailTemuan'));
+            modal.show();
+
+            $.ajax({
+                url: '<?= base_url('sendData') ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    keterangan: 'getDetailTemuanByDeptMonth',
+                    dept: deptId,
+                    bulan: bulan,
+                    status: status,
+                    tahun: tahun
+                },
+                success: function(response) {
+                    let html = '';
+
+                    resetDetailTemuanTable();
+
+                    if (!response || !response.data || response.data.length === 0) {
+                        $('#detailTemuanBody').html(`
+                    <tr>
+                        <td colspan="11" class="text-center">Data tidak ditemukan</td>
+                    </tr>
+                `);
+                        return;
+                    }
+
+                    response.data.forEach((item, index) => {
+                        let evidenceHtml = '-';
+
+                        if (item.evidence_file) {
+                            let fileUrl = "<?= base_url('uploads/findings_evidence/') ?>" + item.evidence_file;
+                            evidenceHtml = `
+                        <a href="${fileUrl}" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    `;
+                        }
+
+                        html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.tanggal_patrol ?? '-'}</td>
+                        <td>${item.departement_name ?? '-'}</td>
+                        <td>${item.section_name ?? '-'}</td>
+                        <td>${item.auditor_name ?? '-'}</td>
+                        <td>${item.nama_auditee ?? '-'}</td>
+                        <td>${item.status_label ?? '-'}</td>
+                        <td>${item.deskripsi_temuan ?? '-'}</td>
+                        <td>${item.action ?? '-'}</td>
+                        <td>${item.due_date ?? '-'}</td>
+                        <td>${evidenceHtml}</td>
+                    </tr>
+                `;
+                    });
+
+                    $('#detailTemuanBody').html(html);
+
+                    let table = $('#tableDetailTemuan').DataTable({
+                        destroy: true,
+                        responsive: true,
+                        autoWidth: false,
+                        pageLength: 10,
+                        lengthMenu: [
+                            [10, 25, 50, 100],
+                            [10, 25, 50, 100]
+                        ],
+                        ordering: true,
+                        searching: true,
+                        paging: true,
+                        info: true,
+                        language: {
+                            search: "Cari:",
+                            lengthMenu: "Tampilkan _MENU_ data",
+                            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                            zeroRecords: "Data tidak ditemukan",
+                            emptyTable: "Data tidak tersedia",
+                            paginate: {
+                                first: "Awal",
+                                last: "Akhir",
+                                next: "Berikutnya",
+                                previous: "Sebelumnya"
+                            }
+                        },
+                        columnDefs: [{
+                            targets: 0,
+                            orderable: false,
+                            searchable: false
+                        }]
+                    });
+
+                    table.on('order.dt search.dt draw.dt', function() {
+                        let info = table.page.info();
+                        table.column(0, {
+                            search: 'applied',
+                            order: 'applied',
+                            page: 'current'
+                        }).nodes().each(function(cell, i) {
+                            cell.innerHTML = info.start + i + 1;
+                        });
+                    }).draw();
+                },
+                error: function(xhr, statusText, error) {
+                    resetDetailTemuanTable();
+
+                    $('#detailTemuanBody').html(`
+                <tr>
+                    <td colspan="11" class="text-center text-danger">
+                        Gagal mengambil data
+                    </td>
+                </tr>
+            `);
+
+                    console.error('Error detail temuan by dept month:', error);
+                }
+            });
+        }
         $('.select2').select2();
         flatpickr(".tanggalpickr", {
             locale: "id",
@@ -993,65 +1687,59 @@
             });
         });
         $('#filterBtn_dept').click(function() {
-            var dept = $('#list_dept').val(); // ambil dept yang dipilih
+            var dept = $('#list_dept').val();
+            var deptName = $('#list_dept option:selected').data('departement') || $('#list_dept option:selected').text();
+
             $(this).attr('disabled', true);
             $('#filterBtn_dept').html('Loading ... <div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>');
+
+            currentDeptFilter = dept ? dept : null;
+            currentDeptName = dept ? deptName : 'Semua Departemen';
 
             $.ajax({
                 url: '<?= base_url('sendData') ?>',
                 type: 'POST',
                 data: {
                     keterangan: 'getData_filter_dept',
-                    dept: dept, // <--- kirim dept ke server
-
+                    dept: dept,
                 },
                 dataType: 'json',
                 success: function(response) {
                     $('#filterBtn_dept').attr('disabled', false);
                     $('#filterBtn_dept').html('<i class="bi bi-funnel-fill me-2"></i> Terapkan Filter');
 
-                    // ====== BAR CHART (PER BULAN) ======
+                    $('#area_xxx').text(currentDeptName);
+
                     var barChart = Highcharts.charts.find(function(c) {
                         return c && c.renderTo && c.renderTo.id === 'barChart_stacked_area';
                     });
 
-                    if (!barChart) {
-                        console.warn('Chart "barChart_stacked_area" tidak ditemukan.');
-                    } else {
-                        // kalau server kirim categories (misal: nama bulan spesifik), update xAxis
+                    if (barChart) {
                         if (Array.isArray(response.categories)) {
                             barChart.xAxis[0].setCategories(response.categories, false);
                         }
 
-                        try {
-                            if (Array.isArray(response.open)) {
-                                barChart.series[0].setData(response.open, false);
-                            }
-                            if (Array.isArray(response.progress)) {
-                                barChart.series[1].setData(response.progress, false);
-                            }
-                            if (Array.isArray(response.close)) {
-                                barChart.series[2].setData(response.close, false);
-                            }
-                            if (Array.isArray(response.cancel)) {
-                                barChart.series[3].setData(response.cancel, false);
-                            }
-                            barChart.redraw();
-                        } catch (e) {
-                            console.error('Gagal update series bar chart:', e);
+                        if (Array.isArray(response.open)) {
+                            barChart.series[0].setData(response.open, false);
                         }
+                        if (Array.isArray(response.progress)) {
+                            barChart.series[1].setData(response.progress, false);
+                        }
+                        if (Array.isArray(response.close)) {
+                            barChart.series[2].setData(response.close, false);
+                        }
+                        if (Array.isArray(response.cancel)) {
+                            barChart.series[3].setData(response.cancel, false);
+                        }
+
+                        barChart.redraw();
                     }
 
-                    // ====== PIE CHART (TOTAL DI AREA/DEPT) ======
                     var pieChart = Highcharts.charts.find(function(c) {
                         return c && c.renderTo && c.renderTo.id === 'piechart_area';
                     });
 
-                    if (!pieChart) {
-                        console.warn('Chart "piechart_area" tidak ditemukan.');
-                    } else {
-
-                        // (opsional tapi disarankan) pastikan pie punya dataLabels & legend aktif
+                    if (pieChart) {
                         pieChart.update({
                             plotOptions: {
                                 pie: {
@@ -1067,11 +1755,10 @@
                             }
                         }, false);
 
-                        // Build data + HILANGKAN yang y=0 (ini yang bikin % & legend ikut gak tampil)
                         var pieData = [{
                                 name: 'Open',
                                 y: parseInt(response.open_count) || 0,
-                                color: '#686B6F' // sesuaikan dengan warna Open kamu
+                                color: '#686B6F'
                             },
                             {
                                 name: 'In Progress',
@@ -1090,8 +1777,6 @@
                             }
                         ].filter(p => p.y > 0);
 
-
-                        // Kalau semua 0, kasih fallback biar chart gak kosong (opsional)
                         if (pieData.length === 0) {
                             pieData = [{
                                 name: 'No Data',
@@ -1103,11 +1788,8 @@
                             }];
                         }
 
-                        pieChart.series[0].setData(pieData, true); // true = redraw
+                        pieChart.series[0].setData(pieData, true);
                     }
-
-
-
                 },
                 error: function(xhr, status, error) {
                     $('#filterBtn_dept').attr('disabled', false);

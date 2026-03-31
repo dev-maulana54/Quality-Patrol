@@ -624,6 +624,10 @@ class CrudController extends BaseController
                     }
 
                     $id_section_pcaudit = $this->request->getPost('area_prosesaudit');
+                    $id_sect_henk = $this->dataPatrol->db->table('section')->where('id_section', $id_section_pcaudit)->get()->getRowArray();
+                    $idSectionFinal = (!empty($id_sect_henk) && $id_sect_henk['id_section_henk'] != 0)
+                        ? $id_sect_henk['id_section_henk']
+                        : $id_section_pcaudit;
                     $id_dept = $this->dataPatrol->tb_section($id_section_pcaudit);
                     # jika area proses audit tidak kosong
                     if ($id_section_pcaudit != '') {
@@ -650,7 +654,7 @@ class CrudController extends BaseController
                             }
                             // $data_update['nama_auditee'] = $nama_auditee['nama_penanggung_jawab'];
                         }
-                        $data_update['id_section'] = (int)$id_section_pcaudit;
+                        $data_update['id_section'] = (int)$idSectionFinal;
                         $data_update['id_departement'] = $id_dept['id_departement_henk'];
                     }
                     $get_section_dept = $this->dataPatrol->getSection_andDeptByIDNEW($this->request->getPost('area_pic_action'));
@@ -895,7 +899,8 @@ class CrudController extends BaseController
             ]);
         } else if ($keterangan  == 'getData_filter_dept') {
             $dept      = $this->request->getPost('dept');
-            $rows = $this->dataPatrol->filterDept($dept);
+            $get_id_henk = $this->dataPatrol->db->table('departement')->where('id_departement', $dept)->get()->getRowArray();
+            $rows = $this->dataPatrol->filterDept($get_id_henk['id_departement_henk']);
             // Siapkan array default 12 bulan
             $open = array_fill(0, 12, 0);
             $inprogress = array_fill(0, 12, 0);
@@ -922,7 +927,7 @@ class CrudController extends BaseController
                 $total[$bulan] += (int)$row['total'];
             }
 
-            $count_temuan = $this->dataPatrol->filterDept2($dept);
+            $count_temuan = $this->dataPatrol->filterDept2($get_id_henk['id_departement_henk']);
 
             return $this->response->setJSON([
                 'categories' => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
@@ -1331,6 +1336,145 @@ class CrudController extends BaseController
                 'message' => 'Data berhasil diambil',
                 'data'    => $data
             ]);
+        } else if ($keterangan == 'getDetailTemuanChart') {
+            $tahun  = $this->request->getPost('tahun');
+            $bulan  = $this->request->getPost('bulan');
+            $status = $this->request->getPost('status');
+
+            $builder = $this->dataPatrol->getBuilderDetailTemuan($tahun, $bulan);
+
+            if ($status !== null && $status !== '' && $status !== 'null') {
+                $builder->where('tp.status', $status);
+            }
+
+            $result = $builder->orderBy('tp.tanggal_patrol', 'DESC')->get()->getResultArray();
+
+            foreach ($result as &$row) {
+                if ($row['status'] == '1') {
+                    $row['status_label'] = 'Close';
+                } elseif ($row['status'] == '2') {
+                    $row['status_label'] = 'In Progress';
+                } elseif ($row['status'] == '3') {
+                    $row['status_label'] = 'Open';
+                } elseif ($row['status'] == '4') {
+                    $row['status_label'] = 'Cancel';
+                } else {
+                    $row['status_label'] = '-';
+                }
+            }
+
+            return $this->response->setJSON(['data' => $result]);
+        } else if ($keterangan == 'getDetailTemuanByArea') {
+            $area   = $this->request->getPost('area');
+            $status = $this->request->getPost('status');
+            $start  = $this->request->getPost('startDate');
+            $end    = $this->request->getPost('endDate');
+
+            $builder = $this->dataPatrol->getBuilderDetailTemuanByArea($area, $start, $end);
+
+            if ($status !== null && $status !== '' && $status !== 'null') {
+                $builder->where('tp.status', $status);
+            }
+
+            $result = $builder->orderBy('tp.tanggal_patrol', 'DESC')->get()->getResultArray();
+
+            foreach ($result as &$row) {
+                if ($row['status'] == '1') {
+                    $row['status_label'] = 'Close';
+                } elseif ($row['status'] == '2') {
+                    $row['status_label'] = 'In Progress';
+                } elseif ($row['status'] == '3') {
+                    $row['status_label'] = 'Open';
+                } elseif ($row['status'] == '4') {
+                    $row['status_label'] = 'Cancel';
+                } else {
+                    $row['status_label'] = '-';
+                }
+            }
+
+            return $this->response->setJSON(['data' => $result]);
+        } else if ($keterangan == 'getDetailTemuanByDept') {
+            $dept   = $this->request->getPost('dept');
+            $status = $this->request->getPost('status');
+
+            $idDeptHenk = null;
+
+            if ($dept !== null && $dept !== '') {
+                $get_id_henk = $this->dataPatrol->db->table('departement')
+                    ->where('id_departement', $dept)
+                    ->get()
+                    ->getRowArray();
+
+                if ($get_id_henk) {
+                    $idDeptHenk = $get_id_henk['id_departement_henk'];
+                }
+            }
+
+            $builder = $this->dataPatrol->getBuilderDetailTemuanByDept($idDeptHenk);
+
+            if ($status !== null && $status !== '' && $status !== 'null') {
+                $builder->where('tp.status', $status);
+            }
+
+            $result = $builder->orderBy('tp.tanggal_patrol', 'DESC')->get()->getResultArray();
+
+            foreach ($result as &$row) {
+                if ($row['status'] == '1') {
+                    $row['status_label'] = 'Close';
+                } elseif ($row['status'] == '2') {
+                    $row['status_label'] = 'In Progress';
+                } elseif ($row['status'] == '3') {
+                    $row['status_label'] = 'Open';
+                } elseif ($row['status'] == '4') {
+                    $row['status_label'] = 'Cancel';
+                } else {
+                    $row['status_label'] = '-';
+                }
+            }
+
+            return $this->response->setJSON(['data' => $result]);
+        } else if ($keterangan == 'getDetailTemuanByDeptMonth') {
+            $dept   = $this->request->getPost('dept');
+            $bulan  = $this->request->getPost('bulan');
+            $tahun  = $this->request->getPost('tahun');
+            $status = $this->request->getPost('status');
+
+            $idDeptHenk = null;
+
+            if ($dept !== null && $dept !== '') {
+                $get_id_henk = $this->dataPatrol->db->table('departement')
+                    ->where('id_departement', $dept)
+                    ->get()
+                    ->getRowArray();
+
+                if ($get_id_henk) {
+                    $idDeptHenk = $get_id_henk['id_departement_henk'];
+                }
+            }
+
+            $builder = $this->dataPatrol->getBuilderDetailTemuanByDeptMonth($idDeptHenk, $bulan, $tahun);
+
+            if ($status !== null && $status !== '' && $status !== 'null') {
+                $builder->where('tp.status', $status);
+            }
+
+            $result = $builder->orderBy('tp.tanggal_patrol', 'DESC')->get()->getResultArray();
+
+            foreach ($result as &$row) {
+                if ($row['status'] == '1') {
+                    $row['status_label'] = 'Close';
+                } elseif ($row['status'] == '2') {
+                    $row['status_label'] = 'In Progress';
+                } elseif ($row['status'] == '3') {
+                    $row['status_label'] = 'Open';
+                } elseif ($row['status'] == '4') {
+                    $row['status_label'] = 'Cancel';
+                } else {
+                    $row['status_label'] = '-';
+                }
+            }
+
+            return $this->response->setJSON(['data' => $result]);
         }
     }
 }

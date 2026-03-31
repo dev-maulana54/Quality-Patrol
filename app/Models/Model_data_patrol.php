@@ -297,6 +297,49 @@ class Model_data_patrol extends Model
             ->get()
             ->getResultArray();
     }
+    public function getBuilderDetailTemuanByArea($area, $startDate = null, $endDate = null)
+    {
+        $builder = $this->db->table('dt_temuan_patrol tp')
+            ->select('
+            tp.id_temuan_patrol,
+            tp.tanggal_patrol,
+            tp.deskripsi_temuan,
+            tp.analisa_penyebab,
+            tp.action,
+            tp.due_date,
+            tp.status,
+            tp.evidence_file,
+            d.departement AS departement_name,
+            s.section AS section_name,
+            pic_dept.departement AS pic_departement_name,
+            tp.nama_auditor AS auditor_name,
+            tp.nama_auditee
+        ')
+            ->join(
+                'departement d',
+                'tp.id_departement = d.id_departement_henk',
+                'left'
+            )
+            ->join(
+                'section s',
+                '(tp.id_section = s.id_section_henk OR (tp.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join(
+                'departement pic_dept',
+                'tp.pic_action_departement_id = pic_dept.id_departement_henk',
+                'left'
+            )
+            ->where('s.section', $area);
+
+        if (!empty($startDate) && !empty($endDate)) {
+            $builder->where('DATE(tp.tanggal_patrol) >=', date('Y-m-d', strtotime($startDate)));
+            $builder->where('DATE(tp.tanggal_patrol) <=', date('Y-m-d', strtotime($endDate)));
+        }
+
+        return $builder;
+    }
     public function chartByYear()
     {
 
@@ -308,6 +351,35 @@ class Model_data_patrol extends Model
             ->orderBy('MONTH(tanggal_patrol)', 'ASC')
             ->get()
             ->getResultArray();
+    }
+    public function getBuilderDetailTemuan($tahun, $bulan)
+    {
+        return $this->db->table('dt_temuan_patrol tp')
+            ->select('
+            tp.id_temuan_patrol,
+            tp.tanggal_patrol,
+            tp.deskripsi_temuan,
+            tp.analisa_penyebab,
+            tp.action,
+            tp.due_date,
+            tp.status,
+            tp.evidence_file,
+            d.departement AS departement_name,
+            s.section AS section_name,
+            pic_dept.departement AS pic_departement_name,
+            tp.nama_auditor AS auditor_name,
+            tp.nama_auditee
+        ')
+            ->join('departement d', 'tp.id_departement = d.id_departement_henk', 'left')
+            ->join(
+                'section s',
+                '(tp.id_section = s.id_section_henk OR (tp.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join('departement pic_dept', 'tp.pic_action_departement_id = pic_dept.id_departement_henk', 'left')
+            ->where('YEAR(tp.tanggal_patrol)', $tahun, false)
+            ->where('MONTH(tp.tanggal_patrol)', $bulan, false);
     }
     public function totalAudience()
     {
@@ -425,30 +497,111 @@ class Model_data_patrol extends Model
     public function totalTemuanByArea()
     {
 
-        return $this->db->table('dt_temuan_patrol')
+        return $this->db->table('dt_temuan_patrol tp')
             ->select("
-            dt_temuan_patrol.id_section,
-            d.departement AS nama_departemen,
-            s.section AS nama_section,
+        tp.id_section,
+        d.departement AS nama_departemen,
+        s.section AS nama_section,
 
-            -- COUNT per status numeric
-            SUM(CASE WHEN dt_temuan_patrol.status = 3 THEN 1 ELSE 0 END) AS total_open,
-            SUM(CASE WHEN dt_temuan_patrol.status = 2 THEN 1 ELSE 0 END) AS total_progress,
-            SUM(CASE WHEN dt_temuan_patrol.status = 1 THEN 1 ELSE 0 END) AS total_close,
-            SUM(CASE WHEN dt_temuan_patrol.status = 4 THEN 1 ELSE 0 END) AS total_cancel,
+        SUM(CASE WHEN tp.status = 3 THEN 1 ELSE 0 END) AS total_open,
+        SUM(CASE WHEN tp.status = 2 THEN 1 ELSE 0 END) AS total_progress,
+        SUM(CASE WHEN tp.status = 1 THEN 1 ELSE 0 END) AS total_close,
+        SUM(CASE WHEN tp.status = 4 THEN 1 ELSE 0 END) AS total_cancel,
 
-            COUNT(dt_temuan_patrol.id_temuan_patrol) AS total_temuan
-        ")
-            ->join("departement d", 'd.id_departement_henk = dt_temuan_patrol.id_departement', 'left')
-            ->join("section s", 's.id_section_henk = dt_temuan_patrol.id_section', 'left')
-
+        COUNT(tp.id_temuan_patrol) AS total_temuan
+    ")
+            ->join(
+                'departement d',
+                'd.id_departement_henk = tp.id_departement',
+                'left'
+            )
+            ->join(
+                'section s',
+                '(tp.id_section = s.id_section_henk OR (tp.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
             ->groupBy([
-                'dt_temuan_patrol.id_section',
+                'tp.id_section',
                 'd.departement',
                 's.section'
             ])
             ->get()
             ->getResultArray();
+    }
+    public function getBuilderDetailTemuanByDept($deptIdHenk = null)
+    {
+        $builder = $this->db->table('dt_temuan_patrol tp')
+            ->select('
+            tp.id_temuan_patrol,
+            tp.tanggal_patrol,
+            tp.deskripsi_temuan,
+            tp.analisa_penyebab,
+            tp.action,
+            tp.due_date,
+            tp.status,
+            tp.evidence_file,
+            d.departement AS departement_name,
+            s.section AS section_name,
+            pic_dept.departement AS pic_departement_name,
+            tp.nama_auditor AS auditor_name,
+            tp.nama_auditee
+        ')
+            ->join('departement d', 'tp.id_departement = d.id_departement_henk', 'left')
+            ->join(
+                'section s',
+                '(tp.id_section = s.id_section_henk OR (tp.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join('departement pic_dept', 'tp.pic_action_departement_id = pic_dept.id_departement_henk', 'left');
+
+        if ($deptIdHenk !== null && $deptIdHenk !== '') {
+            $builder->where('tp.id_departement', $deptIdHenk);
+        }
+
+        return $builder;
+    }
+    public function getBuilderDetailTemuanByDeptMonth($deptIdHenk = null, $bulan = null, $tahun = null)
+    {
+        $builder = $this->db->table('dt_temuan_patrol tp')
+            ->select('
+            tp.id_temuan_patrol,
+            tp.tanggal_patrol,
+            tp.deskripsi_temuan,
+            tp.analisa_penyebab,
+            tp.action,
+            tp.due_date,
+            tp.status,
+            tp.evidence_file,
+            d.departement AS departement_name,
+            s.section AS section_name,
+            pic_dept.departement AS pic_departement_name,
+            tp.nama_auditor AS auditor_name,
+            tp.nama_auditee
+        ')
+            ->join('departement d', 'tp.id_departement = d.id_departement_henk', 'left')
+            ->join(
+                'section s',
+                '(tp.id_section = s.id_section_henk OR (tp.id_section = s.id_section AND s.id_section_henk = 0))',
+                'left',
+                false
+            )
+            ->join('departement pic_dept', 'tp.pic_action_departement_id = pic_dept.id_departement_henk', 'left');
+
+        if ($deptIdHenk !== null && $deptIdHenk !== '') {
+            $builder->where('tp.id_departement', $deptIdHenk);
+        }
+
+        if ($bulan !== null && $bulan !== '') {
+            $builder->where('MONTH(tp.tanggal_patrol)', $bulan, false);
+        }
+
+        if ($tahun !== null && $tahun !== '') {
+            $builder->where('YEAR(tp.tanggal_patrol)', $tahun, false);
+        }
+
+        return $builder;
     }
     public function get_dataSchedule_area($tahun = null, $bulan = null)
     {
