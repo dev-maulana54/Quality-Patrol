@@ -323,6 +323,7 @@ function mapToEditPanelValues(config) {
 
 // Initialize DataTable
 function initializeDataTable() {
+  if (!window.jQuery || !$.fn.DataTable || !$("#auditTable").length) return;
   $("#auditTable").DataTable({
     language: {
       search: "Cari:",
@@ -350,7 +351,9 @@ function initializeDataTable() {
 // Setup Event Listeners
 function setupEventListeners() {
   // Theme Toggle
-  document.getElementById("themeToggle").addEventListener("click", function () {
+  const themeToggle = document.getElementById("themeToggle");
+  if (!themeToggle) return;
+  themeToggle.addEventListener("click", function () {
     isDarkTheme = !isDarkTheme;
     document.body.classList.toggle("dark-theme");
     document.body.classList.toggle("light-theme");
@@ -364,23 +367,26 @@ function setupEventListeners() {
       icon.classList.add("bi-sun-fill");
     }
     // alert("kamu klik");
-    localStorage.setItem("theme", isDarkTheme ? "dark" : "light");
+    if (window.QPDB && typeof window.QPDB.setStorageItem === "function") window.QPDB.setStorageItem("theme", isDarkTheme ? "dark" : "light");
     // updateChartColors();
     renderClusteredChart();
   });
 
   // Profile Dropdown
-  document.getElementById("profileImg").addEventListener("click", function (e) {
+  const profileImg = document.getElementById("profileImg");
+  const profileDropdown = document.getElementById("profileDropdown");
+  if (profileImg && profileDropdown) profileImg.addEventListener("click", function (e) {
     e.stopPropagation();
-    document.getElementById("profileDropdown").classList.toggle("show");
+    profileDropdown.classList.toggle("show");
   });
 
   document.addEventListener("click", function () {
-    document.getElementById("profileDropdown").classList.remove("show");
+    if (profileDropdown) profileDropdown.classList.remove("show");
   });
 
   // Logout Button
-  document.getElementById("logoutBtn").addEventListener("click", function (e) {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) logoutBtn.addEventListener("click", function (e) {
     e.preventDefault();
     const confirmLogout = document.createElement("div");
     confirmLogout.style.cssText =
@@ -409,7 +415,10 @@ function setupEventListeners() {
         document.body.appendChild(successMsg);
 
         setTimeout(() => {
-          window.location.href = "logout";
+          if (window.QPDB && typeof window.QPDB.logoutUser === "function") {
+            window.QPDB.logoutUser();
+          }
+          window.location.replace("../auth/login.html?logged_out=1");
         }, 1000);
 
         backdrop.remove();
@@ -449,7 +458,7 @@ function setupEventListeners() {
   });
 
   // Load saved theme
-  const savedTheme = localStorage.getItem("theme");
+  const savedTheme = window.QPDB && typeof window.QPDB.getStorageItem === "function" ? window.QPDB.getStorageItem("theme") : null;
   if (savedTheme === "dark") {
     document.getElementById("themeToggle").click();
   }

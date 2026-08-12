@@ -238,10 +238,12 @@ function initializeDataTable() {
         var dateColIdx = 1;
 
         var dateFilterWrapper = $(`
-      <div class="col-6">
+      <div class="col-12 col-md-4 mb-2">
+        <label class="filter-label">Dari Tanggal</label>
         <input type="date" id="filterDateFrom_${tableId}" class="form-control form-control-sm" placeholder="From">
       </div>
-      <div class="col-6">
+      <div class="col-12 col-md-4 mb-2">
+        <label class="filter-label">Sampai Tanggal</label>
         <input type="date" id="filterDateTo_${tableId}" class="form-control form-control-sm" placeholder="To">
       </div>
     `);
@@ -314,8 +316,9 @@ function initializeDataTable() {
 
           var filterWrapper = $(`
         <div class="col-12 col-md-4 mb-2">
+          <label class="filter-label">${headerTitle}</label>
           <select class="form-select form-select-sm filter-select" data-col="${colIdx}">
-            <option value=""></option>
+            <option value="">-- Semua --</option>
           </select>
         </div>
       `);
@@ -338,7 +341,7 @@ function initializeDataTable() {
 
           if ($.fn.select2) {
             select.select2({
-              placeholder: headerTitle,
+              placeholder: "-- Semua " + headerTitle + " --",
               allowClear: true,
               width: "100%",
             });
@@ -354,7 +357,7 @@ function initializeDataTable() {
         // BUTTON EXPORT EXCEL
         // =========================
         var exportWrapper = $(`
-      <div class="col-12 col-md-4 mb-2">
+      <div class="col-12 col-md-3 mb-2 d-flex align-items-end">
         <button type="button" id="btnExportExcel_${tableId}" class="btn btn-success btn-sm w-100">
           <i class="bi bi-file-earmark-excel"></i> Export Excel
         </button>
@@ -405,9 +408,9 @@ function initializeDataTable() {
         // BUTTON CLEAR FILTER
         // =========================
         var clearWrapper = $(`
-      <div class="col-12 col-md-12 mb-2">
-        <button type="button" id="btnClearFilter_${tableId}" class="btn btn-secondary btn-sm w-100">
-          <i class="bi bi-arrow-clockwise"></i> Clear Filter
+      <div class="col-12 col-md-3 mb-2 d-flex align-items-end">
+        <button type="button" id="btnClearFilter_${tableId}" class="btn btn-outline-secondary btn-sm w-100">
+          <i class="bi bi-arrow-clockwise"></i> Reset Filter
         </button>
       </div>
     `);
@@ -546,7 +549,16 @@ function setupEventListeners() {
         document.body.appendChild(successMsg);
 
         setTimeout(() => {
-          window.location.href = baseurl + "/logout";
+          if (window.QPDB && typeof window.QPDB.logoutUser === "function") {
+            window.QPDB.logoutUser();
+          }
+          if (window.location.protocol === "file:") {
+            var path = window.location.pathname;
+            var isSub = path.indexOf("/admin/") !== -1 || path.indexOf("/users/") !== -1 || path.indexOf("/mobile/") !== -1;
+            window.location.href = isSub ? "../auth/login.html" : "app/Views/auth/login.html";
+          } else {
+            window.location.href = typeof baseurl !== "undefined" ? baseurl + "/logout" : "logout";
+          }
         }, 1000);
 
         backdrop.remove();

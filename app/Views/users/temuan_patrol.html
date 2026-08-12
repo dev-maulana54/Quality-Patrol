@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manajemen temuan Quality Patrol tanpa database." />
+  <title>Temuan Patrol | Quality Patrol</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--primary:#0d6efd;--ink:#172033;--muted:#64748b;--page:#f5f7fb;--line:#e7ebf3;--surface:#fff;--radius:16px;--shadow:0 10px 35px rgba(15,23,42,.06)}
+    *{box-sizing:border-box} body{min-width:320px;margin:0;background:var(--page);color:var(--ink);font:14px "Poppins",sans-serif}
+    .topbar{position:sticky;top:0;z-index:1030;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+    .brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:17px;font-weight:700;text-decoration:none}.brand-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,var(--primary),#5b9dff);color:#fff;box-shadow:0 6px 14px rgba(13,110,253,.24)}.user{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}.avatar{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:#e8f0ff;color:var(--primary);font-size:16px}
+    main{width:min(1440px,100%);margin:auto;padding:34px 32px 48px}.heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:26px}.eyebrow{margin:0 0 5px;color:var(--primary);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}h1{margin:0;font-size:clamp(24px,3vw,30px);font-weight:700;letter-spacing:-.035em}.subtitle{margin:7px 0 0;color:var(--muted)}
+    .btn{min-height:40px;border-radius:10px;font-size:13px;font-weight:600}.btn-primary{background:var(--primary);border-color:var(--primary);box-shadow:0 7px 14px rgba(13,110,253,.18)}.btn-primary:hover,.btn-primary:focus{background:#0b5ed7;border-color:#0b5ed7}.btn-outline-secondary{border-color:#d8deea;color:#475569}.btn-outline-secondary:hover{border-color:#d8deea;background:#f1f5f9;color:var(--ink)}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}.card,.filters,.table-panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}.card{min-height:110px;padding:18px 20px}.metric-label{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;font-weight:600}.metric-value{margin-top:10px;font-size:26px;font-weight:700;letter-spacing:-.03em}.open{color:#c22b3d}.progress{color:#b7791f}.closed{color:#19713b}
+    .filters{padding:20px;margin-bottom:20px}.panel-heading,.table-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.panel-heading{margin-bottom:18px}.table-head{padding:20px;border-bottom:1px solid var(--line)}.panel-title{display:flex;align-items:center;gap:9px;margin:0;font-size:15px;font-weight:700}.panel-title i{color:var(--primary)}.help,.result{margin:4px 0 0 27px;color:var(--muted);font-size:12px}
+    .filter-grid{display:grid;grid-template-columns:minmax(230px,1.7fr) repeat(4,minmax(145px,1fr)) auto;gap:12px;align-items:end}label{display:block;margin-bottom:6px;color:#56657b;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}.form-control,.form-select{min-height:40px;border-color:#dce3ef;border-radius:9px;color:var(--ink);box-shadow:none;font-size:13px}textarea.form-control{min-height:86px;resize:vertical}.form-control:focus,.form-select:focus{border-color:#86b7fe;box-shadow:0 0 0 3px rgba(13,110,253,.12)}.search{position:relative}.search i{position:absolute;top:50%;left:13px;color:#94a3b8;transform:translateY(-50%)}.search input{padding-left:37px}.reset{min-width:42px;padding:0 12px}
+    .table-panel{overflow:hidden}.table-responsive{overflow-x:auto}table{width:100%;min-width:1080px;margin:0;border-collapse:separate;border-spacing:0}th{padding:13px 14px;border-bottom:1px solid var(--line);background:#f8faff;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}td{padding:14px;border-bottom:1px solid #eef1f6;vertical-align:middle;color:#334155;font-size:12px}tbody tr{transition:background .18s ease}tbody tr:hover{background:#f8fbff}tbody tr:last-child td{border-bottom:0}.id{color:var(--primary);font-weight:700;white-space:nowrap}.name{font-weight:600}.small{color:var(--muted);font-size:11px}.finding{display:-webkit-box;max-width:260px;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+    .badge-status{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:700;white-space:nowrap}.st-open{background:#fff0f1;color:#c22b3d}.st-progress{background:#fff7e7;color:#9a6700}.st-closed{background:#eaf8ef;color:#19713b}.actions{display:flex;justify-content:flex-end;gap:5px}.icon-btn{width:32px;height:32px;display:grid;place-items:center;padding:0;border:1px solid #dfe5ef;border-radius:8px;background:#fff;color:#526178;transition:.18s}.icon-btn:hover,.icon-btn:focus-visible{border-color:#b8d3ff;background:#eef5ff;color:var(--primary)}.icon-btn.delete:hover,.icon-btn.delete:focus-visible{border-color:#f5b8bf;background:#fff1f2;color:#dc3545}
+    .empty{padding:58px 24px;color:var(--muted);text-align:center}.empty i{display:grid;width:48px;height:48px;place-items:center;margin:0 auto 12px;border-radius:50%;background:#eef5ff;color:var(--primary);font-size:21px}.empty h3{margin:0 0 6px;color:var(--ink);font-size:15px}.empty p{margin:0;font-size:12px}.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-top:1px solid var(--line)}.pager-info{color:var(--muted);font-size:12px}.pagination{gap:6px;margin:0}.page-link{min-width:34px;border:1px solid #dfe5ef;border-radius:8px!important;color:#475569;font-size:12px;text-align:center}.page-link:hover{color:var(--primary);background:#eef5ff}.page-item.active .page-link{border-color:var(--primary);background:var(--primary)}.page-item.disabled .page-link{color:#c0c7d2;background:#f8fafc}
+    .modal-content{overflow:hidden;border:0;border-radius:16px;box-shadow:0 24px 60px rgba(15,23,42,.2)}.modal-header{padding:20px 24px;border-bottom-color:var(--line)}.modal-title{font-size:18px;font-weight:700}.modal-body{padding:22px 24px}.modal-footer{padding:16px 24px;border-top-color:var(--line)}.toast-container{z-index:1080}.toast{border:0;border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.16)}
+    .topbar-nav { display:flex; align-items:center; gap:6px; margin-left:20px; }
+    .topbar-nav-link { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; color:#475569; font-size:13px; font-weight:500; text-decoration:none; transition:all 0.2s ease; }
+    .topbar-nav-link:hover, .topbar-nav-link:focus, .topbar-nav-link.active { background-color:#eef2ff; color:#4f46e5; font-weight:600; }
+    @media(max-width:1100px){.filter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.filter-grid .search-field{grid-column:span 2}}@media(max-width:768px){.topbar{height:64px;padding:0 18px}.user span:first-child{display:none}main{padding:24px 16px 32px}.heading{flex-direction:column;margin-bottom:20px}.heading .btn{width:100%}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{min-height:94px;padding:15px}.metric-value{margin-top:7px;font-size:22px}.filters,.table-head{padding:16px}.help{margin-left:0}.filter-grid,.filter-grid .search-field{grid-template-columns:1fr;grid-column:auto}.reset{width:100%}.pager{align-items:flex-start;flex-direction:column;padding:14px 16px}.modal-header,.modal-body,.modal-footer{padding-right:18px;padding-left:18px}}
+  </style>
+  <link href="../../../public/assets/css/quality_patrol/style.css?v=1" rel="stylesheet" />
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="app-shell">
+  <header class="topbar">
+    <div class="topbar-left d-flex align-items-center">
+      <a class="brand" href="summary.html" aria-label="Quality Patrol"><span class="brand-mark"><i class="bi bi-shield-check"></i></span><span>Quality Patrol</span></a>
+      <nav class="topbar-nav d-none d-md-flex">
+        <a class="topbar-nav-link" href="summary.html"><i class="bi bi-house-door"></i> Home</a>
+        <a class="topbar-nav-link active" href="temuan_patrol.html"><i class="bi bi-list-check"></i> Daftar Temuan</a>
+        <div class="dropdown d-inline-block">
+          <a class="topbar-nav-link dropdown-toggle" href="#" id="masterDataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-database"></i> Master Data
+          </a>
+          <ul class="dropdown-menu shadow-sm" aria-labelledby="masterDataDropdown">
+            <li><a class="dropdown-item py-2" href="../admin/mdata_user.html"><i class="bi bi-people me-2 text-primary"></i> User</a></li>
+            <li><a class="dropdown-item py-2" href="../admin/mdata_departement.html"><i class="bi bi-building me-2 text-primary"></i> Departemen</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="topbar-actions"><div class="user" aria-label="Pengguna saat ini"><span>Admin Quality</span><span class="avatar"><i class="bi bi-person"></i></span></div></div>
+  </header>
+  <main>
+    <div class="heading">
+      <div><p class="eyebrow">Quality Control</p><h1>Daftar Temuan Patrol</h1><p class="subtitle">Kelola, pantau, dan ekspor tindak lanjut temuan dalam satu halaman.</p></div>
+      <button id="addButton" class="btn btn-primary px-3" type="button"><i class="bi bi-plus-lg me-1"></i> Tambah Temuan</button>
+    </div>
+    <section class="metrics" aria-label="Ringkasan temuan">
+      <article class="card"><div class="metric-label"><i class="bi bi-clipboard2-check"></i>Total temuan</div><div id="total" class="metric-value">0</div></article>
+      <article class="card"><div class="metric-label"><i class="bi bi-exclamation-circle"></i>Open</div><div id="open" class="metric-value open">0</div></article>
+      <article class="card"><div class="metric-label"><i class="bi bi-arrow-repeat"></i>In Progress</div><div id="progress" class="metric-value progress">0</div></article>
+      <article class="card"><div class="metric-label"><i class="bi bi-check2-circle"></i>Closed</div><div id="closed" class="metric-value closed">0</div></article>
+    </section>
+    <section class="filters" aria-labelledby="filterTitle">
+      <div class="panel-heading">
+        <div><h2 id="filterTitle" class="panel-title"><i class="bi bi-funnel"></i>Filter temuan</h2><p class="help">Pilih kombinasi filter untuk menemukan data lebih cepat.</p></div>
+        <button id="exportButton" class="btn btn-outline-success btn-sm px-3" type="button"><i class="bi bi-file-earmark-spreadsheet me-1"></i>Export Excel</button>
+      </div>
+      <div class="filter-grid">
+        <div class="search-field"><label for="search">Pencarian</label><div class="search"><i class="bi bi-search"></i><input id="search" class="form-control" type="search" placeholder="Cari ID, temuan, auditor, atau PIC" /></div></div>
+        <div><label for="areaFilter">Area / Proses</label><select id="areaFilter" class="form-select"><option value="">Semua area</option></select></div>
+        <div><label for="auditorFilter">Auditor</label><select id="auditorFilter" class="form-select"><option value="">Semua auditor</option></select></div>
+        <div><label for="statusFilter">Status</label><select id="statusFilter" class="form-select"><option value="">Semua status</option><option>Open</option><option>In Progress</option><option>Closed</option></select></div>
+        <div><label for="monthFilter">Bulan patrol</label><input id="monthFilter" class="form-control" type="month" /></div>
+        <button id="resetButton" class="btn btn-outline-secondary reset" type="button" title="Reset semua filter" aria-label="Reset semua filter"><i class="bi bi-arrow-counterclockwise"></i><span class="d-md-none ms-1">Reset filter</span></button>
+      </div>
+    </section>
+    <section class="table-panel" aria-labelledby="tableTitle">
+      <div class="table-head"><div><h2 id="tableTitle" class="panel-title"><i class="bi bi-list-check"></i>Data temuan</h2><p id="result" class="result">Memuat data…</p></div><span id="limit" class="badge text-bg-light border text-secondary px-3 py-2">0 / 100 data</span></div>
+      <div class="table-responsive"><table aria-describedby="result"><thead><tr><th>ID</th><th>Tanggal</th><th>Auditor / Auditee</th><th>Area / Proses</th><th>Temuan</th><th>PIC &amp; Due Date</th><th>Status</th><th class="text-end">Aksi</th></tr></thead><tbody id="tbody"></tbody></table></div>
+      <div id="empty" class="empty d-none"><i class="bi bi-search"></i><h3>Data tidak ditemukan</h3><p>Ubah atau reset filter untuk menampilkan data temuan.</p></div>
+      <div id="pager" class="pager"><span id="pagerInfo" class="pager-info"></span><nav aria-label="Navigasi halaman data"><ul id="pages" class="pagination"></ul></nav></div>
+    </section>
+  </main>
+  <div class="footer" id="footer"><p id="footerText">2025 Quality Patrol - All rights reserved</p></div>
+
+  <div class="modal fade" id="findingModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable"><form id="form" class="modal-content" novalidate>
+      <div class="modal-header"><div><p id="modalId" class="eyebrow mb-1">Temuan Patrol</p><h2 id="modalTitle" class="modal-title">Tambah Temuan</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button></div>
+      <div class="modal-body"><div class="row g-3">
+        <div class="col-md-4"><label for="date">Tanggal patrol</label><input id="date" name="date" class="form-control" type="date" required /></div>
+        <div class="col-md-4"><label for="status">Status</label><select id="status" name="status" class="form-select" required><option>Open</option><option>In Progress</option><option>Closed</option></select></div>
+        <div class="col-md-4"><label for="dueDate">Due date</label><input id="dueDate" name="dueDate" class="form-control" type="date" required /></div>
+        <div class="col-md-6"><label for="auditor">Auditor</label><input id="auditor" name="auditor" class="form-control" type="text" placeholder="Nama auditor" required maxlength="80" /></div>
+        <div class="col-md-6"><label for="auditee">Auditee</label><input id="auditee" name="auditee" class="form-control" type="text" placeholder="Nama auditee" required maxlength="80" /></div>
+        <div class="col-md-6"><label for="area">Area / Proses</label><input id="area" name="area" class="form-control" type="text" placeholder="Contoh: Produksi 1 / Line A" required maxlength="100" /></div>
+        <div class="col-md-6"><label for="pic">PIC Action</label><input id="pic" name="pic" class="form-control" type="text" placeholder="Nama PIC" required maxlength="80" /></div>
+        <div class="col-12"><label for="description">Temuan</label><textarea id="description" name="description" class="form-control" placeholder="Jelaskan temuan yang ditemukan" required maxlength="500"></textarea></div>
+        <div class="col-md-6"><label for="cause">Analisa penyebab</label><textarea id="cause" name="cause" class="form-control" placeholder="Penyebab utama temuan" required maxlength="500"></textarea></div>
+        <div class="col-md-6"><label for="action">Rencana tindakan</label><textarea id="action" name="action" class="form-control" placeholder="Tindakan perbaikan yang direncanakan" required maxlength="500"></textarea></div>
+        <div class="col-12"><label for="evidence">Nama evidence <span class="text-secondary fw-normal text-lowercase">(opsional)</span></label><input id="evidence" name="evidence" class="form-control" type="text" placeholder="Contoh: foto-apd-line-a.jpg" maxlength="120" /></div>
+      </div><p id="formNote" class="small mt-3 mb-0">Data hanya tersimpan selama halaman HTML ini terbuka.</p></div>
+      <div class="modal-footer"><button type="button" class="btn btn-outline-secondary px-3" data-bs-dismiss="modal">Batal</button><button id="save" type="submit" class="btn btn-primary px-3"><i class="bi bi-check2 me-1"></i>Simpan Temuan</button></div>
+    </form></div>
+  </div>
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h2 id="deleteTitle" class="modal-title">Hapus temuan?</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button></div><div class="modal-body"><p class="mb-0 text-secondary">Data <strong id="deleteId" class="text-dark"></strong> akan dihapus dari halaman ini dan tidak dapat dikembalikan.</p></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary px-3" data-bs-dismiss="modal">Batal</button><button id="deleteConfirm" class="btn btn-danger px-3" type="button"><i class="bi bi-trash3 me-1"></i>Hapus</button></div></div></div></div>
+  <div class="toast-container position-fixed top-0 end-0 p-3"><div id="toast" class="toast align-items-center" role="status" aria-live="polite" aria-atomic="true"><div class="d-flex"><div id="toastText" class="toast-body"></div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button></div></div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../public/assets/js/xlsx.full.min.js"></script>
+  <script>
+    "use strict";
+    // State hanya berada di memori browser. Halaman ini tidak melakukan AJAX, API, database, ataupun localStorage.
+    const MAX = 100, SIZE = 10;
+    const fmt = new Intl.DateTimeFormat("id-ID", { day:"2-digit", month:"short", year:"numeric" });
+    const areas = ["Produksi 1 / Line A","Produksi 2 / Line B","QA / Dokumentasi","Warehouse / Material","Maintenance / Utility","Packing / Final Check","Laboratorium / QC","Office / Administrasi"];
+    const auditors = ["Budi Santoso","Citra Dewi","Dimas Pratama","Farah Nabila","Gilang Ramadhan","Intan Permata","Joko Wibowo","Lestari Putri"];
+    const auditees = ["Siti Aminah","Andi Susilo","Rina Wijaya","Hendra Wijaya","Nanda Pratama","Yusuf Hidayat","Maya Sari","Agus Salim"];
+    const pics = ["Hendra Wijaya","Rina Wijaya","Agus Salim","Nanda Pratama","Maya Sari","Yusuf Hidayat"];
+    const descriptions = ["APD tidak digunakan secara lengkap di area kerja.","Checklist pemeriksaan harian belum diisi sesuai jadwal.","Material belum memiliki label identifikasi yang jelas.","Rambu keselamatan di jalur kerja perlu diperbarui.","Dokumen instruksi kerja belum menggunakan revisi terbaru.","Area penyimpanan belum menerapkan penandaan batas maksimum.","Tempat sampah limbah belum dilengkapi label klasifikasi.","Jalur evakuasi terhalang material sementara."];
+    const causes = ["Pengawasan rutin belum konsisten pada setiap pergantian shift.","Sosialisasi standar kerja kepada personel baru belum merata.","Kontrol visual belum diperbarui setelah perubahan area kerja.","Penanggung jawab belum melakukan verifikasi checklist harian."];
+    const actions = ["Lakukan briefing ulang dan verifikasi kepatuhan oleh supervisor.","Perbarui kontrol visual dan lakukan audit tindak lanjut.","Lengkapi kebutuhan area lalu dokumentasikan hasil perbaikan.","Jadwalkan pelatihan singkat serta monitoring selama dua minggu."];
+    const iso = d => new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    const demo = () => Array.from({length:24}, (_,i) => { const d=new Date(2026,6-(i%5),28-i), due=new Date(d); due.setDate(due.getDate()+7+i%5); return { id:`TP-${1001+i}`, date:iso(d), auditor:auditors[i%auditors.length], auditee:auditees[(i+2)%auditees.length], area:areas[i%areas.length], description:descriptions[i%descriptions.length], cause:causes[i%causes.length], action:actions[i%actions.length], pic:pics[i%pics.length], dueDate:iso(due), evidence:i%4===0?`evidence-${String(i+1).padStart(2,"0")}.jpg`:"", status:["Open","In Progress","Closed"][i%3] }; });
+    let data=demo(), page=1, editId=null, deleteId=null;
+    const el = id => document.getElementById(id);
+    const modal = new bootstrap.Modal(el("findingModal")), confirmModal = new bootstrap.Modal(el("deleteModal")), toast = new bootstrap.Toast(el("toast"),{delay:3200});
+    const esc = value => String(value||"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;",'"':"&quot;"}[c]));
+    const date = value => value ? fmt.format(new Date(`${value}T00:00:00`)) : "—";
+    function notify(message, type="primary") {
+      if (typeof Swal !== "undefined") {
+        const swalIcon = type === "success" ? "success" : type === "danger" || type === "error" ? "error" : type === "warning" ? "warning" : "info";
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: swalIcon,
+          title: message,
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true
+        });
+      } else {
+        el("toast").className=`toast align-items-center text-bg-${type} border-0`; el("toastText").textContent=message; toast.show();
+      }
+    }
+    function optionList(id, values, placeholder) { const select=el(id), selected=select.value, choices=[...new Set(values)].sort((a,b)=>a.localeCompare(b,"id")); select.innerHTML=`<option value="">${placeholder}</option>${choices.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("")}`; if(choices.includes(selected)) select.value=selected; }
+    function filtered() { const search=el("search").value.trim().toLocaleLowerCase("id-ID"), area=el("areaFilter").value, auditor=el("auditorFilter").value, status=el("statusFilter").value, month=el("monthFilter").value; return data.filter(x=>{const hay=[x.id,x.auditor,x.auditee,x.area,x.description,x.pic].join(" ").toLocaleLowerCase("id-ID"); return (!search||hay.includes(search))&&(!area||x.area===area)&&(!auditor||x.auditor===auditor)&&(!status||x.status===status)&&(!month||x.date.startsWith(month));}).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id)); }
+    function badge(status) { const css=status==="Closed"?"st-closed":status==="In Progress"?"st-progress":"st-open", icon=status==="Closed"?"bi-check2-circle":status==="In Progress"?"bi-arrow-repeat":"bi-exclamation-circle"; return `<span class="badge-status ${css}"><i class="bi ${icon}"></i>${esc(status)}</span>`; }
+    function renderSummary() { el("total").textContent=data.length; el("open").textContent=data.filter(x=>x.status==="Open").length; el("progress").textContent=data.filter(x=>x.status==="In Progress").length; el("closed").textContent=data.filter(x=>x.status==="Closed").length; el("limit").textContent=`${data.length} / ${MAX} data`; }
+    function renderPages(total) { if(total<=1){el("pages").innerHTML="";return;} const buttons=Array.from({length:total},(_,i)=>i+1).map(n=>`<li class="page-item ${n===page?"active":""}"><button class="page-link" type="button" data-page="${n}" ${n===page?'aria-current="page"':""}>${n}</button></li>`).join(""); el("pages").innerHTML=`<li class="page-item ${page===1?"disabled":""}"><button class="page-link" type="button" data-page="${page-1}" aria-label="Sebelumnya"><i class="bi bi-chevron-left"></i></button></li>${buttons}<li class="page-item ${page===total?"disabled":""}"><button class="page-link" type="button" data-page="${page+1}" aria-label="Selanjutnya"><i class="bi bi-chevron-right"></i></button></li>`; }
+    function renderTable() { const list=filtered(), max=Math.max(1,Math.ceil(list.length/SIZE)); if(page>max)page=max; const start=(page-1)*SIZE, rows=list.slice(start,start+SIZE); el("tbody").innerHTML=rows.map(x=>`<tr><td><span class="id">${esc(x.id)}</span></td><td class="text-nowrap">${date(x.date)}</td><td><div class="name">${esc(x.auditor)}</div><div class="small">Auditee: ${esc(x.auditee)}</div></td><td>${esc(x.area)}</td><td><span class="finding" title="${esc(x.description)}">${esc(x.description)}</span></td><td><div class="name">${esc(x.pic)}</div><div class="small">Due: ${date(x.dueDate)}</div></td><td>${badge(x.status)}</td><td><div class="actions"><button class="icon-btn" type="button" data-action="view" data-id="${esc(x.id)}" title="Lihat detail" aria-label="Lihat ${esc(x.id)}"><i class="bi bi-eye"></i></button><button class="icon-btn" type="button" data-action="edit" data-id="${esc(x.id)}" title="Edit" aria-label="Edit ${esc(x.id)}"><i class="bi bi-pencil"></i></button><button class="icon-btn delete" type="button" data-action="delete" data-id="${esc(x.id)}" title="Hapus" aria-label="Hapus ${esc(x.id)}"><i class="bi bi-trash3"></i></button></div></td></tr>`).join(""); el("empty").classList.toggle("d-none",!!list.length); el("pager").classList.toggle("d-none",!list.length); el("result").textContent=list.length===data.length?`Menampilkan ${data.length} data temuan.`:`Menampilkan ${list.length} dari ${data.length} data temuan.`; if(list.length) el("pagerInfo").textContent=`Data ${start+1}–${Math.min(start+SIZE,list.length)} dari ${list.length}`; renderPages(max); }
+    function render() { optionList("areaFilter",data.map(x=>x.area),"Semua area"); optionList("auditorFilter",data.map(x=>x.auditor),"Semua auditor"); renderSummary(); renderTable(); }
+    function readOnly(value) { el("form").querySelectorAll("input,select,textarea").forEach(x=>x.disabled=value); el("save").classList.toggle("d-none",value); }
+    function fill(item) { Object.entries(item).forEach(([key,value])=>{const field=el("form").elements.namedItem(key);if(field)field.value=value;}); }
+    function add() { if(data.length>=MAX){notify(`Batas maksimal ${MAX} data temuan sudah tercapai. Hapus data untuk menambah baru.`,"warning");return;} editId=null; el("form").reset(); el("form").classList.remove("was-validated"); el("date").value=iso(new Date()); el("dueDate").value=iso(new Date(Date.now()+7*86400000)); el("modalId").textContent="Temuan Patrol"; el("modalTitle").textContent="Tambah Temuan"; el("formNote").textContent=`Tersedia ${MAX-data.length} slot dari batas maksimal ${MAX} data.`; readOnly(false); modal.show(); }
+    function edit(id, view=false) { const item=data.find(x=>x.id===id);if(!item)return; editId=view?null:id; el("form").reset(); el("form").classList.remove("was-validated");fill(item);el("modalId").textContent=item.id;el("modalTitle").textContent=view?"Detail Temuan":"Edit Temuan";el("formNote").textContent=view?"Mode lihat saja. Pilih edit untuk mengubah data.":"Perubahan hanya berlaku selama halaman HTML ini terbuka.";readOnly(view);modal.show(); }
+    function newId() { return `TP-${data.reduce((n,x)=>Math.max(n,Number(x.id.replace("TP-",""))||1000),1000)+1}`; }
+    function save(event) { event.preventDefault();const form=el("form");if(!form.checkValidity()){form.classList.add("was-validated");return;}const item=Object.fromEntries(new FormData(form).entries());if(editId){const i=data.findIndex(x=>x.id===editId);if(i>=0)data[i]={...data[i],...item};notify("Temuan berhasil diperbarui.","success");}else{if(data.length>=MAX){notify(`Batas maksimal ${MAX} data temuan sudah tercapai.`,"warning");return;}data.push({id:newId(),...item});notify("Temuan baru berhasil ditambahkan.","success");}modal.hide();page=1;render(); }
+    function askDelete(id) {
+      if (typeof Swal !== "undefined") {
+        Swal.fire({
+          title: 'Hapus Temuan?',
+          text: `Apakah Anda yakin ingin menghapus temuan ${id}?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#ef4444',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Ya, Hapus',
+          cancelButtonText: 'Batal'
+        }).then(result => {
+          if (result.isConfirmed) {
+            deleteId = id;
+            remove();
+          }
+        });
+      } else {
+        deleteId=id;el("deleteId").textContent=id;confirmModal.show();
+      }
+    }
+    function remove() { if(!deleteId)return;data=data.filter(x=>x.id!==deleteId);deleteId=null;confirmModal.hide();render();notify("Temuan berhasil dihapus.","success"); }
+    function exportExcel() { const list=filtered();if(!list.length){notify("Tidak ada data yang dapat diekspor.","warning");return;}if(typeof XLSX==="undefined"){notify("Fitur ini tidak tersedia di HTML.","warning");return;}const sheet=XLSX.utils.json_to_sheet(list.map((x,i)=>({No:i+1,"ID Temuan":x.id,"Tanggal Patrol":x.date,Auditor:x.auditor,Auditee:x.auditee,"Area / Proses":x.area,Temuan:x.description,"Analisa Penyebab":x.cause,"Rencana Tindakan":x.action,"PIC Action":x.pic,"Due Date":x.dueDate,Evidence:x.evidence||"-",Status:x.status})));sheet["!cols"]=[{wch:6},{wch:14},{wch:15},{wch:22},{wch:22},{wch:28},{wch:48},{wch:48},{wch:48},{wch:22},{wch:15},{wch:24},{wch:15}];const book=XLSX.utils.book_new();XLSX.utils.book_append_sheet(book,sheet,"Temuan Patrol");XLSX.writeFile(book,`temuan-patrol-${iso(new Date())}.xlsx`);notify(`${list.length} data temuan berhasil diekspor ke Excel.`,"success"); }
+    function reset(){["search","areaFilter","auditorFilter","statusFilter","monthFilter"].forEach(id=>el(id).value="");page=1;renderTable();}
+    el("addButton").addEventListener("click",add);el("form").addEventListener("submit",save);el("deleteConfirm").addEventListener("click",remove);el("exportButton").addEventListener("click",exportExcel);el("resetButton").addEventListener("click",reset);
+    ["search","areaFilter","auditorFilter","statusFilter","monthFilter"].forEach(id=>el(id).addEventListener(id==="search"?"input":"change",()=>{page=1;renderTable();}));
+    el("tbody").addEventListener("click",event=>{const button=event.target.closest("button[data-action]");if(!button)return;const {action,id}=button.dataset;if(action==="view")edit(id,true);if(action==="edit")edit(id);if(action==="delete")askDelete(id);});
+    el("pages").addEventListener("click",event=>{const button=event.target.closest("button[data-page]");if(!button||button.closest(".disabled"))return;page=Number(button.dataset.page);renderTable();});
+    render();
+  </script>
+</body>
+</html>

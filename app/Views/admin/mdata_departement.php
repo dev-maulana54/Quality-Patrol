@@ -97,95 +97,65 @@
         }
     </style>
 
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      .topbar-nav { display:flex; align-items:center; gap:6px; margin-left:20px; }
+      .topbar-nav-link { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:10px; color:#475569; font-size:13px; font-weight:500; text-decoration:none; transition:all 0.2s ease; }
+      .topbar-nav-link:hover, .topbar-nav-link:focus, .topbar-nav-link.active { background-color:#eef2ff; color:#4f46e5; font-weight:600; }
+      .dark-theme .topbar-nav-link { color:#cbd5e1; }
+      .dark-theme .topbar-nav-link:hover, .dark-theme .topbar-nav-link:focus, .dark-theme .topbar-nav-link.active { background-color:#334155; color:#818cf8; }
+      .main-content { margin-left: 0 !important; width: 100% !important; padding: 30px !important; }
+      .footer { margin-left: 0 !important; }
+    </style>
+
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
 </head>
 
-<body class="light-theme"><!-- Header -->
-    <div class="header">
-        <div class="header-left"><button class="mobile-toggle" id="mobileToggle"> <i class="bi bi-list"></i> </button>
-            <h1 class="logo-text" id="appName">Quality Patrol</h1>
-        </div>
-        <div class="header-right">
-            <button class="theme-toggle" id="themeToggle">
-                <i class="bi bi-sun-fill"></i>
-            </button>
-            <div class="profile-dropdown">
-                <img src="https://ui-avatars.com/api/?name=User&amp;background=0d6efd&amp;color=fff&amp;size=128" alt="Profile" class="profile-img" id="profileImg">
-                <div class="dropdown-menu" id="profileDropdown">
-                    <a href="#" class="dropdown-item" id="logoutBtn">
-                        <i class="bi bi-box-arrow-right me-2"></i>Logout </a>
-                </div>
-            </div>
-        </div>
-    </div><!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div style="
-            padding: 20px;
-            margin: 0 15px 20px 15px;
-            background: linear-gradient(135deg, #0d6efd, #0056b3);
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
-        ">
-            <h4 style="
-                color: white;
-                font-size: 14px;
-                font-weight: 600;
-                margin: 0 0 4px 0;
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            " id="sidebarUserName"><?= $nama; ?> </h4>
-            <p style="
-                color: rgba(255, 255, 255, 0.8);
-                font-size: 11px;
-                margin: 0;
-                font-weight: 400;
-            "><?= $role ?></p>
-        </div>
-        <a href="<?= base_url('summary') ?>" class="menu-item " data-page="dashboard">
-            <i class="bi bi-speedometer2"></i>
-            <span>Dashboard</span>
+<body class="light-theme">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="topbar-brand" href="<?= base_url('summary') ?>" aria-label="Quality Patrol">
+          <span class="topbar-mark"><i class="bi bi-shield-check"></i></span>
+          <span id="appName">Quality Patrol</span>
         </a>
-        <div class="menu-item has-submenu">
-            <div class="menu-item submenu-toggle">
-                <div class="menu-left">
-                    <i class="bi bi-search"></i>
-                    <span>Data Patrol</span>
-                </div>
-                <i class="bi bi-chevron-down chevron"></i>
-            </div>
-
-            <div class="submenu">
-                <a href="<?= base_url('temuan_patrol/auditor') ?>" class="submenu-item">
-                    <i class="bi bi-person-badge"></i>
-                    <span>Data Auditor</span>
-                </a>
-                <a href="<?= base_url('temuan_patrol/auditee') ?>" class="submenu-item">
-                    <i class="bi bi-person-check"></i>
-                    <span>Data Auditee</span>
-                </a>
-            </div>
-        </div>
-        <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="schedule">
-            <i class="bi bi-calendar-check"></i>
-            <span>Schedule</span>
-        </a>
-        <div class="menu-header">
-            Master Data
-        </div>
-        <?php if ($role === 'Administrator') : ?>
-            <a href="<?= base_url('admin/mdata_user') ?>" class="menu-item " data-page="user">
-                <i class="bi bi-people"></i>
-                <span>User</span>
+        <nav class="topbar-nav d-none d-md-flex">
+          <a class="topbar-nav-link" href="<?= base_url('summary') ?>"><i class="bi bi-house-door"></i> Home</a>
+          <a class="topbar-nav-link" href="<?= base_url('temuan_patrol/daftar_temuan') ?>"><i class="bi bi-list-check"></i> Daftar Temuan</a>
+          <div class="dropdown d-inline-block">
+            <a class="topbar-nav-link dropdown-toggle active" href="#" id="masterDataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-database"></i> Master Data
             </a>
-            <a href="<?= base_url('admin/mdata_departemen') ?>" class="menu-item active" data-page="departemen">
-                <i class="bi bi-building"></i>
-                <span>Departemen</span>
-            </a>
-
-        <?php endif; ?>
-    </div><!-- Main Content -->
+            <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="masterDataDropdown">
+              <li><a class="dropdown-item py-2" href="<?= base_url('admin/mdata_user') ?>"><i class="bi bi-people me-2 text-primary"></i> User</a></li>
+              <li><a class="dropdown-item py-2 active fw-semibold" href="<?= base_url('admin/mdata_departemen') ?>"><i class="bi bi-building me-2 text-primary"></i> Departemen</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-user">
+          <span id="topbarUserName" class="topbar-user-name"><?= isset($nama) ? $nama : 'User'; ?></span>
+          <div class="profile-dropdown">
+            <img src="https://ui-avatars.com/api/?name=<?= urlencode(isset($nama) ? $nama : 'User'); ?>&amp;background=0d6efd&amp;color=fff&amp;size=128" alt="Profil pengguna" class="profile-img" id="profileImg" />
+            <div class="dropdown-menu dropdown-menu-end shadow-sm" id="profileDropdown">
+              <div class="d-md-none border-bottom pb-2 mb-2 px-2">
+                <a class="dropdown-item py-1" href="<?= base_url('summary') ?>"><i class="bi bi-house-door me-2"></i> Home</a>
+                <a class="dropdown-item py-1" href="<?= base_url('temuan_patrol/daftar_temuan') ?>"><i class="bi bi-list-check me-2"></i> Daftar Temuan</a>
+                <div class="dropdown-header px-0 text-muted fw-bold small mt-1">MASTER DATA</div>
+                <a class="dropdown-item py-1 ps-3" href="<?= base_url('admin/mdata_user') ?>"><i class="bi bi-people me-2"></i> User</a>
+                <a class="dropdown-item py-1 ps-3 active" href="<?= base_url('admin/mdata_departemen') ?>"><i class="bi bi-building me-2"></i> Departemen</a>
+              </div>
+              <button class="topbar-menu-action theme-toggle" id="themeToggle" type="button"><i class="bi bi-sun-fill me-2"></i><span>Ubah tema</span></button>
+              <a href="javascript:void(0)" class="dropdown-item text-danger fw-semibold" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
     <div class="main-content" id="mainContent">
-        <h2 class="page-title" id="dashboardTitle">Master data User</h2><!-- Charts Row 1 -->
+        <h2 class="page-title">Master Data Departemen</h2>
 
         <!-- Data Table -->
         <div class="table-card">

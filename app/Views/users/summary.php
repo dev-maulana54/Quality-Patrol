@@ -187,227 +187,194 @@
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
 </head>
 
-<body class="light-theme"><!-- Header -->
-    <div class="header">
-        <div class="header-left"><button class="mobile-toggle" id="mobileToggle"> <i class="bi bi-list"></i> </button>
-            <h1 class="logo-text" id="appName">Quality Patrol</h1>
-        </div>
-        <div class="header-right">
-
-            <button class="theme-toggle" id="themeToggle">
-                <i class="bi bi-sun-fill"></i>
-            </button>
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="bi bi-layout-sidebar-inset"></i>
-            </button>
-            <div class="profile-dropdown">
-                <img src="https://ui-avatars.com/api/?name=User&amp;background=0d6efd&amp;color=fff&amp;size=128" alt="Profile" class="profile-img" id="profileImg">
-                <div class="dropdown-menu" id="profileDropdown">
-                    <a href="javascript:void(0)" class="dropdown-item" id="logoutBtn">
-                        <i class="bi bi-box-arrow-right me-2"></i>Logout </a>
-                </div>
-            </div>
-        </div>
-    </div><!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div style="
-            padding: 20px;
-            margin: 0 15px 20px 15px;
-            background: linear-gradient(135deg, #0d6efd, #0056b3);
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
-        ">
-            <h4 style="
-                color: white;
-                font-size: 14px;
-                font-weight: 600;
-                margin: 0 0 4px 0;
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            " id="sidebarUserName"><?= $nama; ?> </h4>
-            <p style="
-                color: rgba(255, 255, 255, 0.8);
-                font-size: 11px;
-                margin: 0;
-                font-weight: 400;
-            "><?= $role; ?></p>
-        </div>
-        <a href="<?= base_url('summary') ?>" class="menu-item active" data-page="dashboard">
-            <i class="bi bi-speedometer2"></i>
-            <span>Dashboard</span>
+<body class="light-theme">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="topbar-brand" href="<?= base_url('summary') ?>" aria-label="Quality Patrol">
+          <span class="topbar-mark"><i class="bi bi-shield-check"></i></span>
+          <span id="appName">Quality Patrol</span>
         </a>
-        <a href="<?= base_url('temuan_patrol/daftar_temuan') ?>" class="menu-item mt-2" data-page="daftar_temuan">
-            <i class="bi bi-list-check"></i>
-            <span>Daftar Temuan</span>
-        </a>
-        <!-- <div class="menu-item has-submenu">
-            <div class="menu-item submenu-toggle">
-                <div class="menu-left">
-                    <i class="bi bi-search"></i>
-                    <span>Data Patrol</span>
-                </div>
-                <i class="bi bi-chevron-down chevron"></i>
-            </div>
-
-            <div class="submenu">
-                <a href="<?= base_url('temuan_patrol/auditor') ?>" class="submenu-item">
-                    <i class="bi bi-person-badge"></i>
-                    <span>Data Auditor</span>
-                </a>
-                <a href="<?= base_url('temuan_patrol/auditee') ?>" class="submenu-item">
-                    <i class="bi bi-person-check"></i>
-                    <span>Data Auditee</span>
-                </a>
-
-                <a href="<?= base_url('temuan_patrol/list_daftar_hadir') ?>" class="submenu-item">
-                    <i class="bi bi-person-check"></i>
-                    <span>Daftar Hadir</span>
-                </a>
-
-            </div>
-        </div> -->
-
-
-
-        <!-- <a href="<?= base_url('schedule') ?>" class="menu-item" data-page="patrol">
-            <i class="bi bi-calendar-check"></i>
-            <span>Schedule</span>
-        </a> -->
-        <?php if ($role === 'Administrator') : ?>
-            <div class="menu-header">
-                Master Data
-            </div>
-            <a href="<?= base_url('admin/mdata_user') ?>" class="menu-item" data-page="user">
-                <i class="bi bi-people"></i>
-                <span>User</span>
+        <nav class="topbar-nav d-none d-md-flex">
+          <a class="topbar-nav-link active" href="<?= base_url('summary') ?>"><i class="bi bi-house-door"></i> Home</a>
+          <a class="topbar-nav-link" href="<?= base_url('temuan_patrol/daftar_temuan') ?>"><i class="bi bi-list-check"></i> Daftar Temuan</a>
+          <?php if (isset($role) && $role === 'Administrator') : ?>
+          <div class="dropdown d-inline-block">
+            <a class="topbar-nav-link dropdown-toggle" href="#" id="masterDataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-database"></i> Master Data
             </a>
-            <a href="<?= base_url('admin/mdata_departemen') ?>" class="menu-item" data-page="departemen">
-                <i class="bi bi-building"></i>
-                <span>Departemen</span>
-            </a>
-
-        <?php endif; ?>
+            <ul class="dropdown-menu shadow-sm" aria-labelledby="masterDataDropdown">
+              <li><a class="dropdown-item py-2" href="<?= base_url('admin/mdata_user') ?>"><i class="bi bi-people me-2 text-primary"></i> User</a></li>
+              <li><a class="dropdown-item py-2" href="<?= base_url('admin/mdata_departemen') ?>"><i class="bi bi-building me-2 text-primary"></i> Departemen</a></li>
+            </ul>
+          </div>
+          <?php endif; ?>
+        </nav>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-user">
+          <span id="topbarUserName" class="topbar-user-name"><?= isset($nama) ? $nama : 'User'; ?></span>
+          <div class="profile-dropdown">
+            <img src="https://ui-avatars.com/api/?name=<?= urlencode(isset($nama) ? $nama : 'User'); ?>&amp;background=0d6efd&amp;color=fff&amp;size=128" alt="Profil pengguna" class="profile-img" id="profileImg" />
+            <div class="dropdown-menu dropdown-menu-end shadow-sm" id="profileDropdown">
+              <div class="d-md-none border-bottom pb-2 mb-2 px-2">
+                <a class="dropdown-item py-1" href="<?= base_url('summary') ?>"><i class="bi bi-house-door me-2"></i> Home</a>
+                <a class="dropdown-item py-1" href="<?= base_url('temuan_patrol/daftar_temuan') ?>"><i class="bi bi-list-check me-2"></i> Daftar Temuan</a>
+                <?php if (isset($role) && $role === 'Administrator') : ?>
+                <div class="dropdown-header px-0 text-muted fw-bold small mt-1">MASTER DATA</div>
+                <a class="dropdown-item py-1 ps-3" href="<?= base_url('admin/mdata_user') ?>"><i class="bi bi-people me-2"></i> User</a>
+                <a class="dropdown-item py-1 ps-3" href="<?= base_url('admin/mdata_departemen') ?>"><i class="bi bi-building me-2"></i> Departemen</a>
+                <?php endif; ?>
+              </div>
+              <button class="topbar-menu-action theme-toggle" id="themeToggle" type="button"><i class="bi bi-sun-fill me-2"></i><span>Ubah tema</span></button>
+              <a href="javascript:void(0)" class="dropdown-item text-danger fw-semibold" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
     </div><!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <div class="flex justify-center items-center mt-1">
-            <button class="bg-blue-600 text-white px-12 py-6 rounded-xl text-2xl font-bold hover:bg-blue-700 startaudit">
-                <i class="bi bi-clipboard-data"></i> Mulai Quality Patrol
+        <!-- Hero Button -->
+        <div class="d-flex justify-content-end mb-4">
+            <button class="startaudit" style="
+                background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+                color: #fff;
+                border: none;
+                border-radius: 14px;
+                font-weight: 700;
+                font-size: 1rem;
+                padding: 14px 28px;
+                box-shadow: 0 8px 20px rgba(79,70,229,0.25);
+                transition: all 0.3s ease;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            ">
+                <i class="bi bi-clipboard-data" style="font-size:1.2rem;"></i> Mulai Quality Patrol
             </button>
         </div>
-        <h2 class="page-title" id="dashboardTitle">Dashboard Overview</h2><!-- Charts Row 1 -->
+        <h2 class="page-title" id="dashboardTitle">Dashboard Overview</h2>
+
+        <!-- ===== FILTER CARD UNIFIED ===== -->
+        <div class="filter-unified-card">
+            <div class="filter-section-title">
+                <i class="bi bi-funnel-fill"></i> Filter Data
+            </div>
+            <div class="row g-3 align-items-end">
+                <!-- Tahun -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <label class="filter-label"><i class="bi bi-calendar3 me-1"></i> Tahun</label>
+                    <select class="form-select" id="list_year" style="border-radius:10px;height:40px;border:1.5px solid #e2e8f0;font-size:14px;">
+                        <option value="">- Semua Tahun -</option>
+                        <?php
+                        $year_now = date('Y');
+                        $year_end = $year_now - 5;
+                        for ($y = $year_now; $y >= $year_end; $y--) : ?>
+                            <option value="<?= $y ?>" <?= ($y == $year_now) ? 'selected' : '' ?>><?= $y ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+                <!-- Dari Tanggal -->
+                <div class="col-12 col-sm-6 col-md-2">
+                    <label class="filter-label"><i class="bi bi-calendar-event me-1"></i> Dari Tanggal</label>
+                    <input type="text" class="form-control tanggalpickr" id="startDate" placeholder="Pilih tanggal" readonly style="border-radius:10px;height:40px;border:1.5px solid #e2e8f0;font-size:14px;">
+                </div>
+                <!-- Sampai Tanggal -->
+                <div class="col-12 col-sm-6 col-md-2">
+                    <label class="filter-label"><i class="bi bi-calendar-check me-1"></i> Sampai Tanggal</label>
+                    <input type="text" class="form-control tanggalpickr" id="endDate" placeholder="Pilih tanggal" readonly style="border-radius:10px;height:40px;border:1.5px solid #e2e8f0;font-size:14px;">
+                </div>
+                <!-- Departemen -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <label class="filter-label"><i class="bi bi-building me-1"></i> Departemen</label>
+                    <select class="form-select" id="list_dept" style="border-radius:10px;height:40px;border:1.5px solid #e2e8f0;font-size:14px;">
+                        <option value="" selected>- Semua Departemen -</option>
+                        <?php if (!empty($data_dept)): ?>
+                            <?php foreach ($data_dept as $dept) : ?>
+                                <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="Produksi 1">Produksi 1</option>
+                            <option value="Produksi 2">Produksi 2</option>
+                            <option value="QA">QA</option>
+                            <option value="QC">QC</option>
+                            <option value="Procurement">Procurement</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Logistic">Logistic</option>
+                            <option value="Safety &amp; Health">Safety &amp; Health</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+                <!-- Tombol Aksi -->
+                <div class="col-12 col-md-2 d-flex gap-2 align-items-end">
+                    <button class="btn-filter-apply flex-fill" id="filterBtn_all">
+                        <i class="bi bi-funnel-fill me-1"></i> Terapkan
+                    </button>
+                    <button class="btn-filter-reset" id="resetBtn_all" title="Reset Semua Filter">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CHARTS ===== -->
         <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="chart-card" style="margin-bottom: 25px;">
-                    <div class="row align-items-end">
-                        <div class="col-md-8">
-                            <label for="tahun" class="form-label" style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                                <i class="bi bi-calendar-event" style="color: #0d6efd;"></i> Tahun
-                            </label>
-                            <select class="form-select select2" id="list_year" style="width:100%;">
-
-
-
-
-                                <option value="">- Pilih Tahun -</option>
-                                <?php
-                                $year_now = date('Y'); // 2025 (sesuai tahun server)
-                                $year_end = $year_now - 5; // 2025 - 5 = 2020
-
-                                for ($y = $year_now; $y >= $year_end; $y--) : ?>
-                                    <option value="<?= $y ?>"><?= $y ?></option>
-
-                                <?php endfor; ?>
-                                <!-- <option value="">2024</option> -->
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <button class="btn btn-primary w-100 btn-sm" id="filterBtn_year" style="height: 50px;"> <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter </button>
+            <!-- Chart 1: Per Tahun -->
+            <div class="col-lg-12">
+                <div class="chart-card" style="margin-bottom:24px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <div class="chart-section-header">Temuan Tahun <span id="tahun_xxx"><?= date('Y') ?></span></div>
+                            <p class="chart-section-sub">Distribusi temuan per bulan berdasarkan status — klik kolom untuk lihat detail</p>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <h3 class="card-title">Temuan Tahun <span id="tahun_xxx">{All}</span></h3>
-                            <div class="chart-container">
-                                <div id="clustered_chart"></div>
-                            </div>
-                        </div>
-
+                    <div class="chart-container">
+                        <div id="clustered_chart"></div>
                     </div>
                 </div>
-
             </div>
-            <div class="col-lg-12 col-md-12">
-                <div class="chart-card" style="margin-bottom: 25px;">
-                    <div class="row align-items-end">
-                        <div class="col-md-4">
-                            <label for="startDate" class="form-label" style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                                <i class="bi bi-calendar-event" style="color: #0d6efd;"></i> Tanggal Mulai
-                            </label>
-                            <input type="text" class="form-control tanggalpickr" id="startDate" placeholder="Pilih tanggal mulai" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="endDate" class="form-label" style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                                <i class="bi bi-calendar-check" style="color: #0d6efd;"></i> Tanggal Akhir </label>
-                            <input type="text" class="form-control tanggalpickr" id="endDate" placeholder="Pilih tanggal akhir" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary w-100" id="filterBtn_rangeDate" style="height: 50px;">
-                                <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter
-                            </button>
+
+            <!-- Chart 2: Per Departemen -->
+            <div class="col-lg-12">
+                <div class="chart-card" style="margin-bottom:24px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <div class="chart-section-header">Temuan per Departemen</div>
+                            <p class="chart-section-sub">Persentase status temuan berdasarkan area — klik untuk lihat detail</p>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-
-                            <h3 class="card-title">Temuan Quality Patrol</h3>
-                            <div class="chart-container">
-                                <div id="barChartStacked"></div>
-
-                            </div>
-                        </div>
+                    <div class="chart-container">
+                        <div id="barChartStacked"></div>
                     </div>
                 </div>
-
             </div>
-            <div class="col-lg-12 col-md-12">
-                <div class="chart-card" style="margin-bottom: 25px;">
-                    <div class="row align-items-end">
-                        <div class="col-md-8">
-                            <label for="Departement" class="form-label" style="font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                                <i class="bi bi-calendar-event" style="color: #0d6efd;"></i> Departement
-                            </label>
-                            <select class="form-select select2" id="list_dept" style="width:100%;">
-                                <option value="" selected disabled>- Pilih Departemen -</option>
-                                <?php foreach ($data_dept as $dept) : ?>
-                                    <option value="<?= $dept['id_departement'] ?>" data-departement="<?= $dept['departement'] ?>"><?= $dept['departement'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
 
-                        <div class="col-md-4">
-                            <button class="btn btn-primary w-100 btn-sm" id="filterBtn_dept" style="height: 50px;"> <i class="bi bi-funnel-fill me-2"></i> Terapkan Filter </button>
+            <!-- Chart 3: Pie + Stacked Bar Area -->
+            <div class="col-lg-12">
+                <div class="chart-card" style="margin-bottom:24px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <div class="chart-section-header">Temuan Area: <span id="area_xxx">Semua Departemen</span></div>
+                            <p class="chart-section-sub">Distribusi status temuan berdasarkan departemen yang dipilih</p>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row">
                         <div class="col-md-4">
-                            <h3 class="card-title">Temuan Area <span id="area_xxx">{All}</span></h3>
                             <div class="chart-container">
                                 <div id="piechart_area"></div>
                             </div>
                         </div>
                         <div class="col-md-8">
-
                             <div class="chart-container">
                                 <div id="barChart_stacked_area"></div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
 
 
@@ -1533,38 +1500,43 @@
         $('.select2').select2();
         flatpickr(".tanggalpickr", {
             locale: "id",
-            dateFormat: "d M Y",
+            dateFormat: "Y-m-d",
             altInput: true,
             altFormat: "d F Y",
-            // defaultDate: "today",
-
             allowInput: false,
             clickOpens: true,
-            theme: "material_blue",
-            animate: true,
-            position: "auto",
             onReady: function(selectedDates, dateStr, instance) {
-                // Add custom styling to the calendar
-                instance.calendarContainer.style.boxShadow =
-                    "0 15px 35px rgba(13, 110, 253, 0.2)";
+                instance.calendarContainer.style.boxShadow = "0 15px 35px rgba(13, 110, 253, 0.2)";
                 instance.calendarContainer.style.borderRadius = "12px";
-                instance.calendarContainer.style.border =
-                    "1px solid rgba(13, 110, 253, 0.1)";
-            },
-            onChange: function(selectedDates, dateStr, instance) {
-                // Validate field when date is selected
-                const field = document.getElementById("auditDate");
-                // validateField(field);
+                instance.calendarContainer.style.border = "1px solid rgba(13, 110, 253, 0.1)";
+            }
+        });
 
-                // Add visual feedback
-                field.style.borderColor = "#198754";
-                field.style.boxShadow = "0 0 0 3px rgba(25, 135, 84, 0.1)";
+        // Reset Filter Tahun
+        $('#resetBtn_year').click(function () {
+            $('#list_year').val('').trigger('change');
+            $('#filterBtn_year').click();
+        });
 
-                setTimeout(() => {
-                    field.style.borderColor = "";
-                    field.style.boxShadow = "";
-                }, 1000);
-            },
+        // Reset Filter Range Tanggal
+        $('#resetBtn_rangeDate').click(function () {
+            if (document.getElementById('startDate')._flatpickr) {
+                document.getElementById('startDate')._flatpickr.clear();
+            } else {
+                $('#startDate').val('');
+            }
+            if (document.getElementById('endDate')._flatpickr) {
+                document.getElementById('endDate')._flatpickr.clear();
+            } else {
+                $('#endDate').val('');
+            }
+            $('#filterBtn_rangeDate').click();
+        });
+
+        // Reset Filter Departemen
+        $('#resetBtn_dept').click(function () {
+            $('#list_dept').val('').trigger('change');
+            $('#filterBtn_dept').click();
         });
 
         $('#filterBtn_year').click(function() {

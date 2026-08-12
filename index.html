@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Patrol - PT MASA TECH INTELLIGENCE</title>
+    <script>
+        // Entry point - redirect berdasarkan status login
+        (function() {
+            try {
+                var user = JSON.parse(localStorage.getItem('qp_current_user') || 'null');
+                if (!user && window.location.protocol === 'file:') {
+                    var fileSession = window.name || '';
+                    if (fileSession.indexOf('__QUALITY_PATROL_FILE_SESSION__:') === 0) {
+                        user = JSON.parse(fileSession.slice('__QUALITY_PATROL_FILE_SESSION__:'.length));
+                    }
+                }
+                if (user && user.user_id) {
+                    // Sudah login → ke dashboard
+                    window.location.replace('app/Views/users/summary.html');
+                } else {
+                    // Belum login atau sudah logout → ke halaman login
+                    window.location.replace('app/Views/auth/login.html');
+                }
+            } catch(e) {
+                window.location.replace('app/Views/auth/login.html');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p style="font-family:sans-serif;text-align:center;padding:50px;color:#666;">
+        Mengalihkan... jika tidak otomatis, 
+        <a href="app/Views/auth/login.html">klik di sini</a>
+    </p>
+</body>
+</html>

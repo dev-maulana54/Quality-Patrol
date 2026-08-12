@@ -183,3 +183,61 @@ table.dataTable tbody tr > .dtfc-fixed-right {
 hr {
   background-color: black;
 }
+
+/* ===== Sidebar Profile Card ===== */
+.sidebar-profile {
+  padding: 20px;
+  margin: 0 15px 20px 15px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.sidebar-profile h4 {
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.sidebar-profile p {
+  color: #64748b;
+  font-size: 11px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ===== Table Card Header ===== */
+.table-card .card-header {
+  background: transparent;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-radius: 0;
+}
+
+.dark-theme .table-card .card-header {
+  border-bottom-color: #2a2a2a;
+}
+
+/* ===== Filter row label style ===== */
+.filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+  display: block;
+}
+
+/* ===== Improve button group in table ===== */
+.btn-group-action {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}

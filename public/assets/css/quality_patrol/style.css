@@ -1,0 +1,313 @@
+/* Quality Patrol shared visual system for static HTML pages. */
+:root {
+  --qp-primary: #0d6efd;
+  --qp-primary-dark: #0b5ed7;
+  --qp-accent: #4f46e5;
+  --qp-ink: #172033;
+  --qp-muted: #64748b;
+  --qp-page: #f5f7fb;
+  --qp-surface: #ffffff;
+  --qp-line: #e7ebf3;
+  --qp-soft: #eef2ff;
+  --qp-radius: 12px;
+  --qp-font: "Outfit", "Poppins", system-ui, -apple-system, sans-serif;
+}
+
+body.app-shell {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--qp-page);
+  color: var(--qp-ink);
+  font-family: var(--qp-font);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.app-shell *,
+.app-shell *::before,
+.app-shell *::after { box-sizing: border-box; }
+
+.app-shell button,
+.app-shell input,
+.app-shell select,
+.app-shell textarea { font: inherit; }
+
+/* Shared header */
+.app-shell .topbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 70px;
+  padding: 0 32px;
+  background: rgba(255, 255, 255, .94);
+  border-bottom: 1px solid var(--qp-line);
+  box-shadow: none;
+  backdrop-filter: blur(12px);
+}
+
+.app-shell .topbar-left,
+.app-shell .topbar-actions,
+.app-shell .topbar-user,
+.app-shell .topbar > .d-flex,
+.app-shell .user {
+  display: flex;
+  align-items: center;
+}
+
+.app-shell .topbar-left,
+.app-shell .topbar > .d-flex { gap: 12px; }
+.app-shell .topbar-actions { gap: 12px; }
+
+.app-shell .topbar-brand,
+.app-shell .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--qp-ink);
+  font-family: var(--qp-font);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.app-shell .topbar-brand:hover,
+.app-shell .brand:hover { color: var(--qp-ink); }
+
+.app-shell .topbar-mark,
+.app-shell .brand-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  flex: 0 0 34px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--qp-primary), #5b9dff);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(13, 110, 253, .24);
+}
+
+.app-shell .topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 20px;
+}
+
+.app-shell .topbar-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: #475569;
+  font-family: var(--qp-font);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: all .2s ease;
+  white-space: nowrap;
+}
+
+.app-shell .topbar-nav-link:hover,
+.app-shell .topbar-nav-link:focus,
+.app-shell .topbar-nav-link.active {
+  background: var(--qp-soft);
+  color: var(--qp-accent);
+  font-weight: 600;
+}
+
+.app-shell .topbar-user,
+.app-shell .user {
+  gap: 10px;
+  color: var(--qp-muted);
+  font-size: 12px;
+}
+
+.app-shell .topbar-user-name,
+.app-shell .user > span:first-child {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell .profile-img,
+.app-shell .avatar {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  flex: 0 0 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #e8f0ff;
+  color: var(--qp-primary);
+  cursor: pointer;
+  object-fit: cover;
+  transition: transform .2s ease;
+}
+
+.app-shell .profile-img:hover,
+.app-shell .avatar:hover { transform: scale(1.05); }
+
+/* Shared profile dropdown */
+.app-shell .profile-dropdown { position: relative; z-index: 1050; }
+
+.app-shell .profile-dropdown .dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  left: auto;
+  display: none;
+  width: 236px;
+  min-width: 236px;
+  margin: 0;
+  padding: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: var(--qp-radius);
+  background: #fff;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, .16) !important;
+}
+
+.app-shell .profile-dropdown .dropdown-menu.show { display: block; }
+
+.app-shell .profile-dropdown .dropdown-item,
+.app-shell .profile-dropdown .topbar-menu-action {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 11px !important;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.app-shell .profile-dropdown .topbar-menu-action { cursor: pointer; }
+
+.app-shell .profile-dropdown .dropdown-item:hover,
+.app-shell .profile-dropdown .topbar-menu-action:hover {
+  background: #f1f5f9;
+  color: var(--qp-accent);
+}
+
+.app-shell .profile-dropdown .dropdown-item.text-danger:hover {
+  background: #fff1f2;
+  color: #dc2626 !important;
+}
+
+/* Shared page typography */
+.app-shell h1,
+.app-shell h2,
+.app-shell h3,
+.app-shell h4,
+.app-shell h5,
+.app-shell h6 { font-family: var(--qp-font); color: var(--qp-ink); }
+
+.app-shell p { font-family: var(--qp-font); }
+
+.app-shell > main {
+  width: min(1440px, 100%);
+  margin: 70px auto 0;
+  padding: 34px 32px 48px;
+}
+
+/* Shared footer */
+.app-shell .footer {
+  width: 100%;
+  margin: 0 !important;
+  padding: 20px !important;
+  background: #fff !important;
+  border-top: 1px solid #e2e8f0 !important;
+  color: #64748b !important;
+  font-family: var(--qp-font);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.app-shell .footer p { margin: 0; }
+
+/* Temuan patrol uses a plain <main>; add the same footer as the other pages. */
+.app-shell > main + .footer { margin-top: 0; }
+
+/* Shared dark theme */
+.app-shell.dark-theme,
+.app-shell.dark-theme body { background: #0f172a; color: #e2e8f0; }
+
+.app-shell.dark-theme .topbar {
+  background: rgba(30, 41, 59, .94);
+  border-bottom-color: #334155;
+}
+
+.app-shell.dark-theme .topbar-brand,
+.app-shell.dark-theme .topbar-brand:hover,
+.app-shell.dark-theme .brand,
+.app-shell.dark-theme .brand:hover { color: #e2e8f0; }
+
+.app-shell.dark-theme .topbar-user,
+.app-shell.dark-theme .user { color: #94a3b8; }
+
+.app-shell.dark-theme .topbar-nav-link { color: #cbd5e1; }
+
+.app-shell.dark-theme .topbar-nav-link:hover,
+.app-shell.dark-theme .topbar-nav-link:focus,
+.app-shell.dark-theme .topbar-nav-link.active {
+  background: #334155;
+  color: #a5b4fc;
+}
+
+.app-shell.dark-theme .profile-dropdown .dropdown-menu {
+  background: #1e293b;
+  border-color: #475569 !important;
+}
+
+.app-shell.dark-theme .profile-dropdown .dropdown-item,
+.app-shell.dark-theme .profile-dropdown .topbar-menu-action { color: #e2e8f0; }
+
+.app-shell.dark-theme .profile-dropdown .dropdown-item:hover,
+.app-shell.dark-theme .profile-dropdown .topbar-menu-action:hover {
+  background: #334155;
+  color: #a5b4fc;
+}
+
+.app-shell.dark-theme .footer {
+  background: #1e293b !important;
+  border-top-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+
+@media (max-width: 767.98px) {
+  .app-shell .topbar {
+    height: 64px;
+    padding: 0 18px;
+  }
+
+  .app-shell .topbar-brand,
+  .app-shell .brand { font-size: 16px; }
+  .app-shell .topbar-user-name,
+  .app-shell .user > span:first-child { display: none; }
+  .app-shell .profile-dropdown .dropdown-menu { right: -4px; }
+  .app-shell > main { margin-top: 64px; padding: 24px 16px 32px; }
+}

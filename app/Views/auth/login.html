@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Quality Patrol</title>
+    <!-- Google Fonts: Poppins & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Outfit', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #dbeafe 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            position: relative;
+        }
+
+        /* Canvas background overlay */
+        #animation-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Soft ambient glow spots for light theme */
+        .ambient-glow-1 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 70%);
+            top: -100px;
+            left: -100px;
+            z-index: 2;
+            animation: floatGlow 15s infinite alternate ease-in-out;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0) 70%);
+            bottom: -150px;
+            right: -100px;
+            z-index: 2;
+            animation: floatGlow 20s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 20px) scale(1.05); }
+        }
+
+        /* Clean Glassmorphism light card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.02);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px;
+            z-index: 10;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.1);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Input Styling */
+        .custom-input {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #1e293b !important;
+            border-radius: 12px !important;
+            padding: 12px 16px 12px 44px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .custom-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .custom-input:focus {
+            background: #ffffff !important;
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15) !important;
+            outline: none !important;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 1.1rem;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-group-container:focus-within .input-icon {
+            color: #4f46e5;
+        }
+
+        /* Button Styling */
+        .btn-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+            border: none;
+            color: white;
+            padding: 14px;
+            font-weight: 600;
+            border-radius: 12px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-gradient:active {
+            transform: translateY(0);
+        }
+
+        .logo-box {
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.04);
+            border: 1px solid rgba(241, 245, 249, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Canvas for interactive background particles -->
+    <canvas id="animation-canvas"></canvas>
+    
+    <!-- Decorative Glow Spots -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Login Container -->
+    <div class="glass-card">
+        <!-- Brand Logo & Header -->
+        <div class="text-center mb-5">
+            <div class="inline-block p-4 rounded-3xl logo-box mb-4">
+                <img src="../../../public/assets/company.png" class="h-12 w-auto object-contain" alt="CBI Logo">
+            </div>
+            <h1 class="text-2xl font-bold text-slate-800 tracking-wider mb-1">QUALITY PATROL</h1>
+            <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold">PT MASA TECH INTELLIGENCE</p>
+        </div>
+
+        <!-- Alert Container -->
+        <div id="alertContainer" class="mb-4"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-4" novalidate>
+            <!-- Username Input -->
+            <div class="relative form-group-container">
+                <i class="bi bi-person input-icon"></i>
+                <input type="text" class="form-control custom-input" id="username" placeholder="Username" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="relative form-group-container">
+                <i class="bi bi-lock input-icon"></i>
+                <input type="password" class="form-control custom-input" id="password" placeholder="Password" required>
+            </div>
+
+            <!-- Action Button -->
+            <div class="pt-2">
+                <button type="button" class="btn btn-gradient" id="loginButton">Masuk</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Script Libraries -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Simple localStorage session -->
+    <script src="../../../public/assets/js/local_storage_app.js?v=3"></script>
+    
+    <!-- Particles & Interactivity JS Animation -->
+    <script>
+        const canvas = document.getElementById('animation-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const maxParticles = 55;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.7;
+                this.vy = (Math.random() - 0.5) * 0.7;
+                this.radius = Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.4 + 0.2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(79, 70, 229, ${this.alpha})`;
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 160) {
+                        const alpha = (1 - dist / 160) * 0.12;
+                        ctx.strokeStyle = `rgba(79, 70, 229, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+    </script>
+
+    <!-- Login Logic handler -->
+    <script>
+        // Jika sesi masih ada, langsung ke halaman utama.
+        var _existingUser = LocalStorageApp.currentUser();
+        if (_existingUser) {
+            LocalStorageApp.redirectAfterLogin('../users/summary.html');
+        }
+
+        function showAlert(msg, type) {
+            $('#alertContainer').html(
+                '<div class="alert alert-' + type + ' alert-dismissible fade show text-sm py-2 px-3 mb-4 shadow-sm border-0" role="alert">' +
+                msg +
+                '<button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                '</div>'
+            );
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: type === 'success' ? 'success' : type === 'danger' ? 'error' : 'info',
+                    title: msg,
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            }
+        }
+
+        $('#loginButton').on('click', function () {
+            var username = $('#username').val().trim();
+            var password = $('#password').val().trim();
+
+            if (username === '' || password === '') {
+                showAlert('Harap isi semua bidang.', 'danger');
+                return;
+            }
+
+            var $btn = $('#loginButton');
+            $btn.prop('disabled', true);
+            $btn.html(
+                '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Mohon Tunggu ...'
+            );
+
+            // Simulasi delay 600ms
+            setTimeout(function () {
+                var result = LocalStorageApp.login(username, password);
+
+                if (result.ok === true) {
+                    showAlert('Login berhasil! Mengalihkan...', 'success');
+                    setTimeout(function () {
+                        LocalStorageApp.redirectAfterLogin('../users/summary.html');
+                    }, 800);
+                } else {
+                    showAlert(result.msg, 'danger');
+                    $btn.prop('disabled', false);
+                    $btn.html('Masuk');
+                }
+            }, 600);
+        });
+
+        // Enter key support
+        $('#password, #username').on('keypress', function (e) {
+            if (e.which === 13) $('#loginButton').trigger('click');
+        });
+    </script>
+</body>
+
+</html>
+

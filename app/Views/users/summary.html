@@ -1,0 +1,2350 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quality Patrol - Summary</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"
+    />
+    <!-- Google Fonts - Poppins -->
+    <!-- Flatpickr CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css"
+    />
+    <!-- Select2 core CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <!-- Select2 Bootstrap-5 Theme -->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../../../public/assets/css/summary.css" rel="stylesheet" />
+
+    <style>
+      /* CSS Overrides to match PT MASA TECH INTELLIGENCE Light Theme */
+
+      /* Force 'Outfit' font family globally */
+      *,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      span,
+      a,
+      input,
+      button,
+      select,
+      option,
+      td,
+      th {
+        font-family: "Outfit", "Poppins", sans-serif !important;
+      }
+
+      body.light-theme {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+      }
+
+      /* Chart container styles and responsive overrides */
+      .chart-container {
+        position: relative;
+        width: 100%;
+        height: 380px !important;
+        margin-top: 15px;
+        overflow: hidden;
+      }
+
+      @media (max-width: 768px) {
+        .chart-container {
+          height: 260px !important;
+        }
+      }
+
+      .chart-container > div {
+        height: 100% !important;
+        width: 100% !important;
+      }
+      /* Shared topbar pattern with temuan_patrol.html */
+      .topbar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid #e7ebf3;
+        box-shadow: none;
+        backdrop-filter: blur(12px);
+      }
+      .topbar-left,
+      .topbar-actions,
+      .topbar-user {
+        display: flex;
+        align-items: center;
+      }
+      .topbar-left {
+        gap: 12px;
+      }
+      .topbar-actions {
+        gap: 12px;
+      }
+      .topbar-page-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 38px;
+        padding: 0 13px;
+        border: 1px solid #dce7f7;
+        border-radius: 10px;
+        background: #f4f8ff;
+        color: #0d6efd;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.18s ease;
+      }
+      .topbar-page-link:hover,
+      .topbar-page-link:focus-visible {
+        border-color: #b8d3ff;
+        background: #e8f1ff;
+        color: #0b5ed7;
+      }
+      .topbar-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: #172033;
+        font-size: 17px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .topbar-brand:hover {
+        color: #172033;
+      }
+      .topbar-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 11px;
+        background: linear-gradient(135deg, #0d6efd, #5b9dff);
+        color: #fff;
+        box-shadow: 0 6px 14px rgba(13, 110, 253, 0.24);
+      }
+      .topbar-user {
+        gap: 10px;
+        color: #64748b;
+        font-size: 12px;
+      }
+      .topbar .profile-dropdown {
+        position: relative;
+      }
+      .topbar .profile-img {
+        width: 36px;
+        height: 36px;
+        display: block;
+        border: 0;
+        border-radius: 50%;
+        background: #e8f0ff;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+      .topbar .profile-img:hover {
+        transform: scale(1.05);
+      }
+      .topbar .dropdown-menu {
+        top: 46px;
+        min-width: 190px;
+        padding: 6px;
+        border: 1px solid #e7ebf3;
+        border-radius: 12px;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+      }
+      .topbar .dropdown-item,
+      .topbar .topbar-menu-action {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 10px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: left;
+        text-decoration: none;
+        transform: none !important;
+      }
+      .topbar .dropdown-item:hover,
+      .topbar .topbar-menu-action:hover {
+        background: #f1f5f9;
+        color: #0d6efd;
+      }
+
+      @media (max-width: 768px) {
+        .topbar {
+          height: 64px;
+          padding: 0 18px;
+        }
+        .topbar-user-name {
+          display: none;
+        }
+        .topbar-page-link span {
+          display: none;
+        }
+        .topbar-page-link {
+          width: 38px;
+          justify-content: center;
+          padding: 0;
+        }
+        .main-content {
+          margin-top: 64px !important;
+        }
+      }
+      /* Main Content & Cards */
+      .main-content {
+        width: min(1440px, 100%);
+        min-height: calc(100vh - 70px);
+        margin: 70px auto 0 !important;
+        padding: 34px 32px 48px !important;
+        background-color: #f8fafc !important;
+      }
+
+      .page-title {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.5px !important;
+        font-size: 1.75rem !important;
+        margin-bottom: 24px !important;
+      }
+
+      .chart-card,
+      .table-card {
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 20px !important;
+        box-shadow:
+          0 1px 3px 0 rgba(0, 0, 0, 0.05),
+          0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+        padding: 24px !important;
+        margin-bottom: 24px !important;
+      }
+
+      .card-title {
+        color: #0f172a !important;
+        font-weight: 700 !important;
+        font-size: 1.15rem !important;
+        letter-spacing: -0.2px !important;
+      }
+
+      /* Big Clean Action Button */
+      .startaudit {
+        background: linear-gradient(
+          135deg,
+          #4f46e5 0%,
+          #3730a3 100%
+        ) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1.25rem !important;
+        padding: 18px 36px !important;
+        border-radius: 16px !important;
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2) !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+      }
+
+      .startaudit:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 30px rgba(79, 70, 229, 0.3) !important;
+      }
+
+      .startaudit {
+        background: linear-gradient(135deg, #0d6efd, #0056b3) !important;
+        padding: 12px 18px !important;
+        border-radius: 10px !important;
+        font-size: 13px !important;
+        box-shadow: 0 7px 14px rgba(13, 110, 253, 0.18) !important;
+      }
+      /* Footer styling */
+      .footer {
+        background-color: #ffffff !important;
+        border-top: 1px solid #e2e8f0 !important;
+        color: #64748b !important;
+        padding: 20px !important;
+        text-align: center !important;
+      }
+
+      /* ===== FILTER CARD UNIFIED ===== */
+      .filter-unified-card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        padding: 20px 24px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        margin-bottom: 24px;
+      }
+      .dark-theme .filter-unified-card {
+        background: #1e1e1e;
+        border-color: #2a2a2a;
+      }
+      .filter-unified-card .filter-section-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #4f46e5;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .filter-unified-card .filter-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .filter-unified-card .form-control,
+      .filter-unified-card .form-select {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 14px;
+        height: 40px;
+        transition: border-color 0.2s;
+      }
+      .filter-unified-card .form-control:focus,
+      .filter-unified-card .form-select:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      }
+      .btn-filter-apply {
+        background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 8px 20px;
+        height: 40px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-filter-apply:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+        color: #fff;
+      }
+      .btn-filter-reset {
+        background: transparent;
+        color: #64748b;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 8px 16px;
+        height: 40px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-filter-reset:hover {
+        border-color: #4f46e5;
+        color: #4f46e5;
+      }
+      .chart-section-header {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 4px;
+      }
+      .dark-theme .chart-section-header {
+        color: #e0e0e0;
+      }
+      .chart-section-sub {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-bottom: 0;
+      }
+      /* Scrollable filter row on mobile */
+      @media (max-width: 768px) {
+        .filter-scroll-row {
+          overflow-x: auto;
+        }
+      }
+
+      /* Full-width dashboard layout after sidebar removal. */
+      .footer {
+        margin-left: 0 !important;
+      }
+      @media (max-width: 768px) {
+        .main-content {
+          min-height: calc(100vh - 64px);
+          margin-top: 64px !important;
+          padding: 24px 16px 32px !important;
+        }
+      }
+      /* Topbar Navigation Styling */
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 20px;
+      }
+      .topbar-nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .topbar-nav-link:hover,
+      .topbar-nav-link:focus,
+      .topbar-nav-link.active {
+        background-color: #eef2ff;
+        color: #4f46e5;
+        font-weight: 600;
+      }
+      .dark-theme .topbar-nav-link {
+        color: #cbd5e1;
+      }
+      .dark-theme .topbar-nav-link:hover,
+      .dark-theme .topbar-nav-link:focus,
+      .dark-theme .topbar-nav-link.active {
+        background-color: #334155;
+        color: #818cf8;
+      }
+      /* Keep the shared topbar legible when the existing dashboard theme is switched. */
+      .dark-theme .topbar {
+        background: rgba(30, 41, 59, 0.94);
+        border-bottom-color: #334155;
+      }
+      .dark-theme .topbar-brand,
+      .dark-theme .topbar-brand:hover {
+        color: #e2e8f0;
+      }
+      .dark-theme .topbar-user {
+        color: #94a3b8;
+      }
+      .dark-theme .topbar .dropdown-menu {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      .dark-theme .topbar .dropdown-item,
+      .dark-theme .topbar .topbar-menu-action {
+        color: #cbd5e1;
+      }
+      .dark-theme .topbar .dropdown-item:hover,
+      .dark-theme .topbar .topbar-menu-action:hover {
+        background: #334155;
+        color: #fff;
+      }
+    </style>
+
+    <link href="../../../public/assets/css/quality_patrol/style.css?v=1" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  </head>
+
+  <body class="light-theme app-shell">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button
+          id="mobileToggle"
+          type="button"
+          hidden
+          aria-hidden="true"
+        ></button>
+        <a class="topbar-brand" href="summary.html" aria-label="Quality Patrol">
+          <span class="topbar-mark"><i class="bi bi-shield-check"></i></span>
+          <span id="appName">Quality Patrol</span>
+        </a>
+        <nav class="topbar-nav d-none d-md-flex">
+          <a class="topbar-nav-link active" href="summary.html"
+            ><i class="bi bi-house-door"></i> Home</a
+          >
+          <a class="topbar-nav-link" href="temuan_patrol.html"
+            ><i class="bi bi-list-check"></i> Daftar Temuan</a
+          >
+          <div class="dropdown d-inline-block">
+            <a
+              class="topbar-nav-link dropdown-toggle"
+              href="#"
+              id="masterDataDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-database"></i> Master Data
+            </a>
+            <ul
+              class="dropdown-menu shadow-sm"
+              aria-labelledby="masterDataDropdown"
+            >
+              <li>
+                <a class="dropdown-item py-2" href="../admin/mdata_user.html"
+                  ><i class="bi bi-people me-2 text-primary"></i> User</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item py-2"
+                  href="../admin/mdata_departement.html"
+                  ><i class="bi bi-building me-2 text-primary"></i>
+                  Departemen</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-user">
+          <span id="topbarUserName" class="topbar-user-name"
+            >Admin Quality</span
+          >
+          <div class="profile-dropdown">
+            <img
+              src="https://ui-avatars.com/api/?name=User&amp;background=0d6efd&amp;color=fff&amp;size=128"
+              alt="Profil pengguna"
+              class="profile-img"
+              id="profileImg"
+            />
+            <div
+              class="dropdown-menu dropdown-menu-end shadow-sm"
+              id="profileDropdown"
+            >
+              <div class="d-md-none border-bottom pb-2 mb-2 px-2">
+                <a class="dropdown-item py-1" href="summary.html"
+                  ><i class="bi bi-house-door me-2"></i> Home</a
+                >
+                <a class="dropdown-item py-1" href="temuan_patrol.html"
+                  ><i class="bi bi-list-check me-2"></i> Daftar Temuan</a
+                >
+                <div class="dropdown-header px-0 text-muted fw-bold small mt-1">
+                  MASTER DATA
+                </div>
+                <a
+                  class="dropdown-item py-1 ps-3"
+                  href="../admin/mdata_user.html"
+                  ><i class="bi bi-people me-2"></i> User</a
+                >
+                <a
+                  class="dropdown-item py-1 ps-3"
+                  href="../admin/mdata_departement.html"
+                  ><i class="bi bi-building me-2"></i> Departemen</a
+                >
+              </div>
+              <button
+                class="topbar-menu-action theme-toggle"
+                id="themeToggle"
+                type="button"
+              >
+                <i class="bi bi-sun-fill me-2"></i><span>Ubah tema</span>
+              </button>
+              <a
+                href="javascript:void(0)"
+                class="dropdown-item text-danger fw-semibold"
+                id="logoutAction"
+                ><i class="bi bi-box-arrow-right me-2"></i>Logout</a
+              >
+              <a
+                href="javascript:void(0)"
+                id="logoutBtn"
+                hidden
+                aria-hidden="true"
+                >Logout</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <h2 class="page-title" id="dashboardTitle">Dashboard Overview</h2>
+
+      <!-- ===== FILTER CARD UNIFIED ===== -->
+      <div class="filter-unified-card">
+        <div class="filter-section-title">
+          <i class="bi bi-funnel-fill"></i> Filter Data
+        </div>
+        <div class="row g-3 align-items-end">
+          <!-- Tahun -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <label class="filter-label"
+              ><i class="bi bi-calendar3 me-1"></i> Tahun</label
+            >
+            <select
+              class="form-select"
+              id="list_year"
+              style="
+                border-radius: 10px;
+                height: 40px;
+                border: 1.5px solid #e2e8f0;
+                font-size: 14px;
+              "
+            >
+              <option value="">- Semua Tahun -</option>
+              <option value="2026" selected>2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+          <!-- Dari Tanggal -->
+          <div class="col-12 col-sm-6 col-md-2">
+            <label class="filter-label"
+              ><i class="bi bi-calendar-event me-1"></i> Dari Tanggal</label
+            >
+            <input
+              type="text"
+              class="form-control tanggalpickr"
+              id="startDate"
+              placeholder="Pilih tanggal"
+              readonly
+              style="
+                border-radius: 10px;
+                height: 40px;
+                border: 1.5px solid #e2e8f0;
+                font-size: 14px;
+              "
+            />
+          </div>
+          <!-- Sampai Tanggal -->
+          <div class="col-12 col-sm-6 col-md-2">
+            <label class="filter-label"
+              ><i class="bi bi-calendar-check me-1"></i> Sampai Tanggal</label
+            >
+            <input
+              type="text"
+              class="form-control tanggalpickr"
+              id="endDate"
+              placeholder="Pilih tanggal"
+              readonly
+              style="
+                border-radius: 10px;
+                height: 40px;
+                border: 1.5px solid #e2e8f0;
+                font-size: 14px;
+              "
+            />
+          </div>
+          <!-- Departemen -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <label class="filter-label"
+              ><i class="bi bi-building me-1"></i> Departemen</label
+            >
+            <select
+              class="form-select"
+              id="list_dept"
+              style="
+                border-radius: 10px;
+                height: 40px;
+                border: 1.5px solid #e2e8f0;
+                font-size: 14px;
+              "
+            >
+              <option value="" selected>- Semua Departemen -</option>
+              <option value="Produksi 1">Produksi 1</option>
+              <option value="Produksi 2">Produksi 2</option>
+              <option value="QA">QA</option>
+              <option value="QC">QC</option>
+              <option value="Procurement">Procurement</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Logistic">Logistic</option>
+              <option value="Safety &amp; Health">Safety &amp; Health</option>
+            </select>
+          </div>
+          <!-- Tombol Aksi -->
+          <div class="col-12 col-md-2 d-flex gap-2 align-items-end">
+            <button class="btn-filter-apply flex-fill" id="filterBtn_all">
+              <i class="bi bi-funnel-fill me-1"></i> Terapkan
+            </button>
+            <button
+              class="btn-filter-reset"
+              id="resetBtn_all"
+              title="Reset Semua Filter"
+            >
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CHARTS ===== -->
+      <div class="row">
+        <!-- Chart 1: Per Tahun -->
+        <div class="col-lg-12">
+          <div class="chart-card" style="margin-bottom: 24px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <div class="chart-section-header">
+                  Temuan Tahun <span id="tahun_xxx">2026</span>
+                </div>
+                <p class="chart-section-sub">
+                  Distribusi temuan per bulan berdasarkan status — klik kolom
+                  untuk lihat detail
+                </p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <div id="clustered_chart"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 2: Per Departemen (Date Range) -->
+        <div class="col-lg-12">
+          <div class="chart-card" style="margin-bottom: 24px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <div class="chart-section-header">Temuan per Departemen</div>
+                <p class="chart-section-sub">
+                  Persentase status temuan berdasarkan area â€” klik untuk lihat
+                  detail
+                </p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <div id="barChartStacked"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 3: Pie + Stacked Bar per Area -->
+        <div class="col-lg-12">
+          <div class="chart-card" style="margin-bottom: 24px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <div class="chart-section-header">
+                  Temuan Area: <span id="area_xxx">Semua Departemen</span>
+                </div>
+                <p class="chart-section-sub">
+                  Distribusi status temuan berdasarkan departemen yang dipilih
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="chart-container">
+                  <div id="piechart_area"></div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="chart-container">
+                  <div id="barChart_stacked_area"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <!-- Modal Detail Temuan -->
+    <div
+      class="modal fade"
+      id="modalDetailTemuan"
+      tabindex="-1"
+      aria-labelledby="modalDetailTemuanLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetailTemuanLabel">
+              Detail Temuan
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="filterInfo" class="mb-3"></div>
+
+            <div class="table-responsive">
+              <table
+                class="table table-bordered table-striped"
+                id="tableDetailTemuan"
+              >
+                <thead class="table-primary">
+                  <tr>
+                    <th>No</th>
+                    <th>Tanggal Patrol</th>
+                    <th>Departemen</th>
+                    <th>Section</th>
+                    <th>Auditor</th>
+                    <th>Auditee</th>
+                    <th>Status</th>
+                    <th>Deskripsi Temuan</th>
+                    <th>Action</th>
+                    <th>Due Date</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="detailTemuanBody">
+                  <tr>
+                    <td colspan="11" class="text-center">Belum ada data</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" id="footer">
+      <p id="footerText">2025 Quality Patrol - All rights reserved</p>
+    </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../../../public/assets/js/local_storage_app.js?v=3"></script>
+    <script>
+      LocalStorageApp.requireLogin("../auth/login.html");
+    </script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <!-- HighChart -->
+    <script src="../../../public/assets/js/highchart/highcharts.js"></script>
+    <script src="../../../public/assets/js/highchart/modules/exporting.js"></script>
+
+    <script src="../../../public/assets/js/highchart/modules/accessibility.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Select2 core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+    <script src="../../../public/assets/js/summary/summary.js"></script>
+    <script>
+      document.querySelectorAll(".submenu-toggle").forEach((item) => {
+        item.addEventListener("click", () => {
+          item.parentElement.classList.toggle("open");
+        });
+      });
+    </script>
+
+    <script>
+      $(".startaudit").on("click", function () {
+        window.location.href = "temuan_patrol.html";
+      });
+      let currentDeptFilter = null;
+      let currentDeptName = "Semua Departemen";
+
+      function generateRichFallbackData() {
+        var depts = [
+          "Produksi 1",
+          "Produksi 2",
+          "QA",
+          "QC",
+          "Procurement",
+          "Engineering",
+          "Maintenance",
+          "Logistic",
+          "Safety & Health",
+        ];
+        var sections = {
+          "Produksi 1": ["Line A", "Line B", "Stamping"],
+          "Produksi 2": ["Line C", "Line D", "Welding"],
+          QA: ["System Audit", "Document Control", "Product Release"],
+          QC: ["Incoming Inspection", "Calibration Lab", "Final Inspection"],
+          Procurement: ["Supplier Management", "Purchasing", "Contracting"],
+          Engineering: ["Automation", "Machine Design", "Tooling"],
+          Maintenance: ["Mechanical", "Electrical", "Utilities"],
+          Logistic: ["Warehouse 1", "Warehouse 2", "Shipping Dock"],
+          "Safety & Health": ["HSE Office", "Chemical Storage", "TPS B3"],
+        };
+        var auditors = [
+          "Ahmad Fauzi",
+          "Budi Santoso",
+          "Citra Dewi",
+          "Deni Kurniawan",
+          "Eka Putri",
+          "Fajar Hidayat",
+          "Gita Ananda",
+          "Hendra Wijaya",
+          "Indah Lestari",
+          "Joko Prasetyo",
+          "Kartini Sari",
+          "Lukman Hakim",
+        ];
+        var auditees = [
+          "Andi Susilo",
+          "Siti Aminah",
+          "Rian Hidayat",
+          "Dewi Lestari",
+          "Eko Prasetyo",
+          "Rina Wijaya",
+          "Toni Harahap",
+          "Sari Utami",
+          "Bambang Hermawan",
+          "Mega Puspita",
+        ];
+
+        var list = [];
+        var idCounter = 100;
+
+        var descriptions = {
+          Open: [
+            "APD (helm/kacamata/sepatu safety) tidak digunakan di area kerja",
+            "Panel listrik terbuka tanpa penutup pelindung",
+            "Tabung APAR terhalang tumpukan material/palet",
+            "Kabel instalasi mesin terkelupas dan membahayakan",
+            "Rambu-rambu K3 pudar/rusak dan sulit terbaca",
+            "Tumpukan palet menghalangi jalur evakuasi darurat",
+            "Kotak P3K kosong/tidak memiliki daftar obat standar",
+            "Suhu mesin kompresor melebihi batas normal standar",
+          ],
+          "In Progress": [
+            "Kebocoran oli hidrolik minor pada bagian bawah conveyor belt",
+            "Pencahayaan redup di area inspeksi akhir produk",
+            "SOP kerja mesin press belum diperbarui ke revisi terbaru",
+            "Kalibrasi alat ukur jangka sorong mendekati masa kadaluarsa",
+            "Penumpukan oli bekas belum dipindahkan ke TPS B3",
+            "Exhaust fan di ruang mixing berisik/kurang optimal",
+            "Label identifikasi material kimia pudar di storage",
+          ],
+          Close: [
+            "Lantai licin akibat ceceran air pendingin dekat chiller",
+            "Penempatan tools tidak sesuai pada papan shadow board",
+            "Kipas angin ventilasi welding shop berdebu tebal",
+            "Dokumen lembar pemeriksaan harian mesin forklift kosong",
+            "Pintu darurat terkunci saat jam kerja shift pagi",
+            "Penyimpanan oli baru tidak menggunakan secondary containment",
+            "Dinding pembatas welding area retak rambut minor",
+          ],
+          Cancel: [
+            "Temuan kebersihan toilet karyawan kurang terjaga",
+            "Permohonan penggantian kursi operator yang rusak ergonomis",
+            "Pembersihan filter AC ruang kontrol yang tersumbat debu",
+          ],
+        };
+
+        var yearlyConfigs = {
+          2026: {
+            open: [5, 3, 4, 7, 2, 5, 8, 4, 3, 6, 2, 4],
+            progress: [2, 4, 1, 3, 5, 2, 4, 2, 5, 1, 3, 2],
+            close: [15, 18, 12, 20, 22, 19, 17, 21, 24, 18, 16, 20],
+            cancel: [1, 0, 2, 1, 0, 1, 0, 2, 1, 0, 1, 0],
+          },
+          2025: {
+            open: [3, 4, 5, 2, 6, 3, 4, 5, 2, 5, 3, 2],
+            progress: [1, 2, 3, 1, 2, 4, 2, 1, 3, 2, 1, 3],
+            close: [10, 14, 16, 11, 15, 12, 18, 13, 15, 14, 12, 16],
+            cancel: [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+          },
+          2024: {
+            open: [4, 2, 3, 5, 3, 4, 5, 3, 4, 2, 5, 3],
+            progress: [3, 1, 2, 2, 1, 3, 1, 2, 2, 3, 2, 1],
+            close: [8, 12, 10, 14, 11, 13, 12, 15, 11, 13, 14, 12],
+            cancel: [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0],
+          },
+        };
+
+        function getYearConfig(yr) {
+          if (yearlyConfigs[yr]) return yearlyConfigs[yr];
+          var open = [],
+            progress = [],
+            close = [],
+            cancel = [];
+          for (var m = 0; m < 12; m++) {
+            var seed = (yr * 17 + m * 11) % 9;
+            open.push(2 + (seed % 3));
+            progress.push(1 + (seed % 2));
+            close.push(5 + ((seed * 2) % 8));
+            cancel.push(seed % 4 === 0 ? 1 : 0);
+          }
+          return {
+            open: open,
+            progress: progress,
+            close: close,
+            cancel: cancel,
+          };
+        }
+
+        for (var yr = 2022; yr <= 2026; yr++) {
+          var conf = getYearConfig(yr);
+          var openCount = conf.open;
+          var progressCount = conf.progress;
+          var closeCount = conf.close;
+          var cancelCount = conf.cancel;
+
+          for (var m = 0; m < 12; m++) {
+            var monthNum = m + 1;
+            var monthStr = monthNum < 10 ? "0" + monthNum : monthNum;
+
+            var statuses = [];
+            for (var i = 0; i < openCount[m]; i++) statuses.push("Open");
+            for (var i = 0; i < progressCount[m]; i++)
+              statuses.push("In Progress");
+            for (var i = 0; i < closeCount[m]; i++) statuses.push("Close");
+            for (var i = 0; i < cancelCount[m]; i++) statuses.push("Cancel");
+
+            var numPatrols = Math.max(3, Math.ceil(statuses.length / 5));
+            var patrols = [];
+            for (var p = 0; p < numPatrols; p++) {
+              var day = 3 + Math.floor((p * 25) / numPatrols) + (p % 3);
+              var dayStr = day < 10 ? "0" + day : day;
+
+              var dept = depts[(m + p + yr) % depts.length];
+              var secList = sections[dept];
+              var sec = secList[p % secList.length];
+              var auditor = auditors[(m * 3 + p + yr) % auditors.length];
+
+              patrols.push({
+                id: idCounter++,
+                tanggal: yr + "-" + monthStr + "-" + dayStr,
+                departement: dept,
+                seksi: sec,
+                auditor: auditor,
+                temuan: [],
+              });
+            }
+
+            statuses.forEach(function (status, idx) {
+              var pIndex = idx % patrols.length;
+              var patrol = patrols[pIndex];
+              var auditee = auditees[(idx + m + yr) % auditees.length];
+
+              var descList = descriptions[status];
+              var desc = descList[idx % descList.length];
+              var tindakan =
+                status === "Close"
+                  ? "Tindakan perbaikan telah diselesaikan oleh PIC area"
+                  : status === "In Progress"
+                    ? "Pekerjaan perbaikan sedang berjalan oleh maintenance"
+                    : "-";
+
+              var day = parseInt(patrol.tanggal.split("-")[2]);
+              var dueDay = day + 7;
+              var dueDayStr = dueDay < 10 ? "0" + dueDay : dueDay;
+              var deadline = yr + "-" + monthStr + "-" + dueDayStr;
+
+              var evidence =
+                status === "Close"
+                  ? "evidence_20260106_132905_bc6ba54e48.jpeg"
+                  : null;
+
+              patrol.temuan.push({
+                deskripsi: desc,
+                status: status,
+                tindakan: tindakan,
+                due_date: deadline,
+                auditee: auditee,
+                evidence_file: evidence,
+              });
+            });
+
+            patrols.forEach(function (patrol) {
+              if (patrol.temuan.length > 0) {
+                list.push(patrol);
+              }
+            });
+          }
+        }
+        return list;
+      }
+
+      var _cachedFallbackData = null;
+      function getCombinedPatrolData() {
+        var patrolData = LocalStorageApp.all("qp_patrol_data");
+        if (!patrolData || patrolData.length <= 1) {
+          if (!_cachedFallbackData) {
+            _cachedFallbackData = generateRichFallbackData();
+          }
+          return _cachedFallbackData;
+        }
+        return patrolData;
+      }
+
+      function renderClusteredChart() {
+        const isDarkTheme_chart = localStorage.getItem("theme") === "dark";
+        const year = $("#list_year").val() || new Date().getFullYear();
+
+        // Helpers to dynamically get data or seed data
+        function getMonthlyStats(yr) {
+          var open = Array(12).fill(0);
+          var progress = Array(12).fill(0);
+          var close = Array(12).fill(0);
+          var cancel = Array(12).fill(0);
+          var total = [];
+
+          var patrolData = getCombinedPatrolData();
+          patrolData.forEach(function (p) {
+            var d = new Date(p.tanggal);
+            if (d.getFullYear() == yr) {
+              var m = d.getMonth();
+              if (Array.isArray(p.temuan)) {
+                p.temuan.forEach(function (t) {
+                  if (t.status === "Open") open[m]++;
+                  else if (t.status === "In Progress") progress[m]++;
+                  else if (t.status === "Close") close[m]++;
+                  else if (t.status === "Cancel") cancel[m]++;
+                });
+              }
+            }
+          });
+          for (var i = 0; i < 12; i++) {
+            total.push(open[i] + progress[i] + close[i] + cancel[i]);
+          }
+          return {
+            open: open,
+            progress: progress,
+            close: close,
+            cancel: cancel,
+            total: total,
+          };
+        }
+
+        function getDeptStats() {
+          var depts = [];
+          depts = LocalStorageApp.all("qp_departments").map(function (d) {
+            return d.departement;
+          });
+          if (depts.length === 0) {
+            depts = [
+              "Produksi 1",
+              "Produksi 2",
+              "QA",
+              "QC",
+              "Procurement",
+              "Engineering",
+              "Maintenance",
+              "Logistic",
+              "Safety & Health",
+            ];
+          }
+          var open = Array(depts.length).fill(0);
+          var progress = Array(depts.length).fill(0);
+          var close = Array(depts.length).fill(0);
+          var cancel = Array(depts.length).fill(0);
+
+          var patrolData = getCombinedPatrolData();
+          patrolData.forEach(function (p) {
+            var idx = depts.indexOf(p.departement);
+            if (idx !== -1 && Array.isArray(p.temuan)) {
+              p.temuan.forEach(function (t) {
+                if (t.status === "Open") open[idx]++;
+                else if (t.status === "In Progress") progress[idx]++;
+                else if (t.status === "Close") close[idx]++;
+                else if (t.status === "Cancel") cancel[idx]++;
+              });
+            }
+          });
+          return {
+            categories: depts,
+            open: open,
+            progress: progress,
+            close: close,
+            cancel: cancel,
+          };
+        }
+
+        function getOverallStats() {
+          var open = 0,
+            progress = 0,
+            close = 0,
+            cancel = 0;
+          var patrolData = getCombinedPatrolData();
+          patrolData.forEach(function (p) {
+            if (Array.isArray(p.temuan)) {
+              p.temuan.forEach(function (t) {
+                if (t.status === "Open") open++;
+                else if (t.status === "In Progress") progress++;
+                else if (t.status === "Close") close++;
+                else if (t.status === "Cancel") cancel++;
+              });
+            }
+          });
+          return {
+            open: open,
+            progress: progress,
+            close: close,
+            cancel: cancel,
+          };
+        }
+
+        function getMonthlyDeptStats(dept, yr) {
+          var open = Array(12).fill(0);
+          var progress = Array(12).fill(0);
+          var close = Array(12).fill(0);
+          var cancel = Array(12).fill(0);
+
+          var patrolData = getCombinedPatrolData();
+          patrolData.forEach(function (p) {
+            if (
+              (!dept || p.departement === dept) &&
+              new Date(p.tanggal).getFullYear() == yr
+            ) {
+              var m = new Date(p.tanggal).getMonth();
+              if (Array.isArray(p.temuan)) {
+                p.temuan.forEach(function (t) {
+                  if (t.status === "Open") open[m]++;
+                  else if (t.status === "In Progress") progress[m]++;
+                  else if (t.status === "Close") close[m]++;
+                  else if (t.status === "Cancel") cancel[m]++;
+                });
+              }
+            }
+          });
+          return {
+            open: open,
+            progress: progress,
+            close: close,
+            cancel: cancel,
+          };
+        }
+
+        const mStats = getMonthlyStats(year);
+        const dStats = getDeptStats();
+        const oStats = getOverallStats();
+        const mdStats = getMonthlyDeptStats(currentDeptFilter, year);
+
+        const colors = {
+          open: "#64748b",
+          progress: "#f59e0b",
+          close: "#10b981",
+          cancel: "#ef4444",
+          text: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+        };
+
+        // Data Chart Per Tahun
+        Highcharts.chart("clustered_chart", {
+          chart: {
+            backgroundColor: "transparent",
+            marginRight: 40,
+          },
+          title: false,
+          credits: {
+            enabled: false,
+          },
+          exporting: {
+            enabled: true,
+          },
+
+          xAxis: {
+            categories: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "Mei",
+              "Jun",
+              "Jul",
+              "Agu",
+              "Sep",
+              "Okt",
+              "Nov",
+              "Des",
+            ],
+            lineColor: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+            labels: {
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+          },
+
+          yAxis: {
+            min: 0,
+            title: {
+              text: "Jumlah Temuan",
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+            labels: {
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+          },
+
+          legend: {
+            itemStyle: {
+              color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+            },
+          },
+          plotOptions: {
+            series: {
+              cursor: "pointer",
+              point: {
+                events: {
+                  click: function () {
+                    const seriesName = this.series.name;
+                    const bulanNama = this.category;
+
+                    const bulanMap = {
+                      Jan: 1,
+                      Feb: 2,
+                      Mar: 3,
+                      Apr: 4,
+                      Mei: 5,
+                      Jun: 6,
+                      Jul: 7,
+                      Agu: 8,
+                      Sep: 9,
+                      Okt: 10,
+                      Nov: 11,
+                      Des: 12,
+                    };
+
+                    const statusMap = {
+                      Open: 3,
+                      "In Progress": 2,
+                      Close: 1,
+                      Cancel: 4,
+                    };
+
+                    const bulan = bulanMap[bulanNama];
+                    const tahun =
+                      $("#list_year").val() || new Date().getFullYear();
+                    const status =
+                      seriesName === "Total Temuan"
+                        ? null
+                        : statusMap[seriesName];
+
+                    loadDetailTemuan(
+                      tahun,
+                      bulan,
+                      status,
+                      seriesName,
+                      bulanNama,
+                    );
+                  },
+                },
+              },
+            },
+          },
+          series: [
+            {
+              type: "column",
+              name: "Open",
+              data: mStats.open,
+              color: colors.open,
+            },
+            {
+              type: "column",
+              name: "In Progress",
+              data: mStats.progress,
+              color: colors.progress,
+            },
+            {
+              type: "column",
+              name: "Close",
+              data: mStats.close,
+              color: colors.close,
+            },
+            {
+              type: "column",
+              name: "Cancel",
+              data: mStats.cancel,
+              color: colors.cancel,
+            },
+            {
+              type: "spline",
+              name: "Total Temuan",
+              data: mStats.total,
+              color: isDarkTheme_chart ? "#ffffff" : "#000000",
+              marker: {
+                enabled: true,
+                lineWidth: 1,
+                lineColor: isDarkTheme_chart ? "#ffffff" : "#000000",
+                fillColor: isDarkTheme_chart ? "#ffffff" : "#000000",
+              },
+            },
+          ],
+        });
+
+        Highcharts.chart("barChartStacked", {
+          chart: {
+            backgroundColor: "transparent",
+            type: "column",
+            marginRight: 40,
+          },
+          credits: {
+            enabled: false,
+          },
+          exporting: {
+            enabled: true,
+          },
+          title: false,
+
+          xAxis: {
+            categories: dStats.categories,
+
+            labels: {
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+            lineColor: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+          },
+
+          yAxis: {
+            min: 0,
+            title: {
+              text: "Jumlah Temuan",
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+            labels: {
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+          },
+
+          legend: {
+            itemStyle: {
+              color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+            },
+          },
+
+          tooltip: {
+            shared: true,
+            pointFormat:
+              '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+          },
+
+          plotOptions: {
+            series: {
+              animation: {
+                duration: 800,
+              },
+            },
+            column: {
+              stacking: "percent",
+              cursor: "pointer",
+              dataLabels: {
+                enabled: true,
+                formatter: function () {
+                  if (this.percentage === 0) {
+                    return null;
+                  }
+                  return Highcharts.numberFormat(this.percentage, 0) + "%";
+                },
+                style: {
+                  color: isDarkTheme_chart ? "#ffffff" : "#000000",
+                },
+              },
+              point: {
+                events: {
+                  click: function () {
+                    const areaName = this.category;
+                    const seriesName = this.series.name;
+
+                    const statusMap = {
+                      Open: 3,
+                      "In Progress": 2,
+                      Close: 1,
+                      Cancel: 4,
+                    };
+
+                    const status = statusMap[seriesName];
+                    const startDate = $("#startDate").val();
+                    const endDate = $("#endDate").val();
+
+                    loadDetailTemuanByArea(
+                      areaName,
+                      status,
+                      seriesName,
+                      startDate,
+                      endDate,
+                    );
+                  },
+                },
+              },
+            },
+          },
+
+          // Ã°Å¸â€Â¥ DATA TEMUAN BY AREA
+          series: [
+            {
+              name: "Open",
+              data: dStats.open,
+              color: colors.open,
+            },
+            {
+              name: "In Progress",
+              data: dStats.progress,
+              color: colors.progress,
+            },
+            {
+              name: "Close",
+              data: dStats.close,
+              color: colors.close,
+            },
+            {
+              name: "Cancel",
+              data: dStats.cancel,
+              color: colors.cancel,
+            },
+          ],
+        });
+
+        Highcharts.chart("piechart_area", {
+          chart: {
+            type: "pie",
+            backgroundColor: "transparent",
+            marginRight: 40,
+          },
+
+          title: false,
+          credits: {
+            enabled: false,
+          },
+          exporting: {
+            enabled: true,
+          },
+
+          tooltip: {
+            useHTML: true,
+            formatter: function () {
+              return `
+                            <b>${this.point.name}</b><br>
+                            Jumlah: <b>${this.point.y}</b><br>
+                            Persentase: <b>${this.point.percentage.toFixed(1)}%</b>
+                        `;
+            },
+          },
+
+          plotOptions: {
+            pie: {
+              size: "90%",
+              allowPointSelect: true,
+              cursor: "pointer",
+              dataLabels: {
+                enabled: true,
+                distance: -40,
+                format: "{point.percentage:.1f}%",
+                style: {
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  color: colors.text,
+                },
+              },
+              showInLegend: true,
+              point: {
+                events: {
+                  click: function () {
+                    const statusName = this.name;
+
+                    const statusMap = {
+                      Open: 3,
+                      "In Progress": 2,
+                      Close: 1,
+                      Cancel: 4,
+                    };
+
+                    const status = statusMap[statusName];
+
+                    loadDetailTemuanByDept(
+                      currentDeptFilter,
+                      currentDeptName,
+                      status,
+                      statusName,
+                    );
+                  },
+                },
+              },
+            },
+          },
+
+          legend: {
+            enabled: true,
+            align: "center",
+            verticalAlign: "bottom",
+            layout: "horizontal",
+            itemStyle: {
+              color: colors.text,
+              fontSize: "14px",
+            },
+          },
+
+          series: [
+            {
+              name: "Persentase",
+              colorByPoint: true,
+              data: [
+                {
+                  name: "Open",
+                  y: oStats.open,
+                  color: colors.open,
+                },
+                {
+                  name: "In Progress",
+                  y: oStats.progress,
+                  color: colors.progress,
+                },
+                {
+                  name: "Close",
+                  y: oStats.close,
+                  color: colors.close,
+                },
+                {
+                  name: "Cancel",
+                  y: oStats.cancel,
+                  color: colors.cancel,
+                },
+              ],
+            },
+          ],
+        });
+
+        Highcharts.chart("barChart_stacked_area", {
+          chart: {
+            type: "column",
+            backgroundColor: "transparent",
+            marginRight: 40,
+          },
+          credits: {
+            enabled: false,
+          },
+          title: false,
+          xAxis: {
+            categories: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "Mei",
+              "Jun",
+              "Jul",
+              "Agu",
+              "Sep",
+              "Okt",
+              "Nov",
+              "Des",
+            ],
+            labels: {
+              style: {
+                color: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+              },
+            },
+            lineColor: isDarkTheme_chart ? "#ffffff" : "#4b3d3dff",
+          },
+          plotOptions: {
+            series: {
+              animation: {
+                duration: 800,
+              },
+            },
+            column: {
+              stacking: "normal",
+              borderWidth: 0,
+              borderRadiusTopLeft: 10,
+              borderRadiusTopRight: 10,
+              cursor: "pointer",
+              point: {
+                events: {
+                  click: function () {
+                    const bulanNama = this.category;
+                    const statusName = this.series.name;
+
+                    const bulanMap = {
+                      Jan: 1,
+                      Feb: 2,
+                      Mar: 3,
+                      Apr: 4,
+                      Mei: 5,
+                      Jun: 6,
+                      Jul: 7,
+                      Agu: 8,
+                      Sep: 9,
+                      Okt: 10,
+                      Nov: 11,
+                      Des: 12,
+                    };
+
+                    const statusMap = {
+                      Open: 3,
+                      "In Progress": 2,
+                      Close: 1,
+                      Cancel: 4,
+                    };
+
+                    const bulan = bulanMap[bulanNama];
+                    const status = statusMap[statusName];
+
+                    loadDetailTemuanByDeptMonth(
+                      currentDeptFilter,
+                      currentDeptName,
+                      bulan,
+                      bulanNama,
+                      status,
+                      statusName,
+                    );
+                  },
+                },
+              },
+            },
+          },
+
+          series: [
+            {
+              name: "Open",
+              data: mdStats.open,
+              color: colors.open,
+            },
+            {
+              name: "In Progress",
+              data: mdStats.progress,
+              color: colors.progress,
+            },
+            {
+              name: "Close",
+              data: mdStats.close,
+              color: colors.close,
+            },
+            {
+              name: "Cancel",
+              data: mdStats.cancel,
+              color: colors.cancel,
+            },
+          ],
+        });
+      }
+
+      function resetDetailTemuanTable() {
+        if ($.fn.DataTable.isDataTable("#tableDetailTemuan")) {
+          $("#tableDetailTemuan").DataTable().clear().destroy();
+        }
+      }
+
+      // ============================================================
+      // HELPER: Query temuan dari localStorage
+      // ============================================================
+      function queryTemuan(filters) {
+        // filters: { tahun, bulan, dept, status, startDate, endDate }
+        var patrolData = getCombinedPatrolData();
+        var combinedData = patrolData;
+        var results = [];
+
+        combinedData.forEach(function (p) {
+          var tgl = new Date(p.tanggal);
+          var tahunP = tgl.getFullYear();
+          var bulanP = tgl.getMonth() + 1; // 1-based
+
+          // Filter tahun
+          if (filters.tahun && parseInt(filters.tahun) !== tahunP) return;
+
+          // Filter departemen
+          if (filters.dept && p.departement !== filters.dept) return;
+
+          // Filter range tanggal
+          if (filters.startDate) {
+            var sd = new Date(filters.startDate);
+            if (tgl < sd) return;
+          }
+          if (filters.endDate) {
+            var ed = new Date(filters.endDate);
+            ed.setHours(23, 59, 59);
+            if (tgl > ed) return;
+          }
+
+          // Filter bulan
+          if (filters.bulan && parseInt(filters.bulan) !== bulanP) return;
+
+          if (Array.isArray(p.temuan)) {
+            p.temuan.forEach(function (t) {
+              // Filter status
+              var statusLabel = t.status || "-";
+              if (filters.status && statusLabel !== filters.status) return;
+
+              results.push({
+                no: results.length + 1,
+                tanggal_patrol: p.tanggal,
+                departement_name: p.departement || "-",
+                section_name: p.seksi || p.section_name || "-",
+                auditor_name: p.nama_auditor || p.auditor || "-",
+                nama_auditee: p.nama_auditee || t.auditee || "-",
+                status_label: statusLabel,
+                deskripsi_temuan: t.deskripsi || t.deskripsi_temuan || "-",
+                action: t.tindakan || t.action || "-",
+                due_date: t.deadline || t.due_date || "-",
+                evidence_file:
+                  t.evidence_file || t.nama_file || t.evidence || null,
+              });
+            });
+          }
+        });
+
+        return results;
+      }
+
+      // ============================================================
+      // HELPER: Tampilkan data di modal
+      // ============================================================
+      function showTemuanModal(title, filterHtml, data) {
+        $("#modalDetailTemuanLabel").text(title);
+        $("#filterInfo").html(filterHtml);
+        resetDetailTemuanTable();
+
+        var html = "";
+        if (!data || data.length === 0) {
+          html =
+            '<tr><td colspan="11" class="text-center py-4"><i class="bi bi-inbox text-muted" style="font-size:2rem"></i><br>Data tidak ditemukan</td></tr>';
+        } else {
+          data.forEach(function (item, idx) {
+            var statusColor =
+              {
+                Open: "#64748b",
+                "In Progress": "#f59e0b",
+                Close: "#10b981",
+                Cancel: "#ef4444",
+              }[item.status_label] || "#94a3b8";
+
+            var evidenceHtml = "-";
+            if (item.evidence_file) {
+              var fileUrl =
+                "../../uploads/findings_evidence/" + item.evidence_file;
+              evidenceHtml =
+                '<a href="' +
+                fileUrl +
+                '" target="_blank" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> View</a>';
+            }
+
+            html +=
+              "<tr>" +
+              "<td>" +
+              (idx + 1) +
+              "</td>" +
+              "<td>" +
+              (item.tanggal_patrol || "-") +
+              "</td>" +
+              "<td>" +
+              (item.departement_name || "-") +
+              "</td>" +
+              "<td>" +
+              (item.section_name || "-") +
+              "</td>" +
+              "<td>" +
+              (item.auditor_name || "-") +
+              "</td>" +
+              "<td>" +
+              (item.nama_auditee || "-") +
+              "</td>" +
+              '<td><span class="badge" style="background:' +
+              statusColor +
+              ";color:" +
+              (item.status_label === "In Progress" ? "#000" : "#fff") +
+              ';border-radius:8px;padding:5px 10px">' +
+              (item.status_label || "-") +
+              "</span></td>" +
+              "<td>" +
+              (item.deskripsi_temuan || "-") +
+              "</td>" +
+              "<td>" +
+              (item.action || "-") +
+              "</td>" +
+              "<td>" +
+              (item.due_date || "-") +
+              "</td>" +
+              "<td>" +
+              evidenceHtml +
+              "</td>" +
+              "</tr>";
+          });
+        }
+
+        $("#detailTemuanBody").html(html);
+        var modal = new bootstrap.Modal(
+          document.getElementById("modalDetailTemuan"),
+        );
+        modal.show();
+
+        if (data && data.length > 0) {
+          let tbl = $("#tableDetailTemuan").DataTable({
+            destroy: true,
+            responsive: true,
+            autoWidth: false,
+            pageLength: 10,
+            lengthMenu: [
+              [10, 25, 50, -1],
+              [10, 25, 50, "Semua"],
+            ],
+            ordering: true,
+            searching: true,
+            paging: true,
+            info: true,
+            language: {
+              search: "Cari:",
+              lengthMenu: "Tampilkan _MENU_ data",
+              info: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+              zeroRecords: "Data tidak ditemukan",
+              emptyTable: "Tidak ada data",
+              paginate: {
+                first: "Awal",
+                last: "Akhir",
+                next: ">",
+                previous: "<",
+              },
+            },
+            columnDefs: [{ targets: 0, orderable: false, searchable: false }],
+          });
+          tbl
+            .on("order.dt search.dt draw.dt", function () {
+              var info = tbl.page.info();
+              tbl
+                .column(0, {
+                  search: "applied",
+                  order: "applied",
+                  page: "current",
+                })
+                .nodes()
+                .each(function (cell, i) {
+                  cell.innerHTML = info.start + i + 1;
+                });
+            })
+            .draw();
+        }
+      }
+
+      // ============================================================
+      // REPLACE: loadDetailTemuan Ã¢â‚¬â€ Chart Per Tahun klik
+      // ============================================================
+      function loadDetailTemuan(tahun, bulan, status, statusText, bulanNama) {
+        var labelStatus = !status && status !== 0 ? "Semua Status" : statusText;
+        var data = queryTemuan({
+          tahun: tahun,
+          bulan: bulan,
+          status: status ? statusText : null,
+        });
+        var filterHtml =
+          '<div class="alert alert-info mb-2" style="border-radius:12px;border:none;background:#eff6ff;color:#1e40af">' +
+          '<i class="bi bi-filter me-2"></i>Status: <strong>' +
+          labelStatus +
+          "</strong> - Bulan: <strong>" +
+          (bulanNama || "-") +
+          "</strong> - Tahun: <strong>" +
+          tahun +
+          "</strong></div>";
+        showTemuanModal("Detail Temuan per Bulan", filterHtml, data);
+      }
+
+      // ============================================================
+      // REPLACE: loadDetailTemuanByArea Ã¢â‚¬â€ Chart By Area (Date Range) klik
+      // ============================================================
+      function loadDetailTemuanByArea(
+        areaName,
+        status,
+        statusText,
+        startDate,
+        endDate,
+      ) {
+        var data = queryTemuan({
+          dept: areaName,
+          status: statusText,
+          startDate: startDate,
+          endDate: endDate,
+        });
+        var filterHtml =
+          '<div class="alert alert-info mb-2" style="border-radius:12px;border:none;background:#eff6ff;color:#1e40af">' +
+          '<i class="bi bi-filter me-2"></i>Area: <strong>' +
+          areaName +
+          "</strong> - Status: <strong>" +
+          statusText +
+          "</strong>" +
+          (startDate
+            ? " - Periode: <strong>" +
+              startDate +
+              " s/d " +
+              (endDate || "-") +
+              "</strong>"
+            : "") +
+          "</div>";
+        showTemuanModal("Detail Temuan Area", filterHtml, data);
+      }
+
+      // ============================================================
+      // REPLACE: loadDetailTemuanByDept Ã¢â‚¬â€ Pie Chart klik
+      // ============================================================
+      function loadDetailTemuanByDept(deptId, deptName, status, statusText) {
+        var data = queryTemuan({ dept: deptId || null, status: statusText });
+        var filterHtml =
+          '<div class="alert alert-info mb-2" style="border-radius:12px;border:none;background:#eff6ff;color:#1e40af">' +
+          '<i class="bi bi-filter me-2"></i>Departemen: <strong>' +
+          (deptName || "Semua Departemen") +
+          "</strong> - Status: <strong>" +
+          statusText +
+          "</strong></div>";
+        showTemuanModal("Detail Temuan", filterHtml, data);
+      }
+
+      // ============================================================
+      // REPLACE: loadDetailTemuanByDeptMonth Ã¢â‚¬â€ Stacked Bar Chart klik
+      // ============================================================
+      function loadDetailTemuanByDeptMonth(
+        deptId,
+        deptName,
+        bulan,
+        bulanNama,
+        status,
+        statusText,
+      ) {
+        var data = queryTemuan({
+          dept: deptId || null,
+          bulan: bulan,
+          status: statusText,
+        });
+        var filterHtml =
+          '<div class="alert alert-info mb-2" style="border-radius:12px;border:none;background:#eff6ff;color:#1e40af">' +
+          '<i class="bi bi-filter me-2"></i>Departemen: <strong>' +
+          (deptName || "Semua Departemen") +
+          "</strong> - Bulan: <strong>" +
+          bulanNama +
+          "</strong> - Status: <strong>" +
+          statusText +
+          "</strong></div>";
+        showTemuanModal("Detail Temuan per Departemen", filterHtml, data);
+      }
+
+      // ============================================================
+      // HELPER: Recalculate monthly stats for a year
+      // ============================================================
+      function calcMonthlyStats(yr, dept) {
+        var open = Array(12).fill(0),
+          progress = Array(12).fill(0);
+        var close = Array(12).fill(0),
+          cancel = Array(12).fill(0),
+          total = Array(12).fill(0);
+
+        var patrolData = getCombinedPatrolData();
+        patrolData.forEach(function (p) {
+          var tgl = new Date(p.tanggal);
+          if (tgl.getFullYear() != yr) return;
+          if (dept && p.departement !== dept) return;
+          var m = tgl.getMonth();
+          if (Array.isArray(p.temuan)) {
+            p.temuan.forEach(function (t) {
+              if (t.status === "Open") open[m]++;
+              else if (t.status === "In Progress") progress[m]++;
+              else if (t.status === "Close") close[m]++;
+              else if (t.status === "Cancel") cancel[m]++;
+              total[m]++;
+            });
+          }
+        });
+        return {
+          open: open,
+          progress: progress,
+          close: close,
+          cancel: cancel,
+          total: total,
+        };
+      }
+
+      // ============================================================
+      // UNIFIED FILTER BUTTON: Apply all filters to all charts
+      // ============================================================
+      $("#filterBtn_all").click(function () {
+        var $btn = $(this);
+        $btn
+          .prop("disabled", true)
+          .html(
+            '<span class="spinner-border spinner-border-sm me-1"></span> Processing...',
+          );
+
+        var yearVal =
+          parseInt($("#list_year").val()) || new Date().getFullYear();
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        var deptVal = $("#list_dept").val();
+        var deptName = deptVal
+          ? $("#list_dept option:selected").text() || deptVal
+          : "Semua Departemen";
+
+        currentDeptFilter = deptVal || null;
+        currentDeptName = deptName;
+
+        $("#tahun_xxx").text(yearVal);
+        $("#area_xxx").text(deptName);
+
+        // 1. Update Chart Per Tahun (clustered_chart)
+        var statsYear = calcMonthlyStats(yearVal, currentDeptFilter);
+        var chart1 = Highcharts.charts.find(function (c) {
+          return c && c.renderTo && c.renderTo.id === "clustered_chart";
+        });
+        if (chart1) {
+          chart1.series[0].setData(statsYear.open, false);
+          chart1.series[1].setData(statsYear.progress, false);
+          chart1.series[2].setData(statsYear.close, false);
+          chart1.series[3].setData(statsYear.cancel, false);
+          chart1.series[4].setData(statsYear.total, false);
+          chart1.redraw();
+        }
+
+        // 2. Update Chart per Departemen (barChartStacked)
+        var depts = [
+          "Produksi 1",
+          "Produksi 2",
+          "QA",
+          "QC",
+          "Procurement",
+          "Engineering",
+          "Maintenance",
+          "Logistic",
+          "Safety & Health",
+        ];
+        var openArr = [],
+          progressArr = [],
+          closeArr = [],
+          cancelArr = [];
+        depts.forEach(function (d) {
+          var data = queryTemuan({
+            dept: d,
+            tahun: yearVal,
+            startDate: startDate,
+            endDate: endDate,
+          });
+          var o = 0,
+            pr = 0,
+            cl = 0,
+            ca = 0;
+          data.forEach(function (t) {
+            if (t.status_label === "Open") o++;
+            else if (t.status_label === "In Progress") pr++;
+            else if (t.status_label === "Close") cl++;
+            else if (t.status_label === "Cancel") ca++;
+          });
+          openArr.push(o);
+          progressArr.push(pr);
+          closeArr.push(cl);
+          cancelArr.push(ca);
+        });
+
+        var chart2 = Highcharts.charts.find(function (c) {
+          return c && c.renderTo && c.renderTo.id === "barChartStacked";
+        });
+        if (chart2) {
+          chart2.xAxis[0].setCategories(depts, false);
+          chart2.series[0].setData(openArr, false);
+          chart2.series[1].setData(progressArr, false);
+          chart2.series[2].setData(closeArr, false);
+          chart2.series[3].setData(cancelArr, false);
+          chart2.redraw();
+        }
+
+        // 3. Update Pie & Stacked Bar Area
+        var ms = calcMonthlyStats(yearVal, currentDeptFilter);
+        var barChart3 = Highcharts.charts.find(function (c) {
+          return c && c.renderTo && c.renderTo.id === "barChart_stacked_area";
+        });
+        if (barChart3) {
+          barChart3.series[0].setData(ms.open, false);
+          barChart3.series[1].setData(ms.progress, false);
+          barChart3.series[2].setData(ms.close, false);
+          barChart3.series[3].setData(ms.cancel, false);
+          barChart3.redraw();
+        }
+
+        var pieChart = Highcharts.charts.find(function (c) {
+          return c && c.renderTo && c.renderTo.id === "piechart_area";
+        });
+        if (pieChart) {
+          var totalO = ms.open.reduce(function (a, b) {
+            return a + b;
+          }, 0);
+          var totalP = ms.progress.reduce(function (a, b) {
+            return a + b;
+          }, 0);
+          var totalCl = ms.close.reduce(function (a, b) {
+            return a + b;
+          }, 0);
+          var totalCa = ms.cancel.reduce(function (a, b) {
+            return a + b;
+          }, 0);
+
+          var pieData = [
+            { name: "Open", y: totalO, color: "#64748b" },
+            { name: "In Progress", y: totalP, color: "#f59e0b" },
+            { name: "Close", y: totalCl, color: "#10b981" },
+            { name: "Cancel", y: totalCa, color: "#ef4444" },
+          ].filter(function (d) {
+            return d.y > 0;
+          });
+
+          if (pieData.length === 0) {
+            pieData = [
+              {
+                name: "No Data",
+                y: 1,
+                showInLegend: false,
+                dataLabels: { enabled: false },
+              },
+            ];
+          }
+          pieChart.series[0].setData(pieData, true);
+        }
+
+        setTimeout(function () {
+          $btn
+            .prop("disabled", false)
+            .html('<i class="bi bi-funnel-fill me-1"></i> Terapkan');
+        }, 300);
+      });
+
+      // Init select2 and flatpickr
+      if (typeof $.fn.select2 !== "undefined") {
+        $(".select2").select2();
+      }
+      if (typeof flatpickr !== "undefined") {
+        flatpickr(".tanggalpickr", {
+          locale: "id",
+          dateFormat: "Y-m-d",
+          altInput: true,
+          altFormat: "d F Y",
+          allowInput: false,
+          clickOpens: true,
+        });
+      }
+
+      // Reset Unified Filter
+      $("#resetBtn_all").click(function () {
+        $("#list_year").val("2026").trigger("change");
+        if (
+          document.getElementById("startDate") &&
+          document.getElementById("startDate")._flatpickr
+        ) {
+          document.getElementById("startDate")._flatpickr.clear();
+        } else {
+          $("#startDate").val("");
+        }
+        if (
+          document.getElementById("endDate") &&
+          document.getElementById("endDate")._flatpickr
+        ) {
+          document.getElementById("endDate")._flatpickr.clear();
+        } else {
+          $("#endDate").val("");
+        }
+        $("#list_dept").val("").trigger("change");
+        $("#filterBtn_all").click();
+      });
+    </script>
+    <script>
+      // Isi profil dari sesi localStorage.
+      (function () {
+        var u = LocalStorageApp.currentUser();
+        var n = document.getElementById("topbarUserName");
+        var p = document.getElementById("profileImg");
+        if (n && u) n.textContent = u.nama;
+        if (p && u) {
+          p.src =
+            "https://ui-avatars.com/api/?name=" +
+            encodeURIComponent(u.nama) +
+            "&background=0d6efd&color=fff&size=128";
+        }
+        document.querySelectorAll(".submenu-toggle").forEach(function (it) {
+          it.addEventListener("click", function () {
+            it.parentElement.classList.toggle("open");
+          });
+        });
+      })();
+    </script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // SweetAlert2 global alert override helper
+      if (typeof Swal !== "undefined") {
+        window.alert = function (message, title) {
+          return Swal.fire({
+            icon: "info",
+            title: title || "Pemberitahuan",
+            text: message,
+            confirmButtonColor: "#4f46e5",
+            confirmButtonText: "OK",
+          });
+        };
+      }
+
+      // Logout handler using SweetAlert2
+      document.addEventListener("DOMContentLoaded", function () {
+        var logoutAction = document.getElementById("logoutAction");
+        if (!logoutAction) return;
+        logoutAction.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          if (typeof Swal !== "undefined") {
+            Swal.fire({
+              title: "Konfirmasi Logout",
+              text: "Apakah Anda yakin ingin keluar dari aplikasi?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#dc3545",
+              cancelButtonColor: "#6c757d",
+              confirmButtonText: "Ya, Logout",
+              cancelButtonText: "Batal",
+            }).then(function (result) {
+              if (result.isConfirmed) {
+                LocalStorageApp.logout();
+                window.location.replace("../auth/login.html?logged_out=1");
+              }
+            });
+          } else {
+            if (!window.confirm("Apakah Anda yakin ingin logout?")) return;
+            LocalStorageApp.logout();
+            window.location.replace("../auth/login.html?logged_out=1");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

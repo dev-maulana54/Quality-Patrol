@@ -1,0 +1,165 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Audit - Quality Patrol</title><!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <!-- Select2 core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../../../public/assets/css/summary.css" rel="stylesheet">
+    <style>
+        .chart-container { position: relative; width: 100%; height: 380px; }
+        @media (max-width: 768px) { .chart-container { height: 260px; } }
+        .sidebar { width: 260px; transition: width 0.3s ease; }
+        .main-content { margin-left: 260px; transition: margin-left 0.3s ease; }
+        .sidebar.collapsed { width: 0 !important; padding: 0 !important; overflow: hidden !important; }
+        .main-content.expanded { margin-left: 0 !important; }
+        .menu-item.has-submenu { flex-direction: column; align-items: stretch; }
+        .menu-item.submenu-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .menu-item.submenu-toggle .menu-left { display: flex; align-items: center; gap: 10px; }
+        .menu-item.submenu-toggle i, .submenu-item i { font-size: 18px; width: 22px; text-align: center; }
+        .chevron { font-size: 12px; transition: transform 0.2s ease; }
+        .menu-item.has-submenu.open .chevron { transform: rotate(180deg); }
+        .submenu { display: none; flex-direction: column; padding-left: 42px; margin-top: 6px; gap: 6px; }
+        .menu-item.has-submenu.open .submenu { display: flex; }
+        .submenu-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 13px; text-decoration: none; color: #ddd; }
+        .submenu-item:hover { background: rgba(255, 255, 255, 0.08); }
+        .light-theme .submenu-item { color: #2c3e50; }
+    </style>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+<body class="light-theme"><!-- Header -->
+    <div class="header">
+        <div class="header-left"><button class="mobile-toggle" id="mobileToggle"> <i class="bi bi-list"></i> </button>
+            <h1 class="logo-text" id="appName">Quality Patrol</h1>
+        </div>
+        <div class="header-right">
+            <button class="theme-toggle" id="themeToggle"><i class="bi bi-sun-fill"></i></button>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-layout-sidebar-inset"></i></button>
+            <div class="profile-dropdown">
+                <img src="https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128" alt="Profile" class="profile-img" id="profileImg">
+                <div class="dropdown-menu" id="profileDropdown">
+                    <a href="javascript:void(0)" class="dropdown-item" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+                </div>
+            </div>
+        </div>
+    </div><!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div style="padding:20px;margin:0 15px 20px 15px;background:linear-gradient(135deg,#0d6efd,#0056b3);border-radius:12px;text-align:center;box-shadow:0 4px 15px rgba(13,110,253,.3)">
+            <h4 style="color:white;font-size:14px;font-weight:600;margin:0 0 4px 0;text-shadow:0 2px 4px rgba(0,0,0,.2)" id="sidebarUserName">Loading...</h4>
+            <p style="color:rgba(255,255,255,.8);font-size:11px;margin:0;font-weight:400" id="sidebarRole">-</p>
+        </div>
+        <a href="summary.html" class="menu-item active" data-page="dashboard"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <div class="menu-item has-submenu open">
+            <div class="menu-item submenu-toggle">
+                <div class="menu-left"><i class="bi bi-search"></i><span>Data Patrol</span></div>
+                <i class="bi bi-chevron-down chevron"></i>
+            </div>
+            <div class="submenu">
+                <a href="temuan_patrol.html" class="submenu-item"><i class="bi bi-person-badge"></i><span>Data Auditor</span></a>
+                <a href="temuan_auditee.html" class="submenu-item"><i class="bi bi-person-check"></i><span>Data Auditee</span></a>
+                <a href="daftar_hadir.html" class="submenu-item"><i class="bi bi-person-check"></i><span>Daftar Hadir</span></a>
+            </div>
+        </div>
+        <a href="schedule.html" class="menu-item" data-page="patrol"><i class="bi bi-calendar-check"></i><span>Schedule</span></a>
+        <div class="menu-header admin-only" id="adminMenuHeader" style="display:none">Master Data</div>
+        <a href="../admin/mdata_user.html" class="menu-item admin-only" id="menuUser" style="display:none" data-page="user"><i class="bi bi-people"></i><span>User</span></a>
+    </div><!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <h2 class="page-title" id="dashboardTitle">Konfirmasi Audit</h2>
+        <div class="row">
+            <!-- Konten halaman konfirmasi audit -->
+        </div>
+        <div class="text-center mt-4">
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-success btn-lg px-5">
+                    <i class="bi bi-play-circle-fill me-2"></i>Mulai Audit
+                </button>
+            </div>
+        </div>
+    </div><!-- Footer -->
+    <div class="footer" id="footer">
+        <p id="footerText">© 2025 Quality Patrol — All rights reserved</p>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+    <!-- LocalStorage DB -->
+    <script src="../../../public/assets/js/localStorage_db.js"></script>
+    <script>
+        var currentUser = QPDB.requireAuth('../auth/login.html');
+        if (currentUser) {
+            document.getElementById('sidebarUserName').textContent = currentUser.nama;
+            document.getElementById('sidebarRole').textContent = currentUser.role_label;
+            document.getElementById('profileImg').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.nama) + '&background=0d6efd&color=fff&size=128';
+            // Tampilkan menu admin
+            if (currentUser.role === 1) {
+                document.getElementById('adminMenuHeader').style.display = '';
+                document.getElementById('menuUser').style.display = '';
+            }
+        }
+
+        document.querySelectorAll('.submenu-toggle').forEach(function (item) {
+            item.addEventListener('click', function () { item.parentElement.classList.toggle('open'); });
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            QPDB.logoutUser();
+            window.location.href = '../auth/login.html';
+        });
+
+        document.getElementById('profileImg').addEventListener('click', function () {
+            document.getElementById('profileDropdown').classList.toggle('show');
+        });
+    </script>
+    <script>
+        // QPDB Auto Init - sidebar user info
+        (function() {
+            if (typeof QPDB === 'undefined') return;
+            var u = QPDB.getCurrentUser();
+            if (!u) { 
+                // Cek apakah ini halaman login atau 404
+                var fn = window.location.pathname;
+                if (fn.indexOf('login') === -1 && fn.indexOf('404') === -1 && fn.indexOf('info_pengembangan') === -1 && fn.indexOf('welcome_message') === -1) {
+                    window.location.href = '../auth/login.html'; 
+                }
+                return; 
+            }
+            var n = document.getElementById('sidebarUserName');
+            var r = document.getElementById('sidebarRole');
+            var p = document.getElementById('profileImg');
+            if (n) n.textContent = u.nama;
+            if (r) r.textContent = u.role_label;
+            if (p) p.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.nama) + '&background=0d6efd&color=fff&size=128';
+            var lb = document.getElementById('logoutBtn');
+            if (lb) lb.addEventListener('click', function(e) {
+                e.preventDefault(); QPDB.logoutUser(); 
+                window.location.href = (window.location.pathname.indexOf('/admin/') !== -1 || window.location.pathname.indexOf('/users/') !== -1) 
+                    ? '../auth/login.html' : 'auth/login.html';
+            });
+            document.querySelectorAll('.submenu-toggle').forEach(function(it) {
+                it.addEventListener('click', function() { it.parentElement.classList.toggle('open'); });
+            });
+        })();
+    </script>
+</body>
+</html>
+
+

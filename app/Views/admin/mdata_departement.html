@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Data Departemen - Quality Patrol</title>
+    <!-- Google Fonts: Outfit & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <!-- Select2 core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --primary-dark: #3730a3;
+        --primary-light: #eef2ff;
+        --secondary: #64748b;
+        --surface: #ffffff;
+        --background: #f8fafc;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --border: #e2e8f0;
+        --radius-lg: 20px;
+        --radius-md: 12px;
+        --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      body {
+        font-family: 'Outfit', 'Poppins', sans-serif;
+        background-color: var(--background) !important;
+        color: var(--text-primary);
+        min-height: 100vh;
+      }
+
+      /* Topbar Styling */
+      .topbar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid #e7ebf3;
+        backdrop-filter: blur(12px);
+        box-shadow: var(--shadow-sm);
+      }
+      .topbar-left, .topbar-actions, .topbar-user {
+        display: flex;
+        align-items: center;
+      }
+      .topbar-left { gap: 16px; }
+      .topbar-actions { gap: 16px; }
+      .topbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: 1.15rem;
+        text-decoration: none;
+      }
+      .topbar-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 1.15rem;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      }
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 20px;
+      }
+      .topbar-nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .topbar-nav-link:hover, .topbar-nav-link:focus, .topbar-nav-link.active {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      .topbar-user-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-right: 12px;
+      }
+      .profile-dropdown {
+        position: relative;
+      }
+      .profile-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        object-fit: cover;
+        border: 2px solid #e2e8f0;
+        transition: all 0.2s ease;
+      }
+      .profile-img:hover {
+        border-color: var(--primary);
+        transform: scale(1.05);
+      }
+
+      /* Main Layout */
+      .main-content {
+        max-width: 1440px;
+        margin: 70px auto 0 !important;
+        padding: 36px 32px 48px !important;
+        width: 100% !important;
+      }
+      .page-title {
+        color: var(--text-primary) !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.5px !important;
+        font-size: 1.75rem !important;
+        margin-bottom: 24px !important;
+      }
+
+      /* Card & Table Styling */
+      .table-card {
+        background-color: var(--surface) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-lg) !important;
+        box-shadow: var(--shadow-md) !important;
+        padding: 28px !important;
+      }
+      .table-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f1f5f9;
+        margin-bottom: 20px;
+      }
+      .table-card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+      .table-card-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin: 2px 0 0 0;
+      }
+      .btn-primary-accent {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 10px 20px;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary-accent:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+        color: #fff;
+      }
+
+      /* DataTables Overrides */
+      .table > :not(caption) > * > * {
+        padding: 14px 16px;
+        vertical-align: middle;
+      }
+      .table th {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        background-color: #f8fafc !important;
+        border-bottom: 2px solid #e2e8f0;
+      }
+      .table td {
+        font-size: 14px;
+        color: var(--text-primary);
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .table-hover tbody tr:hover {
+        background-color: #f8fafc !important;
+      }
+
+      /* Modal Enhancement */
+      .modal-content {
+        border-radius: 20px !important;
+        border: none !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+        overflow: hidden;
+      }
+      .modal-header {
+        background-color: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 20px 24px;
+      }
+      .modal-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 1.15rem;
+      }
+      .modal-body {
+        padding: 24px;
+      }
+      .modal-footer {
+        background-color: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        padding: 16px 24px;
+      }
+      .form-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 6px;
+      }
+      .form-control, .form-select {
+        border-radius: 10px;
+        border: 1.5px solid #e2e8f0;
+        padding: 10px 14px;
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+      .form-control:focus, .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      }
+
+      /* Dark Theme Compatibility */
+      .dark-theme .topbar { background: rgba(30, 41, 59, 0.95); border-bottom-color: #334155; }
+      .dark-theme .topbar-brand { color: #f8fafc; }
+      .dark-theme .topbar-nav-link { color: #cbd5e1; }
+      .dark-theme .topbar-nav-link:hover, .dark-theme .topbar-nav-link.active { background-color: #334155; color: #818cf8; }
+      .dark-theme .topbar-user-name { color: #cbd5e1; }
+      .dark-theme .table-card { background-color: #1e293b !important; border-color: #334155 !important; }
+      .dark-theme .table-card-title { color: #f8fafc; }
+      .dark-theme .table th { background-color: #0f172a !important; color: #cbd5e1; border-bottom-color: #334155; }
+      .dark-theme .table td { color: #e2e8f0; border-bottom-color: #334155; }
+      .dark-theme .table-hover tbody tr:hover { background-color: #334155 !important; }
+      .dark-theme .modal-content { background-color: #1e293b; color: #f8fafc; }
+      .dark-theme .modal-header, .dark-theme .modal-footer { background-color: #0f172a; border-color: #334155; }
+      .dark-theme .form-control, .dark-theme .form-select { background-color: #0f172a; border-color: #334155; color: #f8fafc; }
+    </style>
+    <link rel="stylesheet" href="../../../public/assets/css/admin_master.css?v=2">
+    <link rel="stylesheet" href="../../../public/assets/css/quality_patrol/style.css?v=1">
+</head>
+
+<body class="light-theme admin-master app-shell">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button id="mobileToggle" type="button" hidden aria-hidden="true"></button>
+        <a class="topbar-brand" href="../users/summary.html" aria-label="Quality Patrol">
+          <span class="topbar-mark"><i class="bi bi-shield-check"></i></span>
+          <span id="appName">Quality Patrol</span>
+        </a>
+        <nav class="topbar-nav d-none d-md-flex">
+          <a class="topbar-nav-link" href="../users/summary.html"><i class="bi bi-house-door"></i> Home</a>
+          <a class="topbar-nav-link" href="../users/temuan_patrol.html"><i class="bi bi-list-check"></i> Daftar Temuan</a>
+          <div class="dropdown d-inline-block">
+            <a class="topbar-nav-link dropdown-toggle active" href="#" id="masterDataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-database"></i> Master Data
+            </a>
+            <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="masterDataDropdown">
+              <li><a class="dropdown-item py-2" href="mdata_user.html"><i class="bi bi-people me-2 text-primary"></i> User</a></li>
+              <li><a class="dropdown-item py-2 active fw-semibold" href="mdata_departement.html"><i class="bi bi-building me-2 text-primary"></i> Departemen</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-user">
+          <span id="topbarUserName" class="topbar-user-name">Admin Quality</span>
+          <div class="profile-dropdown">
+            <img src="https://ui-avatars.com/api/?name=User&amp;background=0d6efd&amp;color=fff&amp;size=128" alt="Profil pengguna" class="profile-img" id="profileImg" />
+            <div class="dropdown-menu dropdown-menu-end shadow-sm" id="profileDropdown">
+              <div class="d-md-none border-bottom pb-2 mb-2 px-2">
+                <a class="dropdown-item py-1" href="../users/summary.html"><i class="bi bi-house-door me-2"></i> Home</a>
+                <a class="dropdown-item py-1" href="../users/temuan_patrol.html"><i class="bi bi-list-check me-2"></i> Daftar Temuan</a>
+                <div class="dropdown-header px-0 text-muted fw-bold small mt-1">MASTER DATA</div>
+                <a class="dropdown-item py-1 ps-3" href="mdata_user.html"><i class="bi bi-people me-2"></i> User</a>
+                <a class="dropdown-item py-1 ps-3 active" href="mdata_departement.html"><i class="bi bi-building me-2"></i> Departemen</a>
+              </div>
+              <button class="topbar-menu-action theme-toggle" id="themeToggle" type="button"><i class="bi bi-sun-fill me-2"></i><span>Ubah tema</span></button>
+              <a href="javascript:void(0)" class="dropdown-item text-danger fw-semibold" id="logoutAction"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+              <a href="javascript:void(0)" id="logoutBtn" hidden aria-hidden="true">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <h2 class="page-title"><i class="bi bi-building-fill text-primary me-2"></i>Master Data Departemen</h2>
+
+        <!-- Tabel Departemen QP -->
+        <div class="table-card">
+            <div class="table-card-header">
+                <div>
+                    <h3 class="table-card-title">Data Departemen Quality Patrol</h3>
+                    <p class="table-card-subtitle">Kelola struktur departemen dan pemetaan section pada sistem.</p>
+                </div>
+                <button type="button" class="btn btn-primary-accent" data-bs-toggle="modal" data-bs-target="#modal_tambahdata">
+                    <i class="bi bi-plus-lg"></i> Tambah Departemen
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table id="auditTable" class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Departement</th>
+                            <th>ID Dept Henkanten</th>
+                            <th width="100">Section</th>
+                            <th width="150"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyDept"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tabel Departemen Henkaten -->
+        <div class="table-card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title">Data Departemen Henkaten</h3>
+            </div>
+            <div class="table-responsive mt-3">
+                <table id="auditTable2" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Dept</th>
+                            <th>Departement</th>
+                            <th width="100">Section</th>
+                            <th width="150"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyDeptHenk"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tabel Master Karyawan -->
+        <div class="table-card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title">Master Data Karyawan (Henkaten)</h3>
+            </div>
+            <div class="table-responsive mt-3">
+                <table id="auditTable3" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NPK</th>
+                            <th>Nama</th>
+                            <th width="100">ID Departement</th>
+                            <th width="100">ID Section</th>
+                            <th width="100">Jabatan</th>
+                            <th width="100">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyKaryawan"></tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- Footer -->
+
+    <!-- Modal Tambah Departemen -->
+    <div class="modal fade" id="modal_tambahdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Departemen Baru</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label"><i class="bi bi-building me-1"></i>Nama Departemen</label>
+                        <input type="text" class="form-control" id="new_dept_name" placeholder="Nama Departemen">
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="form-label"><i class="bi bi-hash me-1"></i>ID Dept Henkanten</label>
+                        <input type="text" class="form-control" id="new_dept_henk" placeholder="Contoh: MFG-02">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btn_tambahDept"><i class="bi bi-plus-circle"></i> Tambah Departemen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Lihat Section -->
+    <div class="modal fade" id="modal_lihatsection" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Section dari Departemen</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-header d-flex justify-content-end align-items-center mb-2">
+                        <button type="button" class="btn btn-primary" id="btnTambahSection">
+                            <i class="bi bi-plus-circle"></i> Tambah Section
+                        </button>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="table-primary">
+                            <tr><th>No</th><th>Section</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="tbody_section1"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" id="footer">
+        <p id="footerText">2025 Quality Patrol - All rights reserved</p>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+    <!-- LocalStorage DB -->
+    <script src="../../../public/assets/js/local_storage_app.js?v=3"></script>
+    <script>
+        var currentUser = LocalStorageApp.requireAdmin('../auth/login.html', '../users/summary.html');
+
+        if (document.getElementById('topbarUserName')) document.getElementById('topbarUserName').textContent = currentUser ? currentUser.nama : 'Admin Quality';
+        if (document.getElementById('sidebarUserName')) document.getElementById('sidebarUserName').textContent = currentUser ? currentUser.nama : '-';
+        if (document.getElementById('sidebarRole')) document.getElementById('sidebarRole').textContent = currentUser ? currentUser.role_label : '-';
+        if (document.getElementById('profileImg')) {
+            document.getElementById('profileImg').src = currentUser
+                ? 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.nama) + '&background=4f46e5&color=fff&size=128'
+                : 'https://ui-avatars.com/api/?name=User&background=4f46e5&color=fff&size=128';
+        }
+
+        var _currentDeptId = null; // untuk modal lihat section
+
+        // === RENDER TABLES ===
+        function renderDeptTable() {
+            var depts = LocalStorageApp.all('qp_departments');
+            var tbody = document.getElementById('tbodyDept');
+            tbody.innerHTML = '';
+            depts.forEach(function (dd, i) {
+                tbody.innerHTML +=
+                    '<tr>' +
+                    '<td>' + (i + 1) + '</td>' +
+                    '<td>' + dd.departement + '</td>' +
+                    '<td>' + (dd.id_departement_henk || '-') + '</td>' +
+                    '<td><button class="btn btn-primary btn-sm btn_lihatsection" data-id="' + dd.id_departement + '"><i class="bi bi-eye"></i> Lihat</button></td>' +
+                    '<td>' +
+                    '<button class="btn btn-danger btn-sm btn_hapusdept ms-1" data-id="' + dd.id_departement + '"><i class="bi bi-trash"></i></button>' +
+                    '</td>' +
+                    '</tr>';
+            });
+        }
+
+        function renderDeptHenkTable() {
+            var depts = LocalStorageApp.all('qp_departments_henk');
+            var tbody = document.getElementById('tbodyDeptHenk');
+            tbody.innerHTML = '';
+            depts.forEach(function (ddh, i) {
+                tbody.innerHTML +=
+                    '<tr>' +
+                    '<td>' + (i + 1) + '</td>' +
+                    '<td>' + ddh.id_departement + '</td>' +
+                    '<td>' + ddh.departement + '</td>' +
+                    '<td><button class="btn btn-primary btn-sm btn_lihatsection2" data-id="' + ddh.id_departement + '"><i class="bi bi-eye"></i> Lihat</button></td>' +
+                    '<td></td>' +
+                    '</tr>';
+            });
+        }
+
+        function renderKaryawanTable() {
+            var karyawan = LocalStorageApp.all('qp_employees');
+            var tbody = document.getElementById('tbodyKaryawan');
+            tbody.innerHTML = '';
+            karyawan.forEach(function (dkh, i) {
+                tbody.innerHTML +=
+                    '<tr>' +
+                    '<td>' + (i + 1) + '</td>' +
+                    '<td>' + dkh.npk + '</td>' +
+                    '<td>' + dkh.nama + '</td>' +
+                    '<td>' + dkh.id_departement + '</td>' +
+                    '<td>' + dkh.id_section + '</td>' +
+                    '<td>' + (dkh.jabatan || '-') + '</td>' +
+                    '<td>' + (dkh.email || '-') + '</td>' +
+                    '</tr>';
+            });
+        }
+
+        function destroyAndRebuildTable(id) {
+            if ($.fn.DataTable.isDataTable('#' + id)) $('#' + id).DataTable().destroy();
+            $('#' + id).DataTable({});
+        }
+
+        $(document).ready(function () {
+            renderDeptTable();
+            renderDeptHenkTable();
+            renderKaryawanTable();
+            destroyAndRebuildTable('auditTable');
+            destroyAndRebuildTable('auditTable2');
+            destroyAndRebuildTable('auditTable3');
+
+            document.querySelectorAll('.submenu-toggle').forEach(function (item) {
+                item.addEventListener('click', function () { item.parentElement.classList.toggle('open'); });
+            });
+        });
+
+        // === TAMBAH DEPARTEMEN ===
+        $('#btn_tambahDept').on('click', function () {
+            var name = $('#new_dept_name').val().trim();
+            var henk = $('#new_dept_henk').val().trim();
+            if (!name) { alert('Nama departemen wajib diisi.'); return; }
+            LocalStorageApp.create('qp_departments', 'id_departement', { departement: name, id_departement_henk: henk });
+            alert('Departemen berhasil ditambahkan!');
+            $('#modal_tambahdata').modal('hide');
+            renderDeptTable();
+            destroyAndRebuildTable('auditTable');
+        });
+
+        // === LIHAT SECTION ===
+        $(document).on('click', '.btn_lihatsection', function () {
+            _currentDeptId = $(this).data('id');
+            var sections = LocalStorageApp.sectionsByDepartment(_currentDeptId);
+            var tbody = document.getElementById('tbody_section1');
+            tbody.innerHTML = '';
+            if (sections.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Belum ada section</td></tr>';
+            } else {
+                sections.forEach(function (sec, i) {
+                    tbody.innerHTML +=
+                        '<tr>' +
+                        '<td>' + (i + 1) + '</td>' +
+                        '<td>' + sec.section + '</td>' +
+                        '<td><button class="btn btn-danger btn-sm btn_hapussection" data-id="' + sec.id_section + '"><i class="bi bi-trash"></i></button></td>' +
+                        '</tr>';
+                });
+            }
+            $('#modal_lihatsection').modal('show');
+        });
+
+        // === TAMBAH SECTION ===
+        $('#btnTambahSection').on('click', function () {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Tambah Section Baru',
+                    input: 'text',
+                    inputLabel: 'Nama Section',
+                    inputPlaceholder: 'Masukkan nama section...',
+                    showCancelButton: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#4f46e5',
+                    inputValidator: (value) => {
+                        if (!value) return 'Nama section tidak boleh kosong!';
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed && result.value) {
+                        LocalStorageApp.create('qp_sections', 'id_section', { id_departement: _currentDeptId, section: result.value });
+                        Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Section berhasil ditambahkan!', timer: 1800, showConfirmButton: false });
+                        $('.btn_lihatsection[data-id="' + _currentDeptId + '"]').trigger('click');
+                    }
+                });
+            } else {
+                var name = prompt('Nama Section baru:');
+                if (!name) return;
+                LocalStorageApp.create('qp_sections', 'id_section', { id_departement: _currentDeptId, section: name });
+                $('.btn_lihatsection[data-id="' + _currentDeptId + '"]').trigger('click');
+            }
+        });
+
+        // === HAPUS SECTION ===
+        $(document).on('click', '.btn_hapussection', function () {
+            var secId = $(this).data('id');
+            var doDeleteSec = function () {
+                LocalStorageApp.remove('qp_sections', 'id_section', secId);
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({ icon: 'success', title: 'Terhapus', text: 'Section berhasil dihapus.', timer: 1800, showConfirmButton: false });
+                }
+                $('.btn_lihatsection[data-id="' + _currentDeptId + '"]').trigger('click');
+            };
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Hapus Section?',
+                    text: 'Apakah Anda yakin ingin menghapus section ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) doDeleteSec();
+                });
+            } else {
+                if (confirm('Hapus section ini?')) doDeleteSec();
+            }
+        });
+
+        // === HAPUS DEPARTEMEN ===
+        $(document).on('click', '.btn_hapusdept', function () {
+            var deptId = $(this).data('id');
+            var doDeleteDept = function () {
+                LocalStorageApp.remove('qp_departments', 'id_departement', deptId);
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({ icon: 'success', title: 'Terhapus', text: 'Departemen berhasil dihapus.', timer: 1800, showConfirmButton: false });
+                }
+                renderDeptTable();
+                destroyAndRebuildTable('auditTable');
+            };
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Hapus Departemen?',
+                    text: 'Apakah Anda yakin ingin menghapus departemen ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) doDeleteDept();
+                });
+            } else {
+                if (confirm('Hapus departemen ini?')) doDeleteDept();
+            }
+        });
+
+        // === LOGOUT ===
+        var handleDeptLogout = function (e) {
+            if (e) e.preventDefault();
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Konfirmasi Logout',
+                    text: 'Apakah Anda yakin ingin keluar dari aplikasi?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Logout',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        LocalStorageApp.logout();
+                        window.location.href = '../auth/login.html?logged_out=1';
+                    }
+                });
+            } else {
+                if (confirm('Apakah Anda yakin ingin logout?')) {
+                    LocalStorageApp.logout();
+                    window.location.href = '../auth/login.html?logged_out=1';
+                }
+            }
+        };
+
+        if (document.getElementById('logoutBtn')) {
+            document.getElementById('logoutBtn').addEventListener('click', handleDeptLogout);
+        }
+        if (document.getElementById('logoutAction')) {
+            document.getElementById('logoutAction').addEventListener('click', handleDeptLogout);
+        }
+
+        if (document.getElementById('profileImg')) {
+            document.getElementById('profileImg').addEventListener('click', function () {
+                document.getElementById('profileDropdown').classList.toggle('show');
+            });
+        }
+    </script>
+</body>
+
+</html>
+
+

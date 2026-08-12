@@ -390,7 +390,16 @@ function setupEventListeners() {
         document.body.appendChild(successMsg);
 
         setTimeout(() => {
-          window.location.href = "logout";
+          if (window.QPDB && typeof window.QPDB.logoutUser === "function") {
+            window.QPDB.logoutUser();
+          }
+          if (window.location.protocol === "file:") {
+            var path = window.location.pathname;
+            var isSub = path.indexOf("/admin/") !== -1 || path.indexOf("/users/") !== -1 || path.indexOf("/mobile/") !== -1;
+            window.location.href = isSub ? "../auth/login.html" : "app/Views/auth/login.html";
+          } else {
+            window.location.href = typeof baseurl !== "undefined" ? baseurl + "/logout" : "logout";
+          }
         }, 1000);
 
         backdrop.remove();
